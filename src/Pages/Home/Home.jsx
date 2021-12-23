@@ -20,10 +20,15 @@ const Home = () => {
             <div style={{display: 'flex', width: '100%', height: '100vh'}}>
                 <div style={{flex: '2', width: '100%', height: '100%'}}>
                     <div className="Home-background">
-                        <div  className="Home-overlay"></div>
+                        <div  className="Home-overlay">
+                            <div className="Home-content-wrapper Home-hide">
+                                <h1>Our Shortlet's Outstanding Traits</h1>
+                                <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick} styles="Home-mobile-btn"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style={{flex: '1.5', width:'100%', height:'100%'}}>
+                <div className="Home-content-header">
                     <div className="Home-content">
                         <div className="Home-content-wrapper">
                             <h1>Our Shortlet's Outstanding Traits</h1>

@@ -19,9 +19,9 @@
     border-radius: 4.72931px;
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 600px) {
     .Button-Container button {
-        font-size: 1rem;
+        font-size: .9rem;
     }
     
 }

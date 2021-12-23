@@ -1,3 +1,9 @@
+@media screen and (min-width: 601px) {
+    .Home-hide {
+        display: none;
+    }
+}
+
 .Home-background {
     background-image: url('../image/homeImage2.jpg');
     background-size: cover;
@@ -7,8 +13,15 @@
     height: 100%;
 }
 
+.Home-content-header {
+    flex: 1.5;
+    width: 100%;
+    height: 100%;
+}
+
+
 .Home-overlay {
-    background: rgba(12, 0, 0, 0.39);
+    background: rgba(12, 0, 0, 0.5);
     width: 100%;
     height: 100%;
 }
@@ -31,22 +44,16 @@
     width: 50% !important;
 }
 
+.Home-mobile-btn {
+    display: flex;
+    justify-content: center;
+}
+
 .Home-content-wrapper h1 {
     color: #fff;
     font-size: 2.5rem;
 }
 
-@media screen and (max-width: 560px) {
-    .Home-content-wrapper h1 {
-        font-size: 1.2rem;
-    }
-
-    .Home-btn {
-        width: 100% !important;
-    }
-    
-    
-}
 .Home-features {
     padding: 4rem;
 }
@@ -75,7 +82,7 @@
 
 .Home-feature-main-content {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 4rem;
 }
 
@@ -102,10 +109,61 @@
     align-items: center;
     padding: 2rem;
     cursor: pointer;
+    transition:  2s;
+}
+
+.Home-feature-main-content-item:hover  {
+    background: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
+    color: #fff;  
 }
 
 .Home-feature-main-content-item span {
     font-size: 1.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .Home-content-header {
+        display: none;
+    }
+    
+    .Home-overlay {
+        display: flex;
+        align-items: end;
+    }
+
+    .Home-features {
+        padding: 0;
+        margin: 1.5rem;
+    }
+
+    .Home-content-wrapper {
+        padding: 1rem;
+        padding-bottom: 4rem;
+    }
+
+    .Home-content-wrapper h1 {
+        text-align: center;
+        font-size: 1.7rem;
+    }
+
+    .Home-btn {
+        width: 70% !important;
+    }
+
+    .Home-features-main {
+        margin-top: 2rem;
+    }
+    
+    .Home-feature-main-content-item {
+        padding: 10px;
+        cursor: pointer;
+        transition:  2s;
+    }
+
+    .Home-feature-main-content {
+        gap: 12px;
+    }
+    
 }
 
 @media screen and (max-width: 768px) {
