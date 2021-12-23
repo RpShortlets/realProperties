@@ -1,0 +1,27 @@
+.Button-Container {
+    margin: 2rem 0 1rem;
+}
+
+.Button-Container button {
+    background: var(--color-primary);
+    color: #fff;
+    border: 0;
+    outline: 0;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1.2rem;
+    border-radius: 4.72931px;
+    cursor: pointer;
+}
+
+.Button-Container button:hover {
+    background: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
+    border-radius: 4.72931px;
+}
+
+@media screen and (max-width: 560px) {
+    .Button-Container button {
+        font-size: 1rem;
+    }
+    
+}

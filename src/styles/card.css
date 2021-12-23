@@ -1,0 +1,118 @@
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 5rem 10rem;
+}
+
+.card {
+    background: radial-gradient(98.82% 196.11% at -2.83% -4.46%, rgba(0, 0, 0, 0.56) 0%, rgba(0, 0, 0, 0.08) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    backdrop-filter: blur(12px);
+    width: 100%;
+    padding: 4rem;
+}
+
+.card-h1 {
+    font-size: 1.7rem; 
+    font-weight: bold;
+    color: #fff;
+    text-align: center; 
+}
+
+.form-container-3,
+.form-container {
+    display: grid;
+    gap: 1rem;
+} 
+
+.form-container {
+    grid-template-columns: 1fr;
+        margin: 1.2rem 0;
+}
+
+.form-container-3 {
+    grid-template-columns:  1fr;
+}
+
+
+@media screen and (min-width: 800px) {
+    .form-container-3,
+    .form-container {
+        display: grid;
+        gap: 4rem;
+        margin: 2rem 0;
+    } 
+    .form-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .form-container-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.Modal-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+    height: 180px;
+    margin: 0 auto;
+}
+
+.Modal-svg img {
+    object-fit: cover;
+}
+
+@media screen and (max-width: 900px) {
+    .Modal-svg img {
+        width: 80%;
+    }
+}
+    
+
+.Modal-content {
+    padding: 1rem;
+}
+
+.Modal-header {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.Modal-header h2 {
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 468px) {
+    .Modal-svg {
+        height: 250px;
+
+    }
+    .form-container-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+@media  screen and (max-width: 768px) {
+    .card-h1 {
+        font-size: 1.4rem; 
+        font-weight: 500; 
+    }
+    .card-container {
+        padding: 0;
+    }
+    .card {
+        padding: 2rem;
+    }
+    .Modal-header h2{
+        font-size: 1rem;
+        text-align: center;
+    }
+}

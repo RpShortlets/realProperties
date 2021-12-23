@@ -1,0 +1,76 @@
+
+.input-container {
+    position: relative;
+}
+
+.input-container label {
+    display: block;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.input-container label svg {
+    margin-left: 5px;
+}
+
+.input-container .react-tel-input .form-control {
+    width: 100% !important;
+}
+
+.input-container .react-tel-input {
+    margin-top: 8px;
+}
+
+.input-container input,
+.input-container select {
+    background: #FFFFFF;
+    border: 1px solid #2193B0;
+    color: var(--color-primary);
+    box-shadow: 0px 7px 64px rgb(0 0 0 / 7%);
+    outline: 0;
+    /* border: 0; */
+    padding: 10px;
+    padding-left: 2.3rem;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 7px;
+}
+
+.input-container input:focus,
+.input-container select:focus {
+    border: 2px solid var(--color-primary);
+}
+
+.input-container input::placeholder,
+select {
+    color: var(--color-primary);
+}
+
+
+.input-container span {
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+    top: 50%;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+
+}
+
+input[type="date"] {
+    color: var(--color-primary);
+    text-transform: uppercase;
+}
+
+
+@media screen and (max-width: 560px) {
+    .input-container label {
+        font-size: .8rem;
+    }
+}

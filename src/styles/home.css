@@ -1,0 +1,116 @@
+.Home-background {
+    background-image: url('../image/homeImage2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.Home-overlay {
+    background: rgba(12, 0, 0, 0.39);
+    width: 100%;
+    height: 100%;
+}
+
+.Home-content {
+    background: linear-gradient(270.31deg, #000000 -3.93%, #33312F 124.76%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Home-content-wrapper {
+    padding: 1rem;
+    padding-left: 3rem;
+}
+
+.Home-btn {
+    width: 50% !important;
+}
+
+.Home-content-wrapper h1 {
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+@media screen and (max-width: 560px) {
+    .Home-content-wrapper h1 {
+        font-size: 1.2rem;
+    }
+
+    .Home-btn {
+        width: 100% !important;
+    }
+    
+    
+}
+.Home-features {
+    padding: 4rem;
+}
+
+.Home-features p {
+    font-size: .8rem;
+    text-align: center;
+}
+
+.Home-features-content h2 {
+    color: #1C7B93;
+    font-size: 2rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .Home-features-content h2 {
+        font-size: 1.2rem;
+    }
+
+}
+
+.Home-features-main {
+    margin-top: 4rem;
+}
+
+.Home-feature-main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px) {
+    .Home-feature-main-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+    
+@media screen and (min-width: 991px) {
+    .Home-feature-main-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+}
+
+.Home-feature-main-content-item {
+    background: #DCEFF4;
+    border: 2px solid #1C7B93;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    cursor: pointer;
+}
+
+.Home-feature-main-content-item span {
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .Home-feature-main-content-item span {
+        font-size: 1.1rem;
+    }
+}
+    

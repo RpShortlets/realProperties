@@ -1,0 +1,66 @@
+
+:root {
+    --color-primary: rgba(33, 147, 176, 1);
+}
+
+
+/**STEPPERS**/
+.mode-enter {
+    transform: translateY(-100em);
+    opacity: 0;
+}
+
+.mode-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: all .5s;
+}
+
+.mode-exit {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mode-exit-active {
+    transform: translateY(-100em);
+    opacity: 0;
+    transition: all .5s;
+}
+
+
+/***MODAL***/
+.modal-enter {
+    transform: translateY(-10rem);
+    opacity: 0;
+}
+
+.modal-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 200ms;
+}
+
+.modal-exit {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-exit-active {
+    transform: translateY(-10rem);
+    opacity: 0;
+    transition: all 200ms;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
