@@ -129,6 +129,9 @@
     .Home-overlay {
         display: flex;
         align-items: end;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: end;
     }
 
     .Home-features {
