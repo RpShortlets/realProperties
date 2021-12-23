@@ -23,6 +23,7 @@ const Home = () => {
                         <div  className="Home-overlay">
                             <div className="Home-content-wrapper Home-hide">
                                 <h1>Our Shortlet's Outstanding Traits</h1>
+                                <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
                                 <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick} styles="Home-mobile-btn"/>
                             </div>
                         </div>
@@ -32,6 +33,7 @@ const Home = () => {
                     <div className="Home-content">
                         <div className="Home-content-wrapper">
                             <h1>Our Shortlet's Outstanding Traits</h1>
+                            <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
                             <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick}/>
                         </div>
                     </div>

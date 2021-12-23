@@ -23,17 +23,21 @@ const Card = () => {
     const [endDate, setEndDate] = useState(new Date());
     const [nationDate, setNationDate] = useState(new Date());
     const [show, setShow] = useState(false)
+    const [loaded, setLoaded] = useState(false)
     const countryList = Country.map((x) => x.name)
 
     
     const handleSubmission = (e) => {
         e.preventDefault();
-
-        console.log(formdata, phn)
-        console.log(dropdown)
+        setLoaded(true)
+        setTimeout(() => {
+            setShow(true)
+            setLoaded(false)
+        }, 2000)
 
     }
 
+    
     useEffect(() => {
         if(show) {
             document.body.style.overflow = 'hidden';
@@ -41,6 +45,8 @@ const Card = () => {
             document.body.style.overflow = 'auto';
         }
     }, [show])
+
+
     return (
         <>
             <Modal  show={show} setShow={setShow}>
@@ -66,7 +72,7 @@ const Card = () => {
                         <Identification  dropdown={dropdown} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData}/>
                         <Dates startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
                         <Numbers rooms={rooms} number={number} dropdown={dropdown} setDropdown={setDropdown} />
-                        <Button  text="Book Reservation" onClicks={() => setShow(true)} styles={{margin: '2rem 0  1rem'}}/>
+                        <Button  text="Book Reservation"  styles={{margin: '2rem 0  1rem'}}/>
                     </form>
                 </div>
             </div>
