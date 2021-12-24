@@ -7,34 +7,50 @@ import Image from "../../Svg/pana.svg"
 import Names from "./components/Names"
 import Email from "./components/Email"
 import Nationality from "./components/Nationality"
-import Identification from "./components/Identification"
 import Dates from "./components/Date"
+import Identification from "./components/Identification"
 import Numbers from "./components/Numbers"
+import { Reservation } from "../../api"
 
 const id = ['Internation Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others']
 const number = ['1', '2', '3', '4', '5']
 const rooms = ['A4', 'C4']
 
 const Card = () => {
-    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", date: "", idnumber: "",  dateDeparture: ""})
+    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
     const [dropdown, setDropdown] = useState({identification: "", adultno: "", childno: "", roomno:"", nationality: ""})
     const [phn, setPhone] = useState("")
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [nationDate, setNationDate] = useState(new Date());
+    const [dateofbirth, setDateofBirth] = useState("");
+    const [arrivalDeparture, setArrivalDeparture] = useState([])
     const [show, setShow] = useState(false)
-    const [loaded, setLoaded] = useState(false)
+    const [loading, setLoading] = useState(false)
     const countryList = Country.map((x) => x.name)
 
-    
+    console.log(loading)
     const handleSubmission = (e) => {
         e.preventDefault();
-        setLoaded(true)
-        setTimeout(() => {
-            setShow(true)
-            setLoaded(false)
-        }, 2000)
-
+        if(formdata.firstname && formdata.lastname && formdata.email && formdata.idnumber && dropdown.identification && dropdown.adultno && dropdown.childno && dropdown.roomno && dropdown.nationality && phn.length > 10 && dateofbirth && arrivalDeparture.length > 0) {
+            setLoading(true)
+            Reservation(formdata, dropdown, phn, dateofbirth,arrivalDeparture).then((res) => {
+                if(res === 'Your Booking was successfully Sent') {
+                    setLoading(false)
+                    setShow(true)
+                    setFormData({firstname: "", lastname: "", email: "", idnumber: ""})
+                    setDropdown({identification: "", adultno: "", childno: "", roomno:"", nationality: ""})
+                    setPhone("")
+                    setDateofBirth("")
+                    setArrivalDeparture([])
+                } else {
+                    alert(res)
+                    setLoading(false)
+                }
+                
+            })  
+        }
+        else {
+            alert('Please fill valid credentials')
+            setLoading(false)
+        }
     }
 
     
@@ -68,11 +84,11 @@ const Card = () => {
                     <form onSubmit={handleSubmission}>
                         <Names formdata={formdata} setFormData={setFormData} />
                         <Email  phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  />
-                        <Nationality dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} setNationDate={setNationDate} nationDate={nationDate} />
+                        <Nationality dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} setDateofBirth={setDateofBirth} />
                         <Identification  dropdown={dropdown} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData}/>
-                        <Dates startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
+                        <Dates number={number} dropdown={dropdown} setDropdown={setDropdown} setArrivalDeparture={setArrivalDeparture}/>
                         <Numbers rooms={rooms} number={number} dropdown={dropdown} setDropdown={setDropdown} />
-                        <Button  text="Book Reservation"  styles={{margin: '2rem 0  1rem'}}/>
+                        <Button  text={loading ? 'Sending Reservation..' : 'Book Reservation'}  styles={{margin: '2rem 0  1rem'}}/>
                     </form>
                 </div>
             </div>

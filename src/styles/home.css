@@ -1,9 +1,11 @@
+/**************** HIDE CONTENT ON LARGE DEVICE **************************/
 @media screen and (min-width: 601px) {
     .Home-hide {
         display: none;
     }
 }
 
+/********************** HOME MAIN STYLES *************************************/
 .Home-background {
     background-image: url('../image/homeImage2.jpg');
     background-size: cover;
@@ -129,6 +131,8 @@
     font-size: 1.5rem;
 }
 
+/******************** MEDIA QUERIES *******************************************/
+
 @media screen and (max-width: 600px) {
     .Home-content-header {
         display: none;
@@ -136,10 +140,11 @@
     
     .Home-overlay {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
         display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: end;
+        -webkit-align-items: flex-end;
+        -webkit-box-align: flex-end;
+        -ms-flex-align: flex-end;
     }
 
     .Home-features {
@@ -189,3 +194,4 @@
     }
 }
     
+/******************** END OF MEDIA QUERIES ***********************************************/

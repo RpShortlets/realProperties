@@ -1,16 +1,14 @@
-import {Calander} from "../../../Svg/svg"
 import  "../../../styles/card.css"
-import { DatePick } from "../../Input"
+import { DatePick, InputSelect } from "../../Input"
 
-const Dates = ({startDate, setStartDate, endDate, setEndDate}) => {
+const Dates = ({setDropdown, dropdown, number, setArrivalDeparture}) => {
     return (
         <div className="form-container">
             <div>
-                {/* <Input type="date" name="dateArrival" label="Date of Arrival"  Icon={Calander} value={formdata.dateArrival} formdata={formdata} setFormData={setFormData}/> */}
-                <DatePick select={startDate} label="Date of Arrival" Icon={Calander} onChanges={setStartDate} startDate={startDate} endDate={endDate} />
+                <DatePick  label="Arrival & Depature" setArrivalDeparture={setArrivalDeparture} />
             </div>
             <div>
-                <DatePick label="Date of Departure" select={endDate} Icon={Calander} onChanges={setEndDate} startDate={startDate} endDate={endDate} />
+                <InputSelect  style={{paddingLeft: '10px'}} name="adultno"  value={dropdown.adultno} dropdown={dropdown} setDropdown={setDropdown} options={number} label="No. of Adults" />
             </div>
         </div>
     )

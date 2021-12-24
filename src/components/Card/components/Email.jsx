@@ -3,7 +3,6 @@ import  "../../../styles/card.css"
 import { Input, PhoneType } from "../../Input"
 
 const Email = ({formdata, setFormData, phn, setPhone}) => {
-    console.log(phn)
     return (
         <div className="form-container">
             <div>

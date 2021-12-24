@@ -1,4 +1,4 @@
-
+/************************** INPUT STYLES*************************************/
 .input-container {
     position: relative;
 }
@@ -13,14 +13,6 @@
     margin-left: 5px;
 }
 
-.input-container .react-tel-input .form-control {
-    width: 100% !important;
-}
-
-.input-container .react-tel-input {
-    margin-top: 8px;
-}
-
 .input-container input,
 .input-container select {
     background: #FFFFFF;
@@ -30,9 +22,10 @@
     outline: 0;
     /* border: 0; */
     padding: 10px;
-    padding-left: 2.3rem;
+    padding-left: 2.2rem;
     border-radius: 4px;
     width: 100%;
+    height: 45px;
     margin-top: 7px;
 }
 
@@ -50,7 +43,7 @@ select {
     background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-position-x: 98%;
-    background-position-y: 5px;
+    background-position-y: 10px;
     -webkit-appearance: none;
 
 }
@@ -60,7 +53,8 @@ select {
     z-index: 1;
     left: 10px;
     top: 50%;
-    font-size: 1.3rem;
+    transform: translateY(15%);
+    font-size: 1.1rem;
     color: var(--color-primary);
 }
 
@@ -76,6 +70,79 @@ input[type="date"] {
     text-transform: uppercase;
 }
 
+/***************** PHONE INPUT STYLE ***************************/
+.input-container .react-tel-input .form-control {
+    width: 100% !important;
+    height: 45px;
+}
+
+.input-container .react-tel-input {
+    margin-top: 8px;
+}
+
+/******************** DATE INPUT STYLE ****************************/
+
+.input-container .ant-picker {
+    width: 100% !important;
+    margin-top: 7px !important;
+    border-radius: 4px;
+}
+
+.input-container .ant-picker-input input{
+    outline: 0 !important;
+    border: 0 !important;
+    padding-left: 10px !important;
+    margin: 0 !important;
+    padding: 6px !important;
+    padding-left: 2rem !important;
+    color: var(--color-primary);
+}
+
+.input-container .ant-picker-input span {
+    left: 0;
+    top: 15%;
+}
+
+.input-container .ant-picker-input input::-webkit-input-placeholder {
+    color: var(--color-primary);
+}
+
+
+.ant-picker-cell .ant-picker-cell-inner {
+    min-width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+    border: 0 !important;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+    color: #fff;
+    background: linear-gradient(225deg, #70B4C6 0%, #17677B 100%) !important;
+    border-radius: 14px !important;
+}
+
+.ant-picker-cell:hover:not(.ant-picker-cell-in-view) .ant-picker-cell-inner, .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
+    background: #D8E3FF !important;
+    color: #2193B0;
+    border-radius: 15px;
+    min-width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+}
+
+.ant-picker-range-separator {
+    display: none !important;
+}
+
+.input-range-picker span {
+    left: 5px !important;
+    top: 20% !important;
+}
+
+/************************** END OF DATE STYLES ****************************************/
 
 @media screen and (max-width: 560px) {
     .input-container label {

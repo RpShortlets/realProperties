@@ -1,15 +1,14 @@
-import {Calander} from "../../../Svg/svg"
 import  "../../../styles/card.css"
-import { InputSelect, DatePick } from "../../Input"
+import { InputSelect, DateBirth } from "../../Input"
 
-const Nationality = ({nationDate, setNationDate, dropdown, setDropdown, countryList}) => {
+const Nationality = ({setDateofBirth, dropdown, setDropdown, countryList}) => {
     return (
         <div className="form-container">
             <div>
-                <DatePick label="Date of Birth" Icon={Calander} select={nationDate}  onChanges={setNationDate} startDate={nationDate} />
+                <DateBirth label="Date of Birth" placeholder="DD/MM/YYYY"  setDateofBirth={setDateofBirth} />
             </div>
             <div>
-                <InputSelect name="nationality" style={{paddingLeft: '10px'}} value={dropdown.nationality} dropdown={dropdown} setDropdown={setDropdown} options={countryList} label="Nationality" />
+                <InputSelect name="nationality"  style={{paddingLeft: '10px'}} value={dropdown.nationality} dropdown={dropdown} setDropdown={setDropdown} options={countryList} label="Nationality" />
             </div>
         </div>
     )
