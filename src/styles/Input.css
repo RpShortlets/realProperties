@@ -84,7 +84,7 @@ input[type="date"] {
 
 .input-container .ant-picker {
     width: 100% !important;
-    margin-top: 7px !important;
+    margin-top: 10px !important;
     border-radius: 4px;
 }
 
@@ -94,19 +94,26 @@ input[type="date"] {
     padding-left: 10px !important;
     margin: 0 !important;
     padding: 6px !important;
-    padding-left: 2rem !important;
+    padding-left: 2.2rem !important;
     color: var(--color-primary);
 }
 
 .input-container .ant-picker-input span {
-    left: 0;
-    top: 15%;
+    left: 3px;
+    top: 18%;
 }
 
 .input-container .ant-picker-input input::-webkit-input-placeholder {
     color: var(--color-primary);
 }
 
+.ant-picker {
+    padding: 0 !important;
+}
+
+.ant-picker input {
+    height: 40px !important;
+}
 
 .ant-picker-cell .ant-picker-cell-inner {
     min-width: 30px !important;
@@ -138,8 +145,8 @@ input[type="date"] {
 }
 
 .input-range-picker span {
-    left: 5px !important;
-    top: 20% !important;
+    left: 3px !important;
+    top: 18% !important;
 }
 
 /************************** END OF DATE STYLES ****************************************/
