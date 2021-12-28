@@ -8,7 +8,7 @@ const Numbers = ({number, dropdown, setDropdown, rooms}) => {
                 <InputSelect name="childno" style={{paddingLeft: '10px'}} value={dropdown.childno} dropdown={dropdown} setDropdown={setDropdown} options={number} label="No. of Children" />
             </div>
             <div>
-                <InputSelect name="roomno" style={{paddingLeft: '10px'}} value={dropdown.roomno} dropdown={dropdown} setDropdown={setDropdown} options={rooms} label="No. of Room" />
+                <InputSelect name="roomno" style={{paddingLeft: '10px'}} value={dropdown.roomno} dropdown={dropdown} setDropdown={setDropdown} options={number} label="No. of Room" />
             </div>
         </div>
     )

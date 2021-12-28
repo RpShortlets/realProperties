@@ -9,11 +9,11 @@ import { DatePicker } from 'antd';
 
 const { RangePicker } = DatePicker;
 
-export const Input = ({type, label, placeholder, name, Icon, value, formdata, setFormData}) => {
+export const Input = ({type, label, placeholder, name, Icon, value, formdata, setFormData, handleChange}) => {
     return (
         <div className="input-container">
             {label && <label> {label}{Asterik}</label>}
-            <input type={type} placeholder={placeholder} name={name} value={value} formdata={formdata} onChange={(e) => setFormData({...formdata, [name]: e.target.value})} />
+            <input type={type} placeholder={placeholder} name={name} value={value} formdata={formdata} onChange={handleChange} />
             <span>{Icon}</span>
         </div>
     )
@@ -27,10 +27,10 @@ export const InputSelect = ({label, style, setDropdown, value, options, dropdown
             <label>{label} {Asterik}
                 <select name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
                     <option defaultChecked disabled>{defaultV}</option>
-                    {options.map((option, index) => {
+                    {options.map((option, i) => {
                         return (
                             <>
-                                <option key={index} value={option}>{option}</option>
+                                <option key={i} value={option}>{option}</option>
                             </>
                         )
                     })}
@@ -42,14 +42,20 @@ export const InputSelect = ({label, style, setDropdown, value, options, dropdown
 }
 
 
-export const PhoneType = ({phn, setPhone, label}) => {
+export const PhoneType = ({phn, setPhone, label, handlePhone}) => {
     return (
         <div className="input-container">
             <label>{label} {Asterik}
                 <PhoneInput
-                    country={'us'}
+                    country={'ng'}
                     value={phn}
-                    onChange={(phone) => setPhone(phone)}
+                    onChange={(e) => setPhone(e)}
+                    inputProps={{
+                        name: 'phone',
+                        required: true,
+                        autoComplete: 'off',
+                        placeholder: '+234 805 4124 7788',
+                    }}
                 />
             </label>
         </div>

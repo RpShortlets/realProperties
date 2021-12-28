@@ -3,6 +3,14 @@
     --color-primary: rgba(33, 147, 176, 1);
 }
 
+/*****ERROR*********/
+.error {
+    font-size: 12px;
+    margin: 0;
+    margin-top: 4px;
+    color: red;
+}
+
 
 /**STEPPERS**/
 .mode-enter {

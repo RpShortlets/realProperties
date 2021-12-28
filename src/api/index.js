@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com/reservation';
+const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
 
 export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDeparture) => {
     let formData = {
@@ -23,9 +23,22 @@ export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDe
 
     console.log(dropdown)
     try {
-        const {data} = await axios.post(BaseURL, formData);
+        const {data} = await axios.post(`${BaseURL}/reservation`, formData);
         return data
     } catch (error) {
         return error.message
     }
+}
+
+export const GetRecaptha = async(value) => {
+    try {
+        const data = await axios.get(`http://localhost:5050/recaptha`,
+        {
+            params: {token: value}
+        })
+        return data
+    } catch (error) {
+        return error.message
+    }
+    
 }

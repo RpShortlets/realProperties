@@ -5,7 +5,7 @@ const Dates = ({setDropdown, dropdown, number, setArrivalDeparture}) => {
     return (
         <div className="form-container">
             <div>
-                <DatePick  label="Arrival & Depature" setArrivalDeparture={setArrivalDeparture} />
+                <DatePick  label="Arrival & Departure" setArrivalDeparture={setArrivalDeparture} />
             </div>
             <div>
                 <InputSelect  style={{paddingLeft: '10px'}} name="adultno"  value={dropdown.adultno} dropdown={dropdown} setDropdown={setDropdown} options={number} label="No. of Adults" />
