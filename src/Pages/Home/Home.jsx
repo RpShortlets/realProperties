@@ -4,6 +4,7 @@ import { useNavigate } from "react-router"
 import Button from "../../components/Button"
 import "../../styles/home.css"
 import Items from "./components/Items";
+import {Helmet} from "react-helmet"
 
 
 
@@ -17,6 +18,13 @@ const Home = () => {
 
     return (
         <section>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Real Properties Nigeria</title>
+                <meta name="description" content="Home of Real Properties Nigeria Limited. Luxury and Affordable Shortlet" />
+                <meta name="keywords" content="Real Properties,  Real Estate, Properties, Real Shortlet, Shortlets, Affordable Shortlet, Shortlets Nigeria" />
+                <meta name="author" content="Real Properties Nigeria Limited" />
+            </Helmet>
             <div style={{display: 'flex', width: '100%', height: '100vh'}}>
                 <div style={{flex: '2', width: '100%', height: '100%'}}>
                     <div className="Home-background">
