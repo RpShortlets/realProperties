@@ -1,9 +1,20 @@
+import { useEffect } from "react"
 import Main from "./Pages/Main.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
+import ReactGa from 'react-ga';
 
 const App = () => {
+
+  const invokeGA = () => {
+    ReactGa.initialize('UA-181778020-1');
+    ReactGa.pageview(window.location.pathname + window.location.search);
+  }
+
+  useEffect(() => {
+    invokeGA();
+  }, []);
 
   return (
     <>
