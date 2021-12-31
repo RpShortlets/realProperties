@@ -67,7 +67,11 @@ export const DatePick = ({label,  placeholder, setArrivalDeparture}) => {
 
     function disabledDate(current) {
         // Can not select days before today and today
+        // console.log(current)
+        console.log(moment().endOf('day'))
         return current && current < moment().endOf('day');
+
+        
     }
     
     return (
