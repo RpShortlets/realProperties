@@ -3,7 +3,7 @@ import React from "react"
 import Backdrop from "./Backdrop"
 import { CSSTransition } from "react-transition-group"
 import  { CancelIcon } from "../Svg/svg"
-import Button from "./Button"
+import Button from "./Button/Button"
 
 import "../styles/utilities.css"
 

@@ -28,8 +28,8 @@ const App = () => {
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
       <Routes>
-        <Route path="/reservation" element={<Main />} />
         <Route path="/" element={<Home />} />
+        <Route path="/reservation" element={<Main />} />
       </Routes>
   </>
   );

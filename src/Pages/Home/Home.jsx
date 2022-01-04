@@ -1,62 +1,117 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router"
-import Button from "../../components/Button"
-import "../../styles/home.css"
-import Items from "./components/Items";
-import {Helmet} from "react-helmet"
+import { useState, useRef, useEffect } from 'react';
+import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux';
+import { resetCounts } from '../../redux/actions/componentState';
+import { SectionStyle } from '../../styles/globalStyles';
+import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
+import SearchFilter from './components/Search/SearchFilter';
 
 
 
+const Section = styled.section `
+    ${SectionStyle}
+`
+
+
+
+const location = [
+    {
+        id: 0,
+        name: 'Ikoyi'
+    }, 
+    {
+        id: 1,
+        name: 'Lekki'
+    },
+    {
+        id: 2,
+        name: 'Ikotun'
+    }
+]
 const Home = () => {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
+    const dispatch = useDispatch()
+    const textTitle = 'Find Shortlets'
+    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const [arrivalDeparture, setArrivalDeparture] = useState([])
+    const [guest, setGuest] = useState()
+    const [text, setText] = useState(textTitle);
+    const [openModal, setOpenModal] = useState(false)
+    const [openGuest, setOpenGuest] = useState(false)
+    const [value, setvalue] = useState('');
 
-    const handleClick = () => {
-        navigate("/reservation")
+
+    const myRef = useRef(null)
+
+
+    useClickOutside(myRef, () => {
+        if (openModal || openGuest) {
+            setOpenModal(false)
+            setOpenGuest(false)
+        }
+            // If user clicks outside of modal, close it.
+    })
+
+
+    //* Change Search Button Title on Mouse Movement
+    const changeText = () => {
+        setText('Search')
+    }
+
+    const DefaultText = () => {
+        setText(textTitle)
+    }
+    //* End
+
+    const handleModal = () => {
+        setOpenModal(true)
+    }
+
+    const handleGuest = () => {
+        setOpenGuest(true)
+    }
+
+
+    const resetCount = () => {
+        setGuest()
+        dispatch(resetCounts())
+    }
+
+    useEffect(() => {
+        setGuest(adultcount + childrencount)
+    }, [adultcount, childrencount]);
+
+    
+
+    const handleOption = (id) => {
+        if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
+            const value = myRef.current.childNodes[id].childNodes[1]?.value
+            setvalue(value)
+            setOpenModal(false)
+        }
     }
 
     return (
-        <section>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Real Properties Nigeria</title>
-                <meta name="description" content="Home of Real Properties Nigeria Limited. Luxury and Affordable Shortlet" />
-                <meta name="keywords" content="Real Properties,  Real Estate, Properties, Real Shortlet, Shortlets, Affordable Shortlet, Shortlets Nigeria" />
-                <meta name="author" content="Real Properties Nigeria Limited" />
-            </Helmet>
-            <div style={{display: 'flex', width: '100%', height: '100vh'}}>
-                <div style={{flex: '2', width: '100%', height: '100%'}}>
-                    <div className="Home-background">
-                        <div  className="Home-overlay">
-                            <div className="Home-content-wrapper Home-hide">
-                                <h1>Our Shortlet's Outstanding Traits</h1>
-                                <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
-                                <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick} styles="Home-mobile-btn"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="Home-content-header">
-                    <div className="Home-content">
-                        <div className="Home-content-wrapper">
-                            <h1>Our Shortlet's Outstanding Traits</h1>
-                            <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
-                            <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="Home-features">
-                <div className="Home-features-content">
-                    <h2>A4 Apartment Features</h2>
-                    <Items show={show}/>
-                </div>
-                <Link to="#" onClick={() => setShow(!show)} style={{textDecoration: 'none'}}>
-                    <p style={{marginTop: '40px', textAlign: 'left'}}>{show ? 'Show Less' : 'Show More'}</p>
-                </Link>
-            </div>
-        </section>
+        <> 
+            <Section>
+                <SearchFilter 
+                    changeText={changeText} 
+                    DefaultText={DefaultText} 
+                    openModal={openModal} 
+                    handleModal={handleModal} 
+                    value={value} 
+                    myRef={myRef} 
+                    location={location} 
+                    handleGuest={handleGuest} 
+                    guest={guest} 
+                    resetCount={resetCount} 
+                    setArrivalDeparture={setArrivalDeparture} 
+                    openGuest={openGuest} 
+                    text={text} 
+                    handleOption={handleOption} 
+                
+                />
+            </Section>
+        </>
     )
 }
 

@@ -1,0 +1,22 @@
+
+/********************** HOME MAIN STYLES *************************************/
+.HomeFilterBackground {
+    background-image: url('../image/background.jpg');
+}
+
+.CountNotActive {
+    border: 1px solid #ccc !important;
+    cursor: not-allowed !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+}
+
+
+.CountActive {
+    border: 1px solid var(--color-dark) !important;
+    cursor: pointer;
+    border-radius: 16px !important;
+}
+
+
+

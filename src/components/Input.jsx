@@ -21,11 +21,11 @@ export const Input = ({type, label, placeholder, name, Icon, value, formdata, se
 
 
 
-export const InputSelect = ({label, style, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
+export const InputSelect = ({label, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
         <div className="input-container">
-            <label>{label} {Asterik}
-                <select name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
+            <label>{label} 
+                <select ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
                     <option defaultChecked disabled>{defaultV}</option>
                     {options.map((option, i) => {
                         return (
@@ -68,7 +68,7 @@ export const DatePick = ({label,  placeholder, setArrivalDeparture}) => {
     function disabledDate(current) {
         // Can not select days before today and today
         // console.log(current)
-        console.log(moment().endOf('day'))
+        // console.log(moment().endOf('day'))
         return current && current < moment().endOf('day');
 
         
@@ -76,10 +76,11 @@ export const DatePick = ({label,  placeholder, setArrivalDeparture}) => {
     
     return (
         <div className="input-container input-range-picker">
-            <label>{label} {Asterik}</label>
+            {/* <label>{label} {Asterik}</label> */}
             <RangePicker   
                 disabledDate={disabledDate}  
                 onChange={(date, dateString) => setArrivalDeparture(dateString)}
+                placeholder={placeholder}
             />
         </div>
         
