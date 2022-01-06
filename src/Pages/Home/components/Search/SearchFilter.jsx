@@ -102,7 +102,7 @@ const FilterSearchWrapper = styled.div `
     width: 100%;
     margin-top: 0 !important;
     /* transition: opacity 0.2s cubic-bezier(0.35, 0, 0.65, 1) 0s !important; */
-    transition: background-color 0.1s cubic-bezier(0.35, 0, 0.65, 1) 0s;
+    transition: all  0.3s cubic-bezier(0.35, 0, 0.65, 1) 0s;
     padding-top: 1rem;
     padding-bottom: 1rem;
     
