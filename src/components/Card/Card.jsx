@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import  "../../styles/card.css"
 import { Country } from "../../Data/Country"
-import Modal  from "../Modal"
+import Modal  from "../Modal/Modal"
 import Button from "../Button/Button"
 import Image from "../../Svg/pana.svg"
 import Names from "./components/Names"

@@ -14,6 +14,20 @@ const Label = styled.label `
         margin-right: 10px;
     }
 
+    p {
+        font-size: var(--font-xtra-small-screen);
+        font-weight: 600;
+    }
+
+    span {
+        font-size: var(--font-xtraLarge-small);
+        font-weight: 400;
+    }
+
+    @media (min-width: 600px) {
+    
+    }
+
 `
 
 const CancelSpan = styled.span `

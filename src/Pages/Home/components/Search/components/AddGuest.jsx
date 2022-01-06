@@ -5,9 +5,14 @@ import GuestDropdowns from './GuestDropdown';
 
 
 const GuestDiv = styled.div `
-    flex: 1;
-    margin: 0 15px;
-    position: relative;
+    display: none;
+
+    @media screen and (min-width: 600px) {
+        display: block;
+        flex: 1;
+        position: relative;
+        margin: 0 15px;
+    }
 
 `
 

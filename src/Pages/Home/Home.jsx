@@ -5,6 +5,8 @@ import { resetCounts } from '../../redux/actions/componentState';
 import { SectionStyle } from '../../styles/globalStyles';
 import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import SearchFilter from './components/Search/SearchFilter';
+import WhyRealShortlets from './components/WhyRealShortlets';
+import { useNavigate } from 'react-router';
 
 
 
@@ -30,6 +32,7 @@ const location = [
 ]
 const Home = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const textTitle = 'Find Shortlets'
     const {adultcount, childrencount} = useSelector(state => state.ComponentState)
     const [arrivalDeparture, setArrivalDeparture] = useState([])
@@ -90,6 +93,12 @@ const Home = () => {
         }
     }
 
+    const SubmitForm = (e) => {
+        e.preventDefault();
+        console.log(value, arrivalDeparture, adultcount, childrencount, guest)
+        navigate('/search')
+    }
+
     return (
         <> 
             <Section>
@@ -107,9 +116,11 @@ const Home = () => {
                     setArrivalDeparture={setArrivalDeparture} 
                     openGuest={openGuest} 
                     text={text} 
-                    handleOption={handleOption} 
+                    handleOption={handleOption}
+                    SubmitForm={SubmitForm} 
                 
                 />
+                <WhyRealShortlets />
             </Section>
         </>
     )

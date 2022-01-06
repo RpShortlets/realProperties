@@ -10,7 +10,7 @@ const Buttons = styled.button`
     font-size: ${({fontSize}) => fontSize ? fontSize : '1.2rem'};
     padding: ${({padding}) => padding ? padding : ''};
     background: ${({background}) => background};
-    border-radius: 7px;
+    border-radius: ${({borderRadius}) => (borderRadius ? borderRadius : '7px')};
     border: ${({border}) => (border ? '1px solid #2962FF;' : 'none')};
     color: ${({color}) => color};
     mix-blend-mode: normal;
@@ -30,7 +30,7 @@ const Buttons = styled.button`
     }
 `
 
-const Button = ({title,justify,fontSize,hoverText, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
+const Button = ({title,justify,fontSize,hoverText,borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
     
     return (
         <>
@@ -55,6 +55,7 @@ const Button = ({title,justify,fontSize,hoverText, classNames, hover, height, Mo
                 hover={hover}
                 onMouseEnter={MouseEnter}
                 onMouseLeave={MouseLeave}
+                borderRadius={borderRadius}
             >
                 {icon}
                 {title}

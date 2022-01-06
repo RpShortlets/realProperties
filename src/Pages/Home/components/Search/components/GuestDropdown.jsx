@@ -20,14 +20,14 @@ const AdultDiv = styled.div `
 
     div:first-child {
         h3 {
-            font-size: var(--font-xtra-small);
+            font-size: var(--font-small-screen);
             font-weight: 600;
             margin: 0;
 
         }
 
         span {
-            font-size: var(--font-small-screen);
+            font-size: var(--font-xtraLarge-small);
         }
     }
 
@@ -120,7 +120,7 @@ const GuestDropdowns = ({openGuest, handleGuest, myRef }) => {
                     <> */}
                     
             {openGuest && (
-                <ModalDiv onClick={handleGuest} width= "28vw" left="-65px" ref={myRef}>
+                <ModalDiv onClick={handleGuest} width= "30vw" left="-65px" ref={myRef}>
                     <GuestDropdown>
                         <AdultDiv>
                             <div>

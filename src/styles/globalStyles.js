@@ -3,34 +3,40 @@ import {css} from 'styled-components/macro'
 //* PAGES STYLES
 export const SectionStyle = css`
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
+`
+
+export const PaddingStyle = css`
+    padding-left: max(6vw, 1rem);
+    padding-right: max(6vw, 1rem);
 `
 
 export const SearchFilterLabel = css`
-    font-weight: 600;
     cursor: pointer;
     display: block;
-    box-shadow: ${({isActive}) => isActive && 'var(--shadow)'};
     background-clip: padding-box;
     border: 1px solid transparent;
     border-radius: var(--border-radius-xtra);
     flex: 1 0 0%;
     min-width: 0px;
-    padding: 8px 16px;
+    padding: 6px 5px;
     transition: .4s;
 
-    :hover {
-        box-shadow: var(--shadow);
-        background: #fff;
-    }
-
+    
     /* span {
         font-size: var(--font-small-screen);
         font-weight: 400;
     } */
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (min-width: 880px) {
+        box-shadow: ${({isActive}) => isActive && 'var(--shadow)'};
         padding: 7px 7px;
+
+        :hover {
+            box-shadow: var(--shadow);
+            background: #fff;
+        }
+
     }
 
 

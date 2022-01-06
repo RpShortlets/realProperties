@@ -1,29 +1,8 @@
-
-
-.Modal {
-    z-index: 100;
-    position: fixed;
-    top: 10vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40%;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    border-radius: 8px;
-}
-
 .Modal-btn {
     background: transparent !important;
 }
 
 .Modal-Padding {
     margin: 0 !important;
-}
-
-@media screen and (max-width: 1024px) {
-    .Modal {
-        /* left: 15%; */
-        width: 80%;
-    }
 }
     

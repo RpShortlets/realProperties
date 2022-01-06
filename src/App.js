@@ -1,6 +1,5 @@
 import { useEffect } from "react"
-import Main from "./Pages/Main.jsx"
-import Home from "./Pages/Home/Home.jsx"
+import {Home, Footer, SearchResult, NotFound} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
@@ -29,8 +28,10 @@ const App = () => {
       </Helmet>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/reservation" element={<Main />} />
+        <Route path="/search" element={<SearchResult />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
   </>
   );
 }
