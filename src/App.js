@@ -3,6 +3,7 @@ import { Footer, SearchResult, NotFound} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
+import { Clip } from "./components/Loader/Spinner";
 
 const App = () => {
   const Home = lazy(() => import("./Pages/Home/Home"));
@@ -27,7 +28,9 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
-      <Suspense fallback={<div style={{height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><h1>Loading</h1></div>}>
+      <Suspense fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
+          <Clip type='TailSpin' />
+      </div>}>
         <Routes>
             <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchResult />} />

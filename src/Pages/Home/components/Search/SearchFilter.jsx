@@ -8,8 +8,13 @@ import {FiSearch} from "react-icons/fi"
 import Destination from "./components/Destination";
 import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
+import useProgressiveImage  from "../../../../hooks/useProgressiveImage/useProgressiveImage";
+import BG from "../../../../image/background.jpg"
+import { Pulse } from "../../../../components/Loader/Spinner";
 
 const FilterContainer = styled.div `
+    background-image: url(${props => props.backgroundImage});
+    /* background-color: ${props => props.backgroundImage ? 'transparent' : '#333'}; */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -105,6 +110,7 @@ const FilterSearchWrapper = styled.div `
     transition: all  0.3s cubic-bezier(0.35, 0, 0.65, 1) 0s;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    z-index: 1;
     
     @media screen and (min-width: 850px) { 
         position: static;
@@ -153,6 +159,8 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
     text, handleOption}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const ScrollRef = useRef()
+        const loaded = useProgressiveImage(BG)
+
 
 
         const handleScroll = useCallback(() => {
@@ -162,8 +170,10 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                     
                 } 
                 else {
-                    ScrollRef.current.style.opacity = '1';
-                    ScrollRef.current.style.backgroundColor = 'transparent';
+                    if(ScrollRef?.current) {
+                        ScrollRef.current.style.opacity = '1';
+                        ScrollRef.current.style.backgroundColor = 'transparent';
+                    }
                 }
             
         }, [Medium]);
@@ -209,60 +219,69 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
     
         
     return (
-        <FilterContainer className={styles.HomeFilterBackground }>
-            <FilterWrapper className="justify-center">
-                <Header>
-                    <h1>Reserve Your Luxury Short Let</h1>
-                    <p>Easy, Secure and Quick</p>
-                </Header>
-                <FilterSearchWrapper ref={ScrollRef}>
-                {/* <Form> */}
-                    <Fiter>
-                        <Destination  
-                            changeText={changeText} 
-                            DefaultText={DefaultText} 
-                            handleModal={handleModal} 
-                            openModal={openModal} 
-                            value={value} 
-                            myRef={myRef} 
-                            location={location} 
-                            handleOption={handleOption}
-                        />
-                        <CheckInOut setArrivalDeparture={setArrivalDeparture}/>
-                        <AddGuest
-                            handleGuest={handleGuest} 
-                            guest={guest} 
-                            resetCount={resetCount} 
-                            openGuest={openGuest} 
-                            myRef={myRef}  
-                        />
-                    </Fiter>
-                    <ButtonContainer className="mt-10">
-                        <Button 
-                            title={text}
-                            type="submit" 
-                            background="var(--linear-primary)" 
-                            height="70px" 
-                            color="var(--color-white)" 
-                            padding="1rem"
-                            fontSize="1rem"
-                            className="flex"
-                            width="150px"
-                            hover="var(--color-primary)"
-                            hoverText="Search"
-                            MouseEnter={changeText} 
-                            MouseLeave={DefaultText}
-                            onClicks={SubmitForm}    
-                        />
-                    </ButtonContainer>
-                    <MobileButton>
-                        <Button  onClicks={SubmitForm}  icon={<FiSearch />}  width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff'/>
-                    </MobileButton> 
-                    {/* </Form> */}
-                </FilterSearchWrapper>
-            </FilterWrapper>
-        </FilterContainer>
-                
+        <>
+            {loaded ? (
+                <FilterContainer className={styles.HomeFilterBackground} backgroundImage={loaded}>
+                    <FilterWrapper className="justify-center">
+                        <Header>
+                            <h1>Reserve Your Luxury Short Let</h1>
+                            <p>Easy, Secure and Quick</p>
+                        </Header>
+                        <FilterSearchWrapper ref={ScrollRef}>
+                        {/* <Form> */}
+                            <Fiter>
+                                <Destination  
+                                    changeText={changeText} 
+                                    DefaultText={DefaultText} 
+                                    handleModal={handleModal} 
+                                    openModal={openModal} 
+                                    value={value} 
+                                    myRef={myRef} 
+                                    location={location} 
+                                    handleOption={handleOption}
+                                />
+                                <CheckInOut setArrivalDeparture={setArrivalDeparture}/>
+                                <AddGuest
+                                    handleGuest={handleGuest} 
+                                    guest={guest} 
+                                    resetCount={resetCount} 
+                                    openGuest={openGuest} 
+                                    myRef={myRef}  
+                                />
+                            </Fiter>
+                            <ButtonContainer className="mt-10">
+                                <Button 
+                                    title={text}
+                                    type="submit" 
+                                    background="var(--linear-primary)" 
+                                    height="70px" 
+                                    color="var(--color-white)" 
+                                    padding="1rem"
+                                    fontSize="1rem"
+                                    className="flex"
+                                    width="150px"
+                                    hover="var(--color-primary)"
+                                    hoverText="Search"
+                                    MouseEnter={changeText} 
+                                    MouseLeave={DefaultText}
+                                    onClicks={SubmitForm}    
+                                />
+                            </ButtonContainer>
+                            <MobileButton>
+                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff'/>
+                            </MobileButton> 
+                            {/* </Form> */}
+                        </FilterSearchWrapper>
+                    </FilterWrapper>
+                </FilterContainer>
+            )
+        
+            : (
+                <div  style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+                    <Pulse  />
+                </div>
+            )}
+        </>     
     )
 }
 
