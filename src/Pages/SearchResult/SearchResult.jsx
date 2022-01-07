@@ -8,6 +8,7 @@ import { Washer, Rooms, Baths } from "../../Svg/svg"
 const Section = styled.section `
     width: 100%;
     height: 100%;
+    overflow: hidden;
 `
 
 const Container = styled.div `
