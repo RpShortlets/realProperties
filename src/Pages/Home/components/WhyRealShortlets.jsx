@@ -25,10 +25,11 @@ const Content = styled.div `
     margin: 2rem 0 0 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 1.5rem;
     
     @media screen and (min-width: 489px) and (max-width: 989px) {
         grid-template-columns: repeat(2, 1fr);   
+        gap: 3rem;
     }
 
     @media screen and (min-width: 990px) {

@@ -12,6 +12,7 @@ const NewsDiv = styled.div `
 
     h4 {
         color: var(--color-white);
+        font-size: var(--font-small-screen);
         margin: 0;
     }
 
@@ -107,7 +108,7 @@ const Terms = () => {
                         <form ref={emailRef}>
                             <div>
                                 <input type="email" name={'email'} placeholder="Enter Your Email Adrdesss"  />
-                                <button onClick={handleNewsLetter}>
+                                <button onClick={handleNewsLetter} style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
                                     <FiSend />
                                 </button>
                             </div>

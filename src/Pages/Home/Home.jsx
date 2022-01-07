@@ -7,6 +7,7 @@ import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
+import { updateUser2 } from "../../redux/actions/propertyResult"
 
 
 
@@ -44,6 +45,7 @@ const Home = () => {
 
 
     const myRef = useRef(null)
+
 
 
     useClickOutside(myRef, () => {
@@ -95,7 +97,10 @@ const Home = () => {
 
     const SubmitForm = (e) => {
         e.preventDefault();
-        console.log(value, arrivalDeparture, adultcount, childrencount, guest)
+        console.log('fired button')
+        const checkedin = arrivalDeparture[0]
+        const checkedout = arrivalDeparture[1]
+        dispatch(updateUser2({value, checkedin, checkedout, adultcount, childrencount}))
         navigate('/search')
     }
 

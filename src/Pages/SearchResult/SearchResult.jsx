@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux"
+import {Row, Col} from "react-bootstrap"
 import styled from "styled-components"
 import  { PaddingStyle, FlexStyle } from "../../styles/globalStyles"
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../Svg/svg"
+import { Pulse } from "../../components/Loader/Spinner"
 
 const Section = styled.section `
     width: 100%;
@@ -55,19 +57,22 @@ const Results = styled.div `
     margin: max(3vh, 1rem) 0 0;
 `
 
-const ResultWrapper = styled.div `
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 2rem;
+// const ResultWrapper = styled.div `
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     gap: 1rem;
 
-    @media screen and (min-width:560px) and (max-width: 849px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
 
-    @media screen and (min-width: 850px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-`
+//     @media screen and (min-width: 489px) and (max-width: 989px) {
+//         grid-template-columns: repeat(2, 1fr); 
+//         gap: 1rem;  
+//     }
+
+//     @media screen and (min-width: 990px) {
+//         gap: 2rem;
+//         grid-template-columns: repeat(3, 1fr);
+//     }
+// `
 
 const Card = styled.div `
     width: 100%;
@@ -83,6 +88,11 @@ const Card = styled.div `
 
     a {
         color: var(--color-dark);
+        text-decoration: none !important;
+    }
+
+    a: {
+        text-decoration: none !important;
     }
 
 
@@ -198,9 +208,11 @@ const Apartment = styled.div `
 `
 
 const SearchResult = () => {
-    const {propertyResult} = useSelector(state => state.propertyResult)
+    const {propertyResult, pending, error} = useSelector(state => state.propertyResult)
 
-    console.log(propertyResult)
+    console.log(pending)
+
+    
     return (
         <Section>
             <Container>
@@ -208,88 +220,105 @@ const SearchResult = () => {
                     Filters
                 </Filter>
                 <Main>
+                    {pending ? (
+                            <div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <Pulse />
+                            </div>
+                        )
+                        
+                        : error ? ( <div>Error</div>)
+                        : (
+                    <>
                     <Header>
                         <div>
                             <p>Search results <span><RiDoubleQuotesL />{propertyResult?.searchlocation}<RiDoubleQuotesR/></span></p>
-                            <span>{propertyResult?.propertiesFound} {propertyResult?.propertiesFound > 1 ? 'properties' : 'property'}  found</span>
+                            <span>{propertyResult?.searchResult ? `${propertyResult?.count[0]?.count}  ${propertyResult?.count[0].count > 1 ? 'properties found': 'property found'}` : ''}</span>
                         </div>
                         <div>
                             Two
                         </div>
                     </Header>
                     <Results>
-                        <ResultWrapper>
-                            {propertyResult.data.map(property => (
-                                <Card key={property.propertyId}>
-                                    <a href="/propertydetails">
-                                        <CardContainer>
-                                            <div style={{width: '100%', height: '170px'}}>
-                                                <picture>
-                                                    <source media="(max-width: 559px)" srcSet={property.imageSmall}/>
-                                                    <source media="(min-width: 560px)" srcSet={property.image} />
-                                                    <img src="elva-800w.jpg" alt="" width="100%" height="100%" style={{borderRadius: '10px', objectFit: 'cover'}}/>
-                                                </picture>
-                                            </div>
-                                            <div>
-                                                <h3>{property?.propertyTitle}</h3>
-                                                <span>{property?.propertyLocation}</span>
-                                            </div>
-                                            <IconDiv>
-                                                <IconContent>
-                                                    <IconCard>
+                        
+                                <Row>
+                                {propertyResult?.searchResult?.map(property => (
+                                    <Col sm={6} md={4} xl={4} style={{paddingTop: '10px', paddingBottom: '10px'}} key={property.apartment_id} >
+                                        <Card key={property.propertyId}>
+                                            <a href="/propertydetails">
+                                                <CardContainer>
+                                                    <div style={{width: '100%', height: '170px'}}>
+                                                        <picture>
+                                                            <source media="(max-width: 559px)" srcSet={property.picture}/>
+                                                            <source media="(min-width: 560px)" srcSet={property.picture} />
+                                                            <img src="elva-800w.jpg" alt="" width="100%" height="100%" style={{borderRadius: '10px', objectFit: 'cover'}}/>
+                                                        </picture>
+                                                    </div>
+                                                    <div>
+                                                        <h3>{property?.apartment_name}</h3>
+                                                        <span>{property?.address}</span>
+                                                    </div>
+                                                    <IconDiv>
+                                                        <IconContent>
+                                                            <IconCard>
+                                                                <div>
+                                                                    <span><IoBed/></span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>{property.bed}</span>
+                                                                    <span>Beds</span>
+                                                                </div>
+                                                            </IconCard>
+                                                            <IconCard>
+                                                                <div>
+                                                                    <span> {Baths}</span> 
+                                                                </div>
+                                                                <div>
+                                                                    <span>{property.bath}</span>
+                                                                    <span>Baths</span>
+                                                                </div>
+                                                            </IconCard>
+                                                            <IconCard>
+                                                                <div>
+                                                                    <span>{Washer}</span> 
+                                                                </div>
+                                                                <div>
+                                                                    <span>{property.washer}</span>   
+                                                                </div>                            
+                                                            </IconCard>
+                                                            <IconCard>
+                                                                <div>
+                                                                    <span>{Rooms}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>{property.room} </span>
+                                                                    <span>Rooms</span>
+                                                                </div>
+                                                            </IconCard>
+                                                        </IconContent>
+                                                    </IconDiv>
+                                                    <Apartment>
                                                         <div>
-                                                            <span><IoBed/></span>
+                                                            <span>{property.propertyType}</span>
                                                         </div>
                                                         <div>
-                                                            <span>{property.beds}</span>
-                                                            <span>Beds</span>
+                                                            <span>{property.allowed_guest} Guests</span>
                                                         </div>
-                                                    </IconCard>
-                                                    <IconCard>
-                                                        <div>
-                                                            <span> {Baths}</span> 
-                                                        </div>
-                                                        <div>
-                                                            <span>{property.baths}</span>
-                                                            <span>Baths</span>
-                                                        </div>
-                                                    </IconCard>
-                                                    <IconCard>
-                                                        <div>
-                                                            <span>{Washer}</span> 
-                                                        </div>
-                                                        <div>
-                                                            <span>{property.amenity}</span>   
-                                                        </div>                            
-                                                    </IconCard>
-                                                    <IconCard>
-                                                        <div>
-                                                            <span>{Rooms}</span>
-                                                        </div>
-                                                        <div>
-                                                            <span>{property.rooms} </span>
-                                                            <span>Rooms</span>
-                                                        </div>
-                                                    </IconCard>
-                                                </IconContent>
-                                            </IconDiv>
-                                            <Apartment>
-                                                <div>
-                                                    <span>{property.propertyType}</span>
-                                                </div>
-                                                <div>
-                                                    <span>{property.guest} Guests</span>
-                                                </div>
-                                            </Apartment>
-                                            <div>
-                                                <h3>&#36;{property.propertyPrice}</h3>
-                                            </div>
-                                        </CardContainer>
-                                    </a>
-                                </Card>
-                            ))}
-                        </ResultWrapper>
+                                                    </Apartment>
+                                                    <div>
+                                                        <h3>&#36;{property.price}</h3>
+                                                    </div>
+                                                </CardContainer>
+                                            </a>
+                                        </Card>
+                                    </Col>
+                                    
+                                ))}
+                            </Row>
+                         
+                        
                     </Results>
+                       </>
+                    )}
                 </Main>
             </Container>
         </Section>

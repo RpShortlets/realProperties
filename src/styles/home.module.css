@@ -1,9 +1,5 @@
 
 /********************** HOME MAIN STYLES *************************************/
-/* .HomeFilterBackground {
-    background-image: url('../image/background.jpg');
-} */
-
 .CountNotActive {
     border: 1px solid #ccc !important;
     cursor: not-allowed !important;

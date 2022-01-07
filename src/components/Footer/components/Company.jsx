@@ -21,7 +21,7 @@ const GridWrapper = styled.div `
 
         h3 {
             color: #F7F7F7;
-            font-size: 1rem;
+            font-size: var(--font-small-screen);
             margin: 0;
         }
 
@@ -34,24 +34,13 @@ const GridWrapper = styled.div `
             font-size: .6rem;
             opacity: .8;
         }
+
+        a:hover {
+            opacity: 1 !important;
+        }
     }
     
-    /* @media screen and (min-width:560px) and (max-width: 700px) {
-        div:first-child {
-            grid-column: 1/4;
-        }
-    }
-
-    @media screen and (min-width: 989px) {
-        display: grid;
-        gap: 2rem;
-        grid-template-columns: repeat(5, 1fr);
-
-        div:first-child {
-            grid-column: 1/3;
-        }
-    } */
-
+    
     @media screen and (max-width: 786px) {
 
     }

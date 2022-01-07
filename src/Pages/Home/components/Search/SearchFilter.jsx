@@ -275,7 +275,7 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                                 />
                             </ButtonContainer>
                             <MobileButton>
-                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff'/>
+                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff'/>
                             </MobileButton> 
                             {/* </Form> */}
                         </FilterSearchWrapper>

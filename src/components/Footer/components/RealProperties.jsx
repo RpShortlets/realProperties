@@ -6,7 +6,7 @@ const Container = styled.div `
 
     h2 {
         color: var(--color-white);
-        font-size: var(--font-small);
+        font-size: var(--font-small) !important;
         font-weight: 600;
     }
 
@@ -33,7 +33,7 @@ const Container = styled.div `
     }
 
     a:hover {
-        opacity: 1;
+        opacity: 1 !important;
     }
 
     @media screen and (min-width:630px) and (max-width: 989px) {

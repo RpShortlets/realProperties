@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import reportWebVitals from './reportWebVitals';
 
