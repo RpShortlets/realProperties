@@ -162,7 +162,7 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
         const loaded = useProgressiveImage(BG)
 
 
-
+        //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
         const handleScroll = useCallback(() => {
             if (Medium && ScrollRef?.current) {
                     ScrollRef.current.style.opacity = '1';
@@ -178,11 +178,12 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
             
         }, [Medium]);
 
+        //* MAKE SEARCH FILTER STICKY ON SCROLL AND FIXED ON MOBILE
         const handleScrollMobile = useCallback(() => {
             if (!Medium && ScrollRef?.current) {
                 ScrollRef.current.style.position = 'sticky';
                 ScrollRef.current.style.top = '0';
-                //! Testing
+                //! Testing : Add background color to destination
                 // if(window.scrollY > 520) {
                 //     ScrollRef.current.childNodes[0].style.borderRadius = '32px';
                 //     ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
@@ -193,30 +194,36 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                 // }
             }
             else {
-                if(ScrollRef?.current) {
+                if(Medium && ScrollRef?.current) {
                     ScrollRef.current.style.position = 'fixed';
                     ScrollRef.current.style.top = '0';
+                    ScrollRef.current.style.backgroundColor = '#fff';
                 }
             }
 
         }, [Medium]);
 
-
-
-
-        
-
+        //* CALL: ADD AND REMOVE BACKGROUND 
         useEffect(() => {
             handleScroll()
         }, [Medium, handleScroll])
 
-
+        //* CALL: MAKE SEARCH FILTER STICKY 
         useEffect(() => {
             window.addEventListener('scroll', handleScrollMobile)
         }, [Medium, handleScrollMobile])
 
 
-    
+        //* HIDE SCROLL BAR WHILE HEADER IMAGE IS STILL LOADING AT HOME PAGE
+        useEffect(() => {
+            if(!loaded) {
+                document.body.style.overflow = 'hidden'
+            } 
+            return () => {
+                document.body.style.overflow = 'auto'
+            }
+        }, [loaded])
+
         
     return (
         <>
