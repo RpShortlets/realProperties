@@ -1,67 +1,50 @@
-import { createSlice } from "@reduxjs/toolkit";
-import Pic from "../../image/resize.jpg"
-import PicSmall from "../../image/resizeSmall.jpg"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const PropertyResultSlice = createSlice({
-    name: "propertyResult",
-    initialState: {
-        propertyResult: {
-            'searchlocation': 'Lagos shortlets',
-            'propertiesFound': '73',
-            'data': [
 
-                {
-                    propertyId: 1,
-                    propertyTitle: '5 Bedroom Luxurious Apartment',
-                    propertyLocation: 'Lekki Phase 1, Lagos State',
-                    propertyPrice: '300',
-                    beds: '5',
-                    baths: '3',
-                    amenity: 'Washer',
-                    rooms: '5',
-                    propertyType: 'Apartment',
-                    guest: '4',
-                    image: Pic,
-                    imageSmall: PicSmall,
-                },
-                {
-                    propertyId: 2,
-                    propertyTitle: '5 Bedroom Luxurious Apartment',
-                    propertyLocation: 'Lekki Phase 1, Lagos State',
-                    propertyPrice: '500',
-                    beds: '5',
-                    baths: '3',
-                    amenity: 'Washer',
-                    rooms: '5',
-                    propertyType: 'Apartment',
-                    guest: '4',
-                    image: Pic,
-                    imageSmall: PicSmall,
-                }, {
-                    propertyId: 3,
-                    propertyTitle: '5 Bedroom Luxurious Apartment',
-                    propertyLocation: 'Lekki Phase 1, Lagos State',
-                    propertyPrice: '1000',
-                    beds: '5',
-                    baths: '3',
-                    amenity: 'Washer',
-                    rooms: '5',
-                    propertyType: 'Apartment',
-                    guest: '4',
-                    image: Pic,
-                    imageSmall: PicSmall,
-                }
-            ]
-        },
-        propertyResultCount: 0,
-        propertyResultPage: 1,
-        propertyResultPageSize: 10,
-        loading: false,
-        error: null,
-    },
-    reducers: {}
+
+export const updateUser2 = createAsyncThunk("users/update", async ({value, checkedin, checkedout, adultcount, childrencount}) => {
+    console.log('I am here')
+    const response = await axios.get("http://localhost:5050/search-shortlets", {
+        params: {
+            location: value,
+            check_in_date: "",
+            check_out_date: "",
+            adult: "",
+            child: "",
+        }
+    });
+
+    console.log(response)
+    
+    return response.data;
 });
 
-// const { } = PropertyResultSlice.actions
+export const PropertyResultSlice = createSlice({
+    name: "users",
+    initialState: {
+        propertyResult: {},
+        pending: null,
+        error: null,
+    },
+    reducers: {},
+    extraReducers: {
+        [updateUser2.pending]: (state) => {
+            state.pending = true;
+            state.error = false;
+        },
+        [updateUser2.fulfilled]: (state, action) => {
+            state.propertyResult = action.payload;
+            state.pending = false;
+        },
+        [updateUser2.rejected]: (state) => {
+            state.error = true;
+            state.pending = false;
+        },
+
+    }
+});
+
+export const { updateStart, updateSuccess, updateFailure } = PropertyResultSlice.actions
 
 export default PropertyResultSlice.reducer;
