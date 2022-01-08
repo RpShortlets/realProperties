@@ -7,7 +7,7 @@ import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
-import { updateUser2 } from "../../redux/actions/propertyResult"
+import { searchShortlets } from "../../redux/actionCreators/actionCreators"
 
 
 
@@ -97,11 +97,10 @@ const Home = () => {
 
     const SubmitForm = (e) => {
         e.preventDefault();
-        console.log('fired button')
         const checkedin = arrivalDeparture[0]
         const checkedout = arrivalDeparture[1]
-        dispatch(updateUser2({value, checkedin, checkedout, adultcount, childrencount}))
-        navigate('/search')
+        dispatch(searchShortlets({value, checkedin, checkedout, adultcount, childrencount}))
+        navigate(`/s/location=${value}&adults=${adultcount}&children=${childrencount}&checkin=${checkedin !== undefined ? checkedin : ''}&checkout=${checkedout !== undefined ? checkedout : ''}`)
     }
 
     return (

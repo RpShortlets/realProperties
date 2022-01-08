@@ -33,7 +33,7 @@ const App = () => {
       </div>}>
         <Routes>
             <Route path="/" element={<Home />} />
-          <Route path="/search" element={<SearchResult />} />
+          <Route path="/s/:id" element={<SearchResult />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

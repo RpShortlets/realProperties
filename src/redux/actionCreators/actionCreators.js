@@ -1,18 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const SearchShortlets = createAsyncThunk("shortlets/shortlets", async (value, arrivalDeparture, adultcount, childrencount, ) => {
-    console.log('I am here')
-    const  response = await axios.get("http://localhost:5050/search-shortlets", {
+export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({value, checkedin, checkedout, adultcount, childrencount}) => {
+    const response = await axios.get("https://tranquil-tundra-47751.herokuapp.com/search-shortlets", {
         params: {
             location: value,
-            check_in_date: arrivalDeparture[0],
-            check_out_date: arrivalDeparture[1],
-            adult: adultcount,
-            child: childrencount,
+            check_in_date: "",
+            check_out_date: "",
+            adult: "",
+            child: "",
         }
     });
-    
-    return response;
-});
 
+    return response.data;
+});

@@ -1,27 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
+import { searchShortlets }from "../actionCreators/actionCreators";
 
 
-
-export const updateUser2 = createAsyncThunk("users/update", async ({value, checkedin, checkedout, adultcount, childrencount}) => {
-    console.log('I am here')
-    const response = await axios.get("http://localhost:5050/search-shortlets", {
-        params: {
-            location: value,
-            check_in_date: "",
-            check_out_date: "",
-            adult: "",
-            child: "",
-        }
-    });
-
-    console.log(response)
-    
-    return response.data;
-});
 
 export const PropertyResultSlice = createSlice({
-    name: "users",
+    name: "shortlet",
     initialState: {
         propertyResult: {},
         pending: null,
@@ -29,15 +12,15 @@ export const PropertyResultSlice = createSlice({
     },
     reducers: {},
     extraReducers: {
-        [updateUser2.pending]: (state) => {
+        [searchShortlets.pending]: (state) => {
             state.pending = true;
             state.error = false;
         },
-        [updateUser2.fulfilled]: (state, action) => {
+        [searchShortlets.fulfilled]: (state, action) => {
             state.propertyResult = action.payload;
             state.pending = false;
         },
-        [updateUser2.rejected]: (state) => {
+        [searchShortlets.rejected]: (state) => {
             state.error = true;
             state.pending = false;
         },
@@ -45,6 +28,6 @@ export const PropertyResultSlice = createSlice({
     }
 });
 
-export const { updateStart, updateSuccess, updateFailure } = PropertyResultSlice.actions
+export const { searchShortletStart, searchShortletSuccess, searchShortletFailure } = PropertyResultSlice.actions
 
 export default PropertyResultSlice.reducer;

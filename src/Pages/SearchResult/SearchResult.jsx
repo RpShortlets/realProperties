@@ -99,7 +99,7 @@ const Card = styled.div `
     h3 {
         color: var(--color-primary-dark);
         font-size: var(--font-small-screen);
-        font-weight: 500;
+        font-weight: 600;
     }
 
     @media screen and (min-width: 850px) {
@@ -194,11 +194,12 @@ const IconCard = styled.div `
 const Apartment = styled.div `
     display: flex;
     align-items: center;
-    margin-top: max(.6vw, .4rem);
+    margin: max(.6vw, .4rem) 0;
 
 
     span {
         font-weight: 500;
+        font-size: var(--font-xtra-small-screen);
     }
 
     div:first-child {
@@ -229,20 +230,19 @@ const SearchResult = () => {
                         : error ? ( <div>Error</div>)
                         : (
                     <>
-                    <Header>
-                        <div>
-                            <p>Search results <span><RiDoubleQuotesL />{propertyResult?.searchlocation}<RiDoubleQuotesR/></span></p>
-                            <span>{propertyResult?.searchResult ? `${propertyResult?.count[0]?.count}  ${propertyResult?.count[0].count > 1 ? 'properties found': 'property found'}` : ''}</span>
-                        </div>
-                        <div>
-                            Two
-                        </div>
-                    </Header>
-                    <Results>
-                        
-                                <Row>
+                        <Header>
+                            <div>
+                                <p>Search results <span><RiDoubleQuotesL />{propertyResult?.searchlocation}<RiDoubleQuotesR/></span></p>
+                                <span>{propertyResult?.searchResult ? `${propertyResult?.count[0]?.count}  ${propertyResult?.count[0].count > 1 ? 'properties found': 'property found'}` : ''}</span>
+                            </div>
+                            <div>
+                                Two
+                            </div>
+                        </Header>
+                        <Results>
+                            <Row>
                                 {propertyResult?.searchResult?.map(property => (
-                                    <Col sm={6} md={4} xl={4} style={{paddingTop: '10px', paddingBottom: '10px'}} key={property.apartment_id} >
+                                    <Col sm={6} md={6} lg={4} xl={4} style={{paddingTop: '10px', paddingBottom: '10px'}} key={property.apartment_id} >
                                         <Card key={property.propertyId}>
                                             <a href="/propertydetails">
                                                 <CardContainer>
@@ -297,15 +297,15 @@ const SearchResult = () => {
                                                         </IconContent>
                                                     </IconDiv>
                                                     <Apartment>
-                                                        <div>
+                                                        {/* <div>
                                                             <span>{property.propertyType}</span>
-                                                        </div>
+                                                        </div> */}
                                                         <div>
                                                             <span>{property.allowed_guest} Guests</span>
                                                         </div>
                                                     </Apartment>
                                                     <div>
-                                                        <h3>&#36;{property.price}</h3>
+                                                        <h3>&#36;{property.price.toLocaleString()}</h3>
                                                     </div>
                                                 </CardContainer>
                                             </a>
@@ -314,10 +314,8 @@ const SearchResult = () => {
                                     
                                 ))}
                             </Row>
-                         
-                        
-                    </Results>
-                       </>
+                        </Results>
+                    </>
                     )}
                 </Main>
             </Container>
