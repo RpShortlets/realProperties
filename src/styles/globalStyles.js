@@ -67,13 +67,14 @@ export const FlexStyle = css`
 export const ModalStyle = css`
     position: absolute;
     left: ${({left}) => left};
-    top: 70px;
+    top: ${({top}) => top ? top : '70px'};
     width: ${({width}) => width};
     border-radius: 7px;
     background: #fff;
     max-height: calc(100vh - 150px) !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+    border: ${({border}) => border};
 
 
 `

@@ -8,10 +8,11 @@ const Buttons = styled.button`
     width: ${({width}) => width};
     height: ${({height}) => height};
     font-size: ${({fontSize}) => fontSize ? fontSize : '1.2rem'};
+    font-weight: ${({fontWeight}) => fontWeight};
     padding: ${({padding}) => padding ? padding : ''};
     background: ${({background}) => background};
     border-radius: ${({borderRadius}) => (borderRadius ? borderRadius : '7px')};
-    border: ${({border}) => (border ? '1px solid #2962FF;' : 'none')};
+    border: ${({border}) => border};
     color: ${({color}) => color};
     mix-blend-mode: normal;
     cursor: pointer;
@@ -30,7 +31,7 @@ const Buttons = styled.button`
     }
 `
 
-const Button = ({title,justify,fontSize,hoverText,borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
+const Button = ({title,justify,fontSize,hoverText, fontWeight, borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
     
     return (
         <>
@@ -56,6 +57,7 @@ const Button = ({title,justify,fontSize,hoverText,borderRadius, classNames, hove
                 onMouseEnter={MouseEnter}
                 onMouseLeave={MouseLeave}
                 borderRadius={borderRadius}
+                fontWeight={fontWeight}
             >
                 {icon}
                 {title}

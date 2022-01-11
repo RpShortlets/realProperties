@@ -162,6 +162,7 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
         const loaded = useProgressiveImage(BG)
 
 
+        console.log(Medium)
         //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
         const handleScroll = useCallback(() => {
             if (Medium && ScrollRef?.current) {
@@ -182,16 +183,21 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
         const handleScrollMobile = useCallback(() => {
             if (!Medium && ScrollRef?.current) {
                 ScrollRef.current.style.position = 'sticky';
+                ScrollRef.current.style.backgroundColor = 'transparent';
                 ScrollRef.current.style.top = '0';
                 //! Testing : Add background color to destination
-                // if(window.scrollY > 520) {
-                //     ScrollRef.current.childNodes[0].style.borderRadius = '32px';
-                //     ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
-                // }
-                // else {
-                //     ScrollRef.current.childNodes[0].style.borderRadius = '7px';
-                //     ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '7px';
-                // }
+                if(window.scrollY > 520 && Medium) {
+                    console.log(window.scrollY)
+                    ScrollRef.current.childNodes[0].style.borderRadius = '32px';
+                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
+                }
+                else if(window.scrollY > 10 && !Medium) {
+                    ScrollRef.current.childNodes[0].style.borderRadius = '32px';
+                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
+                }else {
+                    ScrollRef.current.childNodes[0].style.borderRadius = '7px';
+                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '7px';
+                }
             }
             else {
                 if(Medium && ScrollRef?.current) {
@@ -271,11 +277,12 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                                     hoverText="Search"
                                     MouseEnter={changeText} 
                                     MouseLeave={DefaultText}
-                                    onClicks={SubmitForm}    
+                                    onClicks={SubmitForm} 
+                                    border= 'none'   
                                 />
                             </ButtonContainer>
                             <MobileButton>
-                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff'/>
+                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff' border='none' />
                             </MobileButton> 
                             {/* </Form> */}
                         </FilterSearchWrapper>

@@ -1,13 +1,12 @@
-import { useEffect, Suspense, lazy } from "react"
-import { Footer, SearchResult, NotFound} from "./export"
+import { useEffect, Suspense } from "react"
+import { Footer, NotFound, Home, SearchResult, PropertyDetails} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 
 const App = () => {
-  const Home = lazy(() => import("./Pages/Home/Home"));
-
+  
   const invokeGA = () => {
     ReactGa.initialize('UA-181778020-1');
     ReactGa.pageview(window.location.pathname + window.location.search);
@@ -32,8 +31,9 @@ const App = () => {
           <Clip type='TailSpin' />
       </div>}>
         <Routes>
-            <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/s/:id" element={<SearchResult />} />
+          <Route path="/property-details" element={<PropertyDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

@@ -15,8 +15,6 @@ const Section = styled.section `
     ${SectionStyle}
 `
 
-
-
 const location = [
     {
         id: 0,
