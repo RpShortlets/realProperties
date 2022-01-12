@@ -180,7 +180,21 @@ input[type="date"] {
     display: none !important;
 }
 
-
+.ant-picker-dropdown {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: 'tnum', "tnum";
+    position: absolute;
+    z-index: 1050;
+    /* left: 80px !important;
+    top: 390px !important; */
+}
 
 /************************** END OF DATE STYLES ****************************************/
 

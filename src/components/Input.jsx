@@ -62,7 +62,7 @@ export const PhoneType = ({phn, setPhone, label, handlePhone}) => {
     )
 }
 
-export const DatePick = ({label,  placeholder, setArrivalDeparture}) => {
+export const DatePick = ({label,  placeholder, setArrivalDeparture, open}) => {
 
 
     function disabledDate(current) {
@@ -70,14 +70,13 @@ export const DatePick = ({label,  placeholder, setArrivalDeparture}) => {
         // console.log(current)
         // console.log(moment().endOf('day'))
         return current && current < moment().endOf('day');
-
-        
     }
     
     return (
         <div className="input-container input-range-picker">
             {/* <label>{label} {Asterik}</label> */}
             <RangePicker   
+                open={open}
                 disabledDate={disabledDate}  
                 onChange={(date, dateString) => setArrivalDeparture(dateString)}
                 placeholder={placeholder}

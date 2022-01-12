@@ -93,18 +93,32 @@ export const PropertyDetails = createSlice({
                     picFour: SmallOne,
                     picFive: SmallTwo,
                     picSix: SmallThree,
-                    price: '125'
+                    price: '125',
+                    numberofDays: '3',
+                    total: '375',
+                    adultcount: 2,
+                    childrencount: 2,
+                    guest: 4,
 
                 }
             ]
         },
+        adultcount: 0,
+        childrencount: 0,
+        guest: 0,
         pending: null,
         error: null,
 
     },
-    reducers: {},
+    reducers: {
+        incrementAdultReservation: (state) => {
+            state.adultcount++;
+        },
+    },
     extraReducers: {}
 })
+
+export const { incrementAdultReservation, } = PropertyDetails.actions;
 
 
 export default PropertyDetails.reducer

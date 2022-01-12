@@ -75,6 +75,8 @@ export const ModalStyle = css`
     overflow-x: hidden !important;
     overflow-y: auto !important;
     border: ${({border}) => border};
+    z-index: 1;
+    box-shadow: var(--shadow);
 
 
 `

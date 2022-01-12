@@ -19,29 +19,25 @@ const MainModal = styled.div`
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     border-radius: 8px;
+    padding: 1rem;
 
 
     @media screen and (max-width: 1024px) {
-        width: 80%;
+        width: 90%;
     }
 
 
 `
 
 
-
-
-
 const ModalOverLay = props => {
     const content = (
         <MainModal className="Modal">
-            <div  style={{display:'flex', justifyContent: 'flex-end'}}>
-                <Button icon={CancelIcon} onClicks={() => props.setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
+            <div  style={{display:'flex', justifyContent: 'flex-start', marginBottom: 'max(0.5vw, 1rem)'}}>
+                <Button background='transparent' border='none' icon={CancelIcon} onClicks={() => props.setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
             </div>
             {props.children}
-        </MainModal>
-        
-        
+        </MainModal>        
     )
 
     return ReactDOM.createPortal(content, document.getElementById("modal-portal"))

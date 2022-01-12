@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCounts } from '../../redux/actions/componentState';
@@ -8,6 +8,7 @@ import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
 import { searchShortlets } from "../../redux/actionCreators/actionCreators"
+import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
 
 
 
@@ -35,13 +36,13 @@ const Home = () => {
     const textTitle = 'Find Shortlets'
     const {adultcount, childrencount} = useSelector(state => state.ComponentState)
     const [arrivalDeparture, setArrivalDeparture] = useState([])
-    const [guest, setGuest] = useState()
+    
     const [text, setText] = useState(textTitle);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
     const [value, setvalue] = useState('');
 
-
+    const TotalGuest = useAddGuestTotal({adultcount, childrencount});
     const myRef = useRef(null)
 
 
@@ -75,15 +76,9 @@ const Home = () => {
 
 
     const resetCount = () => {
-        setGuest()
         dispatch(resetCounts())
     }
 
-    useEffect(() => {
-        setGuest(adultcount + childrencount)
-    }, [adultcount, childrencount]);
-
-    
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -113,7 +108,7 @@ const Home = () => {
                     myRef={myRef} 
                     location={location} 
                     handleGuest={handleGuest} 
-                    guest={guest} 
+                    guest={TotalGuest} 
                     resetCount={resetCount} 
                     setArrivalDeparture={setArrivalDeparture} 
                     openGuest={openGuest} 

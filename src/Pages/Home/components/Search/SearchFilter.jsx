@@ -161,8 +161,6 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
 
-
-        console.log(Medium)
         //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
         const handleScroll = useCallback(() => {
             if (Medium && ScrollRef?.current) {
