@@ -11,23 +11,23 @@ export const PropertyResultSlice = createSlice({
         error: null,
     },
     reducers: {},
-    extraReducers: {
-        [searchShortlets.pending]: (state) => {
-            state.pending = true;
-            state.error = false;
-        },
-        [searchShortlets.fulfilled]: (state, action) => {
-            state.propertyResult = action.payload;
-            state.pending = false;
-        },
-        [searchShortlets.rejected]: (state) => {
-            state.error = true;
-            state.pending = false;
-        },
-
+    extraReducers(builder) {
+        builder
+            .addCase(searchShortlets.pending, (state, action) => {
+            state.status = 'loading'
+            })
+            .addCase(searchShortlets.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            // Add any fetched posts to the array
+            state.propertyResult = action.payload
+            })
+            .addCase(searchShortlets.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
     }
 });
 
-export const { searchShortletStart, searchShortletSuccess, searchShortletFailure } = PropertyResultSlice.actions
+// export const { searchShortletStart, searchShortletSuccess, searchShortletFailure } = PropertyResultSlice.actions
 
 export default PropertyResultSlice.reducer;

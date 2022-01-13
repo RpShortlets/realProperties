@@ -9,6 +9,8 @@ import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
 import { searchShortlets } from "../../redux/actionCreators/actionCreators"
 import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
+import { BaseURL } from '../../api';
+import axios from 'axios';
 
 
 
@@ -88,10 +90,11 @@ const Home = () => {
         }
     }
 
-    const SubmitForm = (e) => {
+    const SubmitForm = async(e) => {
         e.preventDefault();
         const checkedin = arrivalDeparture[0]
         const checkedout = arrivalDeparture[1]
+        
         dispatch(searchShortlets({value, checkedin, checkedout, adultcount, childrencount}))
         navigate(`/s/location=${value}&adults=${adultcount}&children=${childrencount}&checkin=${checkedin !== undefined ? checkedin : ''}&checkout=${checkedout !== undefined ? checkedout : ''}`)
     }

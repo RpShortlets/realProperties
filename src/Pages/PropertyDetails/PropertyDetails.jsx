@@ -14,6 +14,7 @@ import PropertyDescription from "./components/PropertyDescription"
 import PropertyAmenities from "./components/PropertyAmenities"
 import PropertyCalender from "./components/PropertyCalender"
 import PropertyRules from "./components/PropertyRules"
+import { WaitLoading } from "../../components/Loader/Spinner"
 
 
 
@@ -87,7 +88,7 @@ const PropertyDetails = () => {
         }
     }, [show])
 
-    if(pending) return <div>Loading</div>
+    if(pending) return <WaitLoading />
 
     return (
         <>
