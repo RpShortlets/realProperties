@@ -7,8 +7,8 @@ export const SectionStyle = css`
 `
 
 export const PaddingStyle = css`
-    padding-left: max(6vw, 1rem);
-    padding-right: max(6vw, 1rem);
+    padding-left: max(11vw, 1rem);
+    padding-right: max(11vw, 1rem);
 `
 
 export const SearchFilterLabel = css`

@@ -6,7 +6,10 @@
 .AntDesign .ant-picker-panel-container {
     border-radius: 0 !important;
     box-shadow: none !important;
+    background: transparent !important;
 }
+
+
 
 .AntDesign .ant-picker-header,
 .AntDesign .ant-picker-panel,
@@ -20,3 +23,10 @@
     display: none !important;
 }
 
+
+.AntDesign {
+    background: transparent;
+    top: 1500px !important;
+    left: 55px !important;
+    transform: translate(0%, 0%) !important;
+}

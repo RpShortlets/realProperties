@@ -22,20 +22,21 @@ const IconContent = styled.div `
 
 
 export const AmenitiesOne = () => {
-    const {propertyDetail} = useSelector(state => state.propertyDetails)
-    let newsdata = propertyDetail?.data.map((data) => data.amenities);
+    const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
 
-    const securityCheck = newsdata[0].map((name) => name.name).filter((x) => x === 'security');
-    const ConditionalCheck = newsdata[0].map((name) => name.name).filter((x) => x === 'conditioned');
-    const parkingCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Parking');
-    const bedroomCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Bedrooms');
-    const fristAidCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'First Aid');
-    const elevatorCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Elevator');
-    const oceanViewCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Oceanview');
-    const bathroomCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Bathroom');
+    console.log(amenities[0]?.security)
+    
+
+    const securityCheck = amenities[0]?.security;
+    const ConditionalCheck = amenities[0]?.air_condition;
+    const parkingCheck =  amenities[0]?.parking;
+    const bedroomCheck =  amenities[0]?.bed;
+    const fristAidCheck =  amenities[0]?.first_aid;
+    const elevatorCheck =  amenities[0]?.elevator;
+    const oceanViewCheck =  amenities[0]?.oceanview;
+    const bathroomCheck =  amenities[0]?.bath;
 
     return (
-
         <IconContent>
             {securityCheck && (
                 <div>
@@ -91,20 +92,20 @@ export const AmenitiesOne = () => {
 }
 
 export const AmenitiesTwo = () => {
-    const {propertyDetail} = useSelector(state => state.propertyDetails)
-    let newsdata = propertyDetail?.data.map((data) => data.amenities);
+    const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
     
-    const kitchenCheck = newsdata[0].map((name) => name.name).filter((x) => x === 'kitchen');
-    const wifiCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Wifi');
-    const balconyCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Balcony');
-    const guestRoomCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Guest Restroom');
-    const cleaningCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Cleaning');
-    const RokuCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Roku');
-    const swimmingCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Swimming');
-    const lightingCheck =  newsdata[0].map((name) => name.name).filter((x) => x === 'Lighting');
+    const kitchenCheck = amenities[0]?.kitchen;
+    const wifiCheck =  amenities[0]?.wifi;
+    const balconyCheck =  amenities[0]?.balcony;
+    const guestRoomCheck =  amenities[0]?.guest_restroom;
+    const cleaningCheck =  amenities[0]?.cleaning_service;
+    const RokuCheck =  amenities[0]?.netflix;
+    const swimmingCheck = amenities[0]?.swimming_pool;
+    const lightingCheck =  amenities[0]?.lighting;
     
 
     return (
+
         <IconContent>
             {kitchenCheck && (
                 <div>

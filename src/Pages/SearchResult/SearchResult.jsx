@@ -42,7 +42,7 @@ const Main = styled.div `
 
 const SearchResult = () => {
     const {pending, error} = useSelector(state => state.propertyResult)
-    
+
     return (
         <Section>
             <Container>
@@ -50,19 +50,14 @@ const SearchResult = () => {
                     Filters
                 </Filter>
                 <Main>
-                    {pending ? (
-                            <div style={{height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Pulse />
-                            </div>
+                    {pending ? ( 'Loading'):
+                        (
+                            <>
+                                <Header />
+                                <Result />
+                            </>
                         )
-                        
-                        : error ? ( <div>Error</div>)
-                        : (
-                    <>
-                        <Header />
-                        <Result />
-                    </>
-                    )}
+                    }
                 </Main>
             </Container>
         </Section>

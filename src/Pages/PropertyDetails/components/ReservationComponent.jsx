@@ -1,3 +1,4 @@
+import { useRef, useState } from "react"
 import {useDispatch, useSelector} from "react-redux"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle, ModalStyle } from "../../../styles/globalStyles"
@@ -11,12 +12,14 @@ import CheckBox from "../../../utils/FormElement/CheckBox"
 
 const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
+    transition: all 0.8s;
+    
 
     @media screen and (min-width: 769px) {
         margin: 0;
         grid-column: 5/7;
         grid-row: 1/4;
-        position: relative;
+        position: ${({position}) => position};
     }
     
 `
@@ -24,7 +27,7 @@ const Reservations = styled.div `
 const ReservationBody = styled.div `
     border: 1px solid rgba(0, 0, 0, 0.22);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 1rem;
+    padding: 2rem 1rem;
 
     @media screen and (min-width: 769px) {
         background: #FFFFFF;
@@ -52,7 +55,7 @@ const ReservationContent = styled.div `
             border: 1px solid rgba(33, 8, 8, 0.5);
             box-sizing: border-box;
             border-radius: 5px;
-            margin: max(2vw,1rem) 0 0.7rem;
+            margin: max(1vw,1rem) 0 0.7rem;
             /* padding: 10px; */
 
             > div:first-child {
@@ -84,7 +87,7 @@ const ReservationContent = styled.div `
             }
 
             > div:nth-child(2) {
-                padding: 7px 10px 0px;
+                padding: 7px 10px 10px;
                 position: relative;
                 cursor: pointer;
 
@@ -216,22 +219,43 @@ const ModalDiv = styled.div `
     }
 `
 
+const initiateState = {CulinaryArtist: "", RealCabsTaxis: "" }
 
 
-const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, openService, setOpenService, setshow, show, Query}) => {
+const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
     const dispatch = useDispatch();
     const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
+    const GeneralInfo = general_info?.map((data) => data)
+    const [checkboxes, setCheckboxes] = useState(initiateState)
     const countAdultMinus = 1;
-    const countAdultAdd = data?.adultcount;
-    const countAddChild = data?.childrencount;
+    const countAdultAdd = GeneralInfo[0]?.allowed_adult;
+    const countAddChild = GeneralInfo[0]?.allowed_child;
     const countMinusChild = 1;
-
+    const reserveRef = useRef();
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
 
-    const  handleCheckbox = (e) => {
-        console.log(`checked = ${e.target.checked}`);
+
+    const handleChange = (e) => {
+        setCheckboxes({...checkboxes, [e.target.name]: e.target.checked})
     }
+
+    const scrollHandler = () => {
+        if(window.scrollY >= 1327) {
+            if(reserveRef.current) {
+                reserveRef.current.style.position = 'relative'
+                reserveRef.current.style.bottom = '-50%'
+            }
+            
+        }else {
+            if(reserveRef.current) {
+                reserveRef.current.style.position = 'static'
+            }
+        }
+    }
+
+    window.addEventListener('scroll', scrollHandler)
 
 
     const AddAdult = () => {
@@ -264,11 +288,11 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
     }
 
     return (
-        <Reservations>
+        <Reservations ref={reserveRef}>
             <ReservationBody>
                 <ReservationContent>
                     <div style={{flex: '1'}}>
-                        <span>&#8358;{data?.price}/night</span>
+                        <span>&#8358;{GeneralInfo[0]?.price?.toLocaleString()}/night</span>
                     </div>
                     <div>
                         <div>
@@ -285,7 +309,7 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
                             <div onClick={() => setOpenGuest(!openGuest)}> 
                                 <div>
                                     <h4>Guests</h4>
-                                    <span>{TotalGuest > 1 ? TotalGuest : countAdultMinus } {data?.guest > 1 ? 'guests' : 'guest' }</span>
+                                    <span>{TotalGuest > 1 ? TotalGuest : countAdultMinus } {GeneralInfo[0]?.allowed_guest > 1 ? 'guests' : 'guest' }</span> 
                                 </div>
                                 <div>
                                     {openGuest ? (<FiChevronUp />) : (<FiChevronDown />)}
@@ -305,7 +329,7 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
                                 countAdultAdd={countAdultAdd}
                                 countMinusChild={countMinusChild}
                                 countAddChild={countAddChild}
-                                top="42px" 
+                                top="51.7px" 
                                 width= "100%" 
                                 left='0'   
                                 border="1px solid rgba(33, 8, 8, 0.22)"
@@ -324,18 +348,15 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
                             {openService && (
                                 <ModalDiv  top="36px" ref={modalRef} width= "100%" left='0'  border="1px solid rgba(33, 8, 8, 0.22)">
                                     <div>
-                                        <form>
-                                            <CheckBox  handleCheckbox={handleCheckbox} label="Culinary Artist"/>
-                                            <CheckBox  handleCheckbox={handleCheckbox} label="Real-Cabs/Taxis"/>
-                                            <CheckBox  handleCheckbox={handleCheckbox} label="Valet Service"/>
-                                        </form>
+                                        <CheckBox  onChange={handleChange} label="Culinary Artist" name="CulinaryArtist" value="CulinaryArtist"/>
+                                        <CheckBox  onChange={handleChange} label="Real-Cabs/Taxis" name="RealCabsTaxis" value="RealCabsTaxis"/>    
                                     </div>
                                 </ModalDiv>
                             )}
                         </div>
                     </ValueAdded>
                     <ReserveButton>
-                        <Button onClicks={Query ? console.log('mobile') : (() => setshow(!show))} title={Query ? 'Reserve' : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                        <Button onClicks={Query ? "" : (() => setshow(!show))} title={Query ? 'Reserve' : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                     </ReserveButton>
                     <Condition>
                         <p>You won’t be charged yet</p>
@@ -344,12 +365,12 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
                         <div>
                             <div>
                                 <p>
-                                    &#8358;{data?.price}
+                                    &#8358;{GeneralInfo[0]?.price?.toLocaleString()}
                                     x
-                                    {data?.numberofDays}nights
+                                    3nights
                                 </p>
                                 <p>
-                                    &#8358;{data?.total}
+                                    &#8358;40,000
                                 </p>
                             </div>
                             <div>
@@ -357,8 +378,20 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, data, op
                                 <p>&#8358;50</p>
                             </div>
                             <div>
-                                <p>VAS</p>
-                                <p>&#8358;60</p>
+                                {checkboxes?.CulinaryArtist && (
+                                    <>
+                                        <p>{checkboxes?.CulinaryArtist && 'Culinary Artist'}</p>
+                                        <p>&#8358;60</p>
+                                    </>
+                                )}
+                            </div>
+                            <div>
+                                {checkboxes?.RealCabsTaxis && (
+                                    <>
+                                        <p>{checkboxes?.RealCabsTaxis && 'Real-Cabs/Taxis'}</p>
+                                        <p>&#8358;60</p>
+                                    </>
+                                )}
                             </div>
                             <div>
                                 <p>Total</p>
