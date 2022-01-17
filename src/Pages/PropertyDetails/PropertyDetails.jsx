@@ -5,7 +5,7 @@ import { PaddingStyle } from "../../styles/globalStyles"
 import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 import MobileModal from "./components/Modal"
-import ReservationComponent from "./components/ReservationComponent"
+import ReservationComponent from "./components/ReservationComponent/ReservationComponent" 
 import "../../styles/propertyDetails.css"
 import PropertyName from "./components/PropertyName"
 import PropertyImage from "./components/PropertyImage"
@@ -15,7 +15,13 @@ import PropertyAmenities from "./components/PropertyAmenities"
 import PropertyCalender from "./components/PropertyCalender"
 import PropertyRules from "./components/PropertyRules"
 import { WaitLoading } from "../../components/Loader/Spinner"
-
+import { SkeletonLoader } from "../../components/Loader/Skeleton"
+import LargeOne from "../../image/largeOne.jpg"
+import SmallOne from "../../image/smallestTwo.jpg"
+import SmallTwo from "../../image/smallestThree.jpg"
+import SmallThree from "../../image/smallestThree.jpg"
+import SmallFour from "../../image/smallestFour.jpg"
+import { VideoPlayer } from "../../Svg/svg"
 
 
 const Section  = styled.section `
@@ -62,10 +68,9 @@ const BodyContent = styled.div `
 
 const PropertyDetails = () => {
     const Query = useMediaQuery("(min-width: 769px)")
-    const {pending, error} = useSelector(state => state.propertyDetails)
+    const {status} = useSelector(state => state.propertyDetails)
     const [openGuest, setOpenGuest] = useState(false)
     const [openService, setOpenService] = useState(false)
-    const [arrivalDeparture, setArrivalDeparture] = useState([])
     const [show, setshow] = useState(false);
     const modalRef = useRef()
 
@@ -88,20 +93,65 @@ const PropertyDetails = () => {
         }
     }, [show])
 
-    if(pending) return <WaitLoading />
+    // if(pending) return <WaitLoading />
 
     return (
         <>
             {!Query && <MobileModal show={show} setshow={setshow}/>}
             <Section>
-                <Main>
+                <Main paddingleft='true' paddingRight='true'>
                     <Header>
-                        <PropertyName  />
-                        <PropertyImage/>
+                        {status === 'loading' ?  <SkeletonLoader />  : <PropertyName status={status} />}
+                        <ImageContainer>
+                            <ImageWrapper>
+                                <LargeImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
+                                        <div>
+                                            <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                            <span>
+                                                {VideoPlayer}
+                                            </span>
+                                        </div>
+                                    )}
+                                    
+                                </LargeImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                        <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                        <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                        <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                                <SmallImage>
+                                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                                    <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                    )}
+                                </SmallImage>
+                            </ImageWrapper>
+                        </ImageContainer>
+                        {/* <PropertyImage status={status}/>  */}
                         <BodyContainer>
                             <BodyContent>
-                                <PropertyHeader />
-                                <PropertyDescription />
+                                <PropertyHeader status={status}/>
+                                <PropertyDescription status={status} />
                                 <ReservationComponent 
                                     setOpenGuest={setOpenGuest}
                                     openGuest={openGuest}
@@ -111,14 +161,13 @@ const PropertyDetails = () => {
                                     setshow={setshow}
                                     show={show}
                                     Query={Query}
-                                    dates={arrivalDeparture}
                                 />
-                                <PropertyAmenities />
+                                <PropertyAmenities  status={status}/>
                             </BodyContent>
                         </BodyContainer>
                     </Header>
-                    <PropertyCalender setArrivalDeparture={setArrivalDeparture} />
-                    <PropertyRules />
+                    <PropertyCalender /> 
+                    <PropertyRules  status={status}/>
                 </Main> 
             </Section>
         </>
@@ -126,3 +175,49 @@ const PropertyDetails = () => {
 }
 
 export default PropertyDetails
+
+const ImageWrapper = styled.div ` 
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* grid-template-rows: repeat(2, 1fr); */
+    grid-gap: 1rem;
+    /* height: 400px; */
+
+`
+
+const LargeImage = styled.div `
+    grid-column: 1/4;
+    grid-row: 1/3;
+
+    div {
+        position: relative;
+        span {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            background: #C4C4C4;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+        }
+    }
+`
+
+const SmallImage = styled.div `
+    
+`
+
+
+const ImageContainer = styled.div `
+    margin: max(3vw, 2rem) 0;
+    img {
+        object-fit: cover;
+        border-radius: 10px !important;
+        width: 100%;
+        height: 100%;
+    }
+`
+

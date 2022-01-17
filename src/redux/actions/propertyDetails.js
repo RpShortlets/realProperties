@@ -10,19 +10,21 @@ export const PropertyDetails = createSlice({
         error: null,
     },
     reducers: {},
-    extraReducers: {
-        [ShortletDetails.pending]: (state) => {
-            state.pending = true;
-            state.error = false;
-        },
-        [ShortletDetails.fulfilled]: (state, action) => {
-            state.PropertyDetails = action.payload;
-            state.pending = false;
-        },
-        [ShortletDetails.rejected]: (state) => {
-            state.error = true;
-            state.pending = false;
-        },
+    extraReducers:(builder) => {
+        builder
+        .addCase(ShortletDetails.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(ShortletDetails.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            // Add any fetched posts to the array
+            state.PropertyDetails = action.payload
+        })
+        .addCase(ShortletDetails.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
+        
 
     }
 });

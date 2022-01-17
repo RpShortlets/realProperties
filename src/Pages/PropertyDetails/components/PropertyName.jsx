@@ -3,6 +3,7 @@ import Button from "../../../components/Button/Button"
 import styled, { css } from "styled-components/macro"
 import { AiOutlineHeart } from "react-icons/ai"
 import { FiShare } from "react-icons/fi"
+import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 
 const HeaderContents = styled.div `
     display: none;
@@ -47,22 +48,24 @@ const LikeIcon = styled(FiShare) `
     ${SvgStyle}
 `
 
-const PropertyName = () => {
+const PropertyName = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
+
     const GeneralInfo = general_info?.map((data) => data)
 
+    console.log(status)
     return (
         <HeaderContents>
             <div>
-                <h1>{GeneralInfo[0]?.apartment_name}</h1>
-                <p>{GeneralInfo[0]?.address}</p>
+                <h1>{status === 'loading' ?  <SkeletonLoader />  : GeneralInfo[0]?.apartment_name}</h1>
+                <p>{status === 'loading' ?  <SkeletonLoader /> : GeneralInfo[0]?.address}</p>
             </div>
             <div>
                 <div style={{marginRight: '20px'}}>
-                    <Button fontWeight='600' icon={<SavedIcon/>} display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="Save" borderRadius="10px" padding="10px 20px" background="transparent" border="2px solid rgba(28, 123, 147, 1)"  color="var(--color-primary-dark)"  />
+                    {status === 'loading' ?  <SkeletonLoader /> : (<Button fontWeight='600' icon={<SavedIcon/>} display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="Save" borderRadius="10px" padding="10px 20px" background="transparent" border="2px solid rgba(28, 123, 147, 1)"  color="var(--color-primary-dark)"  />)}
                 </div>
                 <div>
-                    <Button fontWeight='600' icon={<LikeIcon />} display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="Share" borderRadius="10px" padding="10px 20px" background="transparent" border="2px solid rgba(28, 123, 147, 1)" color="var(--color-primary-dark)" />
+                    {status === 'loading' ?  <SkeletonLoader /> : (<Button fontWeight='600' icon={<LikeIcon/>} display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="Share" borderRadius="10px" padding="10px 20px" background="transparent" border="2px solid rgba(28, 123, 147, 1)"  color="var(--color-primary-dark)"  />)}
                 </div>
             </div>
         </HeaderContents>

@@ -52,7 +52,8 @@ const AdultDiv = styled.div `
 
 const SpanCount = styled.div `
     margin: 0 1rem;
-    font-size: 1.1rem;    
+    font-size: var(--font-xtra-small-screen);
+    color: var(--color-dark)!important;    
 
 `
 
@@ -80,40 +81,40 @@ const OpenGuestDropdown = ({width,left, top, openGuest,border,countAdultMinus, c
                 <ModalDiv onClick={handleGuest} width={width} top={top} border={border} left={left} ref={myRef}>
                     <GuestDropdown>
                         <AdultDiv>
-                            <div>
+                            <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Adults</h3>
-                                <span>Ages 13 and above</span>
+                                <span>Ages 12 and above</span>
                             </div>
                             <div>
                                 <Button 
                                     disabled={adultcount < countAdultMinus} 
                                     classNames={adultcount < countAdultMinus ? styles.CountNotActive : styles.CountActive} 
                                     onClicks={MinusAdult} 
-                                    icon={<FiMinus />} 
+                                    icon={<FiMinus color='var(--color-primary-dark)' />} 
                                     display="flex" 
                                     padding="5px"  
-                                    background="#fff"
+                                    background="transparent"
                                 />
                                     <SpanCount>{adultcount}</SpanCount>
                                 <Button  
                                     classNames={adultcount < countAdultAdd ? styles.CountActive : styles.CountNotActive} 
                                     onClicks={AddAdult} 
-                                    icon={<IoMdAdd />} 
-                                    background="#fff" 
+                                    icon={<IoMdAdd  color='var(--color-primary-dark)'/>} 
+                                    background="transparent" 
                                     padding="5px" 
                                     display="flex" 
                                 />
                             </div>
                         </AdultDiv>
                         <AdultDiv>
-                            <div>
+                            <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Children</h3>
-                                <span>Age 2 - 12</span>
+                                <span>Age 2 - 11</span>
                             </div>
                             <div>
-                                <Button disabled={childrencount < countMinusChild}  classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus />} display="flex" padding="5px" background="#fff" />
+                                <Button disabled={childrencount < countMinusChild}  classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex" padding="5px" background="#fff" />
                                     <SpanCount>{childrencount}</SpanCount>
-                                <Button classNames={childrencount < countAddChild ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd />} background="#fff" padding="5px" display="flex" />
+                                <Button classNames={childrencount < countAddChild ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd  color='var(--color-primary-dark)' />} background="#fff" padding="5px" display="flex" />
                             </div>
                         </AdultDiv>
                     </GuestDropdown>

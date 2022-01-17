@@ -1,23 +1,17 @@
-// import { Checkbox } from 'antd';
-import "../../styles/checkbox.css"
+import React from "react"
+import './checkbox.css'
 
-const CheckBox = ({checked, ...props }) => {
+
+const Checkbox = ({ checked, ...props }) => {
     return (
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            {/* <Checkbox name={label} onChange={handleCheckbox} value={label}>{label}</Checkbox> */}
-            <label>
-                {props.label}
-            </label>
-            <input type="checkbox"  {...props} />
-        </div>
+        <>
+            <input type="checkbox" id="_checkbox" />
+                <label for="_checkbox">
+                    <div id="tick_mark"></div>
+                </label>
+        </>
+    
     )
 }
 
-export default CheckBox
-
-
-
-
-
-
-
+export default Checkbox;

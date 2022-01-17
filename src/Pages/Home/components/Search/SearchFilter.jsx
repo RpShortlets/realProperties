@@ -238,7 +238,7 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                             <h1>Reserve Your Luxury Short Let</h1>
                             <p>Easy, Secure and Quick</p>
                         </Header>
-                        <FilterSearchWrapper ref={ScrollRef}>
+                        <FilterSearchWrapper ref={ScrollRef} paddingleft='true' paddingRight='true'>
                         {/* <Form> */}
                             <Fiter>
                                 <Destination  

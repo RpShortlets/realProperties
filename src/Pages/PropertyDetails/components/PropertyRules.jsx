@@ -1,4 +1,5 @@
 import styled from "styled-components/macro"
+import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 import { FlexStyle } from "../../../styles/globalStyles"
 import { SocialDistance } from "../../../Svg/svg"
 import { WatchIcon, PetsIcon, NoSmokingIcon, FirstAidDark, SmokeAlarm } from "../../../Svg/svg"
@@ -40,7 +41,7 @@ const RuleContent = styled.div `
     }
 `
 
-const PropertyRules = () => {
+const PropertyRules = ({status}) => {
     return (
         <Rules>
             <RulesContainer>
@@ -67,19 +68,21 @@ const PropertyRules = () => {
                 </div>
                 <div style={{flex: '1'}}>
                     <div>
-                        <h2>Health and Safety</h2>
+                        {status === "loading" ? <SkeletonLoader  width='40%'/> : (
+                            <h2>Health and Safety</h2>
+                        ) }
                     </div>
                     <RuleContent>
-                        <span>{SmokeAlarm}</span>
-                        <span>Smoke alarm</span>
+                        {status === 'loading' ? <SkeletonLoader  height='40'/> : <span>{SmokeAlarm}</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>Smoke Alarm</span>}
                     </RuleContent>
                     <RuleContent>
-                        <span>{SocialDistance}</span>
-                        <span>Social distancing and other related COVID-19 </span>
+                        {status === 'loading' ? <SkeletonLoader /> : <span>{SocialDistance}</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>Social distancing and other related COVID-19</span>}
                     </RuleContent> 
                     <RuleContent>
-                        <span>{FirstAidDark}</span>
-                        <span>First Aid Kit </span>
+                        {status === 'loading' ? <SkeletonLoader /> : <span>{FirstAidDark}</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>First aid kit</span>}
                     </RuleContent>                                 
                 </div>
             </RulesContainer>

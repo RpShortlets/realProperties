@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { FlexStyle } from "../../../styles/globalStyles"
 import { IoBed } from "react-icons/io5"
 import { Rooms, Baths } from "../../../Svg/svg"
+import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 
 
 const BodyHeader = styled.div `
@@ -58,31 +59,39 @@ const BodyIconCard = styled.div `
 
 
 
-const PropertyHeader = () => {
+const PropertyHeader = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const GeneralInfo = general_info?.map((data) => data)
 
     return (
         <BodyHeader>
-            <h2>{GeneralInfo[0]?.apartment_name}</h2>
+            {status === 'loading' ? <SkeletonLoader  width='40%'/> : <h2>{GeneralInfo[0]?.apartment_name}</h2>}
             <BodyHeaderIcon>
-                <BodyIconCard>
-                    <div>
-                        <span><IoBed/></span>
-                    </div>
-                    <span>{GeneralInfo[0]?.bed} Beds</span>
-                </BodyIconCard>
+                {status === 'loading' ? <SkeletonLoader /> :(
+                    <BodyIconCard>
+                        <div>
+                            <span><IoBed/></span>
+                        </div>
+                        <span>{GeneralInfo[0]?.bed} Beds</span> 
+                    </BodyIconCard>
+                )}
+                
                 <BodyIconCard style={{margin: '0 max(5vw, 1rem)'}}> 
-                    <div>
-                        <span>{Baths}</span>
-                    </div>
-                    <span>{GeneralInfo[0]?.bath} Baths</span>
+                    {status === 'loading' ? <SkeletonLoader /> : (
+                        <div>
+                            <span>{Baths}</span>
+                        </div>
+                    )}
+                    
+                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.bath} Baths</span>)}
                 </BodyIconCard>
                 <BodyIconCard>
-                    <div>
-                        <span>{Rooms}</span>
-                    </div>
-                    <span>{GeneralInfo[0]?.room} Rooms</span>
+                    {status === 'loading' ? <SkeletonLoader /> : (
+                        <div>
+                            <span>{Rooms}</span>
+                        </div>
+                    )}
+                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.room} Rooms</span>)}
                 </BodyIconCard>
             </BodyHeaderIcon>
         </BodyHeader>

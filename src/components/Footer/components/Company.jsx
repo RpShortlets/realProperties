@@ -57,7 +57,7 @@ const GridWrapper = styled.div `
 
 const Company = () => {
     return (
-        <GridWrapper>
+        <GridWrapper paddingleft='true' paddingRight='true'>
             <RealProperties />
             <Companies />
             <Support />

@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths, WifiIcon } from "../../../Svg/svg"
 import Button from "../../../components/Button/Button"
-import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
+import { ShortletDetails, getReservation } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
 import { Tooltip } from 'antd';
 
@@ -15,9 +15,8 @@ const Card = styled.div `
     background: var(--color-secondary);
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
-    /* cursor: pointer; */
-    
-
+    cursor: pointer; 
+    margin-bottom: max(2vw, 1.2rem);   
 `
 
 const CardContainer = styled.div `
@@ -27,7 +26,7 @@ const CardContainer = styled.div `
     grid-template-columns: repeat(5, 1fr);
     width: 100%; 
     height: 100%; 
-    margin: max(3vw, 1rem) 0; */
+    /* margin: max(3vw, 1rem) 0;  */
 `
 
 const PictureContainer = styled.div `
@@ -148,15 +147,17 @@ const Result = ({data: {address, apartment_name, bath, bed, picture, room, price
 
     const handleGetDetails = async() => {        
         dispatch(ShortletDetails()) 
+        dispatch(getReservation())
         navigate('/property-details')
+
     }
 
 
     return (
         
         <Card 
-            onMouseEnter={() => setShowFeatures(true)}
-            onMouseLeave={() => setShowFeatures(false)} 
+            // onMouseEnter={() => setShowFeatures(true)}
+            // onMouseLeave={() => setShowFeatures(false)} 
         >
             <CardContainer onClick={handleGetDetails}>
                 {showFeatures && (

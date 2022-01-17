@@ -82,20 +82,10 @@ const IconDivs = styled.div `
 
 
 const WhyRealShortlets = () => {
-
-    // const [isactive, setIsActive] = useState(false)
-
-    // const handleClick = (id) => {
-    //     // let newState = {...isactive}
-    //     // newState[id] = !newState[id]
-
-    // }
-
-
     
     return (
         <Container>
-            <Wrapper>
+            <Wrapper paddingleft='true' paddingRight='true'>
                 <h2>Why Real Shortlets</h2>
                 <Content >
                     {RealShortlets.map((item) => (

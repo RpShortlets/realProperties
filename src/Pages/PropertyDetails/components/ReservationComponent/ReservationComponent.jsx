@@ -1,14 +1,17 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useMemo } from "react"
 import {useDispatch, useSelector} from "react-redux"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
-import { FlexStyle, ModalStyle } from "../../../styles/globalStyles"
-import Button from "../../../components/Button/Button"
+import { FlexStyle, ModalStyle } from "../../../../styles/globalStyles"
+import Button from "../../../../components/Button/Button"
 import styled from "styled-components"
-import useAddGuestTotal from "../../../hooks/useAddGuestTotal/useAddGuestTotal"
-import OpenGuestDropdown from "../../../components/OpenGuestDropdown"
-import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../redux/actions/componentState"
-import styles from "../../../styles/home.module.css"
-import CheckBox from "../../../utils/FormElement/CheckBox"
+import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
+import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
+import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../../redux/actions/componentState"
+import {getReservation, getReservationUpdate} from "../../../../redux/actionCreators/actionCreators"
+import styles from "../../../../styles/home.module.css"
+import RentalServices from "./components/RentalServices"
+import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
+
 
 const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
@@ -154,6 +157,7 @@ const Condition = styled.div `
     }
 `
 
+
 const PriceBody =  styled.div `
     display: none;
 
@@ -219,27 +223,125 @@ const ModalDiv = styled.div `
     }
 `
 
-const initiateState = {CulinaryArtist: "", RealCabsTaxis: "" }
+// const initiateState = {CulinaryArtist: "", RealCabsTaxis: "" }
 
 
-const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
+const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
     const dispatch = useDispatch();
-    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
+    const {status, reservation: {price, dates, summary_details, }, } = useSelector(state => state.reservationState)
+
+    
+    
     const GeneralInfo = general_info?.map((data) => data)
-    const [checkboxes, setCheckboxes] = useState(initiateState)
+    // const [checkboxes, setCheckboxes] = useState(initiateState)
+    const [openCar, setOpenCar] = useState(false)
+    const [selectedCar, setSelectedCar] = useState(null)
+    const [driver, setDriver] = useState(false)
+    const [carlength, setCarlength] = useState(false)
+    const [carlengthValue, setCarlengthValue] = useState(0)
+    const [carType, setCarType] = useState('')
+    const [driverlengthValue, setDriverlengthValue] = useState(0)
+    const [radio, setRadio] = useState(null)
+
+
     const countAdultMinus = 1;
     const countAdultAdd = GeneralInfo[0]?.allowed_adult;
     const countAddChild = GeneralInfo[0]?.allowed_child;
     const countMinusChild = 1;
     const reserveRef = useRef();
-    const TotalGuest = useAddGuestTotal({adultcount, childrencount});
+    const BenZ = useRef(null);
+    const Suv = useRef(null);
+    const Camry = useRef(null);
+    // const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
 
-
-    const handleChange = (e) => {
-        setCheckboxes({...checkboxes, [e.target.name]: e.target.checked})
+    const handleBenz = () => {
+        alert('Hello')
     }
+
+    const handlecheckbox = (e) => {
+        const { value} = e.target;
+        setRadio(value)
+        // setCheckboxes(prevState => ({
+        //     ...prevState,
+        //     [name]: value
+        // }))
+    }
+
+    const showBenzRef = (id) => {
+        if(BenZ?.current) {
+            const value = BenZ?.current?.childNodes[1]?.value;
+            const name = BenZ?.current?.childNodes[1]?.name;
+            setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    const showSuvRef = (id) => {
+        if(Suv?.current) {
+            const value = Suv?.current?.childNodes[1]?.value;
+            const name = Suv?.current?.childNodes[1]?.name;
+            setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    const showCamryRef = (id) => {
+        if(Camry?.current) {
+            const name = Camry?.current?.childNodes[1]?.name;
+            const value = Camry?.current?.childNodes[1]?.value;
+            setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    
+
+    const addDays = () => {
+        if(carlengthValue < summary_details[0]?.stay_length) {
+            setCarlengthValue((prev) => prev + 1)
+        }
+    }
+
+    const addDriverLength = () => {
+        if(driverlengthValue < summary_details[0]?.stay_length && driverlengthValue < carlengthValue) {
+            setDriverlengthValue((prev) => prev + 1)
+        }
+    }
+
+    const minusDriverLength = () => {
+        if(driverlengthValue > 0) {
+            setDriverlengthValue((prev) => prev - 1)
+        }
+    }
+
+    const minusDays = () => {
+        if(carlengthValue > 0) {
+            setCarlengthValue((prev) => prev - 1)
+        }
+    }
+
+    const resetData = () => {
+        setCarlengthValue(0)
+        setCarlength(false)
+        setSelectedCar(null)
+        setDriverlengthValue(0)
+        setCarType('')
+        setRadio(null)
+    }
+
+
 
     const scrollHandler = () => {
         if(window.scrollY >= 1327) {
@@ -287,35 +389,50 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, openServ
         }
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(getReservation())
+    }
+
+    useMemo(() => 
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue})), 
+    [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue])
+
+    console.log(carType)
+    
+
     return (
         <Reservations ref={reserveRef}>
             <ReservationBody>
                 <ReservationContent>
                     <div style={{flex: '1'}}>
-                        <span>&#8358;{GeneralInfo[0]?.price?.toLocaleString()}/night</span>
+                        <span>&#8358;{status === 'loading' ? <SkeletonLoader /> : `${price[0]?.price?.toLocaleString()}/night` }</span>
                     </div>
                     <div>
                         <div>
                             <div>
-                                <span>Check-in</span>
-                                <span>{dates[0] ? dates[0] : 'DD/MM/YYYY'}</span>
+                                <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>
+                                <span>{status === 'loading' ? <SkeletonLoader /> : dates[0].check_in_date ? dates[0].check_in_date : checkInDate ? checkInDate : 'DD/MM/YYYY'}</span>
                             </div>
                             <div>
-                                <span>Check-out</span>
-                                <span>{dates[1] ? dates[1] : 'DD/MM/YYYY'}</span>
+                                <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-out'}</span>
+                                <span>{status === 'loading' ? <SkeletonLoader /> : dates[0].check_out_date ? dates[0].check_out_date : checkOutDate ? checkOutDate : 'DD/MM/YYYY'}</span>
                             </div>
                         </div>
                         <div>
-                            <div onClick={() => setOpenGuest(!openGuest)}> 
+                            {status === 'loading' ? (<SkeletonLoader /> ) :
+                            (<div onClick={() => setOpenGuest(!openGuest)}> 
                                 <div>
                                     <h4>Guests</h4>
-                                    <span>{TotalGuest > 1 ? TotalGuest : countAdultMinus } {GeneralInfo[0]?.allowed_guest > 1 ? 'guests' : 'guest' }</span> 
+                                    {/* <span>{TotalGuest > 1 ? TotalGuest : countAdultMinus } {GeneralInfo[0]?.allowed_guest > 1 ? 'guests' : 'guest' }</span>  */}
                                 </div>
                                 <div>
                                     {openGuest ? (<FiChevronUp />) : (<FiChevronDown />)}
                                 </div>
                             </div>
-                            <OpenGuestDropdown  
+                            )}
+                            {status === 'loading' ? (<SkeletonLoader />) :
+                            (<OpenGuestDropdown  
                                 openGuest={openGuest} 
                                 myRef={modalRef} 
                                 adultcount={adultcount} 
@@ -334,50 +451,87 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, openServ
                                 left='0'   
                                 border="1px solid rgba(33, 8, 8, 0.22)"
                                 
-                            />
+                            />)}
                         </div>
                     </div>
                     <ValueAdded>
                         <div> 
-                            <div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between'}}  onClick={() => setOpenService(!openService)}>
+                            {status === 'loading' ? (<SkeletonLoader /> ) :
+                            (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between'}}  onClick={() => setOpenService(!openService)}>
                                 <div>
                                     <h4>Additional Services</h4>
                                 </div>
                                 {openService ? (<FiChevronUp />) : (<FiChevronDown />)}
-                            </div>
+                            </div>)}
                             {openService && (
                                 <ModalDiv  top="36px" ref={modalRef} width= "100%" left='0'  border="1px solid rgba(33, 8, 8, 0.22)">
-                                    <div>
-                                        <CheckBox  onChange={handleChange} label="Culinary Artist" name="CulinaryArtist" value="CulinaryArtist"/>
-                                        <CheckBox  onChange={handleChange} label="Real-Cabs/Taxis" name="RealCabsTaxis" value="RealCabsTaxis"/>    
-                                    </div>
+                                    {/* <div>
+                                        <div>
+                                            <label>Culinary Artist</label>
+                                            <input type="checkbox" name="culinary" checked={checkboxes.culinary} onChange={handleChange}/>
+                                        </div>
+                                        <div>
+                                            <label>Cleaning Service</label>
+                                            <input type="checkbox" name="cleaning" checked={checkboxes.cleaning} onChange={handleChange}/>
+                                        </div> 
+                                    </div> */}
                                 </ModalDiv>
                             )}
                         </div>
                     </ValueAdded>
+                    {status === 'loading' ? (<SkeletonLoader /> ) :
+                    (<RentalServices
+                        openCar={openCar} 
+                        setOpenCar={setOpenCar} 
+                        showBenzRef={showBenzRef} 
+                        BenZ={BenZ} 
+                        handleBenz={handleBenz}
+                        showCamryRef={showCamryRef}
+                        Camry={Camry}
+                        showSuvRef={showSuvRef}
+                        Suv={Suv}
+                        selectedCar={selectedCar}
+                        driver={driver}
+                        setDriver={setDriver}
+                        carlength={carlength}
+                        addDays={addDays}
+                        minusDays={minusDays}
+                        carlengthValue={carlengthValue}
+                        handlecheckbox={handlecheckbox}
+                        setRadio={setRadio}
+                        radio={radio}
+                        resetData={resetData}
+                        addDriverLength={addDriverLength}
+                        minusDriverLength={minusDriverLength}
+                        driverlengthValue={driverlengthValue}
+                    />)}
                     <ReserveButton>
-                        <Button onClicks={Query ? "" : (() => setshow(!show))} title={Query ? 'Reserve' : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                    {status === 'loading' ? (<SkeletonLoader />) :  
+                        (<Button onClicks={Query ? handleSubmit : (() => setshow(!show))} title={Query ? 'Reserve' : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                    )}
                     </ReserveButton>
                     <Condition>
-                        <p>You won’t be charged yet</p>
+                        <p>{status === 'loading' ? <SkeletonLoader /> : 'You won’t be charged yet'}</p>
                     </Condition>
                     <PriceBody>
                         <div>
                             <div>
-                                <p>
-                                    &#8358;{GeneralInfo[0]?.price?.toLocaleString()}
-                                    x
-                                    3nights
-                                </p>
-                                <p>
-                                    &#8358;40,000
-                                </p>
+                                <p> {status === 'loading' ? <SkeletonLoader /> : `${price[0]?.price === null ? '' : price[0]?.price?.toLocaleString()} x ${summary_details[0]?.stay_length === null ? '' : summary_details[0]?.stay_length }nights`}</p>
+                                <p> {status === 'loading' ? <SkeletonLoader /> : `${summary_details[0]?.total_apt_price === null ? '' : summary_details[0]?.total_apt_price?.toLocaleString()}`}</p>
                             </div>
-                            <div>
+                            {/* <div>
                                 <p>Cleaning fee</p>
                                 <p>&#8358;50</p>
+                            </div> */}
+                            <div>
+                                <p>{status === 'loading' ? <SkeletonLoader /> : selectedCar && selectedCar}</p>
+                                <p>{status === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_car_price && summary_details[0]?.total_car_price?.toLocaleString()}</p>
                             </div>
                             <div>
+                                <p style={{textTransform: 'capitalize'}}>{status === 'loading' ? <SkeletonLoader /> : radio && radio}</p>
+                                <p>{status === 'loading' ? <SkeletonLoader /> :  summary_details[0]?.total_driver_price && summary_details[0]?.total_driver_price?.toLocaleString()}</p>
+                            </div>
+                            {/* <div>
                                 {checkboxes?.CulinaryArtist && (
                                     <>
                                         <p>{checkboxes?.CulinaryArtist && 'Culinary Artist'}</p>
@@ -392,10 +546,15 @@ const ReservationComponent = ({dates,setOpenGuest, openGuest, modalRef, openServ
                                         <p>&#8358;60</p>
                                     </>
                                 )}
-                            </div>
+                            </div> */}
                             <div>
-                                <p>Total</p>
-                                <p>&#8358;485</p>
+                                {status === 'loading' ? (<SkeletonLoader />) : 
+                                    (
+                                    <>
+                                        <p>Total</p>
+                                        <p>&#8358; {summary_details[0]?.total?.toLocaleString()}</p>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </PriceBody>

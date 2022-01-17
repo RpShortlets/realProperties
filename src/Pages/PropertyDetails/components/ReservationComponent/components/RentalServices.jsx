@@ -1,0 +1,308 @@
+import { FiChevronDown, FiChevronUp } from "react-icons/fi"
+import { FlexStyle } from "../../../../../styles/globalStyles"
+import styled from "styled-components"
+import Tooltips from "../../../../../components/Tooltip"
+
+
+const RentalService = styled.div `
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin: max(1vw,1rem) 0 0.7rem;
+
+    .RentalContainer {
+        padding: max(1vw, .5rem);
+    }
+
+`
+
+const RentalType = styled.div `
+    position: relative;
+    
+    h3 {
+        margin: 0;
+        font-size: var(--font-xtra-small-screen);
+    }
+
+    .carTypeButton {
+        cursor: pointer;
+        ${FlexStyle}
+        justify-content: space-between;
+        border: 1px solid rgba(33, 8, 8, 0.39);
+        box-sizing: border-box;
+        border-radius: 5px;
+        padding: 10px;
+
+        h4 {
+            font-size: var(--font-xtra-small-screen);
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+
+    .RentalHeader {
+        ${FlexStyle}
+        justify-content: space-between;
+        font-size: var(--font-xtraLarge-small);
+        cursor: pointer;
+
+        span {
+            text-decoration: underline;
+        }
+    }
+
+`
+
+const CarModal = styled.div `
+    border: 1px solid rgba(33, 8, 8, 0.39);
+    border-radius: 5px;
+    margin-top: max(.5vw, .3rem);
+
+    .carModalWrapper {
+        /* padding: 10px; */
+    }
+
+    .carModalInputContainer {
+        ${FlexStyle}
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 5px 10px;
+        transition: all 0.8s;
+
+        span { 
+            flex: 1;
+            font-size: var( --font-xtraLarge-small);
+        }
+
+        :hover {
+            background: #DCEFF4;
+            border: 1px solid rgba(33, 8, 8, 0.39);
+        }
+
+    }
+
+    .carModalInputDiv {
+        flex: 1;
+        ${FlexStyle}
+        span {
+            background: transparent;
+            font-size: var(--font-xtra-small-screen);
+            width: 100%;
+            text-align: end;
+        }
+    }
+`
+
+
+const CarLength = styled.div `
+    background: #FFFFFF;
+    border: 1px solid rgba(33, 8, 8, 0.39);
+    border-radius: 5px;
+    margin-top: max(.5vw, .3rem);
+
+    .carLenghtContainer {
+        ${FlexStyle}
+        justify-content: space-between;
+        padding: 4px 10px;
+    }
+
+    .carLengthDays {
+        span {
+            font-size: var(--font-xtra-small-screen);
+        }
+    }
+
+    .carLenghtBtnsDiv {
+        ${FlexStyle}
+
+        .carLengthBtn {
+            border: 1px solid;
+            width: max(1.7vw, .9rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: max(1.7vw, .9rem);
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .carDays {
+            font-size: var(--font-xtra-small-screen);
+            margin: 0 max(.5vw, .3rem);
+        }
+    }
+
+`
+
+const Driver = styled.div `
+    background: #FFFFFF;
+    border: 1px solid rgba(33, 8, 8, 0.39);
+    border-radius: 5px;
+    margin-top: max(.5vw, .3rem);
+
+    span {
+        font-size: var(--font-xtra-small-screen);
+    }
+
+    .DriverContainer {
+        padding: 4px 10px;
+        ${FlexStyle}
+        justify-content: space-between;
+    }
+
+    .driverRadioBtnContainer {
+        ${FlexStyle}
+        
+    }
+`
+
+const Label = styled.label `
+
+    font-size: var(--font-xtra-small-screen);
+    
+    background: ${({checked}) => checked };
+    border: 1px solid var(--color-primary);
+    color: ${props => props.checked ? 'var(--color-white)' : 'var(--color-primary)'};
+    padding: 0px 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+        
+
+    :last-child {
+        margin-left: max(.5vw, .3rem);
+    }
+
+    :hover {
+        background: var(--color-primary);
+        color: var(--color-white);
+    }
+`
+
+const RentalServices = ({resetData, radio, addDays, minusDays, 
+    carlengthValue, openCar, setOpenCar, showBenzRef, BenZ, handleBenz, Suv, 
+    Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
+    addDriverLength, minusDriverLength, handlecheckbox}) => {
+
+        console.log(radio)
+    return (
+        <RentalService>
+            <div className="RentalContainer">
+                <RentalType>
+                    <div className="RentalHeader">
+                        <h3>Car Rental</h3>
+                        <Tooltips title='reset all data'>
+                            <span onClick={resetData}>Clear data</span>
+                        </Tooltips>
+                    </div>
+                    <div onClick={() => setOpenCar(!openCar)} className="carTypeButton" style={{marginTop: 'max(0.5vw,0.3rem)'}}>
+                        <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
+                        {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
+                    </div>
+                    {openCar && (
+                        <CarModal>
+                            <div className="carModalWrapper">
+                                <div className="carModalInputContainer" onClick={showBenzRef}>
+                                    <span htmlFor="benz">Mercedes Benz E350</span>
+                                    <div className="carModalInputDiv" ref={BenZ} >
+                                        <span>#50,000</span>
+                                        <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
+                                    </div>
+                                </div>
+                                <div className="carModalInputContainer" onClick={showCamryRef}>
+                                    <span>Toyota Camry</span>
+                                    <div className="carModalInputDiv" ref={Camry} >
+                                        <span>#40,000</span>
+                                        <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                    </div>
+                                </div>
+                                <div className="carModalInputContainer" onClick={showSuvRef}>
+                                    <span>Chevy Tahoe SUV</span>
+                                    <div className="carModalInputDiv" ref={Suv} >
+                                        <span>#60,000</span>
+                                        <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </CarModal>
+                    )}
+                    {carlength && (
+                        <CarLength>
+                            <div className="carLenghtContainer">
+                                <div className="carLengthDays">
+                                    <span>Number of days</span>
+                                </div>
+                                <div className="carLenghtBtnsDiv">
+                                    <Tooltips title='Cannot decrease below 1'>
+                                        <span className="carLengthBtn" onClick={minusDays}>-</span>
+                                    </Tooltips>
+                                    <span className="carDays">{carlengthValue}</span>
+                                    <Tooltips title='Cannot increase above length of stay'>
+                                        <span className="carLengthBtn" onClick={addDays}>+</span>
+                                    </Tooltips>
+                                </div>
+                            </div>
+                        </CarLength>
+                    )}
+                    {carlengthValue > 0 && (
+                        <Driver>
+                            <div className="DriverContainer">
+                                <div>
+                                    <span>Need a Driver ?</span>
+                                </div>
+                                <div className="driverRadioBtnContainer">
+                                    <div>
+                                        <input 
+                                            id='yesDriver' 
+                                            type="radio" 
+                                            name="driver" 
+                                            value="driver"  
+                                            style={{display: 'none'}}
+                                            checked={radio === "Yes"}
+                                            onChange={handlecheckbox} 
+                                            />
+                                        <Label htmlFor="yesDriver" checked={radio === 'driver' ? 'var(--color-primary)' : ''}>Yes</Label>
+                                    </div>
+                                    <div>
+                                        <input 
+                                            id="noDriver" 
+                                            type="radio" 
+                                            name="driver" 
+                                            value={null}
+                                            style={{display: 'none'}}
+                                            checked={radio === "No"}
+                                            onChange={handlecheckbox} 
+                                        />
+                                        <Label htmlFor="noDriver" checked={radio === '' ? 'var(--color-primary)' : ''}>No</Label>
+                                    </div>
+                                </div>
+                            </div>
+                        </Driver>
+                    )}
+                    {radio === "driver" && carlengthValue > 0 ? (
+                        <CarLength>
+                            <div className="carLenghtContainer">
+                                <div className="carLengthDays">
+                                    <span>Number of days</span>
+                                </div>
+                                <div className="carLenghtBtnsDiv">
+                                    <Tooltips title='Cannot decrease below 1'>
+                                        <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
+                                    </Tooltips>
+                                        <span className="carDays">{driverlengthValue}</span>
+                                    <Tooltips title='Cannot increase above length of stay'>
+                                        <span className="carLengthBtn" onClick={addDriverLength}>+</span>
+                                    </Tooltips>
+                                </div>
+                            </div>
+                        </CarLength>
+                    )
+                    :("")}
+                </RentalType>
+            </div>
+        </RentalService>
+    )
+}
+
+export default RentalServices

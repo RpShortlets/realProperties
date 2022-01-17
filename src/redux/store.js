@@ -3,6 +3,7 @@ import componentState from "./actions/componentState"
 import formState from "./actions/formState"
 import propertyResult from "./actions/propertyResult"
 import propertyDetails from "./actions/propertyDetails"
+import reservation from "./actions/reservation"
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         formState: formState,
         propertyResult: propertyResult,
         propertyDetails: propertyDetails,
+        reservationState: reservation
     }
 })
 

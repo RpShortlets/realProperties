@@ -6,7 +6,9 @@ export const ComponentState = createSlice({
         adultcount: 0,
         childrencount: 0,
         guest: 0,
-        textTitle: 'Find Shortlets'
+        textTitle: 'Find Shortlets',
+        checkInDate: null,
+        checkOutDate: null,
     }, 
     reducers: {
         incrementAdult: (state) => {
@@ -34,11 +36,18 @@ export const ComponentState = createSlice({
         changeText: (state) => {
             state.textTitle = 'Search'
             console.log('Enter')
+        },
+        checkInDate: (state, action) => {
+            state.checkInDate= action.payload
+        },
+        checkOutDate: (state, action) => {
+            state.checkOutDate = action.payload
         }
+
     },
     extraReducers: {}
 })
 
-export const { incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText } = ComponentState.actions;
+export const { incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate  } = ComponentState.actions;
 
 export default ComponentState.reducer

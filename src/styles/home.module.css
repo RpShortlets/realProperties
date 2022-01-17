@@ -14,5 +14,13 @@
     border-radius: 16px !important;
 }
 
+.loader {
+    height: fit-content;
+}
+
+.loaderWidth {
+    margin-left: 1.2rem
+}
+
 
 

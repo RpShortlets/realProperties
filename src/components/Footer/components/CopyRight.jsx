@@ -5,15 +5,6 @@ import { PaddingStyle } from "../../../styles/globalStyles"
 const CopyRight = styled.div `
     border-top: 1px solid;
 
-    > div {
-        display: flex;
-        justify-content: space-between;
-        ${PaddingStyle}
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
-
-
     > div div:last-child {
         display: flex;
 
@@ -54,20 +45,29 @@ const CopyRight = styled.div `
     }
 `
 
+const CopyRightContent = styled.div `
+    display: flex;
+    justify-content: space-between;
+    ${PaddingStyle}
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+`
 
 const CopyRights = () => {
+
+
     return (
         <CopyRight>
-            <div>
+            <CopyRightContent paddingleft='true' paddingRight='true'>
                 <div>
                     <p>@2022 Real Properties</p>
                 </div>
-                <div>
+                <div >
                     <p>Terms of Use</p>
                     <p>Privacy Policy</p>
                     <p>Cookie Policy</p>
                 </div>
-            </div>
+            </CopyRightContent>
         </CopyRight>
     )
 }

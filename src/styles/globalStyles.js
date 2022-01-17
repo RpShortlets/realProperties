@@ -7,8 +7,8 @@ export const SectionStyle = css`
 `
 
 export const PaddingStyle = css`
-    padding-left: max(11vw, 1rem);
-    padding-right: max(11vw, 1rem);
+    padding-left: ${({paddingleft}) => paddingleft && 'max(7vw, 1rem)'}; 
+    padding-right: ${({paddingRight}) => paddingRight && 'max(7vw, 1rem)'};
 `
 
 export const SearchFilterLabel = css`
@@ -77,6 +77,7 @@ export const ModalStyle = css`
     border: ${({border}) => border};
     z-index: 1;
     box-shadow: var(--shadow);
+    color: ${({color}) => color};
 
 
 `

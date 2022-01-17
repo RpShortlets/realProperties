@@ -2,7 +2,7 @@ import { Tooltip } from 'antd';
 
 const Tooltips = (props) => {
     return (
-        <Tooltip title='Enter'>
+        <Tooltip title={props.title}>
             {props.children}
         </Tooltip>
     )

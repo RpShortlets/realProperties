@@ -1,21 +1,11 @@
 import styled from "styled-components"
-import { ModalStyle, SearchFilterLabel } from '../../../../../styles/globalStyles';
+import { SearchFilterLabel } from '../../../../../styles/globalStyles';
 import useMediaQuery from "../../../../../hooks/useMediaQuery/useMediaQuery"
+import OpenDestination from "../../../../../components/Dropdowns/OpenDestination";
+import { Destlocation } from "../../../../../components/Dropdowns/data/destinationLocation";
 
 
-const ModalDiv = styled.div `
-    ${ModalStyle}
 
-    label {
-        display: block;
-        padding: 7px 20px;
-        cursor: pointer;
-
-        :hover {
-            background: #ccc;
-        }
-    }
-`
 const Label = styled.label `
     ${SearchFilterLabel}
 
@@ -36,7 +26,7 @@ margin: 0 15px;
 
 `
 
-const Destination = ({changeText, DefaultText, handleModal, openModal, value, myRef, location, handleOption}) => {
+const Destination = ({changeText, DefaultText, handleModal, openModal, value, myRef, handleOption}) => {
     const checkedQuery = useMediaQuery("(min-width: 601px)");
 
     let widths = checkedQuery ? '35vw' : '100%';
@@ -58,17 +48,13 @@ const Destination = ({changeText, DefaultText, handleModal, openModal, value, my
                 classNames="search"
             > */}
             
-                {/* <div ref={modalRef} > */}
-                    {openModal && (
-                        <ModalDiv ref={myRef} width={widths} left="0">
-                            {location.map((data, i)  => 
-                                <label key={data.id}>{data.name}
-                                    <input name={data.name} value={data.name} key={data.id} type="checkbox" onChange={() => handleOption(data.id)} style={{display: 'none'}} />
-                                </label>
-                            )}
-                        </ModalDiv>
-                    )}
-                {/* </div> */}
+                <OpenDestination 
+                    openModal={openModal}
+                    myRef={myRef}
+                    widths={widths}
+                    location={Destlocation}
+                    handleOption={handleOption}        
+                />
                 
             {/* </CSSTransition> */}
         </Search>

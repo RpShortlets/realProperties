@@ -2,12 +2,50 @@ import { useSelector } from "react-redux"
 import styled, { css } from "styled-components/macro"
 import { AiOutlineHeart } from "react-icons/ai"
 import { FiShare } from "react-icons/fi"
-import Button from "../../../components/Button/Button"
 import { FlexStyle } from "../../../styles/globalStyles"
+import { VideoPlayer } from "../../../Svg/svg"
 
 import LargeOne from "../../../image/largeOne.jpg"
-import LargeTwo from "../../../image/smallOne.jpg"
-import LargeThree from "../../../image/smallOne.jpg"
+import SmallOne from "../../../image/smallestTwo.jpg"
+import SmallTwo from "../../../image/smallestThree.jpg"
+import SmallThree from "../../../image/smallestThree.jpg"
+import SmallFour from "../../../image/smallestFour.jpg"
+import { SkeletonLoader } from "../../../components/Loader/Skeleton"
+
+
+const ImageWrapper = styled.div ` 
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* grid-template-rows: repeat(2, 1fr); */
+    grid-gap: 1rem;
+    /* height: 400px; */
+
+`
+
+const LargeImage = styled.div `
+    grid-column: 1/4;
+    grid-row: 1/3;
+
+    div {
+        position: relative;
+        span {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            background: #C4C4C4;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+        }
+    }
+`
+
+const SmallImage = styled.div `
+    
+`
 
 
 const ImageContainer = styled.div `
@@ -18,7 +56,7 @@ const ImageContainer = styled.div `
         width: 100%;
         height: 100%;
     }
-
+/* 
     > div:first-of-type {
         div:first-child {
             position: relative;
@@ -33,10 +71,10 @@ const ImageContainer = styled.div `
         > div:last-child {
             display: none;
         }
-    }
+    } */
 
 
-    @media screen and (min-width: 769px) {
+    /* @media screen and (min-width: 769px) {
 
         > div:first-of-type {
             display: grid;
@@ -72,7 +110,7 @@ const ImageContainer = styled.div `
             }
 
         }
-    }
+    } */
 
 `
 
@@ -135,40 +173,44 @@ const SeePhotos = styled.div `
     }
 `
 
-const PropertyImage = () => {
+const PropertyImage = ({status}) => {
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
     
-    console.log(pictures)
 
-    
     return (
         <ImageContainer>
-            <div>
-                <div>
-                    <img src={LargeOne} alt=""  width='100%' height='100%' />
-                    <MobileIcons>
-                        <IconCard><SavedIcon/></IconCard>
-                        <IconCard><LikeIcon /></IconCard>
-                    </MobileIcons>
-                    <SeePhotos>
-                        <Button fontWeight='500' display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="See all 12 photos" borderRadius="5px" padding="5px" background="#fff" border="1px solid rgba(28, 123, 147, 1)" color="var(--color-dark-gray)" />
-                    </SeePhotos>
-                </div>
-                <div>
-                    <img src={LargeTwo} alt="" width='100%' height='100%'/>
-                </div>
-                <div>
-                    <img src={LargeThree} alt="" width='100%' height='100%' />
-                    <div style={{position: 'absolute', right: '15px', bottom: '20px'}}>
-                        <Button fontWeight='500' display='flex' alignT='center' fontSize="var(--font-xtra-small-screen)" title="See all 12 photos" borderRadius="10px" padding="8px" background="#fff" border="1px solid rgba(28, 123, 147, 1)" color="var(--color-dark-gray)" />
+            <ImageWrapper>
+                <LargeImage>
+                    <div>
+                        {status === 'loading' ? (<SkeletonLoader/>) : (
+                            <>
+                                <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                <span>
+                                    {VideoPlayer}
+                                </span>
+                            </>
+                        )}
                     </div>
-                </div>
-                {/* <div><img src={pictures[3]?.picture && pictures[3]?.picture} alt="" width='100%' height='100%' /></div>
-                <div><img src={pictures[4]?.picture && pictures[4]?.picture} alt="" width='100%' height='100%' /></div>
-                <div><img src={pictures[5]?.picture && pictures[5]?.picture} alt="" width='100%' height='100%' /></div>
-                <div><img src={pictures[6]?.picture && pictures[6]?.picture} alt="" width='100%' height='100%' /></div>
-                <div><img src={pictures[7]?.picture && pictures[7]?.picture} alt="" width='100%' height='100%' /></div>  */}
-            </div> 
+                </LargeImage>
+                <SmallImage>
+                        <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+                <SmallImage>
+                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+                <SmallImage>
+                    <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+                <SmallImage>
+                    <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+                <SmallImage>
+                    <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+                <SmallImage>
+                    <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                </SmallImage>
+            </ImageWrapper>
         </ImageContainer>
     )
 }

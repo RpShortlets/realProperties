@@ -9,8 +9,7 @@ import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
 import { searchShortlets } from "../../redux/actionCreators/actionCreators"
 import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
-import { BaseURL } from '../../api';
-import axios from 'axios';
+
 
 
 
@@ -18,20 +17,7 @@ const Section = styled.section `
     ${SectionStyle}
 `
 
-const location = [
-    {
-        id: 0,
-        name: 'Ikoyi'
-    }, 
-    {
-        id: 1,
-        name: 'Lekki'
-    },
-    {
-        id: 2,
-        name: 'Ikotun'
-    }
-]
+
 const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -109,7 +95,6 @@ const Home = () => {
                     handleModal={handleModal} 
                     value={value} 
                     myRef={myRef} 
-                    location={location} 
                     handleGuest={handleGuest} 
                     guest={TotalGuest} 
                     resetCount={resetCount} 
