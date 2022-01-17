@@ -83,7 +83,7 @@ const PropertyHeader = ({status}) => {
                         </div>
                     )}
                     
-                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.bath} Baths</span>)}
+                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.bath} Bathroom</span>)}
                 </BodyIconCard>
                 <BodyIconCard>
                     {status === 'loading' ? <SkeletonLoader /> : (

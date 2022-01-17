@@ -50,20 +50,20 @@ const PropertyRules = ({status}) => {
                         <h2>House Rules</h2>
                     </div>
                     <RuleContent>
-                        <span>{WatchIcon}</span>
-                        <span>Check-in : 3:00 PM </span>
+                    {status === 'loading' ? <SkeletonLoader />  : <span>{WatchIcon}</span>}
+                    {status === 'loading' ? <SkeletonLoader /> : <span>Check-in : 2:00 PM </span>}
                     </RuleContent>
                     <RuleContent>
-                        <span>{WatchIcon}</span>
-                        <span>Check-out : 12:00 PM</span>
+                    {status === 'loading' ? <SkeletonLoader /> : <span>{WatchIcon}</span>}
+                    {status === 'loading' ? <SkeletonLoader /> : <span>Check-out : 11:00 PM</span>}
                     </RuleContent>
                     <RuleContent>
-                        <span>{NoSmokingIcon}</span>
-                        <span>No Smoking</span>
+                        {status === 'loading' ? <SkeletonLoader /> : <span>{NoSmokingIcon}</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>No Smoking</span>}
                     </RuleContent>
                     <RuleContent>
-                        <span>{PetsIcon}</span>
-                        <span>No pets allowed</span>
+                        {status === 'loading' ? <SkeletonLoader /> : <span>{PetsIcon}</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>No pets allowed</span>}
                     </RuleContent>
                 </div>
                 <div style={{flex: '1'}}>

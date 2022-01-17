@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux"
 import { SecurityIcon, KitchenIcon, AcIcon, 
-        ParkingIcon, BedIcon, OceanViewIcon, 
+        ParkingIcon, OceanViewIcon, 
         FirstAidIcon, ElevatorIcon, WifiIcon,
-        BalconyIcon, GuestRoomIcon,CleaningIcon,
+        BalconyIcon, GuestRoomIcon,
         TvIcon, PoolIcon, BulbIcon, ShowerIcon 
     } from "../../../Svg/svg"
 import styled from "styled-components"
@@ -30,11 +30,12 @@ export const AmenitiesOne = () => {
     const securityCheck = amenities[0]?.security;
     const ConditionalCheck = amenities[0]?.air_condition;
     const parkingCheck =  amenities[0]?.parking;
-    const bedroomCheck =  amenities[0]?.bed;
+    // const bedroomCheck =  amenities[0]?.bed;
     const fristAidCheck =  amenities[0]?.first_aid;
     const elevatorCheck =  amenities[0]?.elevator;
     const oceanViewCheck =  amenities[0]?.oceanview;
     const bathroomCheck =  amenities[0]?.bath;
+    const kitchenCheck = amenities[0]?.kitchen;
 
     return (
         <IconContent>
@@ -54,12 +55,6 @@ export const AmenitiesOne = () => {
                 <div>
                     <span>{ParkingIcon}</span>
                     <span>Secure parking spots</span>
-                </div>
-            )}
-            {bedroomCheck && (
-                <div>
-                    <span>{BedIcon}</span>
-                    <span>Bedrooms</span>
                 </div>
             )}
             {oceanViewCheck && (
@@ -83,7 +78,13 @@ export const AmenitiesOne = () => {
             {bathroomCheck && (
                 <div>
                     <span>{ShowerIcon}</span>
-                    <span>bathrooms (rain shower equipped)</span>
+                    <span>Rain shower equipped</span>
+                </div>
+            )}
+            {kitchenCheck && (
+                <div>
+                    <span>{KitchenIcon}</span>
+                    <span>Kitchen</span>
                 </div>
             )}
             
@@ -94,11 +95,10 @@ export const AmenitiesOne = () => {
 export const AmenitiesTwo = () => {
     const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
     
-    const kitchenCheck = amenities[0]?.kitchen;
     const wifiCheck =  amenities[0]?.wifi;
     const balconyCheck =  amenities[0]?.balcony;
     const guestRoomCheck =  amenities[0]?.guest_restroom;
-    const cleaningCheck =  amenities[0]?.cleaning_service;
+    // const cleaningCheck =  amenities[0]?.cleaning_service;
     const RokuCheck =  amenities[0]?.netflix;
     const swimmingCheck = amenities[0]?.swimming_pool;
     const lightingCheck =  amenities[0]?.lighting;
@@ -107,12 +107,6 @@ export const AmenitiesTwo = () => {
     return (
 
         <IconContent>
-            {kitchenCheck && (
-                <div>
-                    <span>{KitchenIcon}</span>
-                    <span>Kitchen</span>
-                </div>
-            )}
             {wifiCheck && (
                 <div>
                     <span>{WifiIcon}</span>
@@ -129,12 +123,6 @@ export const AmenitiesTwo = () => {
                 <div>
                     <span>{GuestRoomIcon}</span>
                     <span>Guest Restroom</span>
-                </div>
-            )}
-            {cleaningCheck && (
-                <div>
-                    <span>{CleaningIcon}</span>
-                    <span>Domestic cleaning service</span>
                 </div>
             )}
             {RokuCheck && (

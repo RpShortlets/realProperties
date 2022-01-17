@@ -4,6 +4,7 @@ import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
+import TawkTo from 'tawkto-react'
 
 const App = () => {
   
@@ -15,6 +16,19 @@ const App = () => {
   useEffect(() => {
     invokeGA();
   }, []);
+
+  useEffect(() => {
+    const tawkId = '1fpjikfdf'
+    const propertyId = '61e52988b84f7301d32b5faf'
+    const tawk = new TawkTo(propertyId, tawkId)
+
+    tawk.onStatusChange((status) => 
+    {
+        console.log(status)
+  
+    })
+
+  }, [])
 
   return (
     <>

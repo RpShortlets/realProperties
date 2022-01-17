@@ -211,7 +211,7 @@ const Result = ({data: {address, apartment_name, bath, bed, picture, room, price
                                         </div>
                                         <div>
                                             <span>{bath}</span>
-                                            <span>Baths</span>
+                                            <span>Bathroom</span>
                                         </div>
                                     </IconCard>
                                     <IconCard>

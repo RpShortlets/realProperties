@@ -83,7 +83,7 @@ const OpenGuestDropdown = ({width,left, top, openGuest,border,countAdultMinus, c
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Adults</h3>
-                                <span>Ages 12 and above</span>
+                                <span>Ages 18 and above</span>
                             </div>
                             <div>
                                 <Button 
@@ -109,7 +109,7 @@ const OpenGuestDropdown = ({width,left, top, openGuest,border,countAdultMinus, c
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Children</h3>
-                                <span>Age 2 - 11</span>
+                                <span>Age 0 - 1</span>
                             </div>
                             <div>
                                 <Button disabled={childrencount < countMinusChild}  classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex" padding="5px" background="#fff" />

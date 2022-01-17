@@ -223,7 +223,7 @@ const ModalDiv = styled.div `
     }
 `
 
-// const initiateState = {CulinaryArtist: "", RealCabsTaxis: "" }
+const initiateState = {cleaning: "", pickup: "" }
 
 
 const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
@@ -235,7 +235,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
     
     
     const GeneralInfo = general_info?.map((data) => data)
-    // const [checkboxes, setCheckboxes] = useState(initiateState)
+    const [checkboxes, setCheckboxes] = useState(initiateState)
     const [openCar, setOpenCar] = useState(false)
     const [selectedCar, setSelectedCar] = useState(null)
     const [driver, setDriver] = useState(false)
@@ -261,13 +261,15 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
         alert('Hello')
     }
 
+    console.log(checkboxes)
     const handlecheckbox = (e) => {
         const { value} = e.target;
         setRadio(value)
-        // setCheckboxes(prevState => ({
-        //     ...prevState,
-        //     [name]: value
-        // }))
+    }
+
+    const handleChange = (e) => {
+        const { value, name } = e.target;
+        setCheckboxes({...checkboxes, [name]: value})
     }
 
     const showBenzRef = (id) => {
@@ -465,16 +467,16 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                             </div>)}
                             {openService && (
                                 <ModalDiv  top="36px" ref={modalRef} width= "100%" left='0'  border="1px solid rgba(33, 8, 8, 0.22)">
-                                    {/* <div>
+                                    <div>
                                         <div>
-                                            <label>Culinary Artist</label>
-                                            <input type="checkbox" name="culinary" checked={checkboxes.culinary} onChange={handleChange}/>
+                                            <label>Cleaning Services</label>
+                                            <input type="checkbox" name="cleaning" checked={checkboxes.cleaning} onChange={handleChange}/>
                                         </div>
                                         <div>
-                                            <label>Cleaning Service</label>
-                                            <input type="checkbox" name="cleaning" checked={checkboxes.cleaning} onChange={handleChange}/>
+                                            <label>Pickup/Drop Off</label>
+                                            <input type="checkbox" name="pickup" checked={checkboxes.pickup} onChange={handleChange}/>
                                         </div> 
-                                    </div> */}
+                                    </div>
                                 </ModalDiv>
                             )}
                         </div>
