@@ -8,6 +8,7 @@ import StaticDateRangePicker from '@mui/lab/StaticDateRangePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import Box from '@mui/material/Box';
+import { SkeletonLoader } from "../../../components/Loader/Skeleton";
 
 
 
@@ -33,7 +34,7 @@ const Calenders = styled.div `
 
 
 
-const PropertyCalender = () => {
+const PropertyCalender = ({status}) => {
     const dispatch = useDispatch();
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
     const [value, setValue] = React.useState([null, null]);
@@ -46,7 +47,6 @@ const PropertyCalender = () => {
         const checkin = value[0]?.toLocaleDateString('en-CA');
         const checkout = value[1]?.toLocaleDateString('en-CA');
     
-        console.log(checkin, checkout)
         if(checkin && checkout) {
             dispatch(checkInDate(checkin))
             dispatch(checkOutDate(checkout))
@@ -61,11 +61,12 @@ const PropertyCalender = () => {
     return (
         <Calenders>
             <div>
-                <h2>Select check-in date</h2>
-                <p>Select your check-in date for exact pricing</p>
+                <h2>{status === 'loading' ? <SkeletonLoader width='20%'/> :  'Select check-in date'}</h2>
+                <p>{status === 'loading' ? <SkeletonLoader width='40%' height='20' /> : 'Select your check-in date for exact pricing'}</p>
             </div>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <StaticDateRangePicker
+                    loading={status === 'loading'? true : false}
                     disablePast
                     shouldDisableDate={date => {
                         const day = moment(date).format('YYYY-MM-DD');

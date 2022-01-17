@@ -47,7 +47,7 @@ const PropertyRules = ({status}) => {
             <RulesContainer>
                 <div style={{flex: '1'}}>
                     <div>
-                        <h2>House Rules</h2>
+                        <h2>{status === 'loading' ? <SkeletonLoader width="30%" />  : 'House Rules'}</h2>
                     </div>
                     <RuleContent>
                     {status === 'loading' ? <SkeletonLoader />  : <span>{WatchIcon}</span>}

@@ -184,7 +184,6 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
     Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
     addDriverLength, minusDriverLength, handlecheckbox}) => {
 
-        console.log(radio)
     return (
         <RentalService>
             <div className="RentalContainer">
@@ -291,7 +290,7 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                                         <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
                                     </Tooltips>
                                         <span className="carDays">{driverlengthValue}</span>
-                                    <Tooltips title='Cannot increase above length of stay'>
+                                    <Tooltips title='Cannot increase above length of car use'>
                                         <span className="carLengthBtn" onClick={addDriverLength}>+</span>
                                     </Tooltips>
                                 </div>

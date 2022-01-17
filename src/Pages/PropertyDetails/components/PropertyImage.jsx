@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux"
 import styled, { css } from "styled-components/macro"
-import { AiOutlineHeart } from "react-icons/ai"
-import { FiShare } from "react-icons/fi"
-import { FlexStyle } from "../../../styles/globalStyles"
+// import { AiOutlineHeart } from "react-icons/ai"
+// import { FiShare } from "react-icons/fi"
+// import { FlexStyle } from "../../../styles/globalStyles"
 import { VideoPlayer } from "../../../Svg/svg"
 
 import LargeOne from "../../../image/largeOne.jpg"
@@ -114,64 +114,64 @@ const ImageContainer = styled.div `
 
 `
 
-const MobileIcons = styled.div `
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    display: flex;
+// const MobileIcons = styled.div `
+//     position: absolute;
+//     top: 15px;
+//     right: 15px;
+//     display: flex;
 
 
-    span:first-child {
-        margin-right: 0.7rem;
-    }
+//     span:first-child {
+//         margin-right: 0.7rem;
+//     }
 
-    @media screen and (min-width: 769px) {
-        display: none !important;
-    }
+//     @media screen and (min-width: 769px) {
+//         display: none !important;
+//     }
 
-`
-const SvgStyle = css`
-    font-size: 14px;
-`
+// `
+// const SvgStyle = css`
+//     font-size: 14px;
+// `
 
-const SavedIcon = styled(AiOutlineHeart)`
-    ${SvgStyle}
-`
+// const SavedIcon = styled(AiOutlineHeart)`
+//     ${SvgStyle}
+// `
 
-const LikeIcon = styled(FiShare) `
-    ${SvgStyle}
-`
+// const LikeIcon = styled(FiShare) `
+//     ${SvgStyle}
+// `
 
-const IconCard = styled.span `
-    background: rgb(255, 255, 255);
-    width: 24px;
-    height: 24px;
-    ${FlexStyle}
-    justify-content: center;
-    border-radius: var(--border-radius-xtra);
-    color: var(--color-primary-dark);
-    opacity: .9;
-    cursor: pointer;
+// const IconCard = styled.span `
+//     background: rgb(255, 255, 255);
+//     width: 24px;
+//     height: 24px;
+//     ${FlexStyle}
+//     justify-content: center;
+//     border-radius: var(--border-radius-xtra);
+//     color: var(--color-primary-dark);
+//     opacity: .9;
+//     cursor: pointer;
 
-    :hover {
-        opacity: 1;
-    }
+//     :hover {
+//         opacity: 1;
+//     }
 
-    @media screen and (min-width: 500px) {
-        width: 40px;
-        height: 40px;
-    }
-`
+//     @media screen and (min-width: 500px) {
+//         width: 40px;
+//         height: 40px;
+//     }
+// `
 
-const SeePhotos = styled.div `
-    position: absolute;
-    right: 15px;
-    bottom: 20px;
+// const SeePhotos = styled.div `
+//     position: absolute;
+//     right: 15px;
+//     bottom: 20px;
 
-    @media screen and (min-width: 769px) {
-        display: none !important;
-    }
-`
+//     @media screen and (min-width: 769px) {
+//         display: none !important;
+//     }
+// `
 
 const PropertyImage = ({status}) => {
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
@@ -181,34 +181,45 @@ const PropertyImage = ({status}) => {
         <ImageContainer>
             <ImageWrapper>
                 <LargeImage>
-                    <div>
-                        {status === 'loading' ? (<SkeletonLoader/>) : (
-                            <>
-                                <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
-                                <span>
-                                    {VideoPlayer}
-                                </span>
-                            </>
-                        )}
-                    </div>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
+                        <div>
+                            <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <span>
+                                {VideoPlayer}
+                            </span>
+                        </div>
+                    )}
+                    
                 </LargeImage>
                 <SmallImage>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
                         <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
                 <SmallImage>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
                         <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
                 <SmallImage>
-                    <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
                 <SmallImage>
-                    <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
                 <SmallImage>
-                    <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
                 <SmallImage>
+                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
                     <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                    )}
                 </SmallImage>
             </ImageWrapper>
         </ImageContainer>

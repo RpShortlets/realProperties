@@ -59,16 +59,16 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
 
 });
 
-export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue}) => {
-    console.log('fired', checkOutDate, checkInDate)
+export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue, checkboxes}) => {
+
     const response = await axios.get(`${BaseURL}/payment-summary-update`,
     {
         params: {
             property_id: 1,
             check_in: checkInDate,
             check_out: checkOutDate,
-            cleaning: '',
-            pickup: '',
+            cleaning: checkboxes?.cleaning,
+            pickup: checkboxes?.pickup,
             car_rental: selectedCar,
             car_rental_length: carlengthValue,
             driver: radio,

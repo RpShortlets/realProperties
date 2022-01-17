@@ -13,7 +13,7 @@ import useAddGuestTotal from "../../hooks/useAddGuestTotal/useAddGuestTotal"
 import OpenDestination from "../../components/Dropdowns/OpenDestination"
 import { Destlocation } from "../../components/Dropdowns/data/destinationLocation"
 import { searchShortlets, filter } from "../../redux/actionCreators/actionCreators"
-import {SkeletonLoader, ContentLoaders, SliderLoader} from "../../components/Loader/Skeleton"
+import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
 
@@ -25,18 +25,6 @@ const Section = styled.section `
     padding-top: 5rem;
 `
 
-const Loader = styled.div `
-
-    
-    
-`
-const LoaderMain = styled.div `
-    padding: 3rem;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 3rem;
-`
 
 
 const GeneralDivStyle = css`
@@ -134,7 +122,7 @@ const Main = styled.div `
 
 const Results = styled.div `
     grid-column: 2/6;
-    /* margin: max(4vw,1rem) 0; */
+    margin-left: max(2vw, 1rem);
 `
 
 const OtherSearch = styled.div `
@@ -267,123 +255,100 @@ const SearchResult = () => {
     1000,[startprice, endprice, dispatch])
 
 
-
-    if(status === 'loading') {
-        return (
-        <Loader>
-            <div style={{marginTop: '-4px'}}>
-                <SkeletonLoader  count={1} height={60} styles={styles.loader}/>
-            </div>
-            <LoaderMain paddingleft='true' paddingRight='true'>
-                <div style={{marginTop: '-3rem'}}>
-                    <SliderLoader />
-                </div>
-                <div style={{gridColumn: '2/5'}}>
-                    <ContentLoaders />
-                </div>
-            </LoaderMain>
-        </Loader>
-        )
-    }
-
-
     return (
         <Section>
             <Container>
-                <Filter paddingleft='true' paddingRight='true'>
-                    
-                        <div>
-                            <Destination>
-                                <DestinationDiv onClick={() => setOpenModal(!openModal)}>
-                                    <FiSearch size={20} />
-                                    <span>{value ? value : 'Destination'}</span>
-                                </DestinationDiv>
-                                {openModal && (
-                                    <OpenDestination 
-                                        openModal={openModal}
-                                        myRef={myRef}
-                                        widths='28vw'
-                                        top='60px'
-                                        location={Destlocation}
-                                        handleOption={handleOption}
-                                        color='#333'
-                                    />
-                                )}
-                            </Destination>
-                            <Dates>
-                                Dates
-                            </Dates>
-                            <Guest>
-                                <GuestClick onClick={() => setguest(!guest)}>
-                                    <span>Add Guest</span>
-                                    <span>{TotalGuest}</span>
-                                </GuestClick>
-                                {guest && (
-                                    <OpenGuestDropdown 
-                                        openGuest={guest} 
-                                        width='28vw'
-                                        top='60px'
-                                        handleGuest={handleGuest} 
-                                        myRef={myRef} 
-                                        adultcount={adultcount} 
-                                        styles={styles} 
-                                        MinusAdult={MinusAdult} 
-                                        childrencount={childrencount} 
-                                        AddAdult={AddAdult} 
-                                        MinusChildren={MinusChildren} 
-                                        AddChildren={AddChildren}
-                                        countAdultMinus={countAdultMinus}
-                                        countAdultAdd={countAdultAdd}
-                                        countMinusChild={countMinusChild}
-                                        countAddChild={countAddChild}
-                                        
-                                    />
-                                )}
-                            </Guest>
+                {status === 'loading' ?(
+                    <div style={{marginTop: '-5.5rem'}}>
+                        <SkeletonLoader count={1} height={60} styles={styles.loader} /> 
+                    </div>)
+                    : (
+                    <Filter paddingleft='true' paddingRight='true'>
                             <div>
-                                <Button onClicks={handlesubmit}  borderRadius='5px' fontSize='var(--font-xtra-small-screen)' width='100%' height='100%' title='SEARCH' border='none' background='var(--linear-primary)' color='var(--color-white)' />
+                                <Destination>
+                                    <DestinationDiv onClick={() => setOpenModal(!openModal)}>
+                                        <FiSearch size={20} />
+                                        <span>{value ? value : 'Destination'}</span>
+                                    </DestinationDiv>
+                                    {openModal && (
+                                        <OpenDestination 
+                                            openModal={openModal}
+                                            myRef={myRef}
+                                            widths='28vw'
+                                            top='60px'
+                                            location={Destlocation}
+                                            handleOption={handleOption}
+                                            color='#333'
+                                        />
+                                    )}
+                                </Destination>
+                                <Dates>
+                                    Dates
+                                </Dates>
+                                <Guest>
+                                    <GuestClick onClick={() => setguest(!guest)}>
+                                        <span>Add Guest</span>
+                                        <span>{TotalGuest}</span>
+                                    </GuestClick>
+                                    {guest && (
+                                        <OpenGuestDropdown 
+                                            openGuest={guest} 
+                                            width='28vw'
+                                            top='60px'
+                                            handleGuest={handleGuest} 
+                                            myRef={myRef} 
+                                            adultcount={adultcount} 
+                                            styles={styles} 
+                                            MinusAdult={MinusAdult} 
+                                            childrencount={childrencount} 
+                                            AddAdult={AddAdult} 
+                                            MinusChildren={MinusChildren} 
+                                            AddChildren={AddChildren}
+                                            countAdultMinus={countAdultMinus}
+                                            countAdultAdd={countAdultAdd}
+                                            countMinusChild={countMinusChild}
+                                            countAddChild={countAddChild}
+                                            
+                                        />
+                                    )}
+                                </Guest>
+                                <div>
+                                    <Button onClicks={handlesubmit}  borderRadius='5px' fontSize='var(--font-xtra-small-screen)' width='100%' height='100%' title='SEARCH' border='none' background='var(--linear-primary)' color='var(--color-white)' />
+                                </div>
                             </div>
-                        </div>
-                    
-                </Filter>
+                        </Filter>
+                    )}
                 <Main>
                     <OtherSearch>
                         <div className="otherContainer">
-                            <div>
-                                <SliderDrawer value={slidervalue} onSliderChange={onSliderChange} />
-                            </div>
-                            <div className="otherInputContainer">
-                                <div>
-                                    <input type="text" name="minprice" value={slidervalue[0].toLocaleString()} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
-                                </div>
-                                <div>
-                                    <input type="text" name="maxprice" value={slidervalue[1].toLocaleString()}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
-                                </div>
-                            </div>
-                        </div>
-                    </OtherSearch>
-                    {status === 'succeeded' ? (
-                        <>
-                            {searchResult.length === 0 ? (
-                                'Empty'
-                            )
-                                : (
-                                    <>
-                                        <Results>
-                                            {searchResult?.map((property) => (
-                                                <Result data={property} key={property.apartment_id} />
-                                            ))}
-                                        </Results>
-                                        
-                                    </>
-                                    
-                                )    
+                            {status === 'loading' ? <SkeletonLoader/> :
+                                ( <div>
+                                    <SliderDrawer value={slidervalue} onSliderChange={onSliderChange} />
+                                </div>)
                             }
                             
-                            
-                        </>
-                    ) : ('Error Occured')
-                }                   
+                            {status === 'loading' ? <SkeletonLoader/> :
+                                (<div className="otherInputContainer">
+                                    <div>
+                                        <input type="text" name="minprice" value={slidervalue[0].toLocaleString()} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
+                                    </div>
+                                
+                                    <div>
+                                        <input type="text" name="maxprice" value={slidervalue[1].toLocaleString()}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
+                                    </div>
+                                </div>)
+                            }
+                        </div>
+                    </OtherSearch>
+                        <Results>
+                            {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
+                                <>
+                                {searchResult?.map((property) => (
+                                    <Result data={property} key={property.apartment_id} />
+                                ))}
+                                </>
+                            )}
+                        </Results>                  
                 </Main>
             </Container>
         </Section>

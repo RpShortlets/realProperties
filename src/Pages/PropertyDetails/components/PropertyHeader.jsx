@@ -67,30 +67,24 @@ const PropertyHeader = ({status}) => {
         <BodyHeader>
             {status === 'loading' ? <SkeletonLoader  width='40%'/> : <h2>{GeneralInfo[0]?.apartment_name}</h2>}
             <BodyHeaderIcon>
-                {status === 'loading' ? <SkeletonLoader /> :(
+                
                     <BodyIconCard>
                         <div>
-                            <span><IoBed/></span>
+                            {status === 'loading' ? <SkeletonLoader /> :(<span><IoBed/></span>)}
                         </div>
-                        <span>{GeneralInfo[0]?.bed} Beds</span> 
+                        <span>{status === 'loading' ? <SkeletonLoader /> : `${GeneralInfo[0]?.bed} Beds`}</span> 
                     </BodyIconCard>
-                )}
                 
                 <BodyIconCard style={{margin: '0 max(5vw, 1rem)'}}> 
-                    {status === 'loading' ? <SkeletonLoader /> : (
-                        <div>
-                            <span>{Baths}</span>
-                        </div>
-                    )}
-                    
+                    <div>
+                        {status === 'loading' ? <SkeletonLoader /> : ( <span>{Baths}</span>  )}
+                    </div>
                     {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.bath} Bathroom</span>)}
                 </BodyIconCard>
                 <BodyIconCard>
-                    {status === 'loading' ? <SkeletonLoader /> : (
-                        <div>
-                            <span>{Rooms}</span>
-                        </div>
-                    )}
+                    <div>
+                        {status === 'loading' ? <SkeletonLoader /> : ( <span>{Rooms}</span> )}
+                    </div>
                     {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.room} Rooms</span>)}
                 </BodyIconCard>
             </BodyHeaderIcon>

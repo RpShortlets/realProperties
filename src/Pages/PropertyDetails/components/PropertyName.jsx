@@ -51,14 +51,12 @@ const LikeIcon = styled(FiShare) `
 const PropertyName = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
 
-    const GeneralInfo = general_info?.map((data) => data)
 
-    console.log(status)
     return (
         <HeaderContents>
             <div>
-                <h1>{status === 'loading' ?  <SkeletonLoader />  : GeneralInfo[0]?.apartment_name}</h1>
-                <p>{status === 'loading' ?  <SkeletonLoader /> : GeneralInfo[0]?.address}</p>
+                <h1>{status === 'loading' ?  <SkeletonLoader />  : general_info[0]?.apartment_name}</h1>
+                <p>{status === 'loading' ?  <SkeletonLoader /> : general_info[0]?.address}</p>
             </div>
             <div>
                 <div style={{marginRight: '20px'}}>

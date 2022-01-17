@@ -1,13 +1,12 @@
-import { useState } from "react"
+
 import  { useNavigate } from "react-router-dom"
 import {useDispatch } from "react-redux"
 import styled from "styled-components"
 import { IoBed } from "react-icons/io5"
-import { Washer, Rooms, Baths, WifiIcon } from "../../../Svg/svg"
-import Button from "../../../components/Button/Button"
+import { Washer, Rooms, Baths } from "../../../Svg/svg"
 import { ShortletDetails, getReservation } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
-import { Tooltip } from 'antd';
+
 
 
 const Card = styled.div `
@@ -143,7 +142,7 @@ const Price = styled.div `
 const Result = ({data: {address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest}}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [showFeatures, setShowFeatures] = useState(false)
+    // const [showFeatures, setShowFeatures] = useState(false)
 
     const handleGetDetails = async() => {        
         dispatch(ShortletDetails()) 
@@ -160,7 +159,7 @@ const Result = ({data: {address, apartment_name, bath, bed, picture, room, price
             // onMouseLeave={() => setShowFeatures(false)} 
         >
             <CardContainer onClick={handleGetDetails}>
-                {showFeatures && (
+                {/* {showFeatures && (
                     <div style={{borderRadius: '10px', position: 'absolute', background: 'rgba(0, 0, 0, .3)', width: '100%', height: '100%', top: 0, zIndex: 1,}}>
                         <div style={{display: 'flex', justifyContent: 'end', margin: '2rem 1rem'}}> 
                             <Tooltip title='Free Wifi'>
@@ -170,7 +169,7 @@ const Result = ({data: {address, apartment_name, bath, bed, picture, room, price
                         </div> 
                         
                     </div>
-                )}
+                )} */}
                 <PictureContainer>
                     <div style={{width: '100%', height: '100%'}}>
                         <picture>

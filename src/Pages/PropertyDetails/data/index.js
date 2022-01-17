@@ -24,9 +24,6 @@ const IconContent = styled.div `
 export const AmenitiesOne = () => {
     const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
 
-    console.log(amenities[0]?.security)
-    
-
     const securityCheck = amenities[0]?.security;
     const ConditionalCheck = amenities[0]?.air_condition;
     const parkingCheck =  amenities[0]?.parking;

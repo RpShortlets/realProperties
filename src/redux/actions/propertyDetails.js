@@ -17,7 +17,6 @@ export const PropertyDetails = createSlice({
         })
         .addCase(ShortletDetails.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            // Add any fetched posts to the array
             state.PropertyDetails = action.payload
         })
         .addCase(ShortletDetails.rejected, (state, action) => {
