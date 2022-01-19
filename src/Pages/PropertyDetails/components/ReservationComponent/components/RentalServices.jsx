@@ -6,6 +6,7 @@ import { CSSTransition, Transition } from "react-transition-group"
 import TweenLite  from "gsap";
 
 
+
 const RentalService = styled.div `
     border: 1px solid rgba(0, 0, 0, 0.25);
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
@@ -189,131 +190,134 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
 
 
     return (
-        <RentalService>
-            <div className="RentalContainer">
-                <RentalType>
-                    <div className="RentalHeader">
-                        <h3>Car Rental</h3>
-                        <Tooltips title='reset all data'>
-                            <span onClick={resetData}>Clear data</span>
-                        </Tooltips>
-                    </div>
-                    <div onClick={() => setOpenCar(!openCar)} className="carTypeButton" style={{marginTop: 'max(0.5vw,0.3rem)'}}>
-                        <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
-                        {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
-                    </div>
-                    <Transition
-                        in={openCar}
-                        timeout={{ enter: 0, exit: 200 }}
-                        appear
-                        unmountOnExit
-                    >
-                        <>
-                        {openCar && (
-                            <CarModal>
-                                <div className="carModalWrapper">
-                                    <div className="carModalInputContainer" onClick={showBenzRef}>
-                                        <span htmlFor="benz">Mercedes Benz E350</span>
-                                        <div className="carModalInputDiv" ref={BenZ} >
-                                            <span>#50,000</span>
-                                            <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
+        <>
+            
+            <RentalService>
+                <div className="RentalContainer">
+                    <RentalType>
+                        <div className="RentalHeader">
+                            <h3>Car Rental</h3>
+                            <Tooltips title='reset all data'>
+                                <span onClick={resetData}>Clear data</span>
+                            </Tooltips>
+                        </div>
+                        <div onClick={() => setOpenCar(!openCar)} className="carTypeButton" style={{marginTop: 'max(0.5vw,0.3rem)'}}>
+                            <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
+                            {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
+                        </div>
+                        <Transition
+                            in={openCar}
+                            timeout={{ enter: 0, exit: 200 }}
+                            appear
+                            unmountOnExit
+                        >
+                            <>
+                            {openCar && (
+                                <CarModal>
+                                    <div className="carModalWrapper">
+                                        <div className="carModalInputContainer" onClick={showBenzRef}>
+                                            <span htmlFor="benz">Mercedes Benz E350</span>
+                                            <div className="carModalInputDiv" ref={BenZ} >
+                                                <span>#50,000</span>
+                                                <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="carModalInputContainer" onClick={showCamryRef}>
-                                        <span>Toyota Camry</span>
-                                        <div className="carModalInputDiv" ref={Camry} >
-                                            <span>#40,000</span>
-                                            <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                        <div className="carModalInputContainer" onClick={showCamryRef}>
+                                            <span>Toyota Camry</span>
+                                            <div className="carModalInputDiv" ref={Camry} >
+                                                <span>#40,000</span>
+                                                <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="carModalInputContainer" onClick={showSuvRef}>
-                                        <span>Chevy Tahoe SUV</span>
-                                        <div className="carModalInputDiv" ref={Suv} >
-                                            <span>#60,000</span>
-                                            <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                        <div className="carModalInputContainer" onClick={showSuvRef}>
+                                            <span>Chevy Tahoe SUV</span>
+                                            <div className="carModalInputDiv" ref={Suv} >
+                                                <span>#60,000</span>
+                                                <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                            </div>
                                         </div>
+                                        
                                     </div>
-                                    
+                                </CarModal>
+                            )}
+                        </>
+                        </Transition>
+                        {carlength && (
+                            <CarLength>
+                                <div className="carLenghtContainer">
+                                    <div className="carLengthDays">
+                                        <span>Number of days</span>
+                                    </div>
+                                    <div className="carLenghtBtnsDiv">
+                                        <Tooltips title='Cannot decrease below 1'>
+                                            <span className="carLengthBtn" onClick={minusDays}>-</span>
+                                        </Tooltips>
+                                        <span className="carDays">{carlengthValue}</span>
+                                        <Tooltips title='Cannot increase above length of stay'>
+                                            <span className="carLengthBtn" onClick={addDays}>+</span>
+                                        </Tooltips>
+                                    </div>
                                 </div>
-                            </CarModal>
+                            </CarLength>
                         )}
-                    </>
-                    </Transition>
-                    {carlength && (
-                        <CarLength>
-                            <div className="carLenghtContainer">
-                                <div className="carLengthDays">
-                                    <span>Number of days</span>
-                                </div>
-                                <div className="carLenghtBtnsDiv">
-                                    <Tooltips title='Cannot decrease below 1'>
-                                        <span className="carLengthBtn" onClick={minusDays}>-</span>
-                                    </Tooltips>
-                                    <span className="carDays">{carlengthValue}</span>
-                                    <Tooltips title='Cannot increase above length of stay'>
-                                        <span className="carLengthBtn" onClick={addDays}>+</span>
-                                    </Tooltips>
-                                </div>
-                            </div>
-                        </CarLength>
-                    )}
-                    {carlengthValue > 0 && (
-                        <Driver>
-                            <div className="DriverContainer">
-                                <div>
-                                    <span>Need a Driver ?</span>
-                                </div>
-                                <div className="driverRadioBtnContainer">
+                        {carlengthValue > 0 && (
+                            <Driver>
+                                <div className="DriverContainer">
                                     <div>
-                                        <input 
-                                            id='yesDriver' 
-                                            type="radio" 
-                                            name="driver" 
-                                            value="driver"  
-                                            style={{display: 'none'}}
-                                            checked={radio === "Yes"}
-                                            onChange={handlecheckbox} 
+                                        <span>Need a Driver ?</span>
+                                    </div>
+                                    <div className="driverRadioBtnContainer">
+                                        <div>
+                                            <input 
+                                                id='yesDriver' 
+                                                type="radio" 
+                                                name="driver" 
+                                                value="driver"  
+                                                style={{display: 'none'}}
+                                                checked={radio === "Yes"}
+                                                onChange={handlecheckbox} 
+                                                />
+                                            <Label htmlFor="yesDriver" checked={radio === 'driver' ? 'var(--color-primary)' : ''}>Yes</Label>
+                                        </div>
+                                        <div>
+                                            <input 
+                                                id="noDriver" 
+                                                type="radio" 
+                                                name="driver" 
+                                                value={null}
+                                                style={{display: 'none'}}
+                                                checked={radio === "No"}
+                                                onChange={handlecheckbox} 
                                             />
-                                        <Label htmlFor="yesDriver" checked={radio === 'driver' ? 'var(--color-primary)' : ''}>Yes</Label>
-                                    </div>
-                                    <div>
-                                        <input 
-                                            id="noDriver" 
-                                            type="radio" 
-                                            name="driver" 
-                                            value={null}
-                                            style={{display: 'none'}}
-                                            checked={radio === "No"}
-                                            onChange={handlecheckbox} 
-                                        />
-                                        <Label htmlFor="noDriver" checked={radio === '' ? 'var(--color-primary)' : ''}>No</Label>
+                                            <Label htmlFor="noDriver" checked={radio === '' ? 'var(--color-primary)' : ''}>No</Label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Driver>
-                    )}
-                    {radio === "driver" && carlengthValue > 0 ? (
-                        <CarLength>
-                            <div className="carLenghtContainer">
-                                <div className="carLengthDays">
-                                    <span>Number of days</span>
+                            </Driver>
+                        )}
+                        {radio === "driver" && carlengthValue > 0 ? (
+                            <CarLength>
+                                <div className="carLenghtContainer">
+                                    <div className="carLengthDays">
+                                        <span>Number of days</span>
+                                    </div>
+                                    <div className="carLenghtBtnsDiv">
+                                        <Tooltips title='Cannot decrease below 1'>
+                                            <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
+                                        </Tooltips>
+                                            <span className="carDays">{driverlengthValue}</span>
+                                        <Tooltips title='Cannot increase above length of car use'>
+                                            <span className="carLengthBtn" onClick={addDriverLength}>+</span>
+                                        </Tooltips>
+                                    </div>
                                 </div>
-                                <div className="carLenghtBtnsDiv">
-                                    <Tooltips title='Cannot decrease below 1'>
-                                        <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
-                                    </Tooltips>
-                                        <span className="carDays">{driverlengthValue}</span>
-                                    <Tooltips title='Cannot increase above length of car use'>
-                                        <span className="carLengthBtn" onClick={addDriverLength}>+</span>
-                                    </Tooltips>
-                                </div>
-                            </div>
-                        </CarLength>
-                    )
-                    :("")}
-                </RentalType>
-            </div>
-        </RentalService>
+                            </CarLength>
+                        )
+                        :("")}
+                    </RentalType>
+                </div>
+            </RentalService>
+        </>
     )
 }
 

@@ -44,12 +44,13 @@ const CancelSpan = styled.span `
 
 `
 
-const Guest = ({resetCount, openGuest, guest}) => {
+const Guest = ({resetCount, openGuest, guest, handleGuest}) => {
+
 
     return (
-        <Label style={{paddingLeft: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} isActive={openGuest}>
+        <Label onClick={handleGuest} style={{paddingLeft: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} isActive={openGuest} >
             <div>
-                <p style={{margin: '0'}}>Guest</p>
+                <p style={{margin: '0'}} onClick={handleGuest}>Guest</p>
                 <span>{guest ? `${guest} ${guest > 1 ? 'guests' : 'guest'}` : 'Add Guests'}</span>
             </div>
             <div>

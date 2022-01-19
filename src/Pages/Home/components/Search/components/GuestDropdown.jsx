@@ -7,7 +7,7 @@ import OpenGuestDropdown from "../../../../../components/OpenGuestDropdown"
 
 
 
-const GuestDropdowns = ({openGuest, handleGuest, myRef }) => {
+const GuestDropdowns = ({openGuest, handleGuest, myRef, setOpenGuest }) => {
         const dispatch = useDispatch();
         const {adultcount, childrencount} = useSelector(state => state.ComponentState)
         const countAdultMinus = 1;
@@ -46,17 +46,9 @@ const GuestDropdowns = ({openGuest, handleGuest, myRef }) => {
 
     return (
         <>
-        {/* <CSSTransition in={openGuest}
-                    mountOnEnter
-                    unmountOnExit 
-                    timeout={200}
-                    classNames="search"
-                >
-                    <> */}
                     
             <OpenGuestDropdown 
                 openGuest={openGuest} 
-                handleGuest={handleGuest} 
                 myRef={myRef} 
                 adultcount={adultcount} 
                 styles={styles} 
@@ -69,8 +61,10 @@ const GuestDropdowns = ({openGuest, handleGuest, myRef }) => {
                 countAdultAdd={countAdultAdd}
                 countMinusChild={countMinusChild}
                 countAddChild={countAddChild}
+                setOpenGuest={setOpenGuest}
                 width='30vw'
                 left="-65px"
+                zIndex='0'
             />
                     
         </>

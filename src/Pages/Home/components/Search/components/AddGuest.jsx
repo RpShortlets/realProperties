@@ -16,19 +16,20 @@ const GuestDiv = styled.div `
 
 `
 
-const AddGuest = ({handleGuest, guest, resetCount, openGuest, myRef,}) => {
+const AddGuest = ({handleGuest, guest, resetCount, openGuest, myRef, setOpenGuest}) => {
 
     return (
-        <GuestDiv onClick={handleGuest}>
+        <GuestDiv >
             <Guest 
                 guest={guest}
                 resetCount={resetCount} 
                 openGuest={openGuest}
+                handleGuest={handleGuest}
             />
             <GuestDropdowns 
                 openGuest={openGuest} 
-                handleGuest={handleGuest} 
                 myRef={myRef} 
+                setOpenGuest={setOpenGuest}
             /> 
         </GuestDiv>
     )

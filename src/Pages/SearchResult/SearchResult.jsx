@@ -1,4 +1,5 @@
 import { useState, useRef } from "react"
+import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components/macro"
 import Result from "./components/Result"
@@ -44,9 +45,12 @@ const OtherSearch = styled.div `
 
     width: 200px;
     height: 100%;
-    padding: 12px;
+    margin: 0 max(1vw, 1rem);
 
-
+    p {
+        margin: 0;
+        font-size: var(--font-xtra-small-screen);
+    }
     .otherInputContainer {
         display: flex;
 
@@ -75,13 +79,17 @@ const OtherSearch = styled.div `
 
 const SearchResult = () => {
     const dispatch = useDispatch();
-    const {adultcount, childrencount, searchValue} = useSelector(state => state.ComponentState)
+    const navigate = useNavigate()
+
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
     const {status, propertyResult: {searchResult}}= useSelector(state => state.propertyResult)
+
     const [guest, setguest] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [slidervalue, setSliderValue] = useState([10000, 100000]);
     const [showCalender, setShowCalender] = useState(false)
     const [min, setMin] = useState(20);
+
     const myRef = useRef(null)
     const countAdultMinus = 1;
     const countAdultAdd = 9;
@@ -136,7 +144,6 @@ const SearchResult = () => {
 
 
     const onSliderChange = (value) => {
-        console.log(value);
         const min = value[0];
         setMin(min)
         setSliderValue(value)
@@ -156,6 +163,7 @@ const SearchResult = () => {
     const handlesubmit = (e) => {
         e.preventDefault();
         dispatch(searchShortlets({searchValue, adultcount, childrencount}))
+        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
 
@@ -210,6 +218,9 @@ const SearchResult = () => {
                     <Main>
                         {status !== 'failed'&& (
                             <OtherSearch>
+                                <div>
+                                    <p>Filter by Price</p>
+                                </div>
                                 <div className="otherContainer">
                                     {status === 'loading' ? <SkeletonLoader/> :
                                         ( <div>

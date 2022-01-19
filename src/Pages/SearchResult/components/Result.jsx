@@ -1,6 +1,6 @@
-
+import { useEffect } from "react"
 import  { useNavigate } from "react-router-dom"
-import {useDispatch } from "react-redux"
+import {useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
@@ -139,37 +139,24 @@ const Price = styled.div `
 
 
 
-const Result = ({data: {address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest}}) => {
+const Result = ({data: {address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // const [showFeatures, setShowFeatures] = useState(false)
+    const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
-    const handleGetDetails = async() => {        
-        dispatch(ShortletDetails()) 
-        dispatch(getReservation())
-        navigate('/property-details')
 
+    const handleGetDetails = async(Id) => {        
+        dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id})) 
+        dispatch(getReservation({checkInDate,checkOutDate,apartment_id}))
+        navigate(`/apartment/${apartment_id}`)
     }
 
+   
 
     return (
         
-        <Card 
-            // onMouseEnter={() => setShowFeatures(true)}
-            // onMouseLeave={() => setShowFeatures(false)} 
-        >
+        <Card >
             <CardContainer onClick={handleGetDetails}>
-                {/* {showFeatures && (
-                    <div style={{borderRadius: '10px', position: 'absolute', background: 'rgba(0, 0, 0, .3)', width: '100%', height: '100%', top: 0, zIndex: 1,}}>
-                        <div style={{display: 'flex', justifyContent: 'end', margin: '2rem 1rem'}}> 
-                            <Tooltip title='Free Wifi'>
-                                <span></span>
-                                <Button  icon={WifiIcon} border='none' background="var( --color-primary-dark)" color="#fff" borderRadius='18px' padding='7px' fontSize='16px' display='flex'/>
-                            </Tooltip>
-                        </div> 
-                        
-                    </div>
-                )} */}
                 <PictureContainer>
                     <div style={{width: '100%', height: '100%'}}>
                         <picture>

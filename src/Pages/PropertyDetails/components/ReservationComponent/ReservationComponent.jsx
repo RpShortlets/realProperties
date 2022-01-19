@@ -14,11 +14,14 @@ import SelectDateInput from "./components/SelectDateInput"
 import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
 import ValueAddedServices from "./components/ValueAddedServices"
 import Prices from "./components/Prices"
+import Backdrop from "../../../../components/Backdrop"
 
 
 const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
     transition: all 0.8s;
+    position: relative;
+    z-index: 11;
     
 
     @media screen and (min-width: 769px) {
@@ -151,12 +154,10 @@ const ReserveButton = styled.div `
 const initiateState = {cleaning: "", pickup: "" }
 
 
-const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
+const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query, id}) => {
     const dispatch = useDispatch();
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-    const {status, reservation: {price, summary_details, max_guest }, } = useSelector(state => state.reservationState)
-
-
+    const {status, reservation: {price, summary_details, max_guest },reservation } = useSelector(state => state.reservationState)
 
     const [checkboxes, setCheckboxes] = useState(initiateState)
     const [openCar, setOpenCar] = useState(false)
@@ -178,10 +179,10 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
     const BenZ = useRef(null);
     const Suv = useRef(null);
     const Camry = useRef(null);
+    const propertyId =  status === 'succeeded' && price[0]?.id
     // const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
 
-    console.log(carType)
     const handleBenz = () => {
         alert('Hello')
     }
@@ -319,16 +320,18 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(getReservation())
+        dispatch(getReservation({checkOutDate, checkInDate, id}))
     }
 
     useMemo(() => 
-        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes})), 
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,id })), 
     [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes])
 
     
 
     return (
+        <>
+        {openCar  && <Backdrop onClick={()=> setOpenCar(false)} zIndex="10" /> }
         <Reservations ref={reserveRef}>
             <ReservationBody>
                 <ReservationContent>
@@ -352,6 +355,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                             {status === 'loading' ? (<SkeletonLoader />) :
                             (<OpenGuestDropdown  
                                 openGuest={openGuest} 
+                                setOpenGuest={setOpenGuest}
                                 myRef={modalRef} 
                                 adultcount={adultcount} 
                                 styles={styles} 
@@ -364,12 +368,13 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                                 countAdultAdd={countAdultAdd}
                                 countMinusChild={countMinusChild}
                                 countAddChild={countAddChild}
-                                top="51.7px" 
+                                top="40px" 
                                 width= "100%" 
                                 left='0'   
                                 border="1px solid rgba(33, 8, 8, 0.22)"
                                 
-                            />)}
+                            />)
+                            }
                         </div>
                     </div>
                     <ValueAddedServices 
@@ -424,6 +429,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                 </ReservationContent>
             </ReservationBody>
         </Reservations>
+        </>
     )
 }
 

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Button from "./Button/Button"
 import { FiMinus } from "react-icons/fi"
 import { IoMdAdd } from "react-icons/io"
+import Backdrop from './Backdrop';
+
 
 
 
@@ -74,11 +76,13 @@ const ModalDiv = styled.div`
 `
 
 
-const OpenGuestDropdown = ({width,left, top, openGuest,border,countAdultMinus, countAdultAdd,countMinusChild, countAddChild, handleGuest, myRef, adultcount, styles, MinusAdult, childrencount, AddAdult, MinusChildren, AddChildren}) => {
+const OpenGuestDropdown = ({width,left, top, setOpenGuest,openGuest,border,countAdultMinus, zIndex, countAdultAdd,countMinusChild, countAddChild, myRef, adultcount, styles, MinusAdult, childrencount, AddAdult, MinusChildren, AddChildren}) => {
+    
     return (
         <>
+            {openGuest  && <Backdrop onClick={()=> setOpenGuest(false)} zIndex={zIndex} /> }
             {openGuest && (
-                <ModalDiv onClick={handleGuest} width={width} top={top} border={border} left={left} ref={myRef}>
+                <ModalDiv  width={width} top={top} border={border} left={left} ref={myRef} show={openGuest} setShow={setOpenGuest}>
                     <GuestDropdown>
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>

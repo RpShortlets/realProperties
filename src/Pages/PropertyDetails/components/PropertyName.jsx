@@ -48,8 +48,8 @@ const LikeIcon = styled(FiShare) `
     ${SvgStyle}
 `
 
-const PropertyName = ({status}) => {
-    const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
+const PropertyName = () => {
+    const {PropertyDetails: {general_info}, status} = useSelector(state => state.propertyDetails)
 
 
     return (

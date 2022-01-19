@@ -23,10 +23,11 @@ const Search = styled.div `
 flex: 1; 
 position: relative;
 margin: 0 15px;
+z-index: 122;
 
 `
 
-const Destination = ({handleModal, openModal, value, myRef, handleOption,}) => {
+const Destination = ({handleModal, openModal, myRef, handleOption, setOpenModal}) => {
     const checkedQuery = useMediaQuery("(min-width: 601px)");
     const {searchValue} = useSelector(state => state.ComponentState)
 
@@ -48,7 +49,9 @@ const Destination = ({handleModal, openModal, value, myRef, handleOption,}) => {
                 myRef={myRef}
                 widths={widths}
                 location={Destlocation}
-                handleOption={handleOption}        
+                handleOption={handleOption} 
+                setOpenModal={setOpenModal}
+                zIndex='0'       
             /> 
             
         </Search>

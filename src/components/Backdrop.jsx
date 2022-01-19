@@ -13,7 +13,7 @@ const Back = styled.div `
     height: 100vh;
     background: ${({ theme }) => theme};
 
-    z-index: 10;
+    z-index: ${({zIndex}) => zIndex ? zIndex : '10'};
     opacity: 1;
 
 
@@ -23,7 +23,7 @@ const Back = styled.div `
 
 const Backdrop = props => {
     return ReactDOM.createPortal(
-        <Back onClick={props.onClick} theme={props.theme}></Back>,
+        <Back onClick={props.onClick} theme={props.theme} zIndex={props.zIndex}></Back>,
         document.getElementById('backdrop-protal')
     );
 };

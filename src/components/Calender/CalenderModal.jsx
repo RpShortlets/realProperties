@@ -7,7 +7,7 @@ import { checkInDate, checkOutDate, newCheckInDate, newCheckOutDate } from "../.
 
 
 
-const CalenderModal = ({show, setShow, theme, left, calanders}) => {
+const CalenderModal = ({show, setShow, theme, left, calanders, disablebooked}) => {
     console.log(calanders)
     const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const CalenderModal = ({show, setShow, theme, left, calanders}) => {
     }
     return (
         <Modal show={show} setShow={setShow} theme={theme} top="12vh" width="fit-content" left={left}>
-            <StaticCalender calendars={calanders}/>
+            <StaticCalender calendars={calanders} disablebooked={disablebooked}/>
             <div>
                 <Button  onClicks={handleReset} title="Clear dates" background="transparent" border='none' fontSize='var(--font-xtra-small-screen)'/>
             </div>

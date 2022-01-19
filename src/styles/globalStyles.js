@@ -67,7 +67,7 @@ export const FlexStyle = css`
 export const ModalStyle = css`
     position: absolute;
     left: ${({left}) => left};
-    top: ${({top}) => top ? top : '70px'};
+    top: ${({top}) => top ? top : '67px'};
     width: ${({width}) => width};
     border-radius: 7px;
     background: #fff;
@@ -75,7 +75,7 @@ export const ModalStyle = css`
     overflow-x: hidden !important;
     overflow-y: auto !important;
     border: ${({border}) => border};
-    z-index: 1;
+    z-index: 11;
     box-shadow: var(--shadow);
     color: ${({color}) => color};
 

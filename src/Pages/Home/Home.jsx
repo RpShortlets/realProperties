@@ -75,6 +75,7 @@ const Home = () => {
             <Section>
                 <SearchFilter 
                     openModal={openModal} 
+                    setOpenModal={setOpenModal}
                     handleModal={openDestinationModal} 
                     myRef={myRef} 
                     handleGuest={handleGuest} 
@@ -83,6 +84,7 @@ const Home = () => {
                     homeDateValue={homeDateValue} 
                     setHomeDateValue={setHomeDateValue}
                     openGuest={openGuest} 
+                    setOpenGuest={setOpenGuest}
                     handleOption={handleOption}
                     SubmitForm={SubmitForm} 
                 

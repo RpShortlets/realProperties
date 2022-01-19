@@ -56,6 +56,8 @@ const Filter = styled.div `
 const Destination = styled.div `
     grid-column: 1/3;
     ${GeneralDivStyle}
+    position: relative;
+    z-index: 12;
 
 `
 
@@ -161,19 +163,21 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                     {openModal && (
                         <OpenDestination 
                             openModal={openModal}
+                            setOpenModal={setOpenModal}
                             myRef={myRef}
                             widths='28vw'
                             top='60px'
                             location={Destlocation}
                             handleOption={handleOption}
                             color='#333'
+                            zIndex='0'
                         />
                     )}
                 </Destination>
                 <DateContainer style={{position: 'relative'}}>
-                    <Dates style={{borderRight: '1px solid var(--color-primary)', height: '100%'}}>
+                    <Dates style={{borderRight: '1px solid var(--color-primary)', height: '100%'}} onClick={() => setShowCalender(!showCalender)}>
                         {useCheckInDate && useCheckOutDate ? (
-                            <DateWrapper onClick={() => setShowCalender(!showCalender)}>
+                            <DateWrapper>
                                 <div style={{marginRight: '1rem'}}>
                                     <BsCalendarWeek fontSize={16} color="" />
                                 </div>
@@ -200,9 +204,9 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                             
                         )}
                     </Dates>
-                    <Dates>
+                    <Dates onClick={() => setShowCalender(!showCalender)}>
                         {useCheckInDate && useCheckOutDate ? (
-                            <DateWrapper  onClick={() => setShowCalender(!showCalender)}>
+                            <DateWrapper>
                                 <div style={{marginRight: '1rem'}}>
                                     <BsCalendarWeek fontSize={18} color="" />
                                 </div>
@@ -268,7 +272,8 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                             countAdultAdd={countAdultAdd}
                             countMinusChild={countMinusChild}
                             countAddChild={countAddChild}
-                            
+                            setOpenGuest={setguest}
+                            zIndex='0'                            
                         />
                     )}
                 </Guest>

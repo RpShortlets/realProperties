@@ -1,8 +1,8 @@
 import {useState, useRef, useEffect} from "react"
+import { useParams} from "react-router-dom"
 import { useSelector } from "react-redux"
 import styled  from "styled-components/macro"
 import { PaddingStyle } from "../../styles/globalStyles"
-import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 import MobileModal from "./components/Modal"
 import ReservationComponent from "./components/ReservationComponent/ReservationComponent" 
@@ -15,6 +15,7 @@ import PropertyAmenities from "./components/PropertyAmenities"
 import {PropertyCalender} from "./components/PropertyCalender"
 import PropertyRules from "./components/PropertyRules"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
+import Backdrop from "../../components/Backdrop"
 
 
 const Section  = styled.section `
@@ -57,7 +58,8 @@ const BodyContent = styled.div `
 
 const PropertyDetails = () => {
     const Query = useMediaQuery("(min-width: 769px)")
-    const {status} = useSelector(state => state.propertyDetails)
+    const Id = useParams().id
+    const {status, PropertyDetails} = useSelector(state => state.propertyDetails)
     const {reservation: {summary_details }} = useSelector(state => state.reservationState)
     const [openGuest, setOpenGuest] = useState(false)
     const [openService, setOpenService] = useState(false)
@@ -66,13 +68,6 @@ const PropertyDetails = () => {
     const staylength = summary_details ? summary_details[0]?.stay_length : 1;
 
 
-    useClickOutside(modalRef, () => {
-        // if (openGuest || openService) {
-        //     setOpenGuest(false)
-        //     setOpenService(false)
-        // }
-            // If user clicks outside of modal, close it.
-    })
 
     //* HIDE SCROLL BAR WHILE HEADER IMAGE IS STILL LOADING AT HOME PAGE
     useEffect(() => {
@@ -88,6 +83,7 @@ const PropertyDetails = () => {
 
     return (
         <>
+            {openService  && <Backdrop onClick={()=> setOpenService(false)} zIndex="10" /> }
             {!Query && <MobileModal show={show} setshow={setshow}/>}
             <Section>
                 <Main paddingleft='true' paddingRight='true'>
@@ -107,6 +103,7 @@ const PropertyDetails = () => {
                                     setshow={setshow}
                                     show={show}
                                     Query={Query}
+                                    id={Id}
                                 />
                                 <PropertyAmenities  status={status}/>
                             </BodyContent>

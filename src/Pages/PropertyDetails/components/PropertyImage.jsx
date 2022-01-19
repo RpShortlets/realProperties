@@ -213,7 +213,7 @@ const PropertyImage = ({status}) => {
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
     
 
-
+    console.log(pictures)
 
     
 
@@ -227,7 +227,7 @@ const PropertyImage = ({status}) => {
                     <LargeImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                             <div onClick={() => setIsOpen(true)}>
-                                <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                                 <span onClick={() => setOpenModal(true)} style={{cursor: 'pointer'}}>
                                     {VideoPlayer}
                                 </span>
@@ -237,32 +237,32 @@ const PropertyImage = ({status}) => {
                     </LargeImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[1]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[2]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[3]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[4]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[5]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                        <img data-src={pictures[6]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                 </ImageWrapper>

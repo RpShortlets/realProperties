@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { ModalStyle } from '../../styles/globalStyles';
+import Backdrop from "../Backdrop";
 
 const ModalDiv = styled.div `
 ${ModalStyle}
@@ -15,9 +16,10 @@ label {
 }
 `
 
-const OpenDestination = ({openModal, myRef, widths, location, handleOption, top, color}) => {
+const OpenDestination = ({openModal, myRef, widths, location, handleOption, top, color, setOpenModal, zIndex}) => {
     return (
         <>
+            {openModal  && <Backdrop onClick={()=> setOpenModal(false)} zIndex={zIndex} /> }
             {openModal && (
                 <ModalDiv ref={myRef} width={widths} left="0" top={top} color={color}>
                     {location.map((data, i)  => 

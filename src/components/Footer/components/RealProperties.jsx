@@ -12,7 +12,7 @@ const Container = styled.div `
 
     p {
         color: var(--color-light-gray);
-        font-size: var(--font-xtra-small-screen);
+        font-size: var( --font-xtraLarge-small);
         font-weight: 300;
         text-align: justify;
         line-height: 1.5;
@@ -51,8 +51,11 @@ const RealProperties = () => {
         <Container>
             <div>
                 <h2>Real properties</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum maecenas sit est eleifend ut a, 
-                    porta magna. Egestas vitae ac ut duis vulputate senectus faucibus.
+                <p>
+                    Real Properties Nigeria Ltd is a boutique real estate and facilities management company
+                    founded in 2012. With our unique contemporary style and passion for connecting people
+                    with property, we aspire to provide the ultimate real estate experience for today’s modern
+                    consumer.
                 </p>
                 <div>
                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookSquare fontSize={16} /></a>

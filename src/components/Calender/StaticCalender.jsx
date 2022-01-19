@@ -38,7 +38,7 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 
 
-const StaticCalender = ({status, calendars}) => {
+const StaticCalender = ({status, calendars, disablebooked}) => {
     const dispatch = useDispatch();
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
@@ -76,10 +76,15 @@ const StaticCalender = ({status, calendars}) => {
             <StaticDateRangePicker
                 loading={status === 'loading'? true : false}
                 disablePast
-                shouldDisableDate={date => {
-                    const day = moment(date).format('YYYY-MM-DD');
-                    return dates?.includes(day)
-                }}
+                // shouldDisableDate={date => {
+                //     const day = moment(date).format('YYYY-MM-DD');
+                //     return dates?.includes(day)
+                // }}
+                shouldDisableDate={disablebooked ?
+                        date => {
+                        const day = moment(date).format('YYYY-MM-DD');
+                        return dates?.includes(day)
+                }: null}
                 renderDay={renderWeekPickerDay}
                 
                 displayStaticWrapperAs="desktop"
