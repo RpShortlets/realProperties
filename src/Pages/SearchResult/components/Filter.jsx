@@ -171,7 +171,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                     )}
                 </Destination>
                 <DateContainer style={{position: 'relative'}}>
-                    <Dates style={{borderRight: '1px solid var(--color-primary)'}}>
+                    <Dates style={{borderRight: '1px solid var(--color-primary)', height: '100%'}}>
                         {useCheckInDate && useCheckOutDate ? (
                             <DateWrapper onClick={() => setShowCalender(!showCalender)}>
                                 <div style={{marginRight: '1rem'}}>
@@ -191,7 +191,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                             </DateWrapper>
                             
                         ) : (
-                            <div style={{display: 'flex', alignItems: 'center'}} onClick={() => setShowCalender(!showCalender)}>
+                            <div style={{display: 'flex', alignItems: 'center', padding: '20px'}} onClick={() => setShowCalender(!showCalender)}>
                                 <BsCalendarWeek fontSize={18} color="" />
                                 <span style={{marginLeft: '.5rem'}}>
                                     Check-in
@@ -219,7 +219,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                                     
                             </DateWrapper>
                         ) : (
-                            <div style={{display: 'flex', alignItems: 'center'}}  onClick={() => setShowCalender(!showCalender)}>
+                            <div style={{display: 'flex', alignItems: 'center', padding: '20px'}}  onClick={() => setShowCalender(!showCalender)}>
                                 <BsCalendarWeek fontSize={16} color="" />
                                 <span style={{marginLeft: '.5rem'}}>
                                     Check-out
@@ -229,7 +229,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                         )}
                     </Dates>
                     {showCalender && (
-                        <CalenderModal show={showCalender} setShow={setShowCalender} theme=""/>
+                        <CalenderModal show={showCalender} setShow={setShowCalender} theme="" left="42%" calanders={2}/>
                     )}
                 </DateContainer>
                 <Guest style={{marginRight: '.6rem'}}>

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkOutDate, checkInDate, newCheckInDate, newCheckOutDate, newUnformattedDates } from "../../redux/actions/componentState";
+import { checkOutDate, checkInDate, newCheckInDate, newCheckOutDate } from "../../redux/actions/componentState";
 import TextField from '@mui/material/TextField';
 import StaticDateRangePicker from '@mui/lab/StaticDateRangePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -9,13 +9,16 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import  "../../styles/utilities.css"
 import MuiDateRangePickerDay from "@mui/lab/DateRangePickerDay";
 import { styled } from "@mui/material/styles";
+import '../../styles/utilities.css'
+
+
 
 const DateRangePickerDay = styled(MuiDateRangePickerDay)(
     ({ theme, isHighlighting, isStartOfHighlighting, isEndOfHighlighting }) => ({
     ...(isHighlighting && {
         borderRadius: 0,
         backgroundColor: 'rgba(33, 147, 176, 1)',
-        color: theme.palette.common.white,
+        color: theme.palette.common.black,
         "&:hover, &:focus": {
         backgroundColor: 'rgba(33, 147, 176, 1)',
         }
@@ -35,7 +38,7 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 
 
-const StaticCalender = ({status}) => {
+const StaticCalender = ({status, calendars}) => {
     const dispatch = useDispatch();
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
@@ -44,6 +47,8 @@ const StaticCalender = ({status}) => {
 
 
         
+    
+    
     React.useEffect(() => {
         var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
         const checkin = value[0]?.toLocaleDateString('en-CA');
@@ -82,7 +87,7 @@ const StaticCalender = ({status}) => {
                 onChange={(newValue) => {
                 setValue(newValue);
                 }}
-                calendars={2}
+                calendars={calendars}
                 renderInput={(startProps, endProps) => (
                 <React.Fragment>
                     <TextField {...startProps} />

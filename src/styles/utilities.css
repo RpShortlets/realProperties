@@ -45,6 +45,10 @@
     flex: 1 !important;
 }
 
+.css-1tape97:not(:last-of-type) {
+    border-right: none !important;
+}
+
 .inputCalenderContainer  span {
     font-size: var(--font-xtraLarge-small);
     font-weight: 400;

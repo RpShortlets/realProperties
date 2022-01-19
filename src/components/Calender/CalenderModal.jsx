@@ -1,13 +1,29 @@
 
 import Modal  from "../Modal/Modal"
 import StaticCalender from "./StaticCalender"
+import Button from "../Button/Button"
+import { useDispatch } from 'react-redux';
+import { checkInDate, checkOutDate, newCheckInDate, newCheckOutDate } from "../../redux/actions/componentState";
 
 
 
-const CalenderModal = ({show, setShow, theme}) => {
+const CalenderModal = ({show, setShow, theme, left, calanders}) => {
+    console.log(calanders)
+    const dispatch = useDispatch();
+
+    const handleReset = () => {
+        dispatch(checkInDate(null))
+        dispatch(checkOutDate(null))
+        dispatch(newCheckInDate(null))
+        dispatch(newCheckOutDate(null))
+        setShow(false)
+    }
     return (
-        <Modal show={show} setShow={setShow} theme={theme} top="12vh" width="fit-content">
-            <StaticCalender />
+        <Modal show={show} setShow={setShow} theme={theme} top="12vh" width="fit-content" left={left}>
+            <StaticCalender calendars={calanders}/>
+            <div>
+                <Button  onClicks={handleReset} title="Clear dates" background="transparent" border='none' fontSize='var(--font-xtra-small-screen)'/>
+            </div>
         </Modal>
     )
 }

@@ -13,7 +13,7 @@ const MainModal = styled.div`
     z-index: 100;
     position: fixed;
     top: ${({ top }) => top};
-    left: 45%;
+    left: ${({ left }) => left};
     transform: translateX(-50%);
     width: ${({ width }) => width};
     background: white;
@@ -42,7 +42,7 @@ const MainModal = styled.div`
 
 const ModalOverLay = props => {
     const content = (
-        <MainModal className="Modal" top={props.top} width={props.width}>
+        <MainModal className="Modal" top={props.top} width={props.width} left={props.left}>
             <div  style={{display:'flex', justifyContent: 'flex-start', marginBottom: 'max(0.5vw, 1rem)'}}>
                 <Button borderRadius='27px' padding="3px" display='flex' alignT='center' justify='center' height='35px' width='35px' background='var(--color-primary)' border='none' icon={CancelIcon} onClicks={() => props.setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
             </div>
@@ -65,7 +65,7 @@ const Modal = (props) => {
                 timeout={200}
                 classNames="SmallModal"
             >
-                <ModalOverLay setShow={props.setShow} top={props.top} width={props.width}>
+                <ModalOverLay setShow={props.setShow} top={props.top} width={props.width} left={props.left}>
                     {props.children}
                 </ModalOverLay>
             </CSSTransition>

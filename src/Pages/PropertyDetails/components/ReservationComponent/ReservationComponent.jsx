@@ -10,6 +10,7 @@ import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } 
 import {getReservation, getReservationUpdate} from "../../../../redux/actionCreators/actionCreators"
 import styles from "../../../../styles/home.module.css"
 import RentalServices from "./components/RentalServices"
+import SelectDateInput from "./components/SelectDateInput"
 import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
 import ValueAddedServices from "./components/ValueAddedServices"
 import Prices from "./components/Prices"
@@ -61,11 +62,13 @@ const ReservationContent = styled.div `
             box-sizing: border-box;
             border-radius: 5px;
             margin: max(1vw,1rem) 0 0.7rem;
+            
             /* padding: 10px; */
 
             > div:first-child {
                 ${FlexStyle}
                 border-bottom: 1px solid rgba(33, 8, 8, 0.5);
+    
 
                 > div {
                     flex: 1;
@@ -151,7 +154,7 @@ const initiateState = {cleaning: "", pickup: "" }
 const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
     const dispatch = useDispatch();
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-    const {status, reservation: {price, dates, summary_details, max_guest }, } = useSelector(state => state.reservationState)
+    const {status, reservation: {price, summary_details, max_guest }, } = useSelector(state => state.reservationState)
 
 
 
@@ -333,16 +336,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                         <span>&#8358;{status === 'loading' ? <SkeletonLoader /> : `${price[0]?.price?.toLocaleString()}/night` }</span>
                     </div>
                     <div>
-                        <div>
-                            <div>
-                                <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>
-                                <span>{status === 'loading' ? <SkeletonLoader /> : dates[0].check_in_date ? dates[0].check_in_date : checkInDate ? checkInDate : 'DD/MM/YYYY'}</span>
-                            </div>
-                            <div>
-                                <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-out'}</span>
-                                <span>{status === 'loading' ? <SkeletonLoader /> : dates[0].check_out_date ? dates[0].check_out_date : checkOutDate ? checkOutDate : 'DD/MM/YYYY'}</span>
-                            </div>
-                        </div>
+                        <SelectDateInput/>
                         <div>
                             {status === 'loading' ? (<SkeletonLoader /> ) :
                             (<div onClick={() => setOpenGuest(!openGuest)}> 
