@@ -5,8 +5,9 @@
 
 .input-container label {
     display: block;
-    font-size: 1rem;
+    font-size: var( --font-small-screen) !important;
     color: #fff;
+    color: var(--color-dark);
 }
 
 .input-container label svg {
@@ -18,15 +19,20 @@
     background: #FFFFFF;
     border: 1px solid #2193B0;
     color: var(--color-primary);
-    /* box-shadow: 0px 7px 64px rgb(0 0 0 / 7%); */
+    font-size: var(--font-xtra-small-screen);
     outline: 0;
-    /* border: 0; */
     padding: 10px;
-    padding-left: 2.2rem;
+    padding-left: max(4vw, 2rem);
     border-radius: 4px;
     width: 100%;
     height: 45px;
     margin-top: 7px;
+    transition: border .2s;
+}
+
+.input-container input {
+    box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
+    border-radius: 6px;
 }
 
 .input-container input:focus,
@@ -51,10 +57,10 @@ select {
 .input-container span {
     position: absolute;
     z-index: 1;
-    left: 10px;
+    left: 15px;
     top: 50%;
-    transform: translateY(15%);
-    font-size: 1.1rem;
+    transform: translateY(5%);
+    /* font-size: var(--font-small); */
     color: var(--color-primary);
 }
 
@@ -80,121 +86,6 @@ input[type="date"] {
     margin-top: 8px;
 }
 
-/******************** DATE INPUT STYLE ****************************/
-
-.input-container .ant-picker {
-    width: 100% !important;
-    border-radius: 4px;
-    width: 100% !important;
-    border-radius: 4px;
-    background: transparent !important;
-    border: 0 !important;
-}
-
-.input-container .ant-picker-input input{
-    outline: 0 !important;
-    border: 0 !important;
-    margin: 0 !important;
-    padding: 6px !important;
-}
-
-.input-container .ant-picker-input span {
-    left: 3px;
-    top: 18%;
-}
-
-.input-container .ant-picker-input input::-webkit-input-placeholder {
-    color: var(--color-dark) !important;
-}
-
-.ant-picker {
-    padding: 0 !important;
-}
-
-.ant-picker input {
-    height: 40px !important;
-}
-
-.ant-picker-cell .ant-picker-cell-inner {
-    min-width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-}
-
-.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
-    border: 0 !important;
-}
-
-.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
-    color: #fff;
-    background: linear-gradient(225deg, #70B4C6 0%, #17677B 100%) !important;
-    border-radius: 14px !important;
-}
-
-.ant-picker-cell:hover:not(.ant-picker-cell-in-view) .ant-picker-cell-inner, .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
-    background: #D8E3FF !important;
-    color: #2193B0;
-    border-radius: 15px;
-    min-width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-}
-
-.ant-picker-range-separator {
-    display: none !important;
-}
-
-.ant-picker-focused {
-    box-shadow: none !important;
-}
-
-.input-range-picker span {
-    left: 3px !important;
-    top: 18% !important;
-    display: none;
-}
-
-.ant-picker-range .ant-picker-active-bar {
-    bottom: -1px;
-    height: 2px;
-    margin-left: 6px !important;
-    background: #1890ff;
-    opacity: 0;
-    transition: all 0.3s ease-out;
-    pointer-events: none;
-    width: 75px !important;
-}
-
-.ant-picker-panel-container {
-    overflow: hidden;
-    vertical-align: top;
-    background: #fff;
-    border-radius: 12.8288px;
-    box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
-    transition: margin 0.3s;
-    background: rgba(245, 245, 245, 1) !important;
-}
-
-.ant-picker-header-super-next-btn,
-.ant-picker-header-super-prev-btn{
-    display: none !important;
-}
-
-.ant-picker-dropdown {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    font-variant: tabular-nums;
-    line-height: 1.5715;
-    list-style: none;
-    font-feature-settings: 'tnum', "tnum";
-    position: absolute;
-    z-index: 1050;
-    /* left: 80px !important;
-    top: 390px !important; */
-}
 
 /************************** END OF DATE STYLES ****************************************/
 

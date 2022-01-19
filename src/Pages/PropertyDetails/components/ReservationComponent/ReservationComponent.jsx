@@ -4,7 +4,7 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
 import styled from "styled-components"
-import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
+// import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
 import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../../redux/actions/componentState"
 import {getReservation, getReservationUpdate} from "../../../../redux/actionCreators/actionCreators"
@@ -151,7 +151,6 @@ const initiateState = {cleaning: "", pickup: "" }
 const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query}) => {
     const dispatch = useDispatch();
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-    // const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const {status, reservation: {price, dates, summary_details, max_guest }, } = useSelector(state => state.reservationState)
 
 
@@ -179,6 +178,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
     // const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
 
+    console.log(carType)
     const handleBenz = () => {
         alert('Hello')
     }

@@ -54,7 +54,6 @@ const PropertyDescription = ({status}) => {
                 <h2>Description</h2>
                 <div>
                     <p>{GeneralInfo[0]?.property_description}</p> 
-                    {/* <p style={{marginTop: '.8rem'}}>{data?.descriptionTwo}</p> */} 
                 </div>
             </>
         )}

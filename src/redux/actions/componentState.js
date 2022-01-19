@@ -7,8 +7,12 @@ export const ComponentState = createSlice({
         childrencount: 0,
         guest: 0,
         textTitle: 'Find Shortlets',
+        unformattedDates: [],
         checkInDate: null,
         checkOutDate: null,
+        useCheckInDate: null,
+        useCheckOutDate: null,
+        searchValue: '',
     }, 
     reducers: {
         incrementAdult: (state) => {
@@ -42,12 +46,24 @@ export const ComponentState = createSlice({
         },
         checkOutDate: (state, action) => {
             state.checkOutDate = action.payload
-        }
+        },
+        newCheckInDate: (state, action) => {
+            state.useCheckInDate= action.payload
+        },
+        newCheckOutDate: (state, action) => {
+            state.useCheckOutDate = action.payload
+        },
+        saveSearchValue: (state, action) => {
+            state.searchValue = action.payload
+        },
+        newUnformattedDates: (state, action) => {
+            state.unformattedDates = action.payload
+        },
 
     },
     extraReducers: {}
 })
 
-export const { incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate  } = ComponentState.actions;
+export const { newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
 
 export default ComponentState.reducer

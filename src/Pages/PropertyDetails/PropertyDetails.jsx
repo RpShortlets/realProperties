@@ -12,7 +12,7 @@ import PropertyImage from "./components/PropertyImage"
 import PropertyHeader from "./components/PropertyHeader"
 import PropertyDescription from "./components/PropertyDescription"
 import PropertyAmenities from "./components/PropertyAmenities"
-import PropertyCalender from "./components/PropertyCalender"
+import {PropertyCalender} from "./components/PropertyCalender"
 import PropertyRules from "./components/PropertyRules"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 
@@ -55,24 +55,22 @@ const BodyContent = styled.div `
 
 
 
-
-
-
-
 const PropertyDetails = () => {
     const Query = useMediaQuery("(min-width: 769px)")
     const {status} = useSelector(state => state.propertyDetails)
+    const {reservation: {summary_details }} = useSelector(state => state.reservationState)
     const [openGuest, setOpenGuest] = useState(false)
     const [openService, setOpenService] = useState(false)
     const [show, setshow] = useState(false);
     const modalRef = useRef()
+    const staylength = summary_details ? summary_details[0]?.stay_length : 1;
 
 
     useClickOutside(modalRef, () => {
-        if (openGuest || openService) {
-            setOpenGuest(false)
-            setOpenService(false)
-        }
+        // if (openGuest || openService) {
+        //     setOpenGuest(false)
+        //     setOpenService(false)
+        // }
             // If user clicks outside of modal, close it.
     })
 
@@ -114,7 +112,7 @@ const PropertyDetails = () => {
                             </BodyContent>
                         </BodyContainer>
                     </Header>
-                    <PropertyCalender status={status}/> 
+                    <PropertyCalender status={status} lenghtstay={staylength}  margin="max(3vw,2rem) 0"/> 
                     <PropertyRules  status={status}/>
                 </Main> 
             </Section>

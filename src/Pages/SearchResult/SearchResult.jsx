@@ -1,21 +1,17 @@
 import { useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import styled, {css} from "styled-components/macro"
-import Button from "../../components/Button/Button"
-import { PaddingStyle, FlexStyle } from "../../styles/globalStyles"
+import styled from "styled-components/macro"
 import Result from "./components/Result"
-import OpenGuestDropdown from "../../components/OpenGuestDropdown"
-import { FiSearch} from "react-icons/fi"
-import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../redux/actions/componentState"
+import { incrementAdult, decrementAdult, incrementChildren, decrementChildren, saveSearchValue } from "../../redux/actions/componentState"
 import styles from "../../styles/home.module.css"
 import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import useAddGuestTotal from "../../hooks/useAddGuestTotal/useAddGuestTotal"
-import OpenDestination from "../../components/Dropdowns/OpenDestination"
-import { Destlocation } from "../../components/Dropdowns/data/destinationLocation"
 import { searchShortlets, filter } from "../../redux/actionCreators/actionCreators"
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
+import FilterComponent from "./components/Filter"
+
 
 
 const Section = styled.section `
@@ -26,93 +22,11 @@ const Section = styled.section `
 `
 
 
-
-const GeneralDivStyle = css`
-    border-radius: 5px;
-    height: 50px;
-    position: relative;
-    background: rgba(196, 196, 196, 1);
-    ${FlexStyle}
-    justify-content: center;
-    color: var(--color-white);
-    cursor: pointer;
-
-`
-
 const Container = styled.div `
     background: var(--color-white);
     width: 100%;
 
 `
-
-const Filter = styled.div `
-    background: var(--color-white);
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
-    height: 70px;
-    position: fixed;
-    width: 100%;
-    z-index: 1;
-    top: 0;
-    /* ${PaddingStyle} */
-    padding: 10px max(16vw, 1rem);
-
-    > div {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: .3rem;
-    }
-
-`
-
-const Destination = styled.div `
-    ${GeneralDivStyle}
-    
-
-`
-
-const DestinationDiv = styled.div `
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    span{
-        font-size: var( --font-xtra-small-screen);
-        margin-left: .5rem;
-    }
-
-    div:last-child label { 
-        color: var(--color-black);
-    }
-`
-
-const Dates = styled.div `
-    grid-column: 2/4;
-    ${GeneralDivStyle}
-    
-`
-const Guest = styled.div `
-    position: relative;
-    ${GeneralDivStyle}
-`
-
-const GuestClick = styled.div `
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-
-    span:first-child {
-        font-size: var( --font-xtra-small-screen);
-    }
-
-    span:last-child {
-        font-size: var(--font-xtraLarge-small);
-    }
-
-`
-
 
 const Main = styled.div `
     margin: max(5vh, 1rem) 0; 
@@ -159,15 +73,14 @@ const OtherSearch = styled.div `
 
 `
 
-
 const SearchResult = () => {
     const dispatch = useDispatch();
-    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, searchValue} = useSelector(state => state.ComponentState)
     const {status, propertyResult: {searchResult}}= useSelector(state => state.propertyResult)
     const [guest, setguest] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [value, setvalue] = useState('');
     const [slidervalue, setSliderValue] = useState([10000, 100000]);
+    const [showCalender, setShowCalender] = useState(false)
     const [min, setMin] = useState(20);
     const myRef = useRef(null)
     const countAdultMinus = 1;
@@ -178,12 +91,13 @@ const SearchResult = () => {
     const endprice = slidervalue[1]
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
+
+    
     useClickOutside(myRef, () => {
-        if (guest || openModal) {
-            setguest(false)
-            setOpenModal(false)
-        }
-            // If user clicks outside of modal, close it.
+        // if (guest || openModal) {
+        //     setguest(false)
+        //     setOpenModal(false)
+        // }// If user clicks outside of modal, close it.
     })
 
 
@@ -229,15 +143,11 @@ const SearchResult = () => {
     };
 
 
-    console.log(min)
-
-
-
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
-            const value = myRef.current.childNodes[id].childNodes[1]?.value
-            setvalue(value)
+            const value = myRef.current.childNodes[id].childNodes[1]?.value;
+            dispatch(saveSearchValue(value))
             setOpenModal(false)
         }
     }
@@ -245,7 +155,7 @@ const SearchResult = () => {
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        dispatch(searchShortlets({value, adultcount, childrencount}))
+        dispatch(searchShortlets({searchValue, adultcount, childrencount}))
     }
 
 
@@ -254,104 +164,87 @@ const SearchResult = () => {
         dispatch(filter({startprice, endprice})), 
     1000,[startprice, endprice, dispatch])
 
+    console.log(status)
+
+    if(status === 'failed') {
+        return (
+            <div>
+                Error
+            </div>
+        )
+    }
 
     return (
-        <Section>
-            <Container>
-                {status === 'loading' ?(
-                    <div style={{marginTop: '-5.5rem'}}>
-                        <SkeletonLoader count={1} height={60} styles={styles.loader} /> 
-                    </div>)
-                    : (
-                    <Filter paddingleft='true' paddingRight='true'>
-                            <div>
-                                <Destination>
-                                    <DestinationDiv onClick={() => setOpenModal(!openModal)}>
-                                        <FiSearch size={20} />
-                                        <span>{value ? value : 'Destination'}</span>
-                                    </DestinationDiv>
-                                    {openModal && (
-                                        <OpenDestination 
-                                            openModal={openModal}
-                                            myRef={myRef}
-                                            widths='28vw'
-                                            top='60px'
-                                            location={Destlocation}
-                                            handleOption={handleOption}
-                                            color='#333'
-                                        />
-                                    )}
-                                </Destination>
-                                <Dates>
-                                    Dates
-                                </Dates>
-                                <Guest>
-                                    <GuestClick onClick={() => setguest(!guest)}>
-                                        <span>Add Guest</span>
-                                        <span>{TotalGuest}</span>
-                                    </GuestClick>
-                                    {guest && (
-                                        <OpenGuestDropdown 
-                                            openGuest={guest} 
-                                            width='28vw'
-                                            top='60px'
-                                            handleGuest={handleGuest} 
-                                            myRef={myRef} 
-                                            adultcount={adultcount} 
-                                            styles={styles} 
-                                            MinusAdult={MinusAdult} 
-                                            childrencount={childrencount} 
-                                            AddAdult={AddAdult} 
-                                            MinusChildren={MinusChildren} 
-                                            AddChildren={AddChildren}
-                                            countAdultMinus={countAdultMinus}
-                                            countAdultAdd={countAdultAdd}
-                                            countMinusChild={countMinusChild}
-                                            countAddChild={countAddChild}
-                                            
-                                        />
-                                    )}
-                                </Guest>
-                                <div>
-                                    <Button onClicks={handlesubmit}  borderRadius='5px' fontSize='var(--font-xtra-small-screen)' width='100%' height='100%' title='SEARCH' border='none' background='var(--linear-primary)' color='var(--color-white)' />
-                                </div>
-                            </div>
-                        </Filter>
-                    )}
-                <Main>
-                    <OtherSearch>
-                        <div className="otherContainer">
-                            {status === 'loading' ? <SkeletonLoader/> :
-                                ( <div>
-                                    <SliderDrawer value={slidervalue} onSliderChange={onSliderChange} />
-                                </div>)
-                            }
+        <>
+            <Section>
+                <Container>
+                    {status === 'loading' ?(
+                        <div style={{marginTop: '-5.5rem'}}>
+                            <SkeletonLoader count={1} height={60} styles={styles.loader} /> 
+                        </div>)
+                        : (
+                            <FilterComponent 
+                                openModal={openModal} 
+                                setOpenModal={setOpenModal} 
+                                myRef={myRef} 
+                                handleOption={handleOption} 
+                                handleGuest={handleGuest} 
+                                guest={guest} 
+                                setguest={setguest} 
+                                TotalGuest={TotalGuest} 
+                                MinusAdult={MinusAdult} 
+                                MinusChildren={MinusChildren} 
+                                AddAdult={AddAdult} 
+                                AddChildren={AddChildren} 
+                                handlesubmit={handlesubmit} 
+                                countAddChild={countAddChild} 
+                                countMinusChild={countMinusChild} 
+                                countAdultMinus={countAdultMinus} 
+                                countAdultAdd={countAdultAdd} 
+                                styles={styles}
+                                setShowCalender={setShowCalender}
+                                showCalender={showCalender}
                             
-                            {status === 'loading' ? <SkeletonLoader/> :
-                                (<div className="otherInputContainer">
-                                    <div>
-                                        <input type="text" name="minprice" value={slidervalue[0].toLocaleString()} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
-                                    </div>
-                                
-                                    <div>
-                                        <input type="text" name="maxprice" value={slidervalue[1].toLocaleString()}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
-                                    </div>
-                                </div>)
-                            }
-                        </div>
-                    </OtherSearch>
-                        <Results>
-                            {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
-                                <>
-                                {searchResult?.map((property) => (
-                                    <Result data={property} key={property.apartment_id} />
-                                ))}
-                                </>
-                            )}
-                        </Results>                  
-                </Main>
-            </Container>
-        </Section>
+                            />
+                        )}
+                    <Main>
+                        {status !== 'failed'&& (
+                            <OtherSearch>
+                                <div className="otherContainer">
+                                    {status === 'loading' ? <SkeletonLoader/> :
+                                        ( <div>
+                                            <SliderDrawer value={slidervalue} onSliderChange={onSliderChange} />
+                                        </div>)
+                                    }
+                                    
+                                    {status === 'loading' ? <SkeletonLoader/> :
+                                        (<div className="otherInputContainer">
+                                            <div>
+                                                <input type="text" name="minprice" value={slidervalue[0].toLocaleString()} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
+                                            </div>
+                                        
+                                            <div>
+                                                <input type="text" name="maxprice" value={slidervalue[1].toLocaleString()}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
+                                            </div>
+                                        </div>)
+                                    }
+                                </div>
+                            </OtherSearch>
+                        )}
+                    
+                            <Results>
+                                {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
+                                    <>
+                                    {searchResult?.map((property) => (
+                                        <Result data={property} key={property.apartment_id} />
+                                    ))}
+                                    </>
+                                )}
+                            </Results>                  
+                    </Main>
+                </Container>
+            </Section>
+        </>
     )
 }
 

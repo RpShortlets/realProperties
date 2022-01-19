@@ -2,6 +2,8 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../../styles/globalStyles"
 import styled from "styled-components"
 import Tooltips from "../../../../../components/Tooltip"
+import { CSSTransition, Transition } from "react-transition-group"
+import TweenLite  from "gsap";
 
 
 const RentalService = styled.div `
@@ -184,6 +186,8 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
     Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
     addDriverLength, minusDriverLength, handlecheckbox}) => {
 
+
+
     return (
         <RentalService>
             <div className="RentalContainer">
@@ -198,34 +202,43 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                         <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
                         {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
                     </div>
-                    {openCar && (
-                        <CarModal>
-                            <div className="carModalWrapper">
-                                <div className="carModalInputContainer" onClick={showBenzRef}>
-                                    <span htmlFor="benz">Mercedes Benz E350</span>
-                                    <div className="carModalInputDiv" ref={BenZ} >
-                                        <span>#50,000</span>
-                                        <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
+                    <Transition
+                        in={openCar}
+                        timeout={{ enter: 0, exit: 200 }}
+                        appear
+                        unmountOnExit
+                    >
+                        <>
+                        {openCar && (
+                            <CarModal>
+                                <div className="carModalWrapper">
+                                    <div className="carModalInputContainer" onClick={showBenzRef}>
+                                        <span htmlFor="benz">Mercedes Benz E350</span>
+                                        <div className="carModalInputDiv" ref={BenZ} >
+                                            <span>#50,000</span>
+                                            <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="carModalInputContainer" onClick={showCamryRef}>
-                                    <span>Toyota Camry</span>
-                                    <div className="carModalInputDiv" ref={Camry} >
-                                        <span>#40,000</span>
-                                        <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                    <div className="carModalInputContainer" onClick={showCamryRef}>
+                                        <span>Toyota Camry</span>
+                                        <div className="carModalInputDiv" ref={Camry} >
+                                            <span>#40,000</span>
+                                            <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="carModalInputContainer" onClick={showSuvRef}>
-                                    <span>Chevy Tahoe SUV</span>
-                                    <div className="carModalInputDiv" ref={Suv} >
-                                        <span>#60,000</span>
-                                        <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                    <div className="carModalInputContainer" onClick={showSuvRef}>
+                                        <span>Chevy Tahoe SUV</span>
+                                        <div className="carModalInputDiv" ref={Suv} >
+                                            <span>#60,000</span>
+                                            <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
+                                        </div>
                                     </div>
+                                    
                                 </div>
-                                
-                            </div>
-                        </CarModal>
-                    )}
+                            </CarModal>
+                        )}
+                    </>
+                    </Transition>
                     {carlength && (
                         <CarLength>
                             <div className="carLenghtContainer">

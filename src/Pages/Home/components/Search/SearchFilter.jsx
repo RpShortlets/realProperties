@@ -154,9 +154,8 @@ const Fiter = styled.div `
 //     width: 100%;
 // `
 
-const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModal, value, myRef, location, handleGuest, 
-    guest, resetCount, setArrivalDeparture, openGuest, 
-    text, handleOption}) => {
+const SearchFilter = ({SubmitForm, openModal, handleModal, value, myRef, location, handleGuest, 
+    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
@@ -242,8 +241,6 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                         {/* <Form> */}
                             <Fiter>
                                 <Destination  
-                                    changeText={changeText} 
-                                    DefaultText={DefaultText} 
                                     handleModal={handleModal} 
                                     openModal={openModal} 
                                     value={value} 
@@ -251,7 +248,10 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                                     location={location} 
                                     handleOption={handleOption}
                                 />
-                                <CheckInOut setArrivalDeparture={setArrivalDeparture}/>
+                                
+                                {/* <HomeCalender /> */}
+                                
+                                <CheckInOut  homeDateValue={homeDateValue} setHomeDateValue={setHomeDateValue}/>
                                 <AddGuest
                                     handleGuest={handleGuest} 
                                     guest={guest} 
@@ -262,7 +262,7 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                             </Fiter>
                             <ButtonContainer className="mt-10">
                                 <Button 
-                                    title={text}
+                                    title='Find Shortlets'
                                     type="submit" 
                                     background="var(--linear-primary)" 
                                     height="70px" 
@@ -273,8 +273,6 @@ const SearchFilter = ({changeText, DefaultText,SubmitForm, openModal, handleModa
                                     width="150px"
                                     hover="var(--color-primary)"
                                     hoverText="Search"
-                                    MouseEnter={changeText} 
-                                    MouseLeave={DefaultText}
                                     onClicks={SubmitForm} 
                                     border= 'none'   
                                 />

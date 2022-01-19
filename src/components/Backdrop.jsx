@@ -11,7 +11,7 @@ const Back = styled.div `
     left: 0;
     width: 100%;
     height: 100vh;
-    /* background: rgba(33, 147, 176, .97); */
+    background: ${({ theme }) => theme};
 
     z-index: 10;
     opacity: 1;
@@ -23,7 +23,7 @@ const Back = styled.div `
 
 const Backdrop = props => {
     return ReactDOM.createPortal(
-        <Back onClick={props.onClick}></Back>,
+        <Back onClick={props.onClick} theme={props.theme}></Back>,
         document.getElementById('backdrop-protal')
     );
 };

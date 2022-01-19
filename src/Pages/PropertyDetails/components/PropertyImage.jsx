@@ -1,18 +1,31 @@
+import { useState } from "react"
 import { useSelector } from "react-redux"
-import styled, { css } from "styled-components/macro"
-// import { AiOutlineHeart } from "react-icons/ai"
-// import { FiShare } from "react-icons/fi"
-// import { FlexStyle } from "../../../styles/globalStyles"
+import styled  from "styled-components/macro"
 import { VideoPlayer } from "../../../Svg/svg"
-
+import Lightbox from 'react-spring-lightbox';
 import LargeOne from "../../../image/largeOne.jpg"
 import SmallOne from "../../../image/smallestTwo.jpg"
 import SmallTwo from "../../../image/smallestThree.jpg"
 import SmallThree from "../../../image/smallestThree.jpg"
 import SmallFour from "../../../image/smallestFour.jpg"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
+import Modal from "../../../components/Modal/Modal";
 
 
+const ImageOverlay = styled.div`
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+`
+
+
+export const ImageOverlayComponent = () => {
+    return (
+        <div style={{background: 'rgba(0,0,0,0.5)', height: '100vh', width: '100%'}}>
+            
+        </div>
+    )
+
+}
 const ImageWrapper = styled.div ` 
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -55,6 +68,7 @@ const ImageContainer = styled.div `
         border-radius: 10px !important;
         width: 100%;
         height: 100%;
+        cursor: pointer;
     }
 /* 
     > div:first-of-type {
@@ -173,56 +187,87 @@ const ImageContainer = styled.div `
 //     }
 // `
 
+
+const images = [
+    {
+        src: 'https://timellenberger.com/static/blog-content/dark-mode/win10-dark-mode.jpg',
+        loading: 'lazy',
+        alt: 'Windows 10 Dark Mode Setting',
+    },
+    {
+        src: 'https://timellenberger.com/static/blog-content/dark-mode/macos-dark-mode.png',
+        loading: 'lazy',
+        alt: 'macOS Mojave Dark Mode Setting',
+    },
+    {
+        src: 'https://timellenberger.com/static/blog-content/dark-mode/android-9-dark-mode.jpg',
+        loading: 'lazy',
+        alt: 'Android 9.0 Dark Mode Setting',
+    },
+];
+
 const PropertyImage = ({status}) => {
+    const [currentImageIndex, setCurrentIndex] = useState(0);
+    const [openModal, setOpenModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
     
 
+
+
+    
+
     return (
-        <ImageContainer>
-            <ImageWrapper>
-                <LargeImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
-                        <div>
-                            <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
-                            <span>
-                                {VideoPlayer}
-                            </span>
-                        </div>
-                    )}
-                    
-                </LargeImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+        <>
+            <Modal show={openModal} setShow={setOpenModal}>
+                hello
+            </Modal>
+            <ImageContainer>
+                <ImageWrapper>
+                    <LargeImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
+                            <div onClick={() => setIsOpen(true)}>
+                                <img data-src={LargeOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                                <span onClick={() => setOpenModal(true)} style={{cursor: 'pointer'}}>
+                                    {VideoPlayer}
+                                </span>
+                            </div>
+                        )}
+                        
+                    </LargeImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
                         <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={SmallThree} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={SmallFour} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={SmallTwo} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-                <SmallImage>
-                    {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                    <img data-src={SmallOne} alt=""  width='100%' height='100%' className="lazyload"/>
-                    )}
-                </SmallImage>
-            </ImageWrapper>
-        </ImageContainer>
+                        )}
+                    </SmallImage>
+                </ImageWrapper>
+            </ImageContainer>
+        </>
     )
 }
 

@@ -39,3 +39,13 @@
     background-color: #fff;
     touch-action: pan-x;
 }
+
+/********************* HOME PAGE CALENDER **************************************/
+.css-17vdz66 {
+    flex: 1 !important;
+}
+
+.inputCalenderContainer  span {
+    font-size: var(--font-xtraLarge-small);
+    font-weight: 400;
+}

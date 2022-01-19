@@ -1,10 +1,11 @@
 import { useEffect, Suspense } from "react"
-import { Footer, NotFound, Home, SearchResult, PropertyDetails} from "./export"
+import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
+
 
 const App = () => {
   
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/s/:id" element={<SearchResult />} />
           <Route path="/property-details" element={<PropertyDetails />} />
+          <Route path='/payment' element={<Payments />}  />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

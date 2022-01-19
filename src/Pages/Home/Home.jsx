@@ -7,6 +7,7 @@ import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
+import { saveSearchValue } from '../../redux/actions/componentState';
 import { searchShortlets } from "../../redux/actionCreators/actionCreators"
 import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
 
@@ -21,45 +22,31 @@ const Section = styled.section `
 const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const textTitle = 'Find Shortlets'
-    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
-    const [arrivalDeparture, setArrivalDeparture] = useState([])
-    
-    const [text, setText] = useState(textTitle);
+
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
+    const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
-    const [value, setvalue] = useState('');
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
     const myRef = useRef(null)
 
 
-
     useClickOutside(myRef, () => {
-        if (openModal || openGuest) {
-            setOpenModal(false)
-            setOpenGuest(false)
-        }
+        // if (openModal || openGuest) {
+        //     setOpenModal(false)
+        //     setOpenGuest(false)
+        // }
             // If user clicks outside of modal, close it.
     })
 
 
-    //* Change Search Button Title on Mouse Movement
-    const changeText = () => {
-        setText('Search')
-    }
-
-    const DefaultText = () => {
-        setText(textTitle)
-    }
-    //* End
-
-    const handleModal = () => {
-        setOpenModal(true)
+    const openDestinationModal = () => {
+        setOpenModal(!openModal)
     }
 
     const handleGuest = () => {
-        setOpenGuest(true)
+        setOpenGuest(!openGuest)
     }
 
 
@@ -71,36 +58,31 @@ const Home = () => {
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
             const value = myRef.current.childNodes[id].childNodes[1]?.value
-            setvalue(value)
+            dispatch(saveSearchValue(value))
             setOpenModal(false)
         }
     }
 
     const SubmitForm = async(e) => {
         e.preventDefault();
-        const checkedin = arrivalDeparture[0]
-        const checkedout = arrivalDeparture[1]
         
-        dispatch(searchShortlets({value, checkedin, checkedout, adultcount, childrencount}))
-        navigate(`/s/location=${value}&adults=${adultcount}&children=${childrencount}&checkin=${checkedin !== undefined ? checkedin : ''}&checkout=${checkedout !== undefined ? checkedout : ''}`)
+        dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
+        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
     return (
         <> 
             <Section>
                 <SearchFilter 
-                    changeText={changeText} 
-                    DefaultText={DefaultText} 
                     openModal={openModal} 
-                    handleModal={handleModal} 
-                    value={value} 
+                    handleModal={openDestinationModal} 
                     myRef={myRef} 
                     handleGuest={handleGuest} 
                     guest={TotalGuest} 
                     resetCount={resetCount} 
-                    setArrivalDeparture={setArrivalDeparture} 
+                    homeDateValue={homeDateValue} 
+                    setHomeDateValue={setHomeDateValue}
                     openGuest={openGuest} 
-                    text={text} 
                     handleOption={handleOption}
                     SubmitForm={SubmitForm} 
                 
