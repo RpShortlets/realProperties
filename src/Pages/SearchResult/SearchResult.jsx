@@ -88,7 +88,7 @@ const SearchResult = () => {
     const [openModal, setOpenModal] = useState(false)
     const [slidervalue, setSliderValue] = useState([10000, 100000]);
     const [showCalender, setShowCalender] = useState(false)
-    const [min, setMin] = useState(20);
+
 
     const myRef = useRef(null)
     const countAdultMinus = 1;
@@ -144,8 +144,6 @@ const SearchResult = () => {
 
 
     const onSliderChange = (value) => {
-        const min = value[0];
-        setMin(min)
         setSliderValue(value)
     };
 

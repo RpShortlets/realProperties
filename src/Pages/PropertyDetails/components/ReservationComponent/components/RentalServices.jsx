@@ -63,6 +63,7 @@ const CarModal = styled.div `
     margin-top: max(.5vw, .3rem);
     z-index: 12;
     position: relative;
+    transition: all 8s ease-in-out;
 
     .carModalWrapper {
         /* padding: 10px; */

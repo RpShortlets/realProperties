@@ -81,3 +81,26 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
 });
 
 
+export const ongoingTransaction = createAsyncThunk("transaction/ongoingTransaction", async ({ id}) => {
+
+    const response = await axios.get(`${BaseURL}/payment-summary-update`,
+    {
+        params: {
+            apartment_id: id,
+            apartment_price: "",
+            stay_length: "",
+            total_apartment_price: '',
+            cleaning: "",
+            pickup: "",
+            car_rental: "",
+            driver: "",
+            security_deposit: '',
+            overall_total: ''
+        }
+    });
+
+    return response.data;
+
+});
+
+

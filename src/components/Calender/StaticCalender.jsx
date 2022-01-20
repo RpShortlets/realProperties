@@ -13,6 +13,7 @@ import '../../styles/utilities.css'
 
 
 
+
 const DateRangePickerDay = styled(MuiDateRangePickerDay)(
     ({ theme, isHighlighting, isStartOfHighlighting, isEndOfHighlighting }) => ({
     ...(isHighlighting && {
@@ -45,10 +46,6 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
     const [value, setValue] = React.useState([null, null]);
     const dates = booked_dates?.map((data) => data.booked_dates)
 
-
-        
-    
-    
     React.useEffect(() => {
         var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
         const checkin = value[0]?.toLocaleDateString('en-CA');
@@ -76,17 +73,12 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
             <StaticDateRangePicker
                 loading={status === 'loading'? true : false}
                 disablePast
-                // shouldDisableDate={date => {
-                //     const day = moment(date).format('YYYY-MM-DD');
-                //     return dates?.includes(day)
-                // }}
                 shouldDisableDate={disablebooked ?
-                        date => {
-                        const day = moment(date).format('YYYY-MM-DD');
-                        return dates?.includes(day)
+                    date => {
+                    const day = moment(date).format('YYYY-MM-DD');
+                    return dates?.includes(day)
                 }: null}
                 renderDay={renderWeekPickerDay}
-                
                 displayStaticWrapperAs="desktop"
                 value={useCheckInDate && useCheckOutDate ? [new Date(useCheckInDate), new Date(useCheckOutDate)] : value} 
                 onChange={(newValue) => {

@@ -21,53 +21,59 @@ const InputContainer = styled.div`
 
     label svg {
         margin-left: 5px;
-    }
-
-
-    input { 
-        background: #FFFFFF;
-        border: 1px solid #2193B0;
-        color: var(--color-primary);
-        font-size: var(--font-xtra-small-screen);
-        outline: 0;
-        padding: 10px;
-        padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
-        border-radius: 4px;
-        width: 100%;
-        height: 45px;
-        margin-top: 7px;
-        transition: all .2s;
-    }
-
-    input:focus-within {
-        border: 2px solid var(--color-primary);
-    }
-
-    input:focus {
-        border: 2px solid var(--color-primary);
-    }
-
-    input::placeholder {
-        color: var(--color-primary);
+        margin-bottom: 3px;
     }
 
     span {
-        position: absolute;
+        position: relative;
         z-index: 1;
         left: 15px;
-        top: 50%;
+        top: -37px;
         transform: translateY(5%);
-        /* font-size: var(--font-small); */
+        color: var(--color-primary);
+
+        svg {
+            font-size: var(--font-small);
+        }
+    }
+
+`
+
+const InputForm = styled.input `
+    
+    background: #FFFFFF;
+    border: 1px solid ${({error}) => error ? 'red' : '#2193B0'};
+    color: var(--color-primary);
+    font-size: var(--font-xtra-small-screen);
+    outline: 0;
+    padding: 10px;
+    padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
+    border-radius: 4px;
+    width: 100%;
+    height: 45px;
+    margin-top: ${({marginTop}) => marginTop ? marginTop : '7px'};
+    transition: all .2s;
+    
+
+    :focus-within {
+        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+    }
+
+    :focus {
+        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+    }
+
+    ::placeholder {
         color: var(--color-primary);
     }
 
 `
 
-export const Input = ({type, label, placeholder, name, Icon, value, formdata, handleChange}) => {
+export const Input = ({type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
         <InputContainer Icon={Icon}>
-            {label && <label> {label}</label>}
-            <input type={type} placeholder={placeholder} name={name} value={value} formdata={formdata} onChange={handleChange} />
+            {label && <label> {label}{Asterik}</label>}
+            <InputForm  error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} formdata={formdata} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
         </InputContainer>
     )
@@ -78,9 +84,9 @@ export const Input = ({type, label, placeholder, name, Icon, value, formdata, ha
 export const InputSelect = ({label, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
         <div className="input-container">
-            <label>{label} 
+            <label>{label}{Asterik} 
                 <select ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
-                    <option defaultChecked disabled>{defaultV}</option>
+                    <option defaultChecked >{defaultV}</option>
                     {options.map((option, i) => {
                         return (
                             <>

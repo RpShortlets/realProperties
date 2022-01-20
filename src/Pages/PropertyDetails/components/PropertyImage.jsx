@@ -1,16 +1,9 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import styled  from "styled-components/macro"
-import { VideoPlayer } from "../../../Svg/svg"
 import Lightbox from 'react-spring-lightbox';
 import {AiOutlineCamera, AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
-import LargeOne from "../../../image/largeOne.jpg"
-import SmallOne from "../../../image/smallestTwo.jpg"
-import SmallTwo from "../../../image/smallestThree.jpg"
-import SmallThree from "../../../image/smallestThree.jpg"
-import SmallFour from "../../../image/smallestFour.jpg"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
-import Modal from "../../../components/Modal/Modal";
 import Backdrop from "../../../components/Backdrop"
 import Button from "../../../components/Button/Button"
 
@@ -29,11 +22,6 @@ import Pic11 from "../../../image/small/picTwo.jpg"
 import Pic14 from "../../../image/small/picSix.jpeg"
 import Pic15 from "../../../image/small/picSeven.jpeg"
 
-
-const ImageOverlay = styled.div`
-    position: absolute;
-    background: rgba(0,0,0,0.5);
-`
 
 
 const ImageWrapper = styled.div ` 
@@ -227,13 +215,8 @@ export const CustomRightArrowButton = (props) => {
 
 const PropertyImage = ({status}) => {
     const [currentImageIndex, setCurrentIndex] = useState(0);
-    const [openModal, setOpenModal] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
-
-    const Src = pictures?.map((src) => src?.src);
-
-
 
     const images = [
         {
@@ -313,7 +296,7 @@ const PropertyImage = ({status}) => {
                         {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                             <div onClick={() => setIsOpen(true)}>
                                 <img data-src={Pic7} alt=""  width='100%' height='100%' className="lazyload"/>
-                                <span onClick={() => setOpenModal(true)} style={{cursor: 'pointer'}}>
+                                <span style={{cursor: 'pointer'}}>
                                     <AiOutlineCamera /> Click to see all pictures
                                 </span>
                             </div>

@@ -1,5 +1,6 @@
 import { useRef, useState, useMemo } from "react"
 import {useDispatch, useSelector} from "react-redux"
+import  { useNavigate } from "react-router-dom"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
@@ -156,6 +157,8 @@ const initiateState = {cleaning: "", pickup: "" }
 
 const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, setOpenService, setshow, show, Query, id}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
     const {status, reservation: {price, summary_details, max_guest },reservation } = useSelector(state => state.reservationState)
 
@@ -320,7 +323,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(getReservation({checkOutDate, checkInDate, id}))
+        navigate('/reservation')
     }
 
     useMemo(() => 

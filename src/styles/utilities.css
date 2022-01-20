@@ -49,6 +49,12 @@
     border-right: none !important;
 }
 
+.css-1xmk8o8-MuiButtonBase-root-MuiIconButton-root {
+    left: -15px;
+    top: 14px;
+    color: var(--color-primary) !important;
+}
+
 .inputCalenderContainer  span {
     font-size: var(--font-xtraLarge-small);
     font-weight: 400;

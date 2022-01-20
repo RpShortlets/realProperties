@@ -59,7 +59,7 @@ const BodyContent = styled.div `
 const PropertyDetails = () => {
     const Query = useMediaQuery("(min-width: 769px)")
     const Id = useParams().id
-    const {status, PropertyDetails} = useSelector(state => state.propertyDetails)
+    const {status} = useSelector(state => state.propertyDetails)
     const {reservation: {summary_details }} = useSelector(state => state.reservationState)
     const [openGuest, setOpenGuest] = useState(false)
     const [openService, setOpenService] = useState(false)

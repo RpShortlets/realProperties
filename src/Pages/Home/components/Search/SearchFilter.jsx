@@ -9,12 +9,11 @@ import Destination from "./components/Destination";
 import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
 import useProgressiveImage  from "../../../../hooks/useProgressiveImage/useProgressiveImage";
-import BG from "../../../../image/background.jpg"
+import BG from "../../../../image/background.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";
 
 const FilterContainer = styled.div `
     background-image: url(${props => props.backgroundImage});
-    /* background-color: ${props => props.backgroundImage ? 'transparent' : '#333'}; */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

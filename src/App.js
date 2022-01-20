@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from "react"
-import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments} from "./export"
+import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, Reservation} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
@@ -50,6 +50,7 @@ const App = () => {
           <Route path="/s/:id" element={<SearchResult />} />
           <Route path="/apartment/:id" element={<PropertyDetails />} />
           <Route path='/payment' element={<Payments />}  />
+          <Route path='/reservation' element={<Reservation />}  />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
