@@ -33,8 +33,8 @@ export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({
     {
         params: {
             property_id: Id || apartment_id,
-            check_in: '',
-            check_out: '',
+            check_in: checkInDate,
+            check_out: checkOutDate,
         }
     });
 

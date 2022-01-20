@@ -21,7 +21,7 @@ const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
     transition: all 0.8s;
     position: relative;
-    z-index: 11;
+   
     
 
     @media screen and (min-width: 769px) {
@@ -331,7 +331,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
 
     return (
         <>
-        {openCar  && <Backdrop onClick={()=> setOpenCar(false)} zIndex="10" /> }
+        {openCar  && <Backdrop onClick={()=> setOpenCar(false)} zIndex="2" /> }
         <Reservations ref={reserveRef}>
             <ReservationBody>
                 <ReservationContent>

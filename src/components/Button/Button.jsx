@@ -2,6 +2,11 @@ import styled from "styled-components"
 
 
 const Buttons = styled.button`
+    position: ${({position}) => position};
+    left: ${({left}) => left};
+    right: ${({right}) => right};
+    bottom: ${({bottom}) => bottom};
+    box-shadow: ${({boxShadow}) => boxShadow};
     display:  ${({display}) => display};
     justify-content: ${({justify}) => justify};
     align-items: ${({alignT}) => alignT};
@@ -15,6 +20,7 @@ const Buttons = styled.button`
     border: ${({border}) => border};
     color: ${({color}) => color};
     mix-blend-mode: normal;
+    z-index: ${({zIndex}) => zIndex};
     cursor: pointer;
     /* transition: 1s; */
 
@@ -31,7 +37,7 @@ const Buttons = styled.button`
     }
 `
 
-const Button = ({title,justify,fontSize,hoverText, fontWeight, borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
+const Button = ({zIndex,position, left, right, bottom, boxShadow, title,justify,fontSize,hoverText, fontWeight, borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
     
     return (
         <>
@@ -58,6 +64,12 @@ const Button = ({title,justify,fontSize,hoverText, fontWeight, borderRadius, cla
                 onMouseLeave={MouseLeave}
                 borderRadius={borderRadius}
                 fontWeight={fontWeight}
+                zIndex={zIndex}
+                position={position}
+                left={left}
+                bottom={bottom}
+                right={right}
+                boxShadow={boxShadow}
             >
                 {icon}
                 {title}

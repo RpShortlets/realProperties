@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import styled  from "styled-components/macro"
 import { VideoPlayer } from "../../../Svg/svg"
 import Lightbox from 'react-spring-lightbox';
+import {AiOutlineCamera, AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import LargeOne from "../../../image/largeOne.jpg"
 import SmallOne from "../../../image/smallestTwo.jpg"
 import SmallTwo from "../../../image/smallestThree.jpg"
@@ -10,6 +11,23 @@ import SmallThree from "../../../image/smallestThree.jpg"
 import SmallFour from "../../../image/smallestFour.jpg"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 import Modal from "../../../components/Modal/Modal";
+import Backdrop from "../../../components/Backdrop"
+import Button from "../../../components/Button/Button"
+
+import Pic1 from "../../../image/largeScreen/picOne.jpeg"
+import Pic2 from "../../../image/largeScreen/picTwo.jpeg"
+import Pic3 from "../../../image/largeScreen/picThree.jpeg"
+import Pic4 from "../../../image/largeScreen/picFour.jpeg"
+import Pic5 from "../../../image/largeScreen/picFive.jpeg"
+import Pic12 from "../../../image/largeScreen/picSix.jpeg"
+import Pic13 from "../../../image/largeScreen/picSeven.jpeg"
+import Pic7 from "../../../image/small/picFour.jpg"
+import Pic8 from "../../../image/small/picFive.jpg"
+import Pic9 from "../../../image/small/picThree.jpg"
+import Pic10 from "../../../image/small/picOne.jpg"
+import Pic11 from "../../../image/small/picTwo.jpg"
+import Pic14 from "../../../image/small/picSix.jpeg"
+import Pic15 from "../../../image/small/picSeven.jpeg"
 
 
 const ImageOverlay = styled.div`
@@ -18,21 +36,10 @@ const ImageOverlay = styled.div`
 `
 
 
-export const ImageOverlayComponent = () => {
-    return (
-        <div style={{background: 'rgba(0,0,0,0.5)', height: '100vh', width: '100%'}}>
-            
-        </div>
-    )
-
-}
 const ImageWrapper = styled.div ` 
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    /* grid-template-rows: repeat(2, 1fr); */
+    grid-template-columns: repeat(7, 1fr);
     grid-gap: 1rem;
-    /* height: 400px; */
-
 `
 
 const LargeImage = styled.div `
@@ -45,13 +52,26 @@ const LargeImage = styled.div `
             position: absolute;
             left: 20px;
             bottom: 20px;
-            background: #C4C4C4;
-            width: 30px;
-            height: 30px;
+            background: rgba(0, 0, 0, .4);
+            font-size: var(--font-xtra-small-screen);
+            color: var(--color-white);
+            padding: 5px 10px;
+            font-weight: 300;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 30px;
+            opacity: 1
+            
+        }
+
+        span:hover {
+            opacity: .8;
+        }
+
+        
+
+        svg {
+            margin-right: .2rem;
         }
     }
 `
@@ -188,81 +208,146 @@ const ImageContainer = styled.div `
 // `
 
 
-const images = [
-    {
-        src: 'https://timellenberger.com/static/blog-content/dark-mode/win10-dark-mode.jpg',
-        loading: 'lazy',
-        alt: 'Windows 10 Dark Mode Setting',
-    },
-    {
-        src: 'https://timellenberger.com/static/blog-content/dark-mode/macos-dark-mode.png',
-        loading: 'lazy',
-        alt: 'macOS Mojave Dark Mode Setting',
-    },
-    {
-        src: 'https://timellenberger.com/static/blog-content/dark-mode/android-9-dark-mode.jpg',
-        loading: 'lazy',
-        alt: 'Android 9.0 Dark Mode Setting',
-    },
-];
+const CustomLeftArrowButton = (props) => {
+    return (
+        <>
+            {props?.currentImageIndex > 0 && <Button boxShadow="var(--shadow)" zIndex='15' left= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineLeft  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+        </>
+    )
+}
+
+export const CustomRightArrowButton = (props) => {
+    return (
+        <>
+            {props?.images?.length > props?.currentImageIndex + 1  && <Button boxShadow="var(--shadow)" zIndex='15' right= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineRight  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+        </>
+    )
+}
+
 
 const PropertyImage = ({status}) => {
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [openModal, setOpenModal] = useState(false);
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
+
+    const Src = pictures?.map((src) => src?.src);
+
+
+
+    const images = [
+        {
+            src: Pic1,
+            loading: 'lazy',
+            alt: '',
+        },
+        {
+            src: Pic2,
+            loading: 'lazy',
+            alt: '',
+        },
+        {
+            src: Pic3,
+            loading: 'lazy',
+            alt: '',
+        },
+        {
+            src: Pic4 ,
+            loading: 'lazy',
+            alt: '',
+        },
+        {
+            src: Pic5,
+            loading: 'lazy',
+            alt: '',
+        },
+        {
+            src: Pic12,
+            loading: 'lazy',
+            alt: ''
+        },
+        {
+            src: Pic13,
+            loading: 'lazy',
+            alt: ''
+        }
+
+    ];
+
+
+
+    const gotoPrevious = () =>
+        currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
+
+    const gotoNext = () =>
+        currentImageIndex + 1 < images.length &&
+        setCurrentIndex(currentImageIndex + 1);
     
 
-    console.log(pictures)
-
+     useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      }
+      return () => {
+        document.body.style.overflow = 'auto';
+      };
+    }, [isOpen])
     
 
     return (
         <>
-            <Modal show={openModal} setShow={setOpenModal}>
-                hello
-            </Modal>
+            {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
+            <Lightbox
+                isOpen={isOpen}
+                onPrev={gotoPrevious}
+                onNext={gotoNext}
+                images={images}
+                currentIndex={currentImageIndex}
+                onClose={() => setIsOpen(false)} 
+                renderPrevButton={() => (<CustomLeftArrowButton onClicks={gotoPrevious}  currentImageIndex={currentImageIndex}/>)}
+                renderNextButton={() => (<CustomRightArrowButton  onClicks={gotoNext} currentImageIndex={currentImageIndex} images={images} />)}
+            />
             <ImageContainer>
                 <ImageWrapper>
                     <LargeImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                             <div onClick={() => setIsOpen(true)}>
-                                <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                                <img data-src={Pic7} alt=""  width='100%' height='100%' className="lazyload"/>
                                 <span onClick={() => setOpenModal(true)} style={{cursor: 'pointer'}}>
-                                    {VideoPlayer}
+                                    <AiOutlineCamera /> Click to see all pictures
                                 </span>
                             </div>
                         )}
                         
                     </LargeImage>
-                    <SmallImage>
+                    <SmallImage style={{gridColumn: '4/6'}}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={pictures[1]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={Pic8} alt=""  width='100%' height='100%' className="lazyload"/>
+                        )}
+                    </SmallImage>
+                    <SmallImage style={{gridColumn: '6/8'}}>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                            <img data-src={Pic9} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={pictures[2]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={Pic10} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={pictures[3]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={Pic11} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={pictures[4]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={Pic14} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                            <img data-src={pictures[5]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
-                        )}
-                    </SmallImage>
-                    <SmallImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={pictures[6]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
+                        <img data-src={Pic15} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                 </ImageWrapper>

@@ -5,7 +5,7 @@ import { FlexStyle, ModalStyle } from "../../../../../styles/globalStyles"
 
 const ModalDiv = styled.div `
     ${ModalStyle}
-    z-index: 1;
+    z-index: 11;
 
     > div {
         padding: 1rem;

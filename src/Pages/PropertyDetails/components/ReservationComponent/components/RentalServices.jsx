@@ -12,6 +12,7 @@ const RentalService = styled.div `
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     margin: max(1vw,1rem) 0 0.7rem;
+    z-index: 12;
 
     .RentalContainer {
         padding: max(1vw, .5rem);
@@ -60,6 +61,8 @@ const CarModal = styled.div `
     border: 1px solid rgba(33, 8, 8, 0.39);
     border-radius: 5px;
     margin-top: max(.5vw, .3rem);
+    z-index: 12;
+    position: relative;
 
     .carModalWrapper {
         /* padding: 10px; */
