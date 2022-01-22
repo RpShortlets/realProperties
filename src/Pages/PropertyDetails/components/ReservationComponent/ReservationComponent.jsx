@@ -1,14 +1,15 @@
 import { useRef, useState, useMemo } from "react"
+import { motion } from "framer-motion"
 import {useDispatch, useSelector} from "react-redux"
 import  { useNavigate } from "react-router-dom"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
 import styled from "styled-components"
-// import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
+import {Pulse} from "../../../../components/Loader/Spinner"
 import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../../redux/actions/componentState"
-import {getReservation, getReservationUpdate} from "../../../../redux/actionCreators/actionCreators"
+import {getReservationUpdate, ongoingTransaction} from "../../../../redux/actionCreators/actionCreators"
 import styles from "../../../../styles/home.module.css"
 import RentalServices from "./components/RentalServices"
 import SelectDateInput from "./components/SelectDateInput"
@@ -18,12 +19,26 @@ import Prices from "./components/Prices"
 import Backdrop from "../../../../components/Backdrop"
 
 
+const list = {
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.3,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      transition: {
+        when: "afterChildren",
+      },
+    },
+  }
+
 const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
     transition: all 0.8s;
     position: relative;
-   
-    
 
     @media screen and (min-width: 769px) {
         margin: 0;
@@ -160,7 +175,10 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
     const navigate = useNavigate();
 
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-    const {status, reservation: {price, summary_details, max_guest },reservation } = useSelector(state => state.reservationState)
+    const {proceess} = useSelector(state => state.paymentState)
+    const {status, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
+
+    
 
     const [checkboxes, setCheckboxes] = useState(initiateState)
     const [openCar, setOpenCar] = useState(false)
@@ -182,7 +200,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
     const BenZ = useRef(null);
     const Suv = useRef(null);
     const Camry = useRef(null);
-    const propertyId =  status === 'succeeded' && price[0]?.id
+
     // const TotalGuest = useAddGuestTotal({adultcount, childrencount});
 
 
@@ -323,6 +341,17 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const stayLenght = summary_details[0]?.stay_length;
+        const totalPrice = summary_details[0]?.total;
+        const security = summary_details[0]?.security_deposit;
+        const apartmentPrice = price[0]?.price;
+        const totalApartmentPrice = summary_details[0]?.total_apt_price;
+        const cleaning = summary_details[0]?.total_cleaning_price;
+        const pickup = summary_details[0]?.total_pickup_dropoff_price;
+        const carPrice = summary_details[0]?.total_car_price;
+        const driver = summary_details[0]?.total_driver_price;
+
+        dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver  }))
         navigate('/reservation')
     }
 
@@ -330,12 +359,19 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,id })), 
     [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes])
 
-    
+
 
     return (
         <>
         {openCar  && <Backdrop onClick={()=> setOpenCar(false)} zIndex="2" /> }
-        <Reservations ref={reserveRef}>
+        <Reservations 
+            ref={reserveRef} 
+            as={motion.div} 
+            initial="hidden"
+            animate="visible"
+            variants={list}
+        
+        >
             <ReservationBody>
                 <ReservationContent>
                     <div style={{flex: '1'}}>
@@ -416,19 +452,22 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, s
                     />)}
                     <ReserveButton>
                     {status === 'loading' ? (<SkeletonLoader />) :  
-                        (<Button onClicks={Query ? handleSubmit : (() => setshow(!show))} title={Query ? 'Reserve' : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                        (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query ? handleSubmit : (() => setshow(!show))} title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                     )}
                     </ReserveButton>
                     <Condition>
                         <p>{status === 'loading' ? <SkeletonLoader /> : 'You won’t be charged yet'}</p>
                     </Condition>
-                    <Prices 
-                        price={price} 
-                        summary_details={summary_details} 
-                        selectedCar={selectedCar} 
-                        status={status} 
-                        radio={radio}
-                    />
+                    {status === 'succeeded' &&
+                    (
+                        <Prices 
+                            price={price} 
+                            summary_details={summary_details} 
+                            selectedCar={selectedCar} 
+                            status={status} 
+                            radio={radio}
+                        />
+                    )}
                 </ReservationContent>
             </ReservationBody>
         </Reservations>

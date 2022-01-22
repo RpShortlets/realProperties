@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components"
 import { ModalStyle } from '../../styles/globalStyles';
 import Backdrop from "../Backdrop";
@@ -21,7 +22,15 @@ const OpenDestination = ({openModal, myRef, widths, location, handleOption, top,
         <>
             {openModal  && <Backdrop onClick={()=> setOpenModal(false)} zIndex={zIndex} /> }
             {openModal && (
-                <ModalDiv ref={myRef} width={widths} left="0" top={top} color={color}>
+                <ModalDiv 
+                    as={motion.div}
+                    animate={{ y: [0, 5, 0] }}
+                    transition={{ ease: "easeOut", duration: 1 }} 
+                    ref={myRef} 
+                    width={widths} 
+                    left="0" top={top} 
+                    color={color}
+                >
                     {location.map((data, i)  => 
                         <label key={data.id}>{data.name}
                             <input name={data.name} value={data.name} key={data.id} type="checkbox" onChange={() => handleOption(data.id)} style={{display: 'none'}} />

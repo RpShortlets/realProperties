@@ -81,23 +81,42 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
 });
 
 
-export const ongoingTransaction = createAsyncThunk("transaction/ongoingTransaction", async ({ id}) => {
+export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction", async ({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver}) => {
+    const formdat = {
+        apartment_id: id,
+        apartment_price: apartmentPrice,
+        stay_length: stayLenght,
+        total_apartment_price: totalApartmentPrice,
+        cleaning: cleaning,
+        pickup: pickup,
+        car_rental: carPrice,
+        driver: driver,
+        security_deposit: security,
+        overall_total: totalPrice
+    }
+    
+    const response = await axios.post(`http://localhost:5050/transaction`, formdat);
 
-    const response = await axios.get(`${BaseURL}/payment-summary-update`,
-    {
-        params: {
-            apartment_id: id,
-            apartment_price: "",
-            stay_length: "",
-            total_apartment_price: '',
-            cleaning: "",
-            pickup: "",
-            car_rental: "",
-            driver: "",
-            security_deposit: '',
-            overall_total: ''
-        }
-    });
+    return response.data;
+
+});
+
+
+export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value}) => {
+    const records = {
+        firstname: formdata.firstname, 
+        lastname: formdata.lastname,
+        email: formdata.email,
+        phone_no: phn,
+        dob: value?.toLocaleDateString('en-CA'),
+        nationality: dropdown.nationality,
+        mode_of_identification: dropdown.identification,
+        identification_no: formdata.idnumber
+    }
+
+    console.log(formdata)
+    
+    const response = await axios.post(`http://localhost:5050/customer`, records);
 
     return response.data;
 

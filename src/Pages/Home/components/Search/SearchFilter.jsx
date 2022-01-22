@@ -154,7 +154,7 @@ const Fiter = styled.div `
 // `
 
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
-    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest}) => {
+    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
@@ -251,7 +251,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                                 
                                 {/* <HomeCalender /> */}
                                 
-                                <CheckInOut  homeDateValue={homeDateValue} setHomeDateValue={setHomeDateValue}/>
+                                <CheckInOut setIsOpenCalender={setIsOpenCalender} isOpenCalender={isOpenCalender} homeDateValue={homeDateValue} setHomeDateValue={setHomeDateValue}/>
                                 <AddGuest
                                     handleGuest={handleGuest} 
                                     guest={guest} 

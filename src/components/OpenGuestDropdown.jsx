@@ -1,4 +1,5 @@
 import { FlexStyle, ModalStyle } from '../styles/globalStyles';
+import { motion } from 'framer-motion';
 import styled from 'styled-components'
 import Button from "./Button/Button"
 import { FiMinus } from "react-icons/fi"
@@ -82,7 +83,9 @@ const OpenGuestDropdown = ({width,left, top, setOpenGuest,openGuest,border,count
         <>
             {openGuest  && <Backdrop onClick={()=> setOpenGuest(false)} zIndex={zIndex} /> }
             {openGuest && (
-                <ModalDiv  width={width} top={top} border={border} left={left} ref={myRef} show={openGuest} setShow={setOpenGuest}>
+                <ModalDiv  as={motion.div}
+                animate={{ y: [0, 5, 0] }}
+                transition={{ ease: "easeOut", duration: 1 }} width={width} top={top} border={border} left={left} ref={myRef} show={openGuest} setShow={setOpenGuest}>
                     <GuestDropdown>
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>

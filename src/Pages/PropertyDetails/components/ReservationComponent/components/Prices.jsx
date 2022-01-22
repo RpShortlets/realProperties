@@ -46,8 +46,13 @@ const Prices = ({price, summary_details, selectedCar, status, radio}) => {
         <PriceBody>
             <div>
                 <div>
-                    <p> {status === 'loading' ? <SkeletonLoader /> : `${price[0]?.price === null ? '' : price[0]?.price?.toLocaleString()} x ${summary_details[0]?.stay_length === null ? '' : summary_details[0]?.stay_length }nights`}</p>
-                    <p> {status === 'loading' ? <SkeletonLoader /> : `${summary_details[0]?.total_apt_price === null ? '' : summary_details[0]?.total_apt_price?.toLocaleString()}`}</p>
+                    {status === 'loading' ? <SkeletonLoader /> : (
+                        <>
+                            <p> {`${price[0]?.price === null || undefined ? '' : price[0]?.price?.toLocaleString()} x ${summary_details[0]?.stay_length === null || undefined ? '' : summary_details[0]?.stay_length }nights`}</p>
+                            <p> {`${summary_details[0]?.total_apt_price === null || undefined? '' : summary_details[0]?.total_apt_price?.toLocaleString()}`}</p>
+                        </>
+                    )}
+                    
                 </div>
                 <div>
                     <p>{status === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price && 'Cleaning Services'}</p>

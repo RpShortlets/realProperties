@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { RealShortlets } from "../data/data"
+import {motion} from "framer-motion"
 import { PaddingStyle } from "../../../styles/globalStyles"
 
 
@@ -89,7 +90,11 @@ const WhyRealShortlets = () => {
                 <h2>Why Real Shortlets</h2>
                 <Content >
                     {RealShortlets.map((item) => (
-                        <IconDivs key={item.id}>
+                        <IconDivs key={item.id} as={motion.div}
+                        whileHover={{ scale: 1.06 }}
+                        whileTap={{ scale: 0.9 }}
+                        >
+        
                             <div>
                                 <div>
                                     {item.image} 

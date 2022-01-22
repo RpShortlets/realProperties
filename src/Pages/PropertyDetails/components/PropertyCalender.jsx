@@ -3,6 +3,7 @@ import * as React from 'react';
 import { SkeletonLoader } from "../../../components/Loader/Skeleton";
 import  "../../../styles/utilities.css"
 import StaticCalender from "../../../components/Calender/StaticCalender";
+import { motion } from 'framer-motion';
 
 
 
@@ -30,7 +31,13 @@ const Calenders = styled.div `
 export const PropertyCalender = ({status, lenghtstay, margin}) => {
     
     return (
-        <Calenders margin={margin}>
+        <Calenders 
+            as={ motion.div}
+            initial={{ opacity: 0.8 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            margin={margin}
+        >
             <div>
                 <h2>{status === 'loading' ? <SkeletonLoader width='20%'/> :  lenghtstay ? `${lenghtstay} ${lenghtstay > 1 ? `nights`: `night`}` : 'Select check-in date'}</h2>
                 <p>{status === 'loading' ? <SkeletonLoader width='40%' height='20' /> : 'Select your check-in date for exact pricing'}</p>

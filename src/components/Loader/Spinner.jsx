@@ -43,12 +43,13 @@ export const Clip = ({type}) => {
 }
 
 
-export const Pulse = () => {
+export const Pulse = ({color, size}) => {
     return (
         <>
             <PulseLoader
-                color="rgba(33, 147, 176, 1)"
+                color={color ? color : "rgba(33, 147, 176, 1)"}
                 loading="true" 
+                size={size && size }
             />
         </>
     )

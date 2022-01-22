@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { SkeletonLoader } from "../../../../../components/Loader/Skeleton"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle, ModalStyle } from "../../../../../styles/globalStyles"
+import { motion } from "framer-motion"
+import Checkbox from "../../../../../utils/FormElement/CheckBox"
 
 const ModalDiv = styled.div `
     ${ModalStyle}
@@ -49,23 +51,27 @@ const ValueAddedServices = ({status, modalRef, checkboxes, handleChange, openSer
         <ValueAdded>
             <div> 
                 {status === 'loading' ? (<SkeletonLoader /> ) :
-                (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between'}}  onClick={() => setOpenService(!openService)}>
+                (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between', cursor: 'pointer'}}  onClick={() => setOpenService(!openService)}>
                     <div>
                         <h4>Additional Services</h4>
                     </div>
                     {openService ? (<FiChevronUp />) : (<FiChevronDown />)}
                 </div>)}
                 {openService && (
-                    <ModalDiv  top="36px" ref={modalRef} width= "100%" left='0'  border="1px solid rgba(33, 8, 8, 0.22)">
+                    <ModalDiv  
+                        as={motion.div}
+                        animate={{ y: [0, 5, 0] }}
+                        transition={{ ease: "easeOut", duration: 1 }}
+                        top="36px" 
+                        ref={modalRef} 
+                        width= "100%" 
+                        left='0'  
+                        border="1px solid rgba(33, 8, 8, 0.22)"
+                    >
                         <div>
-                            <div>
-                                <label htmlFor="cleaning">Cleaning Services</label>
-                                <input id='cleaning' type="checkbox" name="cleaning" checked={checkboxes.cleaning === "cleaning"} value='cleaning' onChange={handleChange}/>
-                            </div>
-                            <div>
-                                <label htmlFor="pickup">Pickup/Drop Off</label>
-                                <input id="pickup" type="checkbox" name="pickup"  value='pickup'  checked={checkboxes.pickup === "pickup"} onChange={handleChange}/>
-                            </div> 
+                            <Checkbox name="cleaning" checkboxes={checkboxes.cleaning} handleChange={handleChange} label="Cleaning Service" />
+                            <Checkbox name="pickup" checkboxes={checkboxes.pickup} handleChange={handleChange} label="Pickup/Dropoff" />
+
                         </div>
                     </ModalDiv>
                 )}

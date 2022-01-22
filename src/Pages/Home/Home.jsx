@@ -27,6 +27,7 @@ const Home = () => {
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
+    const [isOpenCalender, setIsOpenCalender] = useState(false)
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
     const myRef = useRef(null)
@@ -87,6 +88,8 @@ const Home = () => {
                     setOpenGuest={setOpenGuest}
                     handleOption={handleOption}
                     SubmitForm={SubmitForm} 
+                    setIsOpenCalender={setIsOpenCalender}
+                    isOpenCalender={isOpenCalender}
                 
                 />
                 <WhyRealShortlets />

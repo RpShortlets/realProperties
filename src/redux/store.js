@@ -4,6 +4,8 @@ import formState from "./actions/formState"
 import propertyResult from "./actions/propertyResult"
 import propertyDetails from "./actions/propertyDetails"
 import reservation from "./actions/reservation"
+import PaymentsReducer from "./actions/payment"
+import CustomerRecords from "./actions/saveCustomerRecord"
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +13,9 @@ export const store = configureStore({
         formState: formState,
         propertyResult: propertyResult,
         propertyDetails: propertyDetails,
-        reservationState: reservation
+        reservationState: reservation,
+        paymentState: PaymentsReducer,
+        customerRecord : CustomerRecords
     }
 })
 

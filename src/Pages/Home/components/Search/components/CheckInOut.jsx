@@ -35,7 +35,7 @@ const Input = styled.input`
 `
 
 
-const CheckInOut = ({homeDateValue, setHomeDateValue}) => {
+const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenCalender}) => {
     const dispatch = useDispatch();
     
     
@@ -58,10 +58,14 @@ const CheckInOut = ({homeDateValue, setHomeDateValue}) => {
     
     }, [homeDateValue, dispatch,  ])
 
+    console.log(isOpenCalender)
+
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker
+                isOpen={isOpenCalender}
+                onAccept={() => setIsOpenCalender(!isOpenCalender)}
                 className="date-range-picker"
                 label="Advanced keyboard"
                 disablePast
@@ -70,11 +74,11 @@ const CheckInOut = ({homeDateValue, setHomeDateValue}) => {
                 renderInput={(startProps, endProps) => (
                 <React.Fragment>
 
-                    <div className="inputCalenderContainer">
+                    <div className="inputCalenderContainer" onClick={() => setIsOpenCalender(true)}>
                         <Input ref={startProps.inputRef} {...startProps.inputProps} placeholder="Check in" />
                         <span>Add Dates</span>
                     </div>
-                    <div className="inputCalenderContainer">
+                    <div className="inputCalenderContainer"  onClick={() => setIsOpenCalender(true)}>
                         <Input ref={endProps.inputRef} {...endProps.inputProps} placeholder="Check out" />
                         <span>Add Dates</span>
                     </div>

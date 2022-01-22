@@ -69,11 +69,11 @@ const InputForm = styled.input `
 
 `
 
-export const Input = ({type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
+export const Input = ({Blur, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
         <InputContainer Icon={Icon}>
             {label && <label> {label}{Asterik}</label>}
-            <InputForm  error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} formdata={formdata} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
+            <InputForm onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
         </InputContainer>
     )

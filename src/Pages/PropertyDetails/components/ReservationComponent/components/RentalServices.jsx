@@ -2,8 +2,8 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../../styles/globalStyles"
 import styled from "styled-components"
 import Tooltips from "../../../../../components/Tooltip"
-import { CSSTransition, Transition } from "react-transition-group"
-import TweenLite  from "gsap";
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 
 
@@ -191,6 +191,10 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
     Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
     addDriverLength, minusDriverLength, handlecheckbox}) => {
 
+    const variants = {
+        visible: { opacity: 1 },
+        hidden: { opacity: 0 },
+        }
 
 
     return (
@@ -209,63 +213,75 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                             <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
                             {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
                         </div>
-                        <Transition
-                            in={openCar}
-                            timeout={{ enter: 0, exit: 200 }}
-                            appear
-                            unmountOnExit
-                        >
-                            <>
-                            {openCar && (
-                                <CarModal>
-                                    <div className="carModalWrapper">
-                                        <div className="carModalInputContainer" onClick={showBenzRef}>
-                                            <span htmlFor="benz">Mercedes Benz E350</span>
-                                            <div className="carModalInputDiv" ref={BenZ} >
-                                                <span>#50,000</span>
-                                                <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
-                                            </div>
+                        
+                        {openCar && (
+                            <CarModal 
+                                // as={motion.div}
+                                // animate={{ y: [0, 100, 0] }}
+                                // transition={{ ease: "easeOut", duration: 1 }}
+                            >
+                                <div className="carModalWrapper">
+                                    <div className="carModalInputContainer" onClick={showBenzRef}>
+                                        <span htmlFor="benz">Mercedes Benz E350</span>
+                                        <div className="carModalInputDiv" ref={BenZ} >
+                                            <span>#50,000</span>
+                                            <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
                                         </div>
-                                        <div className="carModalInputContainer" onClick={showCamryRef}>
-                                            <span>Toyota Camry</span>
-                                            <div className="carModalInputDiv" ref={Camry} >
-                                                <span>#40,000</span>
-                                                <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
-                                            </div>
+                                    </div>
+                                    <div className="carModalInputContainer" onClick={showCamryRef}>
+                                        <span>Toyota Camry</span>
+                                        <div className="carModalInputDiv" ref={Camry} >
+                                            <span>#40,000</span>
+                                            <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
                                         </div>
-                                        <div className="carModalInputContainer" onClick={showSuvRef}>
-                                            <span>Chevy Tahoe SUV</span>
-                                            <div className="carModalInputDiv" ref={Suv} >
-                                                <span>#60,000</span>
-                                                <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
-                                            </div>
+                                    </div>
+                                    <div className="carModalInputContainer" onClick={showSuvRef}>
+                                        <span>Chevy Tahoe SUV</span>
+                                        <div className="carModalInputDiv" ref={Suv} >
+                                            <span>#60,000</span>
+                                            <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
                                         </div>
-                                        
                                     </div>
-                                </CarModal>
-                            )}
-                        </>
-                        </Transition>
-                        {carlength && (
-                            <CarLength>
-                                <div className="carLenghtContainer">
-                                    <div className="carLengthDays">
-                                        <span>Number of days</span>
-                                    </div>
-                                    <div className="carLenghtBtnsDiv">
-                                        <Tooltips title='Cannot decrease below 1'>
-                                            <span className="carLengthBtn" onClick={minusDays}>-</span>
-                                        </Tooltips>
-                                        <span className="carDays">{carlengthValue}</span>
-                                        <Tooltips title='Cannot increase above length of stay'>
-                                            <span className="carLengthBtn" onClick={addDays}>+</span>
-                                        </Tooltips>
-                                    </div>
+                                    
                                 </div>
-                            </CarLength>
+                            </CarModal>
                         )}
+                        <AnimatePresence>
+                            {carlength && (
+                                <CarLength
+                                    as={motion.div}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }} 
+                                    transition={{ duration: 1 }} 
+                                >
+                                    <div className="carLenghtContainer">
+                                        <div className="carLengthDays">
+                                            <span>Number of days</span>
+                                        </div>
+                                        <div className="carLenghtBtnsDiv">
+                                            <Tooltips title='Cannot decrease below 1'>
+                                                <span className="carLengthBtn" onClick={minusDays}>-</span>
+                                            </Tooltips>
+                                            <span className="carDays">{carlengthValue}</span>
+                                            <Tooltips title='Cannot increase above length of stay'>
+                                                <span className="carLengthBtn" onClick={addDays}>+</span>
+                                            </Tooltips>
+                                        </div>
+                                    </div>
+                                </CarLength>
+                            )}
+                        </AnimatePresence>
+                        <AnimatePresence>
                         {carlengthValue > 0 && (
-                            <Driver>
+                            <Driver
+                                as={motion.div}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 2 }} 
+                                
+                            >
                                 <div className="DriverContainer">
                                     <div>
                                         <span>Need a Driver ?</span>
@@ -299,25 +315,36 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                                 </div>
                             </Driver>
                         )}
-                        {radio === "driver" && carlengthValue > 0 ? (
-                            <CarLength>
-                                <div className="carLenghtContainer">
-                                    <div className="carLengthDays">
-                                        <span>Number of days</span>
+                        </AnimatePresence>
+                        <AnimatePresence>
+                            {radio === "driver" && carlengthValue > 0 ? (
+                                <CarLength
+                                    as={motion.div}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }} 
+                                    transition={{ duration: 3 }}
+                                >
+                                    <div className="carLenghtContainer">
+                                        <div className="carLengthDays">
+                                            <span>Number of days</span>
+                                        </div>
+                                        <div className="carLenghtBtnsDiv">
+                                            <Tooltips title='Cannot decrease below 1'>
+                                                <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
+                                            </Tooltips>
+                                                <span className="carDays">{driverlengthValue}</span>
+                                            <Tooltips title='Cannot increase above length of car use'>
+                                                <span className="carLengthBtn" onClick={addDriverLength}>+</span>
+                                            </Tooltips>
+                                        </div>
                                     </div>
-                                    <div className="carLenghtBtnsDiv">
-                                        <Tooltips title='Cannot decrease below 1'>
-                                            <span className="carLengthBtn" onClick={minusDriverLength}>-</span>
-                                        </Tooltips>
-                                            <span className="carDays">{driverlengthValue}</span>
-                                        <Tooltips title='Cannot increase above length of car use'>
-                                            <span className="carLengthBtn" onClick={addDriverLength}>+</span>
-                                        </Tooltips>
-                                    </div>
-                                </div>
-                            </CarLength>
-                        )
-                        :("")}
+                                </CarLength>
+                                
+                            )
+                            
+                            :("")}
+                        </AnimatePresence>
                     </RentalType>
                 </div>
             </RentalService>
