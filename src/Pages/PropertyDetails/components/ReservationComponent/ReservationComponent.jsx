@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import  { useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import {useDispatch, useSelector} from "react-redux"
@@ -17,6 +17,7 @@ import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
 import ValueAddedServices from "./components/ValueAddedServices"
 import Prices from "./components/Prices"
 import Backdrop from "../../../../components/Backdrop"
+import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
 
 
 
@@ -168,8 +169,9 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const {proceess} = useSelector(state => state.paymentState)
     const {reserve, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
 
+    const [AddtionalServices, setTotalAdditional]  = useState()  
 
-
+    const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
     const AdultMinuss =  max_guest &&  max_guest[0]?.allowed_adult
     const AdultAdds = max_guest && max_guest[0]?.allowed_child  
     const countAdultMinus = 1;
@@ -180,8 +182,11 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const BenZ = useRef(null);
     const Suv = useRef(null);
     const Camry = useRef(null);
+    const CleaningFee = summary_details[0]?.total_cleaning_price ? parseInt(summary_details[0]?.total_cleaning_price) : 0;
+    const PickupFee =  summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
 
-    // const TotalGuest = useAddGuestTotal({adultcount, childrencount});
+    const  TotalGuest = useAddGuestTotal({adultcount, childrencount});
+
 
 
     const handleBenz = () => {
@@ -334,8 +339,11 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         const driver = summary_details[0]?.total_driver_price;
 
         dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver  }))
-        
     }
+
+    useEffect(() => {
+        setTotalAdditional(CleaningFee + PickupFee)
+    }, [CleaningFee, PickupFee]);
 
 
         return (
@@ -350,7 +358,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                 <ReservationBody>
                     <ReservationContent>
                         <div style={{flex: '1'}}>
-                            <span>&#8358;{reserve === 'loading' ? <SkeletonLoader /> : price[0]?.price?.toLocaleString() }</span>
+                            <span>&#8358;{reserve === 'loading' ? <SkeletonLoader /> : `${price[0]?.price?.toLocaleString()}/night `}</span>
                         </div>
                         <div>
                             <SelectDateInput/>
@@ -359,7 +367,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                 (<div onClick={() => setOpenGuest(!openGuest)}> 
                                     <div>
                                         <h4>Guests</h4>
-                                        {/* <span>{TotalGuest > 1 ? TotalGuest : countAdultMinus } {GeneralInfo[0]?.allowed_guest > 1 ? 'guests' : 'guest' }</span>  */}
+                                        <span>{reserve === 'loading' ? <SkeletonLoader /> : TotalGuest > 1 ? TotalGuest : countAdultMinus } { GeneralInfo > 1 ? 'guests' : 'guest' }</span> 
                                     </div>
                                     <div>
                                         {openGuest ? (<FiChevronUp />) : (<FiChevronDown />)}
@@ -442,6 +450,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                 selectedCar={selectedCar} 
                                 reserve={reserve} 
                                 radio={radio}
+                                TotalAdditionalServices={AddtionalServices}
                             />
                         )}
                     </ReservationContent>

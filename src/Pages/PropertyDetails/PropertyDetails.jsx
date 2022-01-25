@@ -2,7 +2,7 @@ import {useState, useRef, useEffect, useMemo} from "react"
 import { useParams} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
-import { PaddingStyle } from "../../styles/globalStyles"
+import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 import MobileModal from "./components/Modal"
 import ReservationComponent from "./components/ReservationComponent/ReservationComponent" 
@@ -19,6 +19,39 @@ import Backdrop from "../../components/Backdrop"
 import {Reservation} from "../../export"
 import { getReservationUpdate } from "../../redux/actionCreators/actionCreators"
 
+
+const Reservations = styled.div `
+    margin: max(1vw, 2rem) 0;
+    transition: all 0.8s;
+    position: relative;
+
+    @media screen and (min-width: 769px) {
+        margin: 0;
+        grid-column: 5/7;
+        grid-row: 1/4;
+        position: ${({position}) => position};
+    }
+    
+`
+
+const ReservationBody = styled.div `
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    filter: none;
+    height: 400px;
+
+    .reserveContent {
+        /* ${FlexStyle} */
+        height: 100%;
+        padding: 1rem;
+
+        div {
+            margin: max(.8vw, .3rem) 0;
+        }
+    }
+`
 
 const Section  = styled.section `
     width: 100%;
@@ -100,14 +133,9 @@ const PropertyDetails = () => {
 
     useEffect(() => {
         if(proceess === 'succeeded') {
-            // navigate('/reservation')
             setShowModal(true)
         }
     }, [proceess]);
-
-    // useEffect(() => 
-    //     dispatch(getReservation({Id})),
-    // [Id, dispatch])
 
     
     useMemo(() => 
@@ -149,7 +177,32 @@ const PropertyDetails = () => {
                             <BodyContent>
                                 <PropertyHeader status={status}/>
                                 <PropertyDescription status={status} />
-                                {reserve === 'succeeded' && (
+                                {reserve === 'loading' ? (
+                                    <Reservations>
+                                        <ReservationBody>
+                                            <div className="reserveContent">
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader height='20px' />}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader height='50px' />}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader  height='50px'/>}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader height='50px' />}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader height='50px' />}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{reserve === 'loading' && <SkeletonLoader height='50px' />}</span>
+                                                </div>
+                                            </div>
+                                        </ReservationBody>
+                                    </Reservations>
+                                    ) : reserve === 'succeeded' &&  (
                                     <ReservationComponent 
                                         setOpenGuest={setOpenGuest}
                                         openGuest={openGuest}
@@ -177,6 +230,7 @@ const PropertyDetails = () => {
                                         driverlengthValue={driverlengthValue}
                                         setRadio={setRadio}
                                         radio={radio}
+                                        reserve={reserve}
                                     />
                                 )}            
                                 <PropertyAmenities  status={status}/>

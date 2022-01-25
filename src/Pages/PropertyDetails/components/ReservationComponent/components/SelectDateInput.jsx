@@ -32,7 +32,11 @@ const SelectDateInput = () => {
 
     return (
         <>
-            <CalenderModal show={show} setShow={setShow} theme='' top="12vh" width="fit-content" left="80%" calanders={1} disablebooked='true' />
+            {show &&
+                (
+                <CalenderModal  show={show} setShow={setShow}  theme='' top="12vh" width="fit-content" left="50%" calanders={1} disablebooked='true'  initial={{opacity: 0, y: 0, x: '100%'}} animate={{opacity: 1, y: 70, x: '50%'}} />
+                )
+            }
             <div>
                 <InputContainer onClick={() => setShow(!show)}>
                     <span>{reserve === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>

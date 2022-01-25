@@ -143,11 +143,9 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
-    console.log(data)
 
     const handleGetDetails = async(Id) => {        
         dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id})) 
-        // dispatch(getReservation({checkInDate,checkOutDate,apartment_id}))
         navigate(`/apartment/${apartment_id}`)
     }
 

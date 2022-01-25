@@ -12,6 +12,7 @@ import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
 import FilterComponent from "./components/Filter"
+import Error from "../../components/Error/Error";
 
 
 
@@ -88,6 +89,8 @@ const SearchResult = () => {
     const [openModal, setOpenModal] = useState(false)
     const [slidervalue, setSliderValue] = useState([10000, 100000]);
     const [showCalender, setShowCalender] = useState(false)
+
+    console.log(searchResult?.length)
 
 
     const myRef = useRef(null)
@@ -213,7 +216,7 @@ const SearchResult = () => {
                             />
                         )}
                     <Main>
-                        {status !== 'failed'&& (
+                        {searchResult?.length > 1 && (
                             <OtherSearch>
                                 <div>
                                     <p>Filter by Price</p>
@@ -243,9 +246,16 @@ const SearchResult = () => {
                             <Results>
                                 {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                                     <>
-                                    {searchResult?.map((property) => (
-                                        <Result data={property} key={property.apartment_id} />
-                                    ))}
+                                        {searchResult?.length > 1 ? (
+                                            <>
+                                                {searchResult?.map((property) => (
+                                                    <Result data={property} key={property.apartment_id} />
+                                                ))}
+                                            </>
+                                        ) : (
+                                            <Error title="No property found. Please try again later" />
+                                        )
+                                        }
                                     </>
                                 )}
                             </Results>                  

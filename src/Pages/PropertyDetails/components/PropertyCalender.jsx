@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 
 
 const Calenders = styled.div `
-    margin: ${({ margin}) => margin};)};
+    margin: ${({ margin}) => margin};
     width: 100%;
 
     h2 {
@@ -33,9 +33,6 @@ export const PropertyCalender = ({status, lenghtstay, margin}) => {
     return (
         <Calenders 
             as={ motion.div}
-            initial={{ opacity: 0.8 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
             margin={margin}
         >
             <div>

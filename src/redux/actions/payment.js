@@ -16,7 +16,6 @@ export const PaymentsReducer = createSlice({
             state.proceess = 'loading'
         })
         .addCase(ongoingTransaction.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.proceess = 'succeeded'
             state.ongoingTransactions = action.payload
         })
@@ -28,7 +27,6 @@ export const PaymentsReducer = createSlice({
             state.proceess = 'loading'
         })
         .addCase(RetrieveTransaction.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.proceess = 'succeeded'
             state.ordersummary = action.payload
         })
@@ -40,7 +38,6 @@ export const PaymentsReducer = createSlice({
             state.proceess = 'loading'
         })
         .addCase(PaymentPayStack.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.status = 'succeeded'
             state.payStack = action.payload
         })

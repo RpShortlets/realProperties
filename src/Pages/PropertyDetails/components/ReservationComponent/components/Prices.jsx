@@ -41,7 +41,7 @@ const PriceBody =  styled.div `
     }
 `
 
-const Prices = ({price, summary_details, selectedCar, reserve, radio}) => {
+const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAdditionalServices}) => {
 
     return (
         <PriceBody>
@@ -49,20 +49,20 @@ const Prices = ({price, summary_details, selectedCar, reserve, radio}) => {
                 <div>
                     {reserve === 'loading' ? <SkeletonLoader /> : (
                         <>
-                            <p> {`${price[0]?.price === null || undefined ? '' : price[0]?.price?.toLocaleString()} x ${summary_details[0]?.stay_length === null || undefined ? '' : summary_details[0]?.stay_length }nights`}</p>
+                            <p> {`${price[0]?.price === null || undefined ? '' : price[0]?.price?.toLocaleString()} x ${summary_details[0]?.stay_length === null || undefined ? '' : summary_details[0]?.stay_length }`}{summary_details[0]?.stay_length > 1 ? 'nights' : 'night'}</p>
                             <p> {`${summary_details[0]?.total_apt_price === null || undefined? '' : summary_details[0]?.total_apt_price?.toLocaleString()}`}</p>
                         </>
                     )}
                     
                 </div>
                 <div>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price && 'Cleaning Services'}</p>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price?.toLocaleString()}</p>
+                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price || summary_details[0]?.total_pickup_dropoff_price ? 'Additional Services' : ''}</p>
+                    <p>{reserve === 'loading' ? <SkeletonLoader /> :   summary_details[0]?.total_cleaning_price ||  summary_details[0]?.total_pickup_dropoff_price ? TotalAdditionalServices?.toLocaleString(): ''}</p>
                 </div>
-                <div>
+                {/* <div>
                     <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_pickup_dropoff_price && 'Pickup/Drop Off'}</p>
                     <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_pickup_dropoff_price?.toLocaleString()}</p>
-                </div>
+                </div> */}
                 <div>
                     <p>{reserve === 'loading' ? <SkeletonLoader /> : selectedCar && selectedCar}</p>
                     <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_car_price && summary_details[0]?.total_car_price?.toLocaleString()}</p>
