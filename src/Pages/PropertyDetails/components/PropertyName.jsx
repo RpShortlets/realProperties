@@ -5,6 +5,12 @@ import { AiOutlineHeart } from "react-icons/ai"
 import { FiShare } from "react-icons/fi"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 
+// import localforage from "localforage"
+
+// let propertyDetails = localforage.createInstance({
+//     name: "PropertyDetails"
+// });
+
 const HeaderContents = styled.div `
     display: none;
 
@@ -51,12 +57,14 @@ const LikeIcon = styled(FiShare) `
 const PropertyName = () => {
     const {PropertyDetails: {general_info}, status} = useSelector(state => state.propertyDetails)
 
+    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
+
 
     return (
         <HeaderContents>
             <div>
-                <h1>{status === 'loading' ?  <SkeletonLoader />  : general_info[0]?.apartment_name}</h1>
-                <p>{status === 'loading' ?  <SkeletonLoader /> : general_info[0]?.address}</p>
+                <h1>{status === 'loading' ?  <SkeletonLoader />  :  cached ? cached?.general_info[0]?.apartment_name : general_info[0]?.apartment_name }</h1>
+                <p>{status === 'loading' ?  <SkeletonLoader /> :  cached ? cached?.general_info[0]?.address : general_info[0]?.address}</p>
             </div>
             <div>
                 <div style={{marginRight: '20px'}}>

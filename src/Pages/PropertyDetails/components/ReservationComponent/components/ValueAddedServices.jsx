@@ -46,11 +46,11 @@ display: none;
 `
 
 
-const ValueAddedServices = ({status, modalRef, checkboxes, handleChange, openService, setOpenService}) => {
+const ValueAddedServices = ({reserve, modalRef, checkboxes, handleChange, openService, setOpenService}) => {
     return (
         <ValueAdded>
             <div> 
-                {status === 'loading' ? (<SkeletonLoader /> ) :
+                {reserve === 'loading' ? (<SkeletonLoader /> ) :
                 (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between', cursor: 'pointer'}}  onClick={() => setOpenService(!openService)}>
                     <div>
                         <h4>Additional Services</h4>

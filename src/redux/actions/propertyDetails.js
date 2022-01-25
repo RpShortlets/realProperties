@@ -14,10 +14,11 @@ export const PropertyDetails = createSlice({
         builder
         .addCase(ShortletDetails.pending, (state, action) => {
             state.status = 'loading'
+            
         })
         .addCase(ShortletDetails.fulfilled, (state, action) => {
             state.status = 'succeeded'
-            state.PropertyDetails = action.payload
+            state.PropertyDetails = action.payload        
         })
         .addCase(ShortletDetails.rejected, (state, action) => {
             state.status = 'failed'

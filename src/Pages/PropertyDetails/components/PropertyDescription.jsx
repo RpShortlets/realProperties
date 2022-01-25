@@ -46,6 +46,8 @@ const Description = styled.div `
 const PropertyDescription = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const GeneralInfo = general_info?.map((data) => data)
+
+    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
     
     return (
         <Description>
@@ -53,7 +55,7 @@ const PropertyDescription = ({status}) => {
             <>
                 <h2>Description</h2>
                 <div>
-                    <p>{GeneralInfo[0]?.property_description}</p> 
+                    <p>{cached ? cached?.general_info[0]?.property_description : GeneralInfo[0]?.property_description}</p> 
                 </div>
             </>
         )}

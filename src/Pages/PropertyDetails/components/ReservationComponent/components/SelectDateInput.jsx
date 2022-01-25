@@ -24,7 +24,7 @@ const InputContainer = styled.div`
 `
 
 const SelectDateInput = () => {
-    const {status, reservation: {dates}, } = useSelector(state => state.reservationState)
+    const {reserve, reservation: {dates}, } = useSelector(state => state.reservationState)
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
 
     const [show, setShow] = useState(false)
@@ -35,12 +35,12 @@ const SelectDateInput = () => {
             <CalenderModal show={show} setShow={setShow} theme='' top="12vh" width="fit-content" left="80%" calanders={1} disablebooked='true' />
             <div>
                 <InputContainer onClick={() => setShow(!show)}>
-                    <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>
-                    {status === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_in_date ? dates[0]?.check_in_date : checkInDate ? checkInDate : 'DD/MM/YYYY'} disabled /> }
+                    <span>{reserve === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>
+                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_in_date ? dates[0]?.check_in_date : checkInDate ? checkInDate : 'DD/MM/YYYY'} disabled /> }
                 </InputContainer>
                 <InputContainer  onClick={() => setShow(!show)}>
-                    <span>{status === 'loading' ? <SkeletonLoader /> : 'Check-out'}</span>
-                    {status === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_out_date ? dates[0]?.check_out_date : checkOutDate ? checkOutDate : 'DD/MM/YYYY'} disabled /> }
+                    <span>{reserve === 'loading' ? <SkeletonLoader /> : 'Check-out'}</span>
+                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_out_date ? dates[0]?.check_out_date : checkOutDate ? checkOutDate : 'DD/MM/YYYY'} disabled /> }
                 </InputContainer>
             </div>
         </>

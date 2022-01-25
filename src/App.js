@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from "react"
-import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, Reservation} from "./export"
+import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
@@ -25,7 +25,7 @@ const App = () => {
 
     tawk.onStatusChange((status) => 
     {
-        console.log(status)
+        // console.log(status)
   
     })
 
@@ -42,17 +42,19 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
-      <Suspense fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
+      <Suspense 
+        fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />
-      </div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/s/:id" element={<SearchResult />} />
-          <Route path="/apartment/:id" element={<PropertyDetails />} />
-          <Route path='/payment' element={<Payments />}  />
-          <Route path='/reservation' element={<Reservation />}  />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        </div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/s/:id" element={<SearchResult />} />
+            <Route path="/apartment/:id" element={<PropertyDetails />} />
+            <Route path='/payment' element={<Payments />}  />
+            <Route path="/order-summary" element={<OrderSummary />} />
+            <Route path="/paystack/callback/shortlet" element={<Verify />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
       </Suspense>
       <Footer />
   </>

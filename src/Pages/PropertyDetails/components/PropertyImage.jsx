@@ -216,7 +216,7 @@ export const CustomRightArrowButton = (props) => {
 const PropertyImage = ({status}) => {
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
+    // const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
 
     const images = [
         {

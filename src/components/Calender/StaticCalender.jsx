@@ -41,10 +41,15 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 const StaticCalender = ({status, calendars, disablebooked}) => {
     const dispatch = useDispatch();
+    const cached = JSON.parse(localStorage.getItem('getReservation'))
+
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
     const [value, setValue] = React.useState([null, null]);
-    const dates = booked_dates?.map((data) => data.booked_dates)
+
+    const dates = cached ? cached?.booked_dates?.map((data) => data.booked_dates) : booked_dates?.map((data) => data.booked_dates)
+
+
 
     React.useEffect(() => {
         var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };

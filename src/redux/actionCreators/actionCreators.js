@@ -2,6 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BaseURL } from "../../api/index"
 
+
+
+// let propertyDetails = localforage.createInstance({
+//     name: "PropertyDetails"
+// });
+
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({value, checkInDate, checkOutDate, adultcount, childrencount}) => {
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
@@ -29,6 +35,7 @@ export const filter = createAsyncThunk("shortlet/filter", async ({startprice,end
 });
 
 export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInDate,checkOutDate, apartment_id, Id}) => {
+    
     const response = await axios.get(`${BaseURL}/shortlet-details`,
     {
         params: {
@@ -38,15 +45,18 @@ export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({
         }
     });
 
-
+    localStorage.setItem("PropertyDetails",JSON.stringify(response.data))
     return response.data;
+    
+    
 
 });
 
 
 export const getReservation = createAsyncThunk("reservation/getReservation", async ({checkInDate,checkOutDate, id}) => {
-    const response = await axios.get(`${BaseURL}/payment-summary`,
-    {
+
+
+    const response = await axios.get(`${BaseURL}/payment-summary`,{
         params: {
             property_id: id,
             check_in: checkInDate,
@@ -55,16 +65,17 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
     });
 
     
+    // localStorage.setItem("getReservation",JSON.stringify(response.data))
     return response.data;
-
+    
 });
 
-export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue, checkboxes, id}) => {
+export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue, checkboxes, Id}) => {
 
     const response = await axios.get(`${BaseURL}/payment-summary-update`,
     {
         params: {
-            property_id: id,
+            property_id: Id,
             check_in: checkInDate,
             check_out: checkOutDate,
             cleaning: checkboxes?.cleaning,
@@ -75,7 +86,7 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
             driver_length: driverlengthValue,
         }
     });
-
+    // localStorage.setItem("getReservation",JSON.stringify(response.data))
     return response.data;
 
 });
@@ -95,14 +106,53 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         overall_total: totalPrice
     }
     
-    const response = await axios.post(`http://localhost:5050/transaction`, formdat);
+    const response = await axios.post(`${BaseURL}/transaction`, formdat);
 
     return response.data;
 
 });
 
 
-export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value}) => {
+export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async ({ongoingId}) => {
+    const formdat = {
+        ongoing_id: ongoingId
+    }
+    
+    const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);
+
+    return response.data;
+
+});
+
+
+export const PaymentPayStack = createAsyncThunk("payment/paymentStack", async ({apartmentId, userId, overAll, guestId }) => {
+    const formdat = {
+        apartment_id: apartmentId,
+        user_id:  guestId,
+        amount: overAll,
+        ongoing_id: userId
+    }
+    
+    const response = await axios.post(`${BaseURL}/payment-paystack`, formdat);
+    localStorage.setItem('ref', JSON.stringify(response.data))
+    return response.data;
+
+});
+
+
+export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async ({ref}) => {
+    
+    const response = await axios.get(`${BaseURL}/paystack/callback/shortlet`, {
+        params: {
+            ref: ref
+        }
+    });
+    return response.data;
+
+});
+
+
+export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value, ongoingId, apartmentId}) => {
     const records = {
         firstname: formdata.firstname, 
         lastname: formdata.lastname,
@@ -111,12 +161,13 @@ export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustom
         dob: value?.toLocaleDateString('en-CA'),
         nationality: dropdown.nationality,
         mode_of_identification: dropdown.identification,
-        identification_no: formdata.idnumber
+        identification_no: formdata.idnumber,
+        apartment_id: apartmentId,
+        ongoing_id: ongoingId
     }
-
-    console.log(formdata)
     
-    const response = await axios.post(`http://localhost:5050/customer`, records);
+    const response = await axios.post(`${BaseURL}/customer`, records);
+    localStorage.setItem('guestId', response.data?.guest_id[0]?.guest_id) 
 
     return response.data;
 

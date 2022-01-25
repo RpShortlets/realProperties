@@ -19,7 +19,7 @@ const InputCheck = styled.input `
 
 
 const Checkbox = ({ checkboxes, handleChange, name, label}) => {
-    console.log(name)
+
     return (
         <>
             <div style={{display:'flex', justifyContent: 'space-between', alignItems:'center', marginBottom: 'max(1.2vw, .6rem)'}}>

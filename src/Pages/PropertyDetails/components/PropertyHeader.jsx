@@ -63,29 +63,32 @@ const PropertyHeader = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const GeneralInfo = general_info?.map((data) => data)
 
+    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
+
+
     return (
         <BodyHeader>
-            {status === 'loading' ? <SkeletonLoader  width='40%'/> : <h2>{GeneralInfo[0]?.apartment_name}</h2>}
+            {status === 'loading' ? <SkeletonLoader  width='40%'/> : <h2>{ cached ? cached?.general_info[0]?.apartment_name : GeneralInfo[0]?.apartment_name}</h2>}
             <BodyHeaderIcon>
                 
                     <BodyIconCard>
                         <div>
                             {status === 'loading' ? <SkeletonLoader /> :(<span><IoBed/></span>)}
                         </div>
-                        <span>{status === 'loading' ? <SkeletonLoader /> : `${GeneralInfo[0]?.bed} Beds`}</span> 
+                        <span>{status === 'loading' ? <SkeletonLoader /> : `${ cached ? cached?.general_info[0]?.bed : GeneralInfo[0]?.bed} Beds`}</span> 
                     </BodyIconCard>
                 
                 <BodyIconCard style={{margin: '0 max(5vw, 1rem)'}}> 
                     <div>
                         {status === 'loading' ? <SkeletonLoader /> : ( <span>{Baths}</span>  )}
                     </div>
-                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.bath} Bathroom</span>)}
+                    {status === 'loading' ? <SkeletonLoader /> : (<span>{cached ? cached?.general_info[0]?.bath : GeneralInfo[0]?.bath} Bathroom</span>)}
                 </BodyIconCard>
                 <BodyIconCard>
                     <div>
                         {status === 'loading' ? <SkeletonLoader /> : ( <span>{Rooms}</span> )}
                     </div>
-                    {status === 'loading' ? <SkeletonLoader /> : (<span>{GeneralInfo[0]?.room} Rooms</span>)}
+                    {status === 'loading' ? <SkeletonLoader /> : (<span>{cached ? cached?.general_info[0]?.room : GeneralInfo[0]?.room} Rooms</span>)}
                 </BodyIconCard>
             </BodyHeaderIcon>
         </BodyHeader>

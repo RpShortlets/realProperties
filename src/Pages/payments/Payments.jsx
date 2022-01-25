@@ -60,7 +60,7 @@ const Payments = () => {
     
     var newNum = num?.toString()?.match(/.{4}/g)?.join(' ');
 
-    console.log(newNum)
+    
     return (
         <Section>
             <Main paddingleft="true" paddingRight="true">

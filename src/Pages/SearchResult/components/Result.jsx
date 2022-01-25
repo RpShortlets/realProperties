@@ -3,7 +3,7 @@ import {useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
-import { ShortletDetails, getReservation } from "../../../redux/actionCreators/actionCreators"
+import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
 
 
@@ -138,19 +138,19 @@ const Price = styled.div `
 
 
 
-const Result = ({data: {address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, }) => {
+const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, data }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
+    console.log(data)
 
     const handleGetDetails = async(Id) => {        
         dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id})) 
-        dispatch(getReservation({checkInDate,checkOutDate,apartment_id}))
+        // dispatch(getReservation({checkInDate,checkOutDate,apartment_id}))
         navigate(`/apartment/${apartment_id}`)
     }
 
-   
 
     return (
         
@@ -175,8 +175,8 @@ const Result = ({data: {address, apartment_name, bath, bed, picture, room, price
                         <div>
                             <h2>{apartment_name}</h2>
                             <span>{address}</span>
-                            <span>Consectetur adipiscing elit duis tristique 
-                                sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae
+                            <span>
+                                {property_brief_description}
                             </span>
                         </div>
                         <IconDiv>

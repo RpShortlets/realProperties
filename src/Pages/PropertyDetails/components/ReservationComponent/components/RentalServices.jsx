@@ -191,12 +191,7 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
     Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
     addDriverLength, minusDriverLength, handlecheckbox}) => {
 
-    const variants = {
-        visible: { opacity: 1 },
-        hidden: { opacity: 0 },
-        }
-
-
+    
     return (
         <>
             

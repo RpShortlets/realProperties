@@ -80,7 +80,16 @@ input[type="date"] {
 .input-container .react-tel-input .form-control {
     width: 100% !important;
     height: 45px;
+    box-shadow: none;
+    border: 1px solid #2193B0;
+    color: var(--color-primary);
+    font-size: var(--font-xtra-small-screen);
 }
+
+.input-container .react-tel-input .form-control:focus {
+    border: 2px solid var(--color-primary);
+}
+
 
 .input-container .react-tel-input {
     margin-top: 8px;

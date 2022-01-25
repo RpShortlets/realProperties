@@ -1,6 +1,6 @@
-import {useState, useRef, useEffect} from "react"
+import {useState, useRef, useEffect, useMemo} from "react"
 import { useParams} from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
 import { PaddingStyle } from "../../styles/globalStyles"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
@@ -16,6 +16,8 @@ import {PropertyCalender} from "./components/PropertyCalender"
 import PropertyRules from "./components/PropertyRules"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import Backdrop from "../../components/Backdrop"
+import {Reservation} from "../../export"
+import { getReservationUpdate } from "../../redux/actionCreators/actionCreators"
 
 
 const Section  = styled.section `
@@ -37,8 +39,6 @@ const Header = styled.div `
 
 `
 
-
-
 const BodyContainer = styled.div `
     margin-bottom: max(1vw, 1rem);    
 
@@ -54,18 +54,37 @@ const BodyContent = styled.div `
     }
 `
 
-
+const initiateState = {cleaning: "", pickup: "" }
 
 const PropertyDetails = () => {
+    const dispatch = useDispatch();
     const Query = useMediaQuery("(min-width: 769px)")
     const Id = useParams().id
+    const cached = JSON.parse(localStorage.getItem('getReservation'))
+
     const {status} = useSelector(state => state.propertyDetails)
+    const {proceess} = useSelector(state => state.paymentState)
+    const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
     const {reservation: {summary_details }} = useSelector(state => state.reservationState)
+    const {reserve} = useSelector(state => state.reservationState)
+
+
     const [openGuest, setOpenGuest] = useState(false)
     const [openService, setOpenService] = useState(false)
     const [show, setshow] = useState(false);
+    const [showModal, setShowModal] = useState(false)
+    const [checkboxes, setCheckboxes] = useState(initiateState)
+    const [openCar, setOpenCar] = useState(false)
+    const [selectedCar, setSelectedCar] = useState(null)
+    const [driver, setDriver] = useState(false)
+    const [carlength, setCarlength] = useState(false)
+    const [carlengthValue, setCarlengthValue] = useState(0)
+    const [carType, setCarType] = useState('')
+    const [driverlengthValue, setDriverlengthValue] = useState(0)
+    const [radio, setRadio] = useState(null)
+
     const modalRef = useRef()
-    const staylength = summary_details ? summary_details[0]?.stay_length : 1;
+    const staylength = cached ? cached?.summary_details[0]?.stay_length :  summary_details ? summary_details[0]?.stay_length : 1;
 
 
 
@@ -79,12 +98,48 @@ const PropertyDetails = () => {
         }
     }, [show])
 
-    // if(pending) return <WaitLoading />
+    useEffect(() => {
+        if(proceess === 'succeeded') {
+            // navigate('/reservation')
+            setShowModal(true)
+        }
+    }, [proceess]);
+
+    // useEffect(() => 
+    //     dispatch(getReservation({Id})),
+    // [Id, dispatch])
+
+    
+    useMemo(() => 
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id})), 
+    [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+
+
+
+    useEffect(() => {
+        if(showModal) {
+
+            // document.body.style.overflow = 'hidden'
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+            })
+            document.body.style.overflow = 'hidden'
+        }
+        return () => {
+            document.body.style.overflow = 'auto'
+        }
+    }, [showModal])
 
     return (
         <>
             {openService  && <Backdrop onClick={()=> setOpenService(false)} zIndex="10" /> }
+            {showModal  && <Backdrop onClick={()=> setShowModal(false)} theme="rgba(0, 0, 0, .5)" /> }
             {!Query && <MobileModal show={show} setshow={setshow}/>}
+            {showModal && (
+                <Reservation  setShowModal={setShowModal}/>
+            )}
             <Section>
                 <Main paddingleft='true' paddingRight='true'>
                     <Header>
@@ -94,17 +149,36 @@ const PropertyDetails = () => {
                             <BodyContent>
                                 <PropertyHeader status={status}/>
                                 <PropertyDescription status={status} />
-                                <ReservationComponent 
-                                    setOpenGuest={setOpenGuest}
-                                    openGuest={openGuest}
-                                    modalRef={modalRef}
-                                    openService={openService}
-                                    setOpenService={setOpenService}
-                                    setshow={setshow}
-                                    show={show}
-                                    Query={Query}
-                                    id={Id}
-                                />
+                                {reserve === 'succeeded' && (
+                                    <ReservationComponent 
+                                        setOpenGuest={setOpenGuest}
+                                        openGuest={openGuest}
+                                        modalRef={modalRef}
+                                        openService={openService}
+                                        setOpenService={setOpenService}
+                                        setshow={setshow}
+                                        show={show}
+                                        Query={Query}
+                                        id={Id}
+                                        setCheckboxes={setCheckboxes}
+                                        checkboxes={checkboxes}
+                                        setOpenCar={setOpenCar}
+                                        openCar={openCar}
+                                        setSelectedCar={setSelectedCar}
+                                        selectedCar={selectedCar}
+                                        setDriver={setDriver}
+                                        driver={driver}
+                                        setCarlength={setCarlength}
+                                        carlength={carlength}
+                                        setCarlengthValue={setCarlengthValue}
+                                        carlengthValue={carlengthValue}
+                                        setCarType={setCarType}
+                                        setDriverlengthValue={setDriverlengthValue}
+                                        driverlengthValue={driverlengthValue}
+                                        setRadio={setRadio}
+                                        radio={radio}
+                                    />
+                                )}            
                                 <PropertyAmenities  status={status}/>
                             </BodyContent>
                         </BodyContainer>
@@ -118,3 +192,5 @@ const PropertyDetails = () => {
 }
 
 export default PropertyDetails
+
+

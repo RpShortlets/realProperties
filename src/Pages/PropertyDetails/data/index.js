@@ -20,19 +20,20 @@ const IconContent = styled.div `
     
 `
 
+const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
 
 export const AmenitiesOne = () => {
     const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
 
-    const securityCheck = amenities[0]?.security;
-    const ConditionalCheck = amenities[0]?.air_condition;
-    const parkingCheck =  amenities[0]?.parking;
+    const securityCheck = cached ? cached?.amenities[0]?.security : amenities[0]?.security;
+    const ConditionalCheck =  cached ? cached?.amenities[0]?.air_condition : amenities[0]?.air_condition;
+    const parkingCheck =   cached ? cached?.amenities[0]?.parking : amenities[0]?.parking;
     // const bedroomCheck =  amenities[0]?.bed;
-    const fristAidCheck =  amenities[0]?.first_aid;
-    const elevatorCheck =  amenities[0]?.elevator;
-    const oceanViewCheck =  amenities[0]?.oceanview;
-    const bathroomCheck =  amenities[0]?.bath;
-    const kitchenCheck = amenities[0]?.kitchen;
+    const fristAidCheck =  cached ? cached?.amenities[0]?.first_aid : amenities[0]?.first_aid;
+    const elevatorCheck =   cached ? cached?.amenities[0]?.elevator : amenities[0]?.elevator;
+    const oceanViewCheck =  cached ? cached?.amenities[0]?.oceanview :  amenities[0]?.oceanview;
+    const bathroomCheck =  cached ? cached?.amenities[0]?.bath : amenities[0]?.bath;
+    const kitchenCheck =  cached ? cached?.amenities[0]?.kitchen : amenities[0]?.kitchen;
 
     return (
         <IconContent>
@@ -92,13 +93,13 @@ export const AmenitiesOne = () => {
 export const AmenitiesTwo = () => {
     const {PropertyDetails: {amenities}} = useSelector(state => state?.propertyDetails)
     
-    const wifiCheck =  amenities[0]?.wifi;
-    const balconyCheck =  amenities[0]?.balcony;
-    const guestRoomCheck =  amenities[0]?.guest_restroom;
+    const wifiCheck =   cached ? cached?.amenities[0]?.wifi : amenities[0]?.wifi;
+    const balconyCheck =   cached ? cached?.amenities[0]?.balcony :  amenities[0]?.balcony;
+    const guestRoomCheck =   cached ? cached?.amenities[0]?.guest_restroom : amenities[0]?.guest_restroom;
     // const cleaningCheck =  amenities[0]?.cleaning_service;
-    const RokuCheck =  amenities[0]?.netflix;
-    const swimmingCheck = amenities[0]?.swimming_pool;
-    const lightingCheck =  amenities[0]?.lighting;
+    const RokuCheck =   cached ? cached?.amenities[0]?.netflix : amenities[0]?.netflix;
+    const swimmingCheck =  cached ? cached?.amenities[0]?.swimming_pool : amenities[0]?.swimming_pool;
+    const lightingCheck =   cached ? cached?.amenities[0]?.lighting : amenities[0]?.lighting;
     
 
     return (

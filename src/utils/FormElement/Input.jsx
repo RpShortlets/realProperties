@@ -67,7 +67,15 @@ const InputForm = styled.input `
         color: var(--color-primary);
     }
 
+    :-internal-autofill-selected {
+    appearance: menulist-button;
+    background-image: none !important;
+    background-color: -internal-light-dark(white) !important;
+    color: -internal-light-dark(black, white) !important;
+}
+
 `
+
 
 export const Input = ({Blur, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (

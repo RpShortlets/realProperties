@@ -170,7 +170,6 @@ const SearchResult = () => {
         dispatch(filter({startprice, endprice})), 
     1000,[startprice, endprice, dispatch])
 
-    console.log(status)
 
     if(status === 'failed') {
         return (
