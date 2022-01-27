@@ -49,7 +49,6 @@ export const PaymentsReducer = createSlice({
             state.status = 'loading'
         })
         .addCase(VerifyPayStack.fulfilled, (state, action) => {
-            console.log(action.payload)
             state.status = 'succeeded'
             state.verify = action.payload
         })

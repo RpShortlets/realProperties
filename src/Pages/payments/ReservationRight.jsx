@@ -15,6 +15,9 @@ import validator from 'validator'
 import {saveCustomerInformation, RetrieveTransaction} from "../../redux/actionCreators/actionCreators"
 import { motion, AnimatePresence } from "framer-motion"
 import { CancelIcon } from "../../Svg/svg"
+import { Pulse } from "../../components/Loader/Spinner"
+import {useValidate, useValidateId, useValidateLast} from "../../hooks/useValidate/useValidate"
+import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
 
 
 const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others'];
@@ -26,8 +29,8 @@ const SectionRight = styled.div `
     z-index: 11; 
     height: 100vh;
     position: absolute; 
-    top: 0; 
-    right: 100px;
+    /* top: 0;  */
+    right: 0px;
     overflow-y: scroll;
 
 `
@@ -59,29 +62,53 @@ const ReservationRight = ({setShowModal}) => {
 
     const {status} = useSelector(state => state.customerRecord)
     const {ongoingTransactions: {Ongoing_id, apartment_id}} = useSelector(state => state.paymentState)
-
-
-
-
+    
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: "", dateofBirth: ''})
-    const [dropdown, setDropdown] = useState({identification: "", nationality: ""})
+    const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
     const [value, setValue] = useState(new Date());
     const [phn, setPhone] = useState("")
     const [validated, setValidated] = useState(false)
     const [emailerror, setEmailError] = useState(false)
     const [focus, setFocus] = useState(false)
-    const [error, seterror] = useState(false)
+    const [focusLast, setFocusLast] = useState(false)
+    const [focusId, setFocusId] = useState(false)
+
+    const name = formdata.firstname 
+    const lastname = formdata.lastname;
+    const Idnum = formdata.idnumber
+
+    const {validatedName} = useValidate({name, focus})
+    const {validatedLastName} =  useValidateLast({lastname, focusLast})
+    const {validatedID} = useValidateId({Idnum, focusId})
+
+    const Focus = (e) => {
+        if(e.target.name) {
+            setFocus(true)
+        }
+    }
+
+    const FocusLastName = (e) => {
+        if(e.target.name) {
+            setFocusLast(true)
+        }
+    }
+
+    const FocusID = (e) => {
+        if(e.target.name) {
+            setFocusId(true)
+        }
+    }
+
 
 
     // const [captcha, setCaptcha] = useState(false)
     const countryList = Country.map((x) => x.name)
 
-    console.log(focus)
 
     // var regmm = '^([0|+[0-9]{1,5})?([7-9][0-9]{9})$';
     // var regmob = new RegExp(regmm)
 
-    
+
 
     //* Validate Email
     const checkEmail = value => {
@@ -98,38 +125,25 @@ const ReservationRight = ({setShowModal}) => {
     }
 
 
-
     const submitFormReservation = (e) => {
         e.preventDefault();
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validated) {
+        if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.length > 11 ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
             dispatch(RetrieveTransaction({ongoingId}))
         }
         else {
-            alert('Not valid')
+            OpenNotificationWithIcon({
+                type: 'warning',
+                message: 'Please fill all credentials'
+            })
         }
 
     }
     
 
-    
-    const Blur = (e) => {
-        if(formdata.firstname.length < 1 ) {
-            seterror(true)  
-        }
-        else {
-            seterror(false)
-        }
-    }
-
-    const Focus = (e) => {
-        if(e.target.name) {
-            setFocus(true)
-        }
-    }
 
     useMemo(() => {
         if(status === 'succeeded') {
@@ -138,18 +152,20 @@ const ReservationRight = ({setShowModal}) => {
         
     }, [status, navigate]);
 
+    
 
     return (
         <>
             <AnimatePresence initial={false}>
                 <SectionRight 
                     as={motion.section}
-                    initial={{x: '200'}}  
-                    animate={{ x: 100 }}
-                    transition={{ ease: "easeOut", duration: 1, type:{
+                    initial={{opacity: 0, x: 500}}  
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{opacity: 0, x: 500}}
+                    transition={{duration: 0.3,
+                    type:{
                         type: 'spring'
                     }}}
-                    exit={{x: 0}}
                 >
                     <MainRight>
                         <div className="reservationHeader">
@@ -174,11 +190,11 @@ const ReservationRight = ({setShowModal}) => {
                         </div>
                         <div className="FormHeader">
                             <form onSubmit={submitFormReservation}>
-                                <Names formdata={formdata} setFormData={setFormData} Focus={Focus} Blur={Blur} error={error}  />
+                                <Names formdata={formdata} Focus={Focus} dropdown={dropdown} setDropdown={setDropdown} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
                                 <Email checkEmail={checkEmail} error={emailerror} phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  /> 
                                 <Nationality dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} formdata={formdata} setFormData={setFormData} value={value} setValue={setValue}  />
-                                <Identification  dropdown={dropdown} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData}/> 
-                                <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ? 'Loading' : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                                <Identification  dropdown={dropdown} error={validatedID} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData} FocusID={FocusID}/> 
+                                <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={status}/>  : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                             </form>
                         </div>
                     </MainRight>

@@ -2,10 +2,12 @@ import { useEffect } from "react"
 import  "../../styles/card.css"
 import { VerifyPayStack } from "../../redux/actionCreators/actionCreators"
 import {useDispatch, useSelector} from "react-redux"
+import { useNavigate } from "react-router"
 import styled from "styled-components"
 import { BsFillCheckCircleFill,  } from "react-icons/bs"
-import { MdCancel } from 'react-icons/md'
+// import { MdCancel } from 'react-icons/md'
 import Button from "../../components/Button/Button"
+import { SkeletonLoader } from "../../components/Loader/Skeleton"
 
 const Section = styled.section `
     width: 100%;
@@ -98,61 +100,87 @@ const Card = styled.div `
 
 const Verify = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const ref = JSON.parse(localStorage.getItem('ref'))?.message?.reference
+    
 
 
     const {verify, status} = useSelector(state => state.paymentState)
 
-    console.log(status, verify, ref)
+    const GoBack = () => {
+        navigate('/')
+    }
 
     useEffect(() => {
         dispatch(VerifyPayStack({ref}))
     }, [dispatch, ref])
 
+    
+
     return <Section>
-        {verify?.message === "PaymentSuccessful" ? (
+        {/* {verify?.message === "PaymentSuccessful" ? ( */}
             <Main>
                 <div className="paymentHeader">
-                    <BsFillCheckCircleFill />
-                    <h2>Payment Received</h2>
+                    {status === 'loading' ? <SkeletonLoader width='80px' height="80px" circle={true} /> : (<BsFillCheckCircleFill />)}
+                    <h2>{status === 'loading' ? <SkeletonLoader width='50%' height='25px' /> : ('Payment Received')}</h2>
                 </div>
                 <div className="paymentBody">
-                    <p>Thank you, your payment was successful. We have sent your payment details to  
-                        <span> {verify?.email} </span>
-                    </p>
+                    {status === 'loading' ? (
+                        <>
+                            <SkeletonLoader width='100%' height='10px' /> 
+                            <SkeletonLoader width='100%' height='10px' /> 
+                        </>
+                    ): (
+                    
+                        <p>Thank you, your payment was successful. We have sent your payment details to  
+                            <span> {verify?.email} </span>
+                        </p>
+                    
+                    )}
                 </div>
                 <div className="cardContainer">
-                    <Card>
-                        <div className="cardBody">
-                            <p>Payment Details</p>
-                        </div>
-                        <div className="cardText">
-                            <p>{verify?.email}</p>
-                            <p>Billing Agreement ID:</p>
-                            <h3>{verify?.payment_id}</h3>
-                        </div>
-                    </Card>
+                    {status === 'loading' ? (
+                        <SkeletonLoader width='100%' height='200px' /> 
+                    ): (
+                        <Card>
+                            <div className="cardBody">
+                                <p> Payment Details</p>
+                            </div>
+                            <div className="cardText">
+                                <p>{verify?.email}</p>
+                                <p>Billing Agreement ID:</p>
+                                <h3>{verify?.payment_id}</h3>
+                            </div>
+                        </Card>
+                    )}
+                    
                 </div>
                 <div className="cardButton">
-                    <Button width='100%' title="Proceed to home page" border='0' padding='1rem' background="var(--linear-primary)"  color="var(--color-white)"/>
+                    {status === 'loading' ? (
+                        <>
+                            <SkeletonLoader width='100%' height='50px' /> 
+                        </>
+                    ):(
+                        <Button width='100%'  onClicks={GoBack} title="Proceed to home page" border='0' padding='1rem' background="var(--linear-primary)"  color="var(--color-white)"/>
+                    )}
                 </div>
             </Main>
-        ): (
-            <Main>
-                <div className="paymentHeader">
-                    <MdCancel />
-                    <h2>Payment Unsuccessful</h2>
-                </div>
-                <div className="paymentBody">
-                    <p>
-                        Oops your payment could not be completed dues to insufficient balance  
-                    </p>
-                </div>
-                <div className="cardButton">
-                    <Button width='100%' title="Proceed to home page" border='0' padding='1rem' background="var(--linear-primary)"  color="var(--color-white)"/>
-                </div>
-            </Main>
-        )}
+        {/* // ): (
+        //     <Main>
+        //         <div className="paymentHeader">
+        //             <MdCancel />
+        //             <h2>Payment Unsuccessful</h2>
+        //         </div>
+        //         <div className="paymentBody">
+        //             <p>
+        //                 Oops your payment could not be completed dues to insufficient balance  
+        //             </p>
+        //         </div>
+        //         <div className="cardButton">
+        //             <Button width='100%' title="Proceed to home page" border='0' padding='1rem' background="var(--linear-primary)"  color="var(--color-white)"/>
+        //         </div>
+        //     </Main>
+        // )} */}
 
     </Section>;
 };

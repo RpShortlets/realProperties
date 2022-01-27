@@ -18,6 +18,7 @@ import ValueAddedServices from "./components/ValueAddedServices"
 import Prices from "./components/Prices"
 import Backdrop from "../../../../components/Backdrop"
 import useAddGuestTotal from "../../../../hooks/useAddGuestTotal/useAddGuestTotal"
+import { OpenNotificationWithIcon } from "../../../../components/Notification/Notification"
 
 
 
@@ -345,6 +346,15 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         setTotalAdditional(CleaningFee + PickupFee)
     }, [CleaningFee, PickupFee]);
 
+    if(proceess === 'failed') {
+        console.log('it faild')
+        OpenNotificationWithIcon({
+            type: 'error',
+            message: "Something went wrong with you reservation. Please try again",
+        })
+    }
+    console.log(proceess)
+
 
         return (
         <>
@@ -435,7 +445,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                         />)}
                         <ReserveButton>
                         {reserve === 'loading' ? (<SkeletonLoader />) :  
-                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query ? handleSubmit : (() => setshow(!show))} title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query ? handleSubmit : (() => setshow(!show))} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         )}
                         </ReserveButton>
                         <Condition>

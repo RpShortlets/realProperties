@@ -2,7 +2,7 @@ import  "../../../styles/card.css"
 import { InputSelect } from "../../../utils/FormElement/Input"
 import StaticYearPicker from "../../../components/Calender/StaticYearPicker"
 
-const Nationality = ({formdata, setFormData, dropdown, setDropdown, countryList, value, setValue}) => {
+const Nationality = ({dropdown, setDropdown, countryList, value, setValue}) => {
     return (
         <>
             <div style={{marginTop: 'max(2vw, .1rem)'}}>

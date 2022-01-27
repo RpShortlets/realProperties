@@ -20,6 +20,7 @@ import {Reservation} from "../../export"
 import { getReservationUpdate } from "../../redux/actionCreators/actionCreators"
 
 
+
 const Reservations = styled.div `
     margin: max(1vw, 2rem) 0;
     transition: all 0.8s;
@@ -137,6 +138,10 @@ const PropertyDetails = () => {
         }
     }, [proceess]);
 
+    //!DEPENDING ISSUE
+    // useEffect(() => {
+    //     dispatch(ShortletDetails({checkInDate,checkOutDate, Id})) 
+    // },  [checkInDate,checkOutDate,apartment_id])
     
     useMemo(() => 
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id})), 
@@ -147,18 +152,21 @@ const PropertyDetails = () => {
     useEffect(() => {
         if(showModal) {
 
-            // document.body.style.overflow = 'hidden'
+            //document.body.style.overflowX = 'hidden'
             window.scrollTo({
                 top: 0,
                 left: 0,
                 behavior: "smooth"
             })
+            
             document.body.style.overflow = 'hidden'
         }
         return () => {
             document.body.style.overflow = 'auto'
         }
     }, [showModal])
+
+
 
     return (
         <>

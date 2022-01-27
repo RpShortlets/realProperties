@@ -1,16 +1,20 @@
 import {Person} from "../../../Svg/svg"
 // import  "../../../styles/card.css"
-import { Input } from "../../../utils/FormElement/Input"
+import { Input, InputSelect } from "../../../utils/FormElement/Input"
 
-const Names = ({formdata, setFormData,Focus, Blur, error}) => {
+const Gent = [ 'Male', 'Female', 'Prefer not to say']
+const Names = ({formdata, setFormData,Focus, FocusLastName, error, validatedLastName, dropdown,setDropdown}) => {
 
     return (
         <>
             <div>
-                <Input type="text" label="First Name" placeholder="First Name" name="firstname" Icon={Person}  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value })} Focus={Focus} Blur={Blur} />
+                <Input type="text" label="First Name" error={!error} placeholder="First Name" name="firstname" Icon={Person}  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value })} Focus={Focus}  />
             </div>
             <div>
-                <Input type="text" label="Last Name" marginTop="0px" placeholder="Last Name" name="lastname" Icon={Person} value={formdata.lastname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value})} Focus={Focus} Blur={Blur}/>
+                <Input type="text" label="Last Name" error={!validatedLastName} marginTop="0px" placeholder="Last Name" name="lastname" Icon={Person} value={formdata.lastname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value})} Focus={FocusLastName}/>
+            </div>
+            <div>
+                <InputSelect name="gender" style={{paddingLeft: '10px'}} value={dropdown.gender} dropdown={dropdown} setDropdown={setDropdown} options={Gent} label="Gender" defaultV="Choose Gender" />
             </div>
         </>
     )

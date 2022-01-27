@@ -154,9 +154,9 @@ export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (
 
 export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value, ongoingId, apartmentId}) => {
     const records = {
-        firstname: formdata.firstname, 
-        lastname: formdata.lastname,
-        email: formdata.email,
+        firstname: formdata.firstname?.toLowerCase(), 
+        lastname: formdata.lastname?.toLowerCase(),
+        email: formdata.email?.toLowerCase(),
         phone_no: phn,
         dob: value?.toLocaleDateString('en-CA'),
         nationality: dropdown.nationality,

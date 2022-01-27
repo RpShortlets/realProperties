@@ -3,13 +3,14 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import ContentLoader from 'react-content-loader'
 
 
-export const SkeletonLoader = ({count, height, styles, width}) => {
+export const SkeletonLoader = ({count, height, styles, width, circle}) => {
     return (
         <>
             <Skeleton
                 count={count}
                 height={height}
                 width={width}
+                circle={circle}
 
                 containerClassName={styles}
             />

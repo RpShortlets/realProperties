@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom"
 import React from "react"
 import Backdrop from "../Backdrop"
-import { CSSTransition } from "react-transition-group"
 import  { CancelIcon } from "../../Svg/svg"
 import Button from "../Button/Button"
 import styled from "styled-components"
@@ -42,7 +41,7 @@ const MainModal = styled.div`
 
 
 const ModalOverLay = ({top, width, left, initial, children, setShow, animate, transition, btn}) => {
-    console.log(animate, initial)
+
     const content = (
         <AnimatePresence>
             <MainModal 
@@ -74,7 +73,6 @@ const ModalOverLay = ({top, width, left, initial, children, setShow, animate, tr
 
 
 const Modal = (props) => {
-    console.log(props.show)
     return (
         <>
             {props.show && <Backdrop onClick={()=> props.setShow(false)} theme={props.theme} /> }

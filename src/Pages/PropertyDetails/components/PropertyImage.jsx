@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
 import styled  from "styled-components/macro"
 import Lightbox from 'react-spring-lightbox';
 import {AiOutlineCamera, AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 import Backdrop from "../../../components/Backdrop"
 import Button from "../../../components/Button/Button"
+// import ReactPlayer from 'react-player'
+// import Video from "../../../video/a4.mp4"
 
 import Pic1 from "../../../image/largeScreen/picOne.jpeg"
 import Pic2 from "../../../image/largeScreen/picTwo.jpeg"
@@ -334,6 +335,13 @@ const PropertyImage = ({status}) => {
                         )}
                     </SmallImage>
                 </ImageWrapper>
+                {/* <ReactPlayer
+                    className='react-player'
+                    url={Video}
+                    width='100%'
+                    height='100%'
+                    controls={true}
+                /> */}
             </ImageContainer>
         </>
     )

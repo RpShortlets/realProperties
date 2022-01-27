@@ -1,8 +1,8 @@
+import Error from "./Error/Error"
+
 const NotFound = () => {
     return (
-        <div>
-            Not Found
-        </div>
+        <Error title="An unexpected error has occured. Please try again later" />
     )
 }
 
