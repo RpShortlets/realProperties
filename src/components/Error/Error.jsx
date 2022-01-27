@@ -3,7 +3,7 @@ import styled from "styled-components"
 // import Svg from "../../Svg/rafiki.svg"
 // import Button from "../../components/Button/Button"
 
-const Section = styled.section `
+const Section = styled.div `
     width: 100%;
     height: 100vh;
     margin: ${({margin}) => margin && 'max(4vw, 2rem) 0'};
@@ -33,7 +33,6 @@ const Section = styled.section `
 `
 
 const Error = ({title, Icon, error}) => {
-    console.log(Icon)
     return (
         <Section margin={error}>
             <div className="container">

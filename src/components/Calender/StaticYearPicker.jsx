@@ -54,7 +54,7 @@ export default function CustomInput({value, setValue, label}) {
       <DesktopDatePicker
         open={isOpen}
         label="Custom input"
-        onAccept={() => setIsOpen(false)}
+        onAccept={() => setIsOpen(!isOpen)}
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

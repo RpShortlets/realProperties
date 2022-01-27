@@ -80,8 +80,8 @@ const OrderSummary = () => {
     const [addtionService, setAddtionalService] = useState();
 
 
-    const CleaningFee = Ongoing_id_info[0]?.cleaning ? Ongoing_id_info[0]?.cleaning : 0;
-    const PickupFee = Ongoing_id_info[0]?.pickup ? Ongoing_id_info[0]?.pickup : 0
+    const CleaningFee =  proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning 
+    const PickupFee =   proceess === 'succeeded' && Ongoing_id_info[0]?.pickup ? Ongoing_id_info[0]?.pickup : 0
 
     useEffect(() => {
         if(status === 'succeeded') {
@@ -121,8 +121,8 @@ const OrderSummary = () => {
                     </div>
                     <div className='orderBody'>
                         <Card>
-                            {Ongoing_id_info.map((data) => (
-                                <div>
+                            {Ongoing_id_info.map((data,i) => (
+                                <div key={i}>
                                     {data?.apartment_price &&  (
                                         <CardDetails>
                                             <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> : data?.apartment_price } {proceess === 'succeeded' && `x${data?.stay_length}`}{proceess === 'succeeded' ? data?.stay_length > 1 ? 'nights' : 'night' : ''} </p>
@@ -147,12 +147,6 @@ const OrderSummary = () => {
                                             <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver?.toLocaleString()}</span>
                                         </CardDetails>
                                     )}
-                                    {/* {data?.pickup && (
-                                        <CardDetails>
-                                            <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup && 'Pickup/Dropoff'}</p>
-                                            <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup?.toLocaleString()}</span>
-                                        </CardDetails>
-                                    )} */}
                                     {data?.security_deposit && (
                                         <CardDetails>
                                             <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>

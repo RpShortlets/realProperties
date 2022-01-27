@@ -7,39 +7,37 @@ import Button from "../../../components/Button/Button"
 import OpenDestination from "../../../components/Dropdowns/OpenDestination"
 import { Destlocation } from "../../../components/Dropdowns/data/destinationLocation"
 import styled, {css} from "styled-components/macro"
-import { FlexStyle } from "../../../styles/globalStyles"
+import { FlexStyle, PaddingStyle } from "../../../styles/globalStyles"
 import CalenderModal from "../../../components/Calender/CalenderModal"
 
 
 const GeneralDivStyle = css`
-    border-radius: 7px;
+    border-radius: 4px;
     height: 50px;
     position: relative;
-    background: rgba(196, 196, 196, 1);
+    background: var(--color-secondary);
     /* ${FlexStyle} */
     justify-content: center;
-    color: var(--color-white);
+    color: var(--color-dark);
     cursor: pointer;
     flex: 1;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 
     span {
-        font-size: var( --font-xtra-small-screen);
+        font-size: 10px;
     }
 
 `
 
 const Filter = styled.div `
-    background: var(--color-primary-dark);
-    height: 70px;
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1;
     top: 0;
     ${FlexStyle}
+    ${PaddingStyle}
     justify-content: center;
-    padding: 0 8rem;
+    margin-top: .5rem;
 
 
     > div {
@@ -154,7 +152,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
     
     return (
 
-        <Filter paddingleft='true' paddingRight='true'>
+        <Filter>
             <div>
                 <Destination>
                     <DestinationDiv onClick={() => setOpenModal(!openModal)}>
@@ -189,7 +187,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                                         <span>{searchYearIn}</span>
                                     </div>
                                     <div>
-                                        <span style={{fontWeight: 500}}>{searchDayIn}</span>
+                                        <span style={{color: 'var(--color-primary)'}}>{searchDayIn}</span>
                                     </div>
                                 </div>
                                 
@@ -218,7 +216,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                                         <span>{searchYearOut}</span>
                                     </div>
                                     <div>
-                                        <span style={{fontWeight: 500}}>{searchDayOut}</span>
+                                        <span style={{color: 'var(--color-primary)'}}>{searchDayOut}</span>
                                     </div>
                                 </div>
                                     
@@ -240,18 +238,24 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                 <Guest style={{marginRight: '.6rem'}}>
                     <GuestClick onClick={() => setguest(!guest)}>
                         <div style={{marginRight: '1rem'}}>
-                            <AiOutlineUsergroupAdd fontSize={16} color="" />
-                        </div>
-                        <div >
-                            <div>
-                                <span>Add Guest</span>
-                            </div>
-                            
                             {adultcount || childrencount ? (
                                 <div>
                                     <span style={{fontWeight: 500}}> {TotalGuest}</span>
                                 </div>
-                            ): ('')}
+                            ) :
+                                <AiOutlineUsergroupAdd fontSize={16} color="" />
+                            }
+                        </div>
+                        <div >
+                            <div>
+                                <span>{adultcount || childrencount ? `${TotalGuest > 1 ? 'Guests' : 'Guest'}` : 'Add Guest'}</span>
+                            </div>
+                            
+                            {/* {adultcount || childrencount ? (
+                                <div>
+                                    <span style={{fontWeight: 500}}> {TotalGuest}</span>
+                                </div>
+                            ): ('')} */}
                             
                         </div>
                     </GuestClick>

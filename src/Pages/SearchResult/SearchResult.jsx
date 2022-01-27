@@ -1,11 +1,10 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components/macro"
 import Result from "./components/Result"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren, saveSearchValue } from "../../redux/actions/componentState"
 import styles from "../../styles/home.module.css"
-import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import useAddGuestTotal from "../../hooks/useAddGuestTotal/useAddGuestTotal"
 import { searchShortlets, filter } from "../../redux/actionCreators/actionCreators"
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
@@ -14,6 +13,7 @@ import useDebounce from "../../hooks/useDebounce/useDebounce"
 import FilterComponent from "./components/Filter"
 import Error from "../../components/Error/Error";
 import { SearchNotFoundIcon } from "../../Svg/svg";
+import { PaddingStyle } from "../../styles/globalStyles";
 
 
 
@@ -27,26 +27,21 @@ const Section = styled.section `
 const Container = styled.div `
     background: var(--color-white);
     width: 100%;
-
+    ${PaddingStyle}
 `
 
 const Main = styled.div `
     margin: max(5vh, 1rem) 0; 
-    display: grid;
+    display: ${({error}) => error ? 'block' : 'grid'};
     grid-template-columns: repeat(6,1fr);
+    gap: 2rem;
 `
 
 const Results = styled.div `
-    grid-column: 2/6;
-    margin-left: max(2vw, 1rem);
+    grid-column: 2/7;
 `
 
 const OtherSearch = styled.div `
-    position: fixed;
-
-    width: 200px;
-    height: 100%;
-    margin: 0 max(1vw, 1rem);
 
     p {
         margin: 0;
@@ -90,8 +85,6 @@ const SearchResult = () => {
     const [slidervalue, setSliderValue] = useState([10000, 100000]);
     const [showCalender, setShowCalender] = useState(false)
 
-    console.log(searchResult?.length)
-
 
     const myRef = useRef(null)
     const countAdultMinus = 1;
@@ -101,15 +94,6 @@ const SearchResult = () => {
     const startprice = slidervalue[0]
     const endprice = slidervalue[1]
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
-
-
-    
-    useClickOutside(myRef, () => {
-        // if (guest || openModal) {
-        //     setguest(false)
-        //     setOpenModal(false)
-        // }// If user clicks outside of modal, close it.
-    })
 
 
     const handleGuest = () => {
@@ -173,6 +157,15 @@ const SearchResult = () => {
         dispatch(filter({startprice, endprice})), 
     1000,[startprice, endprice, dispatch])
 
+    useEffect(() => {
+        if(status === 'loading') {
+            document.body.style.overflow = 'hidden'
+        }
+        return () => {
+            document.body.style.overflow = 'auto'
+        };
+    }, [status]);
+
 
     if(status === 'failed') {
         return (
@@ -185,7 +178,7 @@ const SearchResult = () => {
     return (
         <>
             <Section>
-                <Container>
+                <Container  paddingleft='true' paddingRight='true'>
                     {status === 'loading' ?(
                         <div style={{marginTop: '-5.5rem'}}>
                             <SkeletonLoader count={1} height={60} styles={styles.loader} /> 
@@ -215,7 +208,7 @@ const SearchResult = () => {
                             
                             />
                         )}
-                    <Main>
+                    <Main error={searchResult?.length > 1 ? false : true}>
                         {searchResult?.length > 1 && (
                             <OtherSearch>
                                 <div>

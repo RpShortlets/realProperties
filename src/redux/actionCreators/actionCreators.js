@@ -19,11 +19,11 @@ export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async
         }
     });
 
+    console.log(response.data?.searchResult[0]?.apartment_id)
     return response.data;
 });
 
 export const filter = createAsyncThunk("shortlet/filter", async ({startprice,endprice}) => {
-    console.log('Fired')
     const response = await axios.get(`${BaseURL}/shortlet-filter`, {
         params: {
             start_price: startprice,
