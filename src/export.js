@@ -10,3 +10,4 @@ export const Verify = lazy(() => import('./Pages/payments/Verify.jsx'))
 
 export { default as Footer } from "./components/Footer/Footer"
 export { default as NotFound } from "./components/NotFound"
+export { default as Nav } from "./components/Nav/Nav"

@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from "react"
-import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify} from "./export"
+import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Nav} from "./export"
 import { Routes, Route,  } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
@@ -42,6 +42,7 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
+      <Nav />
       <Suspense 
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />

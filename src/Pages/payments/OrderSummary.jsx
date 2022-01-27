@@ -6,8 +6,6 @@ import {Pulse} from "../../components/Loader/Spinner"
 import {FlexStyle} from "../../styles/globalStyles"
 import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
-import Modal from "../../components/Modal/Modal"
-
 
 
 const Section = styled.section `
@@ -79,9 +77,8 @@ const OrderSummary = () => {
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     const {payStack, status} = useSelector(state => state.paymentState)
     const guestId =  parseInt(localStorage.getItem('guestId'))
-
     const [addtionService, setAddtionalService] = useState();
-    const [show, setShow] = useState(false)
+
 
     const CleaningFee = Ongoing_id_info[0]?.cleaning ? Ongoing_id_info[0]?.cleaning : 0;
     const PickupFee = Ongoing_id_info[0]?.pickup ? Ongoing_id_info[0]?.pickup : 0
@@ -99,7 +96,16 @@ const OrderSummary = () => {
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
         dispatch(PaymentPayStack({apartmentId, userId, overAll, guestId}))
-        setShow(false)
+    }
+
+    const showConfirm = () => {
+        // window.confirm('You\'re being redirected' )
+
+        if (window.confirm("You're being redirected") === true) {
+            processPayment()
+            } else {
+            console.log('No')
+        }
     }
 
     useEffect(() => {
@@ -108,15 +114,6 @@ const OrderSummary = () => {
 
     return (
         <>
-            {show && (
-                <Modal show={show} setShow={setShow} left="30%" top='5%' width='40%' initial={{opacity: 0, y: 0}} animate={{opacity: 1, y: 10}} transition={{ duration: 0.3 }} btn={true} >
-                    <div style={{textAlign: 'center'}}>
-                        <p>You're being redirected to payment</p>
-                        <Button onClicks={processPayment} title='Pay' border='none' background='var(--linear-primary)' color='var(--color-white)' width='50%' padding='.9rem' fontSize='var(--font-xtra-small-screen)' />
-                    </div>
-                </Modal>
-            )}
-            
             <Section>
                 <Main>
                     <div className='orderHeader'>
@@ -169,7 +166,7 @@ const OrderSummary = () => {
                                         </CardTotal>
                                     )}
 
-                                    <Button onClicks={() => setShow(!show)} disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Confirm and pay'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                    <Button onClicks={showConfirm} disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Confirm and pay'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                 </div>
                             ))}
                         </Card>

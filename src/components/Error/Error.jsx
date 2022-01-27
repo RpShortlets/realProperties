@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from "styled-components"
-import Svg from "../../Svg/rafiki.svg"
-import Button from "../../components/Button/Button"
+// import Svg from "../../Svg/rafiki.svg"
+// import Button from "../../components/Button/Button"
 
 const Section = styled.section `
     width: 100%;
     height: 100vh;
-    margin-top: max(4vw, 2rem);
+    margin: ${({margin}) => margin && 'max(4vw, 2rem) 0'};
 
     .container {
         width: 100%;
@@ -32,19 +32,20 @@ const Section = styled.section `
     }
 `
 
-const Error = ({title}) => {
+const Error = ({title, Icon, error}) => {
+    console.log(Icon)
     return (
-        <Section>
+        <Section margin={error}>
             <div className="container">
                 <div>
-                    <img src={Svg} alt="" />
+                    {Icon}
                 </div>
                 <div className='paragraph'>
                     <p>{title}</p>
                 </div>
-                <div className='btn-container'>
+                {/* <div className='btn-container'>
                     <Button  title="Go Back"  border="0" width="50%" padding="1rem" background="var(--linear-primary)" color="var(--color-white)"/>
-                </div>
+                </div> */}
             </div>
         </Section>
     )

@@ -13,6 +13,7 @@ import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
 import FilterComponent from "./components/Filter"
 import Error from "../../components/Error/Error";
+import { SearchNotFoundIcon } from "../../Svg/svg";
 
 
 
@@ -20,7 +21,6 @@ const Section = styled.section `
     width: 100%;
     height: 100%;
     overflow: hidden;
-    padding-top: 5rem;
 `
 
 
@@ -253,7 +253,7 @@ const SearchResult = () => {
                                                 ))}
                                             </>
                                         ) : (
-                                            <Error title="No property found. Please try again later" />
+                                            <Error title="Oops! We can’t find any property that matches your search" Icon={SearchNotFoundIcon} />
                                         )
                                         }
                                     </>

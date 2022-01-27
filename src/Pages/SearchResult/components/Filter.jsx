@@ -32,7 +32,8 @@ const GeneralDivStyle = css`
 const Filter = styled.div `
     background: var(--color-primary-dark);
     height: 70px;
-    position: fixed;
+    position: sticky;
+    top: 0;
     width: 100%;
     z-index: 1;
     top: 0;
