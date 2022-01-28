@@ -370,7 +370,7 @@ export const SearchNotFoundIcon =  <svg width="282" height="200" viewBox="0 0 38
 <path opacity="0.1" d="M175.45 86.8787V100.91C166.569 99.6724 158.117 97.0559 151.216 93.0527C141.171 87.2749 136.153 79.6565 136.153 72.0546V58.0228C136.156 56.4758 136.362 54.9358 136.764 53.4419V53.4419C134.287 62.48 139.141 72.0463 151.2 79.0292C158.15 83.0489 166.569 85.6654 175.45 86.8787Z" fill="black"/>
 </svg>
 
-export const Error404Icon  = <svg width="623" height="465" viewBox="0 0 623 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const Error404Icon  = <svg width="423" height="265" viewBox="0 0 623 465" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M623 408.491H0V408.803H623V408.491Z" fill="#EBEBEB"/>
 <path d="M560.575 428.54H519.308V428.851H560.575V428.54Z" fill="#EBEBEB"/>
 <path d="M412.7 431.929H401.872V432.24H412.7V431.929Z" fill="#EBEBEB"/>

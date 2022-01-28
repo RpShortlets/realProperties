@@ -8,6 +8,13 @@ import { BaseURL } from "../../api/index"
 //     name: "PropertyDetails"
 // });
 
+export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () => {
+    const response = await axios.get(`${BaseURL}/update-booking`)
+    console.log(response)
+    return response.data;
+});
+
+
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({value, checkInDate, checkOutDate, adultcount, childrencount}) => {
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
@@ -18,8 +25,6 @@ export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async
             child: childrencount,
         }
     });
-
-    console.log(response.data?.searchResult[0]?.apartment_id)
     return response.data;
 });
 
@@ -92,7 +97,7 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
 });
 
 
-export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction", async ({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver}) => {
+export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction", async ({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}) => {
     const formdat = {
         apartment_id: id,
         apartment_price: apartmentPrice,
@@ -103,7 +108,9 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         car_rental: carPrice,
         driver: driver,
         security_deposit: security,
-        overall_total: totalPrice
+        overall_total: totalPrice,
+        check_in_date: checkInDate,
+        check_out_date: checkOutDate
     }
     
     const response = await axios.post(`${BaseURL}/transaction`, formdat);

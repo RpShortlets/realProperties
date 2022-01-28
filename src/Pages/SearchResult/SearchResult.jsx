@@ -12,7 +12,7 @@ import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
 import FilterComponent from "./components/Filter"
 import Error from "../../components/Error/Error";
-import { SearchNotFoundIcon } from "../../Svg/svg";
+import { Error404Icon, SearchNotFoundIcon } from "../../Svg/svg";
 import { PaddingStyle } from "../../styles/globalStyles";
 
 
@@ -169,9 +169,7 @@ const SearchResult = () => {
 
     if(status === 'failed') {
         return (
-            <div>
-                Error
-            </div>
+            <Error Icon={Error404Icon}  title="Something went wrong. Please try again." />
         )
     }
 

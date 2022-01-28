@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getReservation, getReservationUpdate } from "../actionCreators/actionCreators"
+import { getReservation, getReservationUpdate, UpdateBooks } from "../actionCreators/actionCreators"
 
 
 export const ReservationState = createSlice({
@@ -32,6 +32,18 @@ export const ReservationState = createSlice({
             })
             .addCase(getReservationUpdate.rejected, (state, action) => {
                 state.reserve = 'failed'
+                state.error = action.error.message
+            })
+            .addCase(UpdateBooks.pending, (state, action) => {
+                state.bookings = 'loading'
+            })
+            .addCase(UpdateBooks.fulfilled, (state, action) => {
+                state.bookings = 'succeeded'
+                state.updateBooks = action.payload
+                
+            })
+            .addCase(UpdateBooks.rejected, (state, action) => {
+                state.bookings = 'failed'
                 state.error = action.error.message
             })
         

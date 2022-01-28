@@ -229,7 +229,7 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                         </div>
                     </Apartment>
                     <Price>
-                        <h3>&#36;{price.toLocaleString()}</h3>
+                        <h3>&#8358; {price.toLocaleString()}</h3>
                     </Price>
                 </ContentContainer>
             </CardContainer>

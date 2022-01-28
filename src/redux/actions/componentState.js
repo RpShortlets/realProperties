@@ -13,6 +13,7 @@ export const ComponentState = createSlice({
         useCheckInDate: null,
         useCheckOutDate: null,
         searchValue: '',
+        checkScroll: false
     }, 
     reducers: {
         incrementAdult: (state) => {
@@ -59,11 +60,14 @@ export const ComponentState = createSlice({
         newUnformattedDates: (state, action) => {
             state.unformattedDates = action.payload
         },
+        checkScrollState: (state, action) => {
+            state.checkScroll = action.payload
+        }
 
     },
     extraReducers: {}
 })
 
-export const { newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
+export const { checkScrollState, newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
 
 export default ComponentState.reducer

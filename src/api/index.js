@@ -1,8 +1,7 @@
 import axios from "axios";
 
 
-export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
-
+export const BaseURL = 'http://localhost:5050';
 
 
 export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDeparture) => {
@@ -22,8 +21,6 @@ export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDe
         no_of_children: dropdown.childno,
     
     }
-
-    console.log(dropdown)
     try {
         const {data} = await axios.post(`${BaseURL}/reservation`, formData);
         return data

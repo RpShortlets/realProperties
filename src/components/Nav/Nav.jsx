@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useSelector } from 'react-redux';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon } from '../../Svg/svg';
 import {motion, AnimatePresence} from "framer-motion"
+import NavVas from './components/NavVas';
+import MiniSearch from './components/MiniSearch';
 
+
+const svgs = [
+    {
+        id: 1,
+        icon: TaxiIcon
+    }, {
+        id: 2,
+        icon: ChefIcon
+    }
+]
 
 const NavBar = styled.nav `
     position: sticky;
@@ -35,21 +48,6 @@ const NavItems =  styled.div `
 
 `
 
-const NavSocialIcons = styled.div `
-    ${FlexStyle}
-
-    span {
-        font-size: var(--font-small-screen);
-        color: var(--color-primary);
-        text-shadow: 0 0 1px;
-        font-weight: 500px;
-    }
-
-    svg {
-        color: var(--color-primary);
-        margin: 0 max(2.5vw, 1.5rem);
-    }
-`
 
 const NavDropdown = styled.div `
     display: flex;
@@ -67,13 +65,14 @@ const Modal =  styled.div`
     background: #fff;
     border-radius: 3px;
     top: 61px;
-    right: 12px;
+    right: 85px;
     height: 100px;
     width: 200px;
 
 `
 
 const Nav = () => {
+    const {checkScroll} = useSelector(state =>  state.ComponentState)
     const [show, setShow] = useState(false)
     return (
         <NavBar paddingleft="true" paddingRight="true">
@@ -83,15 +82,11 @@ const Nav = () => {
                         {CompanyLogo}
                     </Link>
                 </div>
-                <NavSocialIcons className='nav'>
-                    <div>
-                        <span>Want a:</span>
-                    </div>
-                    <div>
-                        {TaxiIcon}
-                        {ChefIcon}
-                    </div>
-                </NavSocialIcons>
+                {checkScroll ? (
+                    <MiniSearch />
+                ) : (
+                    <NavVas  Icons={svgs} />
+                )}
                 <NavDropdown>
                     <Link to='#' onClick={() => setShow(prev => !prev)}>
                         {HamburgerIcon}
@@ -100,12 +95,10 @@ const Nav = () => {
                         <AnimatePresence>
                             <Modal
                                 as={motion.div}
-                                initial={{opacity: 0}}
-                                animate={{opacity: 1}}
-                                exit={{opacity: 0}}
-                                transition={{duration: 0.5, type: {
-                                    type: 'spring'
-                                }}}
+                                initial={{y: -5}}
+                                animate={{ y: [0, 5, 0], opacity: 1}}
+                                transition={{ ease: "easeOut", duration: 0.7 }}
+                                exit={{opacity: 0, y: [0, 10, 0]}}
                             >
                                 Hello
                             </Modal>

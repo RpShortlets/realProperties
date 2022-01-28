@@ -68,20 +68,24 @@ const InputForm = styled.input `
     }
 
     :-internal-autofill-selected {
-    appearance: menulist-button;
-    background-image: none !important;
-    background-color: -internal-light-dark(white) !important;
-    color: -internal-light-dark(black, white) !important;
-}
+        appearance: menulist-button;
+        background-image: none !important;
+        background-color: -internal-light-dark(white) !important;
+        color: -internal-light-dark(black, white) !important;
+    }
+
+    :disabled {
+        background-color: #ccc;
+    }
 
 `
 
 
-export const Input = ({Blur, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
+export const Input = ({Blur, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
         <InputContainer Icon={Icon}>
             {label && <label> {label}{Asterik}</label>}
-            <InputForm onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
+            <InputForm disabled={disabled} onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
         </InputContainer>
     )
@@ -89,11 +93,11 @@ export const Input = ({Blur, Focus,type, error, label, placeholder, name, Icon, 
 
 
 
-export const InputSelect = ({label, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
+export const InputSelect = ({label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
         <div className="input-container">
             <label>{label}{Asterik} 
-                <select ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
+                <select disabled={disabled} ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
                     <option defaultChecked >{defaultV}</option>
                     {options.map((option, i) => {
                         return (

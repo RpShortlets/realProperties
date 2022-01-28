@@ -5,10 +5,12 @@ import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
+import { useDispatch } from "react-redux";
+import { UpdateBooks } from "./redux/actionCreators/actionCreators";
 
 
 const App = () => {
-  
+  const dispatch = useDispatch();
   const invokeGA = () => {
     ReactGa.initialize('UA-181778020-1');
     ReactGa.pageview(window.location.pathname + window.location.search);
@@ -17,6 +19,10 @@ const App = () => {
   useEffect(() => {
     invokeGA();
   }, []);
+
+  useEffect(() => {
+    dispatch(UpdateBooks())
+  }, [dispatch])
 
   useEffect(() => {
     const tawkId = '1fpjikfdf'

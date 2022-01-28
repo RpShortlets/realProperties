@@ -11,6 +11,9 @@ import AddGuest from "./components/AddGuest";
 import useProgressiveImage  from "../../../../hooks/useProgressiveImage/useProgressiveImage";
 import BG from "../../../../image/background.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";
+import { checkScrollState } from '../../../../redux/actions/componentState';
+import { useDispatch } from "react-redux";
+import { motion, useAnimation } from 'framer-motion';
 
 const FilterContainer = styled.div `
     background-image: url(${props => props.backgroundImage});
@@ -156,6 +159,8 @@ const Fiter = styled.div `
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
     guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
+        const dispatch = useDispatch();
+        let controls = useAnimation()
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
 
@@ -177,40 +182,63 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
 
         //* MAKE SEARCH FILTER STICKY ON SCROLL AND FIXED ON MOBILE
         const handleScrollMobile = useCallback(() => {
-            if (!Medium && ScrollRef?.current) {
-                ScrollRef.current.style.position = 'sticky';
-                ScrollRef.current.style.backgroundColor = 'transparent';
-                ScrollRef.current.style.top = '0';
-                //! Testing : Add background color to destination
-                if(window.scrollY > 520 && Medium) {
-                    console.log(window.scrollY)
-                    ScrollRef.current.childNodes[0].style.borderRadius = '32px';
-                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
-                }
-                else if(window.scrollY > 10 && !Medium) {
-                    ScrollRef.current.childNodes[0].style.borderRadius = '32px';
-                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
-                }else {
-                    ScrollRef.current.childNodes[0].style.borderRadius = '7px';
-                    ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '7px';
-                }
-            }
-            else {
-                if(Medium && ScrollRef?.current) {
-                    ScrollRef.current.style.position = 'fixed';
-                    ScrollRef.current.style.top = '0';
-                    ScrollRef.current.style.backgroundColor = '#fff';
+            if(ScrollRef?.current) {
+                if(window.scrollY > 362) {
+                    dispatch(checkScrollState(true))
+                    controls.start(i => ({
+                        opacity: 0,
+                        scale: .5,
+                        transition: {duration: .1,
+                            type: {type: 'spring'}
+                        },
+                        
+                    }))
+                    
+                } else {
+                    dispatch(checkScrollState(false))
+                    controls.start(i => ({
+                        opacity: 1,
+                        scale: 1,
+                        transition: {duration: .1,
+                            type: {type: 'spring'}
+                        }
+                    }))
                 }
             }
+            // if (!Medium && ScrollRef?.current) {
+            //     ScrollRef.current.style.position = 'sticky';
+            //     ScrollRef.current.style.backgroundColor = 'transparent';
+            //     ScrollRef.current.style.top = '0';
+            //     //! Testing : Add background color to destination
+            //     if(window.scrollY > 520 && Medium) {
+            //         console.log(window.scrollY)
+            //         ScrollRef.current.childNodes[0].style.borderRadius = '32px';
+            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
+            //     }
+            //     else if(window.scrollY > 10 && !Medium) {
+            //         ScrollRef.current.childNodes[0].style.borderRadius = '32px';
+            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
+            //     }else {
+            //         ScrollRef.current.childNodes[0].style.borderRadius = '7px';
+            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '7px';
+            //     }
+            // }
+            // else {
+            //     if(Medium && ScrollRef?.current) {
+            //         ScrollRef.current.style.position = 'fixed';
+            //         ScrollRef.current.style.top = '0';
+            //         ScrollRef.current.style.backgroundColor = '#fff';
+            //     }
+            // }
 
-        }, [Medium]);
+        }, []);
 
         //* CALL: ADD AND REMOVE BACKGROUND 
-        useEffect(() => {
-            handleScroll()
-        }, [Medium, handleScroll])
+        // useEffect(() => {
+        //     handleScroll()
+        // }, [Medium, handleScroll])
 
-        //* CALL: MAKE SEARCH FILTER STICKY 
+        // //* CALL: MAKE SEARCH FILTER STICKY 
         useEffect(() => {
             window.addEventListener('scroll', handleScrollMobile)
         }, [Medium, handleScrollMobile])
@@ -236,7 +264,13 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                             <h1>Reserve Your Luxury Short Let</h1>
                             <p>Easy, Secure and Quick</p>
                         </Header>
-                        <FilterSearchWrapper ref={ScrollRef} paddingleft='true' paddingRight='true'>
+                        <FilterSearchWrapper 
+                            ref={ScrollRef} 
+                            paddingleft='true' 
+                            paddingRight='true'
+                            as={motion.div}
+                            animate={controls}
+                        >
                         {/* <Form> */}
                             <Fiter>
                                 <Destination  

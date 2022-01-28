@@ -18,6 +18,7 @@ import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import Backdrop from "../../components/Backdrop"
 import {Reservation} from "../../export"
 import { getReservationUpdate } from "../../redux/actionCreators/actionCreators"
+import { AnimatePresence } from "framer-motion"
 
 
 
@@ -132,11 +133,15 @@ const PropertyDetails = () => {
         }
     }, [show])
 
-    useEffect(() => {
-        if(proceess === 'succeeded') {
-            setShowModal(true)
-        }
-    }, [proceess]);
+    console.log(showModal)
+
+    // useEffect(() => {
+    //     if(proceess === 'succeeded') {
+    //         setShowModal(true)
+    //     } else {
+    //         setShowModal(false)
+    //     }
+    // }, []);
 
     //!DEPENDING ISSUE
     // useEffect(() => {
@@ -166,16 +171,18 @@ const PropertyDetails = () => {
         }
     }, [showModal])
 
-
+    console.log(showModal, 'Modal')
 
     return (
         <>
             {openService  && <Backdrop onClick={()=> setOpenService(false)} zIndex="10" /> }
             {showModal  && <Backdrop onClick={()=> setShowModal(false)} theme="rgba(0, 0, 0, .5)" /> }
             {!Query && <MobileModal show={show} setshow={setshow}/>}
-            {showModal && (
-                <Reservation  setShowModal={setShowModal}/>
-            )}
+            <AnimatePresence  initial={false} exitBeforeEnter={false}>
+                {showModal && (
+                    <Reservation  setShowModal={setShowModal} proceess={proceess}/>
+                )}
+            </AnimatePresence>
             <Section>
                 <Main paddingleft='true' paddingRight='true'>
                     <Header>
@@ -239,6 +246,7 @@ const PropertyDetails = () => {
                                         setRadio={setRadio}
                                         radio={radio}
                                         reserve={reserve}
+                                        setShowModal={setShowModal}
                                     />
                                 )}            
                                 <PropertyAmenities  status={status}/>

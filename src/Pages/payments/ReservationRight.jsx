@@ -13,7 +13,7 @@ import Identification from "./components/Identification"
 //import ReCaptchaV2 from 'react-google-recaptcha'
 import validator from 'validator'
 import {saveCustomerInformation, RetrieveTransaction} from "../../redux/actionCreators/actionCreators"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { CancelIcon } from "../../Svg/svg"
 import { Pulse } from "../../components/Loader/Spinner"
 import {useValidate, useValidateId, useValidateLast} from "../../hooks/useValidate/useValidate"
@@ -56,7 +56,7 @@ const MainRight = styled.div `
 `
 
 
-const ReservationRight = ({setShowModal}) => {
+const ReservationRight = ({setShowModal, proceess}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -156,50 +156,47 @@ const ReservationRight = ({setShowModal}) => {
 
     return (
         <>
-            <AnimatePresence initial={false}>
-                <SectionRight 
-                    as={motion.section}
-                    initial={{opacity: 0, x: 500}}  
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{opacity: 0, x: 500}}
-                    transition={{duration: 0.3,
-                    type:{
-                        type: 'spring'
-                    }}}
-                >
-                    <MainRight>
-                        <div className="reservationHeader">
-                            <div>
-                                <h1>Contact Information</h1>
-                            </div>
-                            <div>
-                                <Button 
-                                    background="var(--color-white)" 
-                                    icon={CancelIcon} 
-                                    border= '2px solid #ccc' 
-                                    borderRadius= '32px'
-                                    width= '25px'
-                                    height= '25px'
-                                    display='flex'
-                                    alignT= 'center'
-                                    justify= 'center'
-                                    fontSize= '12px'
-                                    onClicks={() => setShowModal(false)}
-                                />
-                            </div>
+            
+            <SectionRight 
+                as={motion.section}
+                initial={{opacity: 0, x: 500}}  
+                animate={{ opacity: 1, x: 0 }}
+                exit={{opacity: 0, x: 500}}
+                // transition={{duration: 0.3}}
+            >
+                <MainRight>
+                    <div className="reservationHeader">
+                        <div>
+                            <h1>Contact Information</h1>
                         </div>
-                        <div className="FormHeader">
-                            <form onSubmit={submitFormReservation}>
-                                <Names formdata={formdata} Focus={Focus} dropdown={dropdown} setDropdown={setDropdown} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
-                                <Email checkEmail={checkEmail} error={emailerror} phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  /> 
-                                <Nationality dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} formdata={formdata} setFormData={setFormData} value={value} setValue={setValue}  />
-                                <Identification  dropdown={dropdown} error={validatedID} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData} FocusID={FocusID}/> 
-                                <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={status}/>  : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
-                            </form>
+                        <div>
+                            <Button 
+                                background="var(--color-white)" 
+                                icon={CancelIcon} 
+                                border= '2px solid #ccc' 
+                                borderRadius= '32px'
+                                width= '25px'
+                                height= '25px'
+                                display='flex'
+                                alignT= 'center'
+                                justify= 'center'
+                                fontSize= '12px'
+                                onClicks={() => setShowModal(false)}
+                            />
                         </div>
-                    </MainRight>
-                </SectionRight>
-            </AnimatePresence>
+                    </div>
+                    <div className="FormHeader">
+                        <form onSubmit={submitFormReservation} className="noselect" >
+                            <Names proceess={proceess} formdata={formdata} Focus={Focus} dropdown={dropdown} setDropdown={setDropdown} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
+                            <Email proceess={proceess}  checkEmail={checkEmail} error={emailerror} phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  /> 
+                            <Nationality proceess={proceess}  dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} formdata={formdata} setFormData={setFormData} value={value} setValue={setValue}  />
+                            <Identification  proceess={proceess}  dropdown={dropdown} error={validatedID} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData} FocusID={FocusID}/> 
+                            <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={status}/>  : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                        </form>
+                    </div>
+                </MainRight>
+            </SectionRight>
+            
         </>
         
     )

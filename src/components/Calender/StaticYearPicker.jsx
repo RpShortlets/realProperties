@@ -35,6 +35,11 @@ const InputForm = styled.input `
         color: var(--color-primary);
     }
 
+    
+    :disabled {
+        background-color: #ccc;
+    }
+
 `
 
 const Label = styled.label `
@@ -45,7 +50,7 @@ const Label = styled.label `
 
 `
 
-export default function CustomInput({value, setValue, label}) {
+export default function CustomInput({value, setValue, label, disabled}) {
   const readOnly = true;
   const [isOpen, setIsOpen] =  React.useState(false)
 
@@ -62,7 +67,7 @@ export default function CustomInput({value, setValue, label}) {
         renderInput={({ inputRef, inputProps, InputProps }) => (
           <div onClick={() => setIsOpen(!isOpen)}>
             <Label>{label}</Label>
-            <InputForm readOnly={readOnly} ref={inputRef} {...inputProps} label="Date of Birth"  value={value?.toLocaleDateString('en-CA')}  onChange={() => console.log('dates')} />
+            <InputForm disabled={disabled} readOnly={readOnly} ref={inputRef} {...inputProps} label="Date of Birth"  value={value?.toLocaleDateString('en-CA')}  onChange={() => console.log('dates')} />
           </div>
         )}
       />

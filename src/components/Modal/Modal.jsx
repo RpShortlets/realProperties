@@ -39,6 +39,28 @@ const MainModal = styled.div`
 
 `
 
+// const dropIn = {
+// hidden: {
+//     y: "-100vh",
+//     opacity: 0,
+// },
+// visible: {
+//     y: "0",
+//     opacity: 1,
+//     transition: {
+//     duration: 0.1,
+//     type: "spring",
+//     damping: 25,
+//     stiffness: 500,
+//     },
+// },
+// exit: {
+//     y: "100vh",
+//     opacity: 0,
+// },
+// };
+  
+
 
 const ModalOverLay = ({top, width, left, initial, children, setShow, animate, transition, btn}) => {
 
@@ -50,8 +72,6 @@ const ModalOverLay = ({top, width, left, initial, children, setShow, animate, tr
                 animate={animate}
                 exit={{ opacity: 0 }}
                 transition={transition}
-                
-                
                 className="Modal" 
                 top={top} 
                 width={width} 
