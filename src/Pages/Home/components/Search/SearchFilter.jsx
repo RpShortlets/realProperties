@@ -182,29 +182,29 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
 
         //* MAKE SEARCH FILTER STICKY ON SCROLL AND FIXED ON MOBILE
         const handleScrollMobile = useCallback(() => {
-            if(ScrollRef?.current) {
-                if(window.scrollY > 362) {
-                    dispatch(checkScrollState(true))
-                    controls.start(i => ({
-                        opacity: 0,
-                        scale: .5,
-                        transition: {duration: .1,
-                            type: {type: 'spring'}
-                        },
+            // if(ScrollRef?.current) {
+            //     if(window.scrollY > 362) {
+            //         dispatch(checkScrollState(true))
+            //         controls.start(i => ({
+            //             opacity: 0,
+            //             scale: .5,
+            //             transition: {duration: .1,
+            //                 type: {type: 'spring'}
+            //             },
                         
-                    }))
+            //         }))
                     
-                } else {
-                    dispatch(checkScrollState(false))
-                    controls.start(i => ({
-                        opacity: 1,
-                        scale: 1,
-                        transition: {duration: .1,
-                            type: {type: 'spring'}
-                        }
-                    }))
-                }
-            }
+            //     } else {
+            //         dispatch(checkScrollState(false))
+            //         controls.start(i => ({
+            //             opacity: 1,
+            //             scale: 1,
+            //             transition: {duration: .1,
+            //                 type: {type: 'spring'}
+            //             }
+            //         }))
+            //     }
+            // }
             // if (!Medium && ScrollRef?.current) {
             //     ScrollRef.current.style.position = 'sticky';
             //     ScrollRef.current.style.backgroundColor = 'transparent';
