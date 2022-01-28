@@ -206,8 +206,8 @@ const SearchResult = () => {
                             
                             />
                         )}
-                    <Main error={searchResult?.length > 1 ? false : true}>
-                        {searchResult?.length > 1 && (
+                    <Main error={searchResult?.length > 0 ? false : true}>
+                        {searchResult?.length > 0 && (
                             <OtherSearch>
                                 <div>
                                     <p>Filter by Price</p>
@@ -237,7 +237,7 @@ const SearchResult = () => {
                             <Results>
                                 {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                                     <>
-                                        {searchResult?.length > 1 ? (
+                                        {searchResult?.length > 0 ? (
                                             <>
                                                 {searchResult?.map((property) => (
                                                     <Result data={property} key={property.apartment_id} />

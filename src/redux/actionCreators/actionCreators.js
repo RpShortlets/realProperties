@@ -15,10 +15,11 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 });
 
 
-export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({value, checkInDate, checkOutDate, adultcount, childrencount}) => {
+export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchValue, checkInDate, checkOutDate, adultcount, childrencount}) => {
+    console.log(checkInDate, checkOutDate, searchValue)
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
-            location: value,
+            location: searchValue,
             check_in_date: checkInDate,
             check_out_date: checkOutDate,
             adult: adultcount,

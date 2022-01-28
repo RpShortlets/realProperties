@@ -21,7 +21,7 @@ const MiniSearch = () => {
             }}
         
         >
-            Hello
+            Search
         </MiniSearches>
     )
 };

@@ -121,7 +121,7 @@ const OrderSummary = () => {
                     </div>
                     <div className='orderBody'>
                         <Card>
-                            {Ongoing_id_info.map((data,i) => (
+                            {Ongoing_id_info?.map((data,i) => (
                                 <div key={i}>
                                     {data?.apartment_price &&  (
                                         <CardDetails>
