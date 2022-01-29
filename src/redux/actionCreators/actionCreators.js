@@ -10,13 +10,12 @@ import { BaseURL } from "../../api/index"
 
 export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () => {
     const response = await axios.get(`${BaseURL}/update-booking`)
-    console.log(response)
     return response.data;
 });
 
 
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchValue, checkInDate, checkOutDate, adultcount, childrencount}) => {
-    console.log(checkInDate, checkOutDate, searchValue)
+    
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
             location: searchValue,
@@ -89,7 +88,7 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
             car_rental: selectedCar,
             car_rental_length: carlengthValue,
             driver: radio,
-            driver_length: driverlengthValue,
+            driver_length: carlengthValue,
         }
     });
     // localStorage.setItem("getReservation",JSON.stringify(response.data))

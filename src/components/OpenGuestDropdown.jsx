@@ -77,8 +77,8 @@ const ModalDiv = styled.div`
 `
 
 
-const OpenGuestDropdown = ({width,left, top, setOpenGuest,openGuest,border,countAdultMinus, zIndex, countAdultAdd,countMinusChild, countAddChild, myRef, adultcount, styles, MinusAdult, childrencount, AddAdult, MinusChildren, AddChildren}) => {
-    
+const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenGuest,openGuest,border,countAdultMinus, zIndex, countAdultAdd,countMinusChild, countAddChild, myRef, adultcount, styles, MinusAdult, childrencount, AddAdult, MinusChildren, AddChildren}) => {
+
     return (
         <>
             {openGuest  && <Backdrop onClick={()=> setOpenGuest(false)} zIndex={zIndex} /> }
@@ -119,9 +119,9 @@ const OpenGuestDropdown = ({width,left, top, setOpenGuest,openGuest,border,count
                                 <span>Age 0 - 1</span>
                             </div>
                             <div>
-                                <Button disabled={childrencount < countMinusChild}  classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex" padding="5px" background="#fff" />
-                                    <SpanCount>{childrencount}</SpanCount>
-                                <Button classNames={childrencount < countAddChild ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd  color='var(--color-primary-dark)' />} background="#fff" padding="5px" display="flex" />
+                                <Button disabled={DisabledChild}  classNames={childrencount < countMinusChild || DisabledChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex" padding="5px" background="#fff" />
+                                    <SpanCount>{AllowAdult ? adultcount === countAdultAdd ? 0 : childrencount : childrencount}</SpanCount>
+                                <Button disabled={DisabledChild} classNames={childrencount < countAddChild  ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd  color='var(--color-primary-dark)' />} background="#fff" padding="5px" display="flex" />
                             </div>
                         </AdultDiv>
                     </GuestDropdown>

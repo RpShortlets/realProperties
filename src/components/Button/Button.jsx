@@ -32,6 +32,7 @@ const Buttons = styled.button`
     :disabled {
         cursor: not-allowed;
         background: ${({disabledBG}) => disabledBG ? disabledBG : 'transparent'};
+        border: 1px solid #ccc !important;
     }
     svg {
         margin: ${({svgMargin}) => svgMargin};

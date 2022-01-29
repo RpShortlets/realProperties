@@ -28,8 +28,7 @@ const Calenders = styled.div `
 
 
 
-export const PropertyCalender = ({status, lenghtstay, margin}) => {
-    
+export const PropertyCalender = ({status, lenghtstay, margin}) => { 
     return (
         <Calenders 
             as={ motion.div}
@@ -39,7 +38,7 @@ export const PropertyCalender = ({status, lenghtstay, margin}) => {
                 <h2>{status === 'loading' ? <SkeletonLoader width='20%'/> :  lenghtstay ? `${lenghtstay} ${lenghtstay > 1 ? `nights`: `night`}` : 'Select check-in date'}</h2>
                 <p>{status === 'loading' ? <SkeletonLoader width='40%' height='20' /> : 'Select your check-in date for exact pricing'}</p>
             </div>
-            <StaticCalender calendars={2} disablebooked='true' />
+            <StaticCalender calendars={2} disablebooked='true' status={status} />
         </Calenders>
     )
 }

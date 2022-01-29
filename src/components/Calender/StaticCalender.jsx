@@ -72,6 +72,7 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
     };
     
 
+    console.log(status)
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>

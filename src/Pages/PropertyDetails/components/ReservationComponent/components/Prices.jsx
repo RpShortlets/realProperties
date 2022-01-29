@@ -1,5 +1,6 @@
 import { SkeletonLoader } from "../../../../../components/Loader/Skeleton"
 import styled from "styled-components"
+import Tooltips from "../../../../../components/Tooltip"
 
 const PriceBody =  styled.div `
     display: none;
@@ -41,7 +42,7 @@ const PriceBody =  styled.div `
     }
 `
 
-const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAdditionalServices}) => {
+const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAdditionalServices, TotalCarAndDriverPrice}) => {
 
     return (
         <PriceBody>
@@ -64,13 +65,15 @@ const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAddit
                     <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_pickup_dropoff_price?.toLocaleString()}</p>
                 </div> */}
                 <div>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : selectedCar && selectedCar}</p>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_car_price && summary_details[0]?.total_car_price?.toLocaleString()}</p>
+                    <Tooltips title='Please note that the car comes with a driver'>
+                        <p>{reserve === 'loading' ? <SkeletonLoader /> : selectedCar && selectedCar}</p>
+                    </Tooltips>
+                    <p>{reserve === 'loading' ? <SkeletonLoader /> : TotalCarAndDriverPrice && TotalCarAndDriverPrice > 0 ? TotalCarAndDriverPrice.toLocaleString() : ''}</p>
                 </div>
-                <div>
+                {/* <div>
                     <p style={{textTransform: 'capitalize'}}>{reserve === 'loading' ? <SkeletonLoader /> : radio && radio}</p>
                     <p>{reserve === 'loading' ? <SkeletonLoader /> :  summary_details[0]?.total_driver_price && summary_details[0]?.total_driver_price?.toLocaleString()}</p>
-                </div>
+                </div> */}
                 <div>
                     {reserve === 'loading' ? (<SkeletonLoader />) : 
                         (

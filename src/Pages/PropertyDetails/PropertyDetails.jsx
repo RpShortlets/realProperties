@@ -113,10 +113,10 @@ const PropertyDetails = () => {
     const [selectedCar, setSelectedCar] = useState(null)
     const [driver, setDriver] = useState(false)
     const [carlength, setCarlength] = useState(false)
-    const [carlengthValue, setCarlengthValue] = useState(0)
-    const [carType, setCarType] = useState('')
+    const [carlengthValue, setCarlengthValue] = useState(1)
+    // const [carType, setCarType] = useState('')
     const [driverlengthValue, setDriverlengthValue] = useState(0)
-    const [radio, setRadio] = useState(null)
+    const [radio, setRadio] = useState('driver')
 
     const modalRef = useRef()
     const staylength = cached ? cached?.summary_details[0]?.stay_length :  summary_details ? summary_details[0]?.stay_length : 1;
@@ -133,7 +133,7 @@ const PropertyDetails = () => {
         }
     }, [show])
 
-    console.log(showModal)
+    
 
     // useEffect(() => {
     //     if(proceess === 'succeeded') {
@@ -171,7 +171,7 @@ const PropertyDetails = () => {
         }
     }, [showModal])
 
-    console.log(showModal, 'Modal')
+    
 
     return (
         <>
@@ -240,7 +240,7 @@ const PropertyDetails = () => {
                                         carlength={carlength}
                                         setCarlengthValue={setCarlengthValue}
                                         carlengthValue={carlengthValue}
-                                        setCarType={setCarType}
+                                        // setCarType={setCarType}
                                         setDriverlengthValue={setDriverlengthValue}
                                         driverlengthValue={driverlengthValue}
                                         setRadio={setRadio}

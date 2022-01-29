@@ -39,6 +39,7 @@ const Description = styled.div `
         margin: 0;
         justify-content: justify;
         color: var(--color-dark);
+        line-height: 2;
     }
 
 `

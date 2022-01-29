@@ -162,16 +162,18 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     setCarType, setDriverlengthValue,  setRadio, radio, setCarlengthValue, driverlengthValue,
     carlengthValue, setShowModal
     }) => {
+
     const dispatch = useDispatch();
     const { id } = useParams();
 
-
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-
     const {proceess} = useSelector(state => state.paymentState)
     const {reserve, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
 
     const [AddtionalServices, setTotalAdditional]  = useState()  
+    const [carDriverTotal, setCarDriverTotal]  = useState()  
+    const [disableChild, setDisabledChild]  = useState(false)
+
 
     const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
     const AdultMinuss =  max_guest &&  max_guest[0]?.allowed_adult
@@ -180,22 +182,25 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const countAdultAdd =  reserve === 'succeeded' && AdultMinuss
     const countAddChild =  reserve === 'succeeded' && AdultAdds
     const countMinusChild = 1;
+
+
     const reserveRef = useRef();
     const BenZ = useRef(null);
     const Suv = useRef(null);
     const Camry = useRef(null);
+
     const CleaningFee = summary_details[0]?.total_cleaning_price ? parseInt(summary_details[0]?.total_cleaning_price) : 0;
     const PickupFee =  summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
+    const carPrice = summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
+    const driverPrice = summary_details[0]?.total_driver_price ?  parseInt(summary_details[0]?.total_driver_price) : 0;
+    const  TotalGuest = useAddGuestTotal({adultcount, childrencount, AdultMinuss});
 
-    const  TotalGuest = useAddGuestTotal({adultcount, childrencount});
-
-
-
+    
     const handleBenz = () => {
         alert('Hello')
     }
 
-    
+
     const handlecheckbox = (e) => {
         const { value} = e.target;
         setRadio(value)
@@ -209,9 +214,9 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
 
     const showBenzRef = (id) => {
         if(BenZ?.current) {
-            const value = BenZ?.current?.childNodes[1]?.value;
+            // const value = BenZ?.current?.childNodes[1]?.value;
             const name = BenZ?.current?.childNodes[1]?.name;
-            setCarType(value)
+            // setCarType(value)
             setSelectedCar(name)
             setOpenCar(false)
             setCarlength(true)
@@ -221,9 +226,9 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
 
     const showSuvRef = (id) => {
         if(Suv?.current) {
-            const value = Suv?.current?.childNodes[1]?.value;
+            // const value = Suv?.current?.childNodes[1]?.value;
             const name = Suv?.current?.childNodes[1]?.name;
-            setCarType(value)
+            // setCarType(value)
             setSelectedCar(name)
             setOpenCar(false)
             setCarlength(true)
@@ -234,8 +239,8 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const showCamryRef = (id) => {
         if(Camry?.current) {
             const name = Camry?.current?.childNodes[1]?.name;
-            const value = Camry?.current?.childNodes[1]?.value;
-            setCarType(value)
+            // const value = Camry?.current?.childNodes[1]?.value;
+            // setCarType(value)
             setSelectedCar(name)
             setOpenCar(false)
             setCarlength(true)
@@ -315,9 +320,14 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
 
     
     const AddChildren = () => {
-        if(childrencount < countAddChild) {
+        if(adultcount === countAdultAdd) {
+            return;
+        } else if(childrencount < countAddChild) {
             dispatch(incrementChildren())
         }
+        // if(childrencount < countAddChild) {
+        //     dispatch(incrementChildren())
+        // }
     }
 
     const MinusChildren = () => {
@@ -340,7 +350,6 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         const carPrice = summary_details[0]?.total_car_price;
         const driver = summary_details[0]?.total_driver_price;
 
-
         dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
         setShowModal(true)
     }
@@ -348,6 +357,20 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     useEffect(() => {
         setTotalAdditional(CleaningFee + PickupFee)
     }, [CleaningFee, PickupFee]);
+
+    useEffect(() => {
+        setCarDriverTotal(carPrice + driverPrice)
+    }, [carPrice, driverPrice]);
+
+    useEffect(() => {
+        if(adultcount === countAdultAdd ) {
+            setDisabledChild(true)
+        } else {
+            setDisabledChild(false) 
+        }
+    }, [adultcount, countAdultAdd])
+
+
 
     if(proceess === 'failed') {
         OpenNotificationWithIcon({
@@ -396,13 +419,15 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                     MinusAdult={MinusAdult} 
                                     childrencount={childrencount} 
                                     AddAdult={AddAdult} 
+                                    DisabledChild={disableChild}
+                                    AllowAdult={AdultMinuss}
                                     MinusChildren={MinusChildren} 
                                     AddChildren={AddChildren} 
                                     countAdultMinus={countAdultMinus}
                                     countAdultAdd={countAdultAdd}
                                     countMinusChild={countMinusChild}
                                     countAddChild={countAddChild}
-                                    top="40px" 
+                                    top="52px" 
                                     width= "100%" 
                                     left='0'   
                                     border="1px solid rgba(33, 8, 8, 0.22)"
@@ -463,6 +488,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                 reserve={reserve} 
                                 radio={radio}
                                 TotalAdditionalServices={AddtionalServices}
+                                TotalCarAndDriverPrice={carDriverTotal}
                             />
                         )}
                     </ReservationContent>
