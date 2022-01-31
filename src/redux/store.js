@@ -15,7 +15,11 @@ export const store = configureStore({
         propertyDetails: propertyDetails,
         reservationState: reservation,
         paymentState: PaymentsReducer,
-        customerRecord : CustomerRecords
-    }
+        customerRecord : CustomerRecords,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+    }),
 })
 

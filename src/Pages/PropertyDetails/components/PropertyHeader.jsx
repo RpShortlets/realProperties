@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { FlexStyle } from "../../../styles/globalStyles"
 import { IoBed } from "react-icons/io5"
 import { Rooms, Baths } from "../../../Svg/svg"
-import { SkeletonLoader } from "../../../components/Loader/Skeleton"
+
 
 
 const BodyHeader = styled.div `
@@ -59,36 +59,31 @@ const BodyIconCard = styled.div `
 
 
 
-const PropertyHeader = ({status}) => {
+const PropertyHeader = () => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const GeneralInfo = general_info?.map((data) => data)
 
-    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
-
-
     return (
         <BodyHeader>
-            {status === 'loading' ? <SkeletonLoader  width='40%'/> : <h2>{ cached ? cached?.general_info[0]?.apartment_name : GeneralInfo[0]?.apartment_name}</h2>}
+            <h2>{GeneralInfo[0]?.apartment_name}</h2>
             <BodyHeaderIcon>
-                
-                    <BodyIconCard>
-                        <div>
-                            {status === 'loading' ? <SkeletonLoader /> :(<span><IoBed/></span>)}
-                        </div>
-                        <span>{status === 'loading' ? <SkeletonLoader /> : `${ cached ? cached?.general_info[0]?.bed : GeneralInfo[0]?.bed} Beds`}</span> 
-                    </BodyIconCard>
-                
+                <BodyIconCard>
+                    <div>
+                        <span><IoBed/></span>
+                    </div>
+                    <span>{`${GeneralInfo[0]?.bed} Beds`}</span> 
+                </BodyIconCard>
                 <BodyIconCard style={{margin: '0 max(5vw, 1rem)'}}> 
                     <div>
-                        {status === 'loading' ? <SkeletonLoader /> : ( <span>{Baths}</span>  )}
+                        <span>{Baths}</span> 
                     </div>
-                    {status === 'loading' ? <SkeletonLoader /> : (<span>{cached ? cached?.general_info[0]?.bath : GeneralInfo[0]?.bath} Bathroom</span>)}
+                    <span>{GeneralInfo[0]?.bath} Bathroom</span>
                 </BodyIconCard>
                 <BodyIconCard>
                     <div>
-                        {status === 'loading' ? <SkeletonLoader /> : ( <span>{Rooms}</span> )}
+                        <span>{Rooms}</span> 
                     </div>
-                    {status === 'loading' ? <SkeletonLoader /> : (<span>{cached ? cached?.general_info[0]?.room : GeneralInfo[0]?.room} Rooms</span>)}
+                    <span>{GeneralInfo[0]?.room} Rooms</span>
                 </BodyIconCard>
             </BodyHeaderIcon>
         </BodyHeader>

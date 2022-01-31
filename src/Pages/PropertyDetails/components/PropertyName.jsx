@@ -57,14 +57,14 @@ const LikeIcon = styled(FiShare) `
 const PropertyName = () => {
     const {PropertyDetails: {general_info}, status} = useSelector(state => state.propertyDetails)
 
-    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
+    // const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
 
 
     return (
         <HeaderContents>
             <div>
-                <h1>{status === 'loading' ?  <SkeletonLoader />  :  cached ? cached?.general_info[0]?.apartment_name : general_info[0]?.apartment_name }</h1>
-                <p>{status === 'loading' ?  <SkeletonLoader /> :  cached ? cached?.general_info[0]?.address : general_info[0]?.address}</p>
+                <h1>{general_info[0]?.apartment_name && general_info[0]?.apartment_name}</h1>
+                <p>{general_info[0]?.address && general_info[0]?.address}</p>
             </div>
             <div>
                 <div style={{marginRight: '20px'}}>

@@ -17,7 +17,7 @@ import PropertyRules from "./components/PropertyRules"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import Backdrop from "../../components/Backdrop"
 import {Reservation} from "../../export"
-import { getReservationUpdate } from "../../redux/actionCreators/actionCreators"
+import { getReservationUpdate, ShortletDetails } from "../../redux/actionCreators/actionCreators"
 import { AnimatePresence } from "framer-motion"
 
 
@@ -144,9 +144,9 @@ const PropertyDetails = () => {
     // }, []);
 
     //!DEPENDING ISSUE
-    // useEffect(() => {
-    //     dispatch(ShortletDetails({checkInDate,checkOutDate, Id})) 
-    // },  [checkInDate,checkOutDate,apartment_id])
+    useEffect(() => {
+        dispatch(ShortletDetails({checkInDate,checkOutDate, Id})) 
+    },  [Id, dispatch])
     
     useMemo(() => 
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id})), 
@@ -171,6 +171,15 @@ const PropertyDetails = () => {
         }
     }, [showModal])
 
+
+    useEffect(() => {
+        if(status === 'loading') {            
+            document.body.style.overflow = 'hidden'
+        }
+        return () => {
+            document.body.style.overflow = 'auto'
+        }
+    }, [status])
     
 
     return (
@@ -186,12 +195,31 @@ const PropertyDetails = () => {
             <Section>
                 <Main paddingleft='true' paddingRight='true'>
                     <Header>
-                        {status === 'loading' ?  <SkeletonLoader />  : <PropertyName status={status} />}
+                        {status === 'loading' ?  <SkeletonLoader  />  : 
+                            status === 'succeeded' &&
+                            <PropertyName status={status} />
+                        }
                         <PropertyImage status={status}/> 
                         <BodyContainer>
                             <BodyContent>
-                                <PropertyHeader status={status}/>
-                                <PropertyDescription status={status} />
+                                {status === 'loading' ?  
+                                    <BodyHeader>
+                                        <SkeletonLoader  width="40%"/> 
+                                    </BodyHeader>
+                                    :
+                                    status === 'succeeded' && (
+                                        <PropertyHeader status={status}/>
+                                    )
+                                }
+                                {status === "loading" ?
+                                    <Description>
+                                        <SkeletonLoader  height='200px'/> 
+                                    </Description>
+                                    : 
+                                    status === "succeeded" && (
+                                        <PropertyDescription status={status}/>
+                                    )
+                                } 
                                 {reserve === 'loading' ? (
                                     <Reservations>
                                         <ReservationBody>
@@ -249,11 +277,18 @@ const PropertyDetails = () => {
                                         setShowModal={setShowModal}
                                     />
                                 )}            
-                                <PropertyAmenities  status={status}/>
+                                {status === "loading" ? 
+                                    <Amenities>
+                                        <SkeletonLoader  height='300px'/> 
+                                    </Amenities> :
+                                    status === "succeeded" && (
+                                        <PropertyAmenities />
+                                    )
+                                }   
                             </BodyContent>
                         </BodyContainer>
                     </Header>
-                    <PropertyCalender status={status} lenghtstay={staylength}  margin="max(3vw,2rem) 0"/> 
+                    <PropertyCalender status={reserve} lenghtstay={staylength}  margin="max(3vw,2rem) 0"/> 
                     <PropertyRules  status={status}/>
                 </Main> 
             </Section>
@@ -263,4 +298,14 @@ const PropertyDetails = () => {
 
 export default PropertyDetails
 
+const Description = styled.div `
+    grid-column: 1/4;
+`
 
+const Amenities = styled.div `
+    grid-column: 1/4;
+`
+
+const BodyHeader = styled.div `
+    grid-column: 1/5;
+`

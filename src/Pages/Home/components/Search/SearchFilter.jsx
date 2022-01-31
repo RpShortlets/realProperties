@@ -165,20 +165,20 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         const loaded = useProgressiveImage(BG)
 
         //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
-        const handleScroll = useCallback(() => {
-            if (Medium && ScrollRef?.current) {
-                    ScrollRef.current.style.opacity = '1';
-                    ScrollRef.current.style.backgroundColor = '#fff';
+        // const handleScroll = useCallback(() => {
+        //     if (Medium && ScrollRef?.current) {
+        //             ScrollRef.current.style.opacity = '1';
+        //             ScrollRef.current.style.backgroundColor = '#fff';
                     
-                } 
-                else {
-                    if(ScrollRef?.current) {
-                        ScrollRef.current.style.opacity = '1';
-                        ScrollRef.current.style.backgroundColor = 'transparent';
-                    }
-                }
+        //         } 
+        //         else {
+        //             if(ScrollRef?.current) {
+        //                 ScrollRef.current.style.opacity = '1';
+        //                 ScrollRef.current.style.backgroundColor = 'transparent';
+        //             }
+        //         }
             
-        }, [Medium]);
+        // }, [Medium]);
 
         //* MAKE SEARCH FILTER STICKY ON SCROLL AND FIXED ON MOBILE
         const handleScrollMobile = useCallback(() => {
@@ -231,7 +231,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
             //     }
             // }
 
-        }, []);
+        }, [dispatch, controls]);
 
         //* CALL: ADD AND REMOVE BACKGROUND 
         // useEffect(() => {

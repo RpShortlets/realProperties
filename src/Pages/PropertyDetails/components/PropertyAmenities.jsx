@@ -1,7 +1,7 @@
 import styled, {css} from "styled-components/macro"
 import { AmenitiesOne, AmenitiesTwo } from "../data/index"
 import Button from "../../../components/Button/Button"
-import { SkeletonLoader } from "../../../components/Loader/Skeleton"
+
 
 
 const BorderStyle = css`
@@ -66,20 +66,16 @@ const AmenitiesHeader = styled.div `
 const PropertyAmenities = ({status}) => {
     return (
         <Amenities>
-            {status === "loading" ? <SkeletonLoader  height='300px'/> : (
-                <>
-                    <h2>Amenities</h2>
-                    <AmenitiesHeader>
-                        <div>
-                            <AmenitiesOne />
-                            <AmenitiesTwo />
-                        </div>
-                        <div>
-                            <Button  color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title="Show all 23 ameninities" border="1.78224px solid #000000" borderRadius= '8.91119px' />
-                        </div>
-                    </AmenitiesHeader>
-                </>
-        )}
+            <h2>Amenities</h2>
+            <AmenitiesHeader>
+                <div>
+                    <AmenitiesOne />
+                    <AmenitiesTwo />
+                </div>
+                <div>
+                    <Button  color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title="Show all 23 ameninities" border="1.78224px solid #000000" borderRadius= '8.91119px' />
+                </div>
+            </AmenitiesHeader>
         </Amenities>
     )
 }

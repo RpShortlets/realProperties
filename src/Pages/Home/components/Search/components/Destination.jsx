@@ -31,7 +31,6 @@ const Destination = ({handleModal, openModal, myRef, handleOption, setOpenModal}
     const checkedQuery = useMediaQuery("(min-width: 601px)");
     const {searchValue} = useSelector(state => state.ComponentState)
 
-
     let widths = checkedQuery ? '35vw' : '100%';
 
 

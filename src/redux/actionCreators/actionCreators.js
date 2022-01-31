@@ -50,7 +50,7 @@ export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({
         }
     });
 
-    localStorage.setItem("PropertyDetails",JSON.stringify(response.data))
+    // localStorage.setItem("PropertyDetails",JSON.stringify(response.data))
     return response.data;
     
     

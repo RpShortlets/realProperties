@@ -1,6 +1,5 @@
 import styled, {css} from "styled-components/macro"
 import { useSelector } from "react-redux"
-import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 
 const BorderStyle = css`
     border-top:  1.80872px solid #000000;
@@ -48,18 +47,13 @@ const PropertyDescription = ({status}) => {
     const {PropertyDetails: {general_info}} = useSelector(state => state.propertyDetails)
     const GeneralInfo = general_info?.map((data) => data)
 
-    const cached = JSON.parse(localStorage.getItem('PropertyDetails'))
     
     return (
         <Description>
-        {status === "loading" ? <SkeletonLoader  height='300px'/> : (
-            <>
-                <h2>Description</h2>
-                <div>
-                    <p>{cached ? cached?.general_info[0]?.property_description : GeneralInfo[0]?.property_description}</p> 
-                </div>
-            </>
-        )}
+            <h2>Description</h2>
+            <div>
+                <p>{GeneralInfo[0]?.property_description}</p> 
+            </div>
         </Description>
     
     )

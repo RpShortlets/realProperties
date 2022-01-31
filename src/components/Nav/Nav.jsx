@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon } from '../../Svg/svg';
 import {motion, AnimatePresence} from "framer-motion"
 import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
+import { saveSearchValue } from '../../redux/actions/componentState';
+import { searchShortlets } from '../../redux/actionCreators/actionCreators';
 
 
 const svgs = [
@@ -26,7 +29,7 @@ const NavBar = styled.nav `
     width: 100%;
     background: var(--color-white);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.12);
-    height: 60px;
+    height: 70px;
     ${FlexStyle}
     ${PaddingStyle}
 `
@@ -72,8 +75,32 @@ const Modal =  styled.div`
 `
 
 const Nav = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const {checkScroll} = useSelector(state =>  state.ComponentState)
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
+
+
     const [show, setShow] = useState(false)
+    const [openNavMini, setOpenNavMini] = useState(false)
+    const myRef = useRef(null)
+
+    const handleOption = (id) => {
+        if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
+            const value = myRef.current.childNodes[id].childNodes[1]?.value
+            dispatch(saveSearchValue(value))
+            setOpenNavMini(false)
+        }
+    }
+
+    const SubmitForm = async(e) => {
+        e.preventDefault();
+        dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
+        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+    }
+
+
     return (
         <NavBar paddingleft="true" paddingRight="true">
             <NavItems>
@@ -82,8 +109,14 @@ const Nav = () => {
                         {CompanyLogo}
                     </Link>
                 </div>
-                {checkScroll ? (
-                    <MiniSearch />
+                {checkScroll && window.location.pathname === '/' ? (
+                    <MiniSearch 
+                        myRef={myRef} 
+                        setOpenNavMini={setOpenNavMini} 
+                        openNavMini={openNavMini} 
+                        handleOption={handleOption} 
+                        SubmitForm={SubmitForm}
+                    />
                 ) : (
                     <NavVas  Icons={svgs} />
                 )}

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from "react-redux"
+import { useNavigate } from 'react-router';
+import {useSelector} from "react-redux"
 import styled from "styled-components"
 import Button from "../../components/Button/Button"
 import {Pulse} from "../../components/Loader/Spinner"
 import {FlexStyle} from "../../styles/globalStyles"
-import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
+// import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 
 
@@ -73,41 +74,45 @@ const CardTotal = styled.div `
 `
 
 const OrderSummary = () => {
-    const dispatch =  useDispatch();
+    const navigate = useNavigate();
+    // const dispatch =  useDispatch();
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
-    const {payStack, status} = useSelector(state => state.paymentState)
-    const guestId =  parseInt(localStorage.getItem('guestId'))
+    // const {payStack, status} = useSelector(state => state.paymentState)
+    // const guestId =  parseInt(localStorage.getItem('guestId'))
     const [addtionService, setAddtionalService] = useState();
 
 
     const CleaningFee =  proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning 
     const PickupFee =   proceess === 'succeeded' && Ongoing_id_info[0]?.pickup ? Ongoing_id_info[0]?.pickup : 0
 
-    useEffect(() => {
-        if(status === 'succeeded') {
-            window.open(payStack?.message?.authorization_url, '_blank')
-        }
-    }, [payStack?.message?.authorization_url]);
+    // useEffect(() => {
+    //     if(status === 'succeeded') {
+    //         window.open(payStack?.message?.authorization_url, '_blank')
+    //     }
+    // }, [payStack?.message?.authorization_url]);
 
     
 
-    const processPayment = () => {
-        const apartmentId = Ongoing_id_info[0]?.apartment_id;
-        const userId = Ongoing_id_info[0]?.id;
-        const overAll = Ongoing_id_info[0]?.overall_total
-        dispatch(PaymentPayStack({apartmentId, userId, overAll, guestId}))
+    // const processPayment = () => {
+    //     const apartmentId = Ongoing_id_info[0]?.apartment_id;
+    //     const userId = Ongoing_id_info[0]?.id;
+    //     const overAll = Ongoing_id_info[0]?.overall_total
+    //     dispatch(PaymentPayStack({apartmentId, userId, overAll, guestId}))
+    // }
+
+    // const showConfirm = () => {
+    //     // window.confirm('You\'re being redirected' )
+    //     if (window.confirm("You're being redirected") === true) {
+    //         processPayment()
+    //         } else {
+    //         console.log('No')
+    //     }
+    // }
+
+    const handleTransfer =() => {
+        navigate('/order-summary/payment')
     }
-
-    const showConfirm = () => {
-        // window.confirm('You\'re being redirected' )
-
-        if (window.confirm("You're being redirected") === true) {
-            processPayment()
-            } else {
-            console.log('No')
-        }
-    }
-
+    
     useEffect(() => {
         setAddtionalService(CleaningFee + PickupFee)
     }, [CleaningFee, PickupFee]);
@@ -159,8 +164,9 @@ const OrderSummary = () => {
                                             <span>&#8358;{proceess === 'loading' ? <SkeletonLoader  width='100%'/> : `${data?.overall_total?.toLocaleString()}`}</span>
                                         </CardTotal>
                                     )}
-
-                                    <Button onClicks={showConfirm} disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Confirm and pay'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                                        <Button onClicks={handleTransfer} disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10" /> : 'Proceed'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='50%' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                    </div>
                                 </div>
                             ))}
                         </Card>

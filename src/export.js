@@ -7,6 +7,7 @@ export const Payments = lazy(() => import('./Pages/payments/Payments') )
 export const Reservation = lazy(() => import('./Pages/payments/ReservationRight.jsx') )
 export const OrderSummary = lazy(() => import('./Pages/payments/OrderSummary'))
 export const Verify = lazy(() => import('./Pages/payments/Verify.jsx'))
+export const Transfer = lazy(() => import('./Pages/payments/transfer.jsx'))
 
 export { default as Footer } from "./components/Footer/Footer"
 export { default as NotFound } from "./components/NotFound"

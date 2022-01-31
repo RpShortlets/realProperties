@@ -1,6 +1,5 @@
-
   /* montserrat-500 - latin */
-  @font-face {
+@font-face {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
@@ -13,6 +12,9 @@
          url('./fonts/montserrat-v21-latin-500.svg#Montserrat') format('svg'); /* Legacy iOS */
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
 
 
 :root {
