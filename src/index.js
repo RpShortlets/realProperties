@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import 'lazysizes';
 import 'antd/dist/antd.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 // import reportWebVitals from './reportWebVitals';
 
