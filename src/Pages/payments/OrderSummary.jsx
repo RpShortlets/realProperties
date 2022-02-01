@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import {useSelector} from "react-redux"
+import { useNavigate, useParams } from 'react-router';
+import {useSelector, useDispatch} from "react-redux"
 import styled from "styled-components"
 import Button from "../../components/Button/Button"
 import {Pulse} from "../../components/Loader/Spinner"
 import {FlexStyle} from "../../styles/globalStyles"
 // import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
+import { RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
 
 
 const Section = styled.section `
@@ -75,7 +76,9 @@ const CardTotal = styled.div `
 
 const OrderSummary = () => {
     const navigate = useNavigate();
-    // const dispatch =  useDispatch();
+    const dispatch = useDispatch();
+    const Id  = useParams().id;
+
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     // const {payStack, status} = useSelector(state => state.paymentState)
     // const guestId =  parseInt(localStorage.getItem('guestId'))
@@ -113,6 +116,10 @@ const OrderSummary = () => {
         navigate('/order-summary/payment')
     }
     
+    useEffect(() => {
+        dispatch(RetrieveTransaction({Id}))
+    }, [dispatch, Id])
+
     useEffect(() => {
         setAddtionalService(CleaningFee + PickupFee)
     }, [CleaningFee, PickupFee]);

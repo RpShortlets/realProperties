@@ -1,6 +1,6 @@
 import { useEffect, Suspense } from "react"
-import { Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Nav, Transfer} from "./export"
-import { Routes, Route,  } from "react-router-dom"
+import { AdminDashboard, Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Nav, Transfer} from "./export"
+import { Routes, Route, useLocation } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
@@ -11,6 +11,7 @@ import { UpdateBooks } from "./redux/actionCreators/actionCreators";
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const invokeGA = () => {
     ReactGa.initialize('UA-181778020-1');
     ReactGa.pageview(window.location.pathname + window.location.search);
@@ -48,7 +49,7 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
-      <Nav />
+      {location.pathname !=='/admin/live/bookings' && (<Nav />)}
       <Suspense 
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />
@@ -58,13 +59,14 @@ const App = () => {
             <Route path="/s/:id" element={<SearchResult />} />
             <Route path="/apartment/:id" element={<PropertyDetails />} />
             <Route path='/payment' element={<Payments />}  />
-            <Route path="/order-summary" element={<OrderSummary />} />
+            <Route path="/order-summary/ref/:id" element={<OrderSummary />} />
             <Route path="/order-summary/payment" element={<Transfer />} />
             <Route path="/paystack/callback/shortlet" element={<Verify />} />
+            <Route path="/admin/live/bookings" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
       </Suspense>
-      <Footer />
+      {location.pathname !=='/admin/live/bookings' && (<Footer />)}
   </>
   );
 }

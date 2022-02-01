@@ -78,6 +78,9 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticDateRangePicker
                 loading={status === 'loading'? true : false}
+                DesktopDatePicker={true}
+                disableHighlightToday={true}
+                disableCloseOnSelect={true}
                 disablePast
                 shouldDisableDate={disablebooked ?
                     date => {

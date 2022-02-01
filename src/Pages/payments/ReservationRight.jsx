@@ -12,7 +12,7 @@ import Nationality from "./components/Nationality"
 import Identification from "./components/Identification"
 //import ReCaptchaV2 from 'react-google-recaptcha'
 import validator from 'validator'
-import {saveCustomerInformation, RetrieveTransaction} from "../../redux/actionCreators/actionCreators"
+import {saveCustomerInformation} from "../../redux/actionCreators/actionCreators"
 import { motion } from "framer-motion"
 import { CancelIcon } from "../../Svg/svg"
 import { Pulse } from "../../components/Loader/Spinner"
@@ -132,7 +132,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
         if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.length > 11 ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
-            dispatch(RetrieveTransaction({ongoingId}))
+            // dispatch(RetrieveTransaction({ongoingId}))
         }
         else {
             OpenNotificationWithIcon({
@@ -147,10 +147,10 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
     useMemo(() => {
         if(status === 'succeeded') {
-            navigate('/order-summary')
+            navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
         }
         
-    }, [status, navigate]);
+    }, [status, navigate, Ongoing_id]);
 
     
 

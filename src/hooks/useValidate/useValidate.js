@@ -2,9 +2,7 @@ import { useState, useEffect, useCallback } from "react"
 
 export function useValidate({name, lastname, focus}) {
     const [validatedName, setValidated] =  useState(false)
-    console.log(name)
     
-
     const validator =  useCallback((value) => {
         if(!focus) {
             setValidated(true)

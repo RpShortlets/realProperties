@@ -6,7 +6,7 @@ import Result from "./components/Result"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren, saveSearchValue } from "../../redux/actions/componentState"
 import styles from "../../styles/home.module.css"
 import useAddGuestTotal from "../../hooks/useAddGuestTotal/useAddGuestTotal"
-import { filter } from "../../redux/actionCreators/actionCreators"
+import { filter, searchShortlets } from "../../redux/actionCreators/actionCreators"
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import SliderDrawer from "../../components/Slider"
 import useDebounce from "../../hooks/useDebounce/useDebounce"
@@ -82,7 +82,7 @@ const SearchResult = () => {
 
     const [guest, setguest] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [slidervalue, setSliderValue] = useState([10000, 100000]);
+    const [slidervalue, setSliderValue] = useState([70000, 150000]);
     const [showCalender, setShowCalender] = useState(false)
 
 
@@ -147,7 +147,7 @@ const SearchResult = () => {
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        // dispatch(searchShortlets({searchValue, adultcount, childrencount}))
+        dispatch(searchShortlets({searchValue, adultcount, childrencount}))
         navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 

@@ -58,6 +58,7 @@ export default function CustomInput({value, setValue, label, disabled}) {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DesktopDatePicker
         open={isOpen}
+        disableHighlightToday={true}
         label="Custom input"
         onAccept={() => setIsOpen(!isOpen)}
         value={value}

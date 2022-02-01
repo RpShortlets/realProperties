@@ -19,6 +19,8 @@ import Backdrop from "../../components/Backdrop"
 import {Reservation} from "../../export"
 import { getReservationUpdate, ShortletDetails } from "../../redux/actionCreators/actionCreators"
 import { AnimatePresence } from "framer-motion"
+import Error from "../../components/Error/Error"
+import { SearchNotFoundIcon } from "../../Svg/svg"
 
 
 
@@ -180,6 +182,13 @@ const PropertyDetails = () => {
             document.body.style.overflow = 'auto'
         }
     }, [status])
+
+
+    if(status === 'failed') {
+        return (
+            <Error title="Property not found" Icon={SearchNotFoundIcon} />
+        )
+    }
     
 
     return (

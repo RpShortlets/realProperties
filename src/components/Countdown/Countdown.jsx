@@ -1,7 +1,7 @@
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-const minuteSeconds = 69;
+const minuteSeconds = 67;
 const hourSeconds = 3600;
 
 

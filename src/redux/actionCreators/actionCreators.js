@@ -114,15 +114,15 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
     }
     
     const response = await axios.post(`${BaseURL}/transaction`, formdat);
-
+    localStorage.setItem("definded",JSON.stringify(response?.data?.Ongoing_id[0]?.ongoing_id))
     return response.data;
 
 });
 
 
-export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async ({ongoingId}) => {
+export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async ({Id}) => {
     const formdat = {
-        ongoing_id: ongoingId
+        ongoing_id: parseInt(Id),
     }
     
     const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);

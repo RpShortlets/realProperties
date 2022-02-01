@@ -9,7 +9,7 @@ const SliderDrawer = ({onSliderChange, value}) => {
 
     return (
         <>
-            <Range className='sliderComponent' pushable={true} draggableTrack={true} step={5000} min={50000} max={200000} allowCross={false} value={value} onChange={onSliderChange} />
+            <Range className='sliderComponent' pushable={true} draggableTrack={true} step={5000} min={60000} max={200000} allowCross={false} value={value} onChange={onSliderChange} />
         </>
     )
 }
