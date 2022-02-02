@@ -145,8 +145,9 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
 
 
     const handleGetDetails = async(Id) => {        
-        dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id})) 
-        navigate(`/apartment/${apartment_id}`)
+        // dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id}))
+        //checkIn=${checkInDate}&checkOut=${checkOutDate 
+        navigate(`/apartment/${apartment_id}&checkIn=${checkInDate}&checkOut=${checkOutDate}`)
     }
 
 

@@ -3,10 +3,18 @@ import axios from "axios";
 import { BaseURL } from "../../api/index"
 
 
-
-// let propertyDetails = localforage.createInstance({
-//     name: "PropertyDetails"
-// });
+export const getUserProfile = createAsyncThunk(
+    "userProfile/getUserProfile",
+    async () => {
+        try {
+            const { data } = await axios.get(`${BaseURL}/userProfile`);
+            localStorage.setItem("userProfile", JSON.stringify(data));
+            return data;
+        } catch (error) {
+            return error.message;
+        }
+    }
+);
 
 export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () => {
     const response = await axios.get(`${BaseURL}/update-booking`)
@@ -14,15 +22,15 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 });
 
 
-export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchValue, checkInDate, checkOutDate, adultcount, childrencount}) => {
-    
+export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
+
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
-            location: searchValue,
-            check_in_date: checkInDate,
-            check_out_date: checkOutDate,
-            adult: adultcount,
-            child: childrencount,
+            location: searchV, 
+            check_in_date: checkI, 
+            check_out_date: checkO, 
+            adult: adult,
+            child: childr,
         }
     });
     return response.data;
@@ -39,18 +47,18 @@ export const filter = createAsyncThunk("shortlet/filter", async ({startprice,end
     return response.data;
 });
 
-export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInDate,checkOutDate, apartment_id, Id}) => {
+export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInD,checkOutD, apartment_id, Id}) => {
     
     const response = await axios.get(`${BaseURL}/shortlet-details`,
     {
         params: {
             property_id: Id || apartment_id,
-            check_in: checkInDate,
-            check_out: checkOutDate,
+            check_in: checkInD,
+            check_out: checkOutD,
         }
     });
 
-    // localStorage.setItem("PropertyDetails",JSON.stringify(response.data))
+    console.log(response.data)
     return response.data;
     
     
@@ -127,6 +135,20 @@ export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction
     
     const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);
 
+    return response.data;
+
+});
+
+export const ManualPay = createAsyncThunk("payment/manualPay", async ({apartmentId, userId, overAll, guestId }) => {
+    const formdat = {
+        apartment_id: apartmentId,
+        user_id:  guestId,
+        // amount: overAll,
+        ongoing_id: userId
+    }
+    
+    const response = await axios.post(`${BaseURL}/manual-pay`, formdat);
+    console.log(response)
     return response.data;
 
 });

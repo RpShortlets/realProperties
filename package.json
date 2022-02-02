@@ -22,7 +22,6 @@
     "moment": "^2.29.1",
     "rc-slider": "^9.7.5",
     "react": "^17.0.2",
-    "react-bootstrap": "^2.1.0",
     "react-content-loader": "^6.1.0",
     "react-copy-to-clipboard": "^5.0.4",
     "react-countdown-circle-timer": "^3.0.8",

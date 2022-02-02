@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector, useDispatch } from "react-redux"
 import styled from "styled-components/macro"
 import Result from "./components/Result"
@@ -76,6 +76,15 @@ const OtherSearch = styled.div `
 const SearchResult = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const {location, adults, children, checkIn, checkOut,} = useParams();
+    const searchV = location?.slice(9)
+    const adult = adults?.slice(7) === 'null' ? '' : adults?.slice(7)
+    const childr = children?.slice(9) === 'null' ? '' : children?.slice(9)
+    const checkI = checkIn?.slice(8)
+    const checkO = checkOut?.slice(9)
+
+    console.log(adult)
+
 
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
     const {status, propertyResult: {searchResult}}= useSelector(state => state.propertyResult)
@@ -147,8 +156,8 @@ const SearchResult = () => {
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        dispatch(searchShortlets({searchValue, adultcount, childrencount}))
-        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+        // dispatch(searchShortlets({searchV, checkI, checkO, adult, childr}))
+        navigate(`/s/location=${searchValue}&adults=${adultcount === null || 'null' ? "" : adultcount}&children=${childrencount === null || 'null' ? "" : childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
 
@@ -156,6 +165,10 @@ const SearchResult = () => {
     useDebounce(() => 
         dispatch(filter({startprice, endprice})), 
     1000,[startprice, endprice, dispatch])
+
+    useEffect(() => {
+        dispatch(searchShortlets({searchV, checkI, checkO, adult, childr}))
+    },[searchV, checkI, checkO, adult, childr, dispatch])
 
     useEffect(() => {
         if(status === 'loading') {
@@ -222,11 +235,11 @@ const SearchResult = () => {
                                     {status === 'loading' ? <SkeletonLoader/> :
                                         (<div className="otherInputContainer">
                                             <div>
-                                                <input type="text" name="minprice" value={slidervalue[0].toLocaleString()} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
+                                                <input type="text" name="minprice" value={slidervalue[0]} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
                                             </div>
                                         
                                             <div>
-                                                <input type="text" name="maxprice" value={slidervalue[1].toLocaleString()}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
+                                                <input type="text" name="maxprice" value={slidervalue[1]}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
                                             </div>
                                         </div>)
                                     }

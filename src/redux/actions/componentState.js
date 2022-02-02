@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 export const ComponentState = createSlice({
     name: 'componentState',
     initialState: {
-        adultcount: 0,
-        childrencount: 0,
+        adultcount: null,
+        childrencount: null,
         guest: 0,
         textTitle: 'Find Shortlets',
         unformattedDates: [],

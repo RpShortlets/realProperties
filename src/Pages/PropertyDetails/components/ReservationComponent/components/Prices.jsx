@@ -1,6 +1,8 @@
 import { SkeletonLoader } from "../../../../../components/Loader/Skeleton"
 import styled from "styled-components"
 import Tooltips from "../../../../../components/Tooltip"
+// import { motion, AnimatePresence } from "framer-motion"
+
 
 const PriceBody =  styled.div `
     display: none;
@@ -17,6 +19,7 @@ const PriceBody =  styled.div `
             div {
                 display: flex;
                 justify-content: space-between;
+                position: relative;
                 margin: 0.2rem 0;
 
                 p:first-child {
@@ -39,10 +42,16 @@ const PriceBody =  styled.div `
             }
         }
 
+        .pricesStyle {
+            display: flex;
+            justify-content: space-between;
+        }
+
     }
 `
 
 const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAdditionalServices, TotalCarAndDriverPrice}) => {
+
 
     return (
         <PriceBody>
@@ -54,6 +63,22 @@ const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAddit
                             <p> {`${summary_details[0]?.total_apt_price === null || undefined? '' : summary_details[0]?.total_apt_price?.toLocaleString()}`}</p>
                         </>
                     )}
+                    {/* <AnimatePresence>
+                    {show && (
+                        <motion.div 
+                            initial={{ opacity: 0 , scale: 0, x: 0 }}
+                            animate={{ opacity: 1,  scale: 1, x: 10 }}
+                            transition={{ duration: 0.9 }}
+                            exit={{ opacity: 0,  scale: 0, x:0 }}
+
+                            style={{position: 'absolute', background: '#ccc', zIndex: 1, top: "-35px", left: '-50px'}}>
+                            <div>
+                                Hello
+                            </div>
+                        </motion.div>
+                    )}
+                    </AnimatePresence> */}
+                    
                     
                 </div>
                 <div>

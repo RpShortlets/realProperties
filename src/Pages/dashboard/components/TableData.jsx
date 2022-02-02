@@ -12,7 +12,7 @@ const TableWrapper = styled.div`
     
 
     h4 {
-        font-size: var(--font-xtra-small-screen);
+        font-size: var(--font-small-screen);
     }
 `
 
@@ -42,6 +42,7 @@ const TableBod = styled.tbody`
     td {
         padding: max(2vw, 1rem) 0;
         color: var(--color-dark);
+        
     }
 
 `
@@ -53,6 +54,7 @@ const TableHea = styled.thead`
         color: rgba(159, 162, 180, 1);
         padding: 0.5rem 0;
         font-weight: 300;
+        text-align: left;
 
     }
     

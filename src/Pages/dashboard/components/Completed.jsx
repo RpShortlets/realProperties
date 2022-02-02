@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 const Wrapper = styled.div `
     padding: max(3vw, 1.3rem);
-    height: 100%;
+    /* height: 100%; */
 
     h1 {
         color: var(--color-primary);

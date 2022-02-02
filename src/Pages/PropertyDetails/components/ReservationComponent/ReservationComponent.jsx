@@ -350,8 +350,12 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         const carPrice = summary_details[0]?.total_car_price;
         const driver = summary_details[0]?.total_driver_price;
 
-        dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-        setShowModal(true)
+        if(checkInDate && checkOutDate ) {
+            dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+            setShowModal(true)
+        } else {
+            alert('Please select check in and check out date')
+        }
     }
 
     useEffect(() => {

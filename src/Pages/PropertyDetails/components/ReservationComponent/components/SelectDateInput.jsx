@@ -3,6 +3,7 @@ import { SkeletonLoader } from "../../../../../components/Loader/Skeleton"
 import styled from "styled-components"
 import CalenderModal from "../../../../../components/Calender/CalenderModal"
 import { useState } from "react"
+import { useParams } from "react-router-dom"
 
 
 const InputContainer = styled.div`
@@ -24,10 +25,14 @@ const InputContainer = styled.div`
 `
 
 const SelectDateInput = () => {
+    const {checkIn, checkOut} = useParams()
     const {reserve, reservation: {dates}, } = useSelector(state => state.reservationState)
-    const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
+    // const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
 
     const [show, setShow] = useState(false)
+
+    const checkInD = checkIn.slice(8);
+    const checkOutD = checkOut.slice(9);
 
 
     return (
@@ -40,11 +45,11 @@ const SelectDateInput = () => {
             <div>
                 <InputContainer onClick={() => setShow(!show)}>
                     <span>{reserve === 'loading' ? <SkeletonLoader /> : 'Check-in'}</span>
-                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_in_date ? dates[0]?.check_in_date : checkInDate ? checkInDate : 'DD/MM/YYYY'} disabled /> }
+                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_in_date ? dates[0]?.check_in_date : checkInD ? checkInD : 'DD/MM/YYYY'} disabled /> }
                 </InputContainer>
                 <InputContainer  onClick={() => setShow(!show)}>
                     <span>{reserve === 'loading' ? <SkeletonLoader /> : 'Check-out'}</span>
-                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_out_date ? dates[0]?.check_out_date : checkOutDate ? checkOutDate : 'DD/MM/YYYY'} disabled /> }
+                    {reserve === 'loading' ? <SkeletonLoader /> : <input type="text" value={dates[0]?.check_out_date ? dates[0]?.check_out_date : checkOutD ? checkOutD : 'DD/MM/YYYY'} disabled /> }
                 </InputContainer>
             </div>
         </>

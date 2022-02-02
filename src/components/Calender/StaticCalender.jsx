@@ -1,6 +1,7 @@
 import moment from 'moment';
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { checkOutDate, checkInDate, newCheckInDate, newCheckOutDate } from "../../redux/actions/componentState";
 import TextField from '@mui/material/TextField';
 import StaticDateRangePicker from '@mui/lab/StaticDateRangePicker';
@@ -41,6 +42,11 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 const StaticCalender = ({status, calendars, disablebooked}) => {
     const dispatch = useDispatch();
+    const { checkIn, checkOut} = useParams()
+    const checkInD = checkIn.slice(8);
+    const checkOutD = checkOut.slice(9);
+
+    console.log( checkIn.slice(8), checkOut.slice(9))
     const cached = JSON.parse(localStorage.getItem('getReservation'))
 
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
@@ -89,7 +95,7 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
                 }: null}
                 renderDay={renderWeekPickerDay}
                 displayStaticWrapperAs="desktop"
-                value={useCheckInDate && useCheckOutDate ? [new Date(useCheckInDate), new Date(useCheckOutDate)] : value} 
+                value={ useCheckInDate && useCheckOutDate ? [new Date(useCheckInDate), new Date(useCheckOutDate)]  : checkInD && checkOutD ?  [new Date(checkInD), new Date(checkOutD)] : value} 
                 onChange={(newValue) => {
                 setValue(newValue);
                 }}

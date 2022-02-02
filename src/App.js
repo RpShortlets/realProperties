@@ -1,17 +1,22 @@
 import { useEffect, Suspense } from "react"
-import { AdminDashboard, Footer, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Nav, Transfer} from "./export"
-import { Routes, Route, useLocation } from "react-router-dom"
+import {Footer, Nav} from "./export"
+import { useLocation } from "react-router-dom"
 import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
 import { useDispatch } from "react-redux";
 import { UpdateBooks } from "./redux/actionCreators/actionCreators";
+import { useRoutes } from 'react-router-dom';
+import routes from "./routes";
 
 
 const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const isLoggedIn = false;
+  const routing = useRoutes(routes(isLoggedIn));
+  
   const invokeGA = () => {
     ReactGa.initialize('UA-181778020-1');
     ReactGa.pageview(window.location.pathname + window.location.search);
@@ -49,24 +54,29 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
-      {location.pathname !=='/admin/live/bookings' && (<Nav />)}
+      {location.pathname ==='/admin/live/bookings'  || location.pathname ==='/admin/live/bookings/completed' ||  location.pathname ==='/admin/live/bookings/pending' || location.pathname ==='/login' ? null : (<Nav />)}
       <Suspense 
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />
         </div>}>
-          <Routes>
+          {routing}
+          {/* <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/s/:id" element={<SearchResult />} />
             <Route path="/apartment/:id" element={<PropertyDetails />} />
             <Route path='/payment' element={<Payments />}  />
             <Route path="/order-summary/ref/:id" element={<OrderSummary />} />
             <Route path="/order-summary/payment" element={<Transfer />} />
             <Route path="/paystack/callback/shortlet" element={<Verify />} />
-            <Route path="/admin/live/bookings" element={<AdminDashboard />} />
+            <Route path="admin/live/bookings" element={<AdminDashboard />}>
+              <Route path="pending" element={<AdminDashboard />} />
+              <Route path="completed" element={<AdminDashboard />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
-          </Routes>
+          </Routes> */}
       </Suspense>
-      {location.pathname !=='/admin/live/bookings' && (<Footer />)}
+      {location.pathname ==='/admin/live/bookings'  || location.pathname ==='/admin/live/bookings/completed' ||  location.pathname ==='/admin/live/bookings/pending' || location.pathname ==='/login' ? null :  (<Footer />)}
   </>
   );
 }

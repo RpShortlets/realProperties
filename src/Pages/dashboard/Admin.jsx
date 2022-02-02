@@ -92,13 +92,13 @@ const Admin = () => {
                     </div>
                     <div className='sideBarLink'>
                         <div className={pending ? 'sideBarBorder' : undefined} onClick={handlePending}>
-                            <Link to='#'>
+                            <Link to='pending'>
                                 <span>{PendingIcon}</span>
                                 <span>Pending</span>
                             </Link>
                         </div>
                         <div onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined}>
-                            <Link to='#'>
+                            <Link to='completed'>
                                 <span>{CompletedIcon}</span>
                                 <span>Completed</span>
                             </Link>

@@ -96,8 +96,8 @@ const initiateState = {cleaning: "", pickup: "" }
 const PropertyDetails = () => {
     const dispatch = useDispatch();
     const Query = useMediaQuery("(min-width: 769px)")
-    const Id = useParams().id
-    const cached = JSON.parse(localStorage.getItem('getReservation'))
+    const {Id, checkIn, checkOut} = useParams()
+
 
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
@@ -121,7 +121,7 @@ const PropertyDetails = () => {
     const [radio, setRadio] = useState('driver')
 
     const modalRef = useRef()
-    const staylength = cached ? cached?.summary_details[0]?.stay_length :  summary_details ? summary_details[0]?.stay_length : 1;
+    const staylength = summary_details ? summary_details[0]?.stay_length : 1;
 
 
 
@@ -145,10 +145,13 @@ const PropertyDetails = () => {
     //     }
     // }, []);
 
+
     //!DEPENDING ISSUE
+    const checkInD = checkIn.slice(8);
+    const checkOutD = checkOut.slice(9);
     useEffect(() => {
-        dispatch(ShortletDetails({checkInDate,checkOutDate, Id})) 
-    },  [Id, dispatch])
+        dispatch(ShortletDetails({checkInD, checkOutD, Id})) 
+    },  [checkInD,checkOutD, Id, dispatch])
     
     useMemo(() => 
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id})), 

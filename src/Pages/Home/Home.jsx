@@ -66,8 +66,8 @@ const Home = () => {
 
     const SubmitForm = async(e) => {
         e.preventDefault();
-        dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
-        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+        // dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
+        navigate(`/s/location=${searchValue}&adults=${adultcount === null || 'null' ? "" : adultcount}&children=${childrencount === null || 'null' ? "" : childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
     return (
