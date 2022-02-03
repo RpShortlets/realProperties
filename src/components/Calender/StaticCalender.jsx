@@ -43,8 +43,8 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 const StaticCalender = ({status, calendars, disablebooked}) => {
     const dispatch = useDispatch();
     const { checkin, checkout} = useParams()
-    const checkInD = checkin.slice(8);
-    const checkOutD = checkout.slice(9);
+    const checkInD = checkin?.slice(8);
+    const checkOutD = checkout?.slice(9);
 
     const {PropertyDetails: {booked_dates, temp_booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
