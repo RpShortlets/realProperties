@@ -158,7 +158,7 @@ const PropertyDetails = () => {
     
     useMemo(() => {
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
-        navigate(`/apartment/${Id}&checkIn=${checkInDate}&checkOut=${checkOutDate}`, { replace: true })
+        navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`, { replace: true })
 
     }, [dispatch, checkInDate, navigate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
 

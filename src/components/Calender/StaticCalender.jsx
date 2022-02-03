@@ -46,15 +46,14 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
     const checkInD = checkin.slice(8);
     const checkOutD = checkout.slice(9);
 
-
-    const cached = JSON.parse(localStorage.getItem('getReservation'))
-
-    const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
+    const {PropertyDetails: {booked_dates, temp_booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
     const [value, setValue] = React.useState([null, null]);
 
-    const dates = cached ? cached?.booked_dates?.map((data) => data.booked_dates) : booked_dates?.map((data) => data.booked_dates)
-
+    const tem = temp_booked_dates?.map((data) => data.temp_booked_dates) 
+    const booked = booked_dates?.map((data) => data.booked_dates)
+    const newBookedDate = booked?.concat(tem)
+    const dates = newBookedDate?.map((data) => data)
 
 
     React.useEffect(() => {
