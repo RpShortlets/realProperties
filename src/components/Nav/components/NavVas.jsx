@@ -15,7 +15,9 @@ const NavSocialIcons = styled.div `
 
     svg {
         color: var(--color-primary);
-        margin: 0 max(2.5vw, 1.5rem);
+        margin: 0 max(1.5vw, 1rem);
+        display: flex;
+        align-items: center;
     }
 `
 const NavVas = ({Icons}) => {
@@ -24,9 +26,11 @@ const NavVas = ({Icons}) => {
             <div>
                 <span>Want a:</span>
             </div>
-            <div>
-                {Icons.map((icon) => icon.icon)}
-            </div>
+            {Icons.map((icon, i) =>
+                <div key={i}>
+                    {icon.icon}
+                </div>
+            )}
         </NavSocialIcons>
     )
 };

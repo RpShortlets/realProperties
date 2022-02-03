@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { CompanyLogo, PendingIcon, CompletedIcon } from '../../Svg/svg';
 import { Link } from 'react-router-dom';
 import { FlexStyle } from '../../styles/globalStyles';
 import Pending from './components/Pending';
 import Completed from './components/Completed';
+import { AdminPendingTransaction, AdminCompletedTransaction } from '../../redux/actionCreators/actionCreators';
+import Deleted from './components/Deleted';
+
 
 const Section = styled.section `
     width: 100%;
@@ -65,21 +69,33 @@ const LeftBar = styled.div `
 `
 
 const Admin = () => {
+    const dispatch = useDispatch();
+
     const [pending, setPending] = useState(true);
     const [completed, setCompleted] = useState(false);
+    const [deleted, setDeleted] = useState(false);
 
 
     //* Render the pending or completed component
     const handlePending = () => {
         setPending(true);
         setCompleted(false);
+        setDeleted(false);
+        dispatch(AdminPendingTransaction())
     }
 
     const handleCompleted = () => {
         setPending(false);
         setCompleted(true);
+        setDeleted(false);
+        dispatch(AdminCompletedTransaction())
     }
 
+    const handleDeleted = () => {
+        setDeleted(true);
+        setCompleted(false);
+        setPending(false);
+    }
     //* End of Render the pending or completed component
 
 
@@ -91,27 +107,32 @@ const Admin = () => {
                         {CompanyLogo}
                     </div>
                     <div className='sideBarLink'>
-                        <div className={pending ? 'sideBarBorder' : undefined} onClick={handlePending}>
-                            <Link to='pending'>
+                        <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                            <div style={{display: 'flex' , alignItems: 'center'}}>
                                 <span>{PendingIcon}</span>
                                 <span>Pending</span>
-                            </Link>
-                        </div>
-                        <div onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined}>
-                            <Link to='completed'>
+                            </div>
+                        </Link>
+                        <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
+                            <div style={{display: 'flex' , alignItems: 'center'}}>
                                 <span>{CompletedIcon}</span>
                                 <span>Completed</span>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
+                        <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
+                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                <span>{CompletedIcon}</span>
+                                <span>Deleted</span>
+                            </div>
+                        </Link>
                     </div>
                 </SideBar>
                 <LeftBar>
-                    {pending ? (
-                        <Pending />
-                        ) : 
-                        (
-                        <Completed />
-                    )}
+                    {pending ? (<Pending />) : completed ?
+                        (<Completed />) 
+                        : deleted && 
+                        (<Deleted />)
+                    }
                 </LeftBar>
             </Main>
         </Section>

@@ -132,6 +132,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
         if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.length > 11 ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
+            navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
             // dispatch(RetrieveTransaction({ongoingId}))
         }
         else {
@@ -145,12 +146,12 @@ const ReservationRight = ({setShowModal, proceess}) => {
     
 
 
-    useMemo(() => {
-        if(status === 'succeeded') {
-            navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
-        }
+    // useMemo(() => {
+    //     if(status === 'succeeded') {
+    //         navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
+    //     }
         
-    }, [status, navigate, Ongoing_id]);
+    // }, [status, navigate, Ongoing_id]);
 
     
 

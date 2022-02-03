@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div `
     padding: max(3vw, 1.3rem);
-    height: 100%;
+    /* height: 100%; */
 
     h1 {
         color: var(--color-primary);
@@ -15,17 +15,15 @@ const Wrapper = styled.div `
 
 `
 
-const Pending = () => {
-    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
-
+const Deleted = () => {
+    const {cancelled, cancelledTransaction} = useSelector(state => state.adminDashboard);
 
     return <Wrapper>
             <h1>Dashboard Kit</h1>
-        <TableData title="Pending">
-            {pending === 'succeeded' && (
-                <>
-                
-                {pendingTransaction?.map((item) => (
+        <TableData title="Deleted">
+        {cancelled === 'succeeded' && (
+            <>    
+                {cancelledTransaction?.map((item) => (
                     <tr key={item.id}>
                         <td>
                             {item?.guest_name}
@@ -59,4 +57,4 @@ const Pending = () => {
     </Wrapper>;
 };
 
-export default Pending;
+export default Deleted;

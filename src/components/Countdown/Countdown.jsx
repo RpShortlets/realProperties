@@ -27,6 +27,7 @@ const Countdown = () => {
     const remainingTime = endTime - stratTime;
     const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
 
+    console.log(getTimeMinutes(remainingTime));
     return (
         <CountdownCircleTimer
             {...timerProps}

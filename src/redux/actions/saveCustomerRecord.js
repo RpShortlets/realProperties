@@ -7,7 +7,7 @@ export const CustomerRecords = createSlice({
     initialState: {
         records: {}
     },
-     extraReducers:(builder) => {
+    extraReducers:(builder) => {
         builder
         .addCase(saveCustomerInformation.pending, (state, action) => {
             state.status = 'loading'

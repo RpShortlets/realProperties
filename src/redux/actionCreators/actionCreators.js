@@ -105,9 +105,9 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
 });
 
 
-export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction", async ({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}) => {
+export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction", async ({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}) => {
     const formdat = {
-        apartment_id: id,
+        apartment_id: Id,
         apartment_price: apartmentPrice,
         stay_length: stayLenght,
         total_apartment_price: totalApartmentPrice,
@@ -148,7 +148,17 @@ export const ManualPay = createAsyncThunk("payment/manualPay", async ({apartment
     }
     
     const response = await axios.post(`${BaseURL}/manual-pay`, formdat);
-    console.log(response)
+    return response.data;
+
+});
+
+
+export const ManualCancel = createAsyncThunk("payment/manualCancel", async ({pendingId }) => {
+    const formdat = {
+        pending_id: pendingId,
+    }
+    
+    const response = await axios.post(`${BaseURL}/cancel-manual-payment`, formdat);
     return response.data;
 
 });
@@ -201,5 +211,24 @@ export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustom
     return response.data;
 
 });
+
+
+//* Admin */
+
+export const AdminPendingTransaction = createAsyncThunk("adminDashboard/adminPendingTransaction", async () => {
+    const {data} = await axios.get(`${BaseURL}/admin/pending-payments`);
+    return data.results;
+});
+
+export const AdminCompletedTransaction = createAsyncThunk("adminDashboard/adminCompletedTransaction", async () => {
+    const {data} = await axios.get(`${BaseURL}/admin/completed-payments`);
+    return data.results;
+});
+
+export const AdminDeletedTransaction = createAsyncThunk("adminDashboard/adminDeletedTransaction", async () => {
+    const {data} = await axios.get(`${BaseURL}/admin/deleted-payments`);
+    return data.results;
+});
+
 
 

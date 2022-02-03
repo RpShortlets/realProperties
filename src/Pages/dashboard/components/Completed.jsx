@@ -1,6 +1,7 @@
 import React from 'react';
 import TableData from './TableData';
 import styled from "styled-components"
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div `
     padding: max(3vw, 1.3rem);
@@ -15,79 +16,45 @@ const Wrapper = styled.div `
 `
 
 const Completed = () => {
+    const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
+
     return <Wrapper>
             <h1>Dashboard Kit</h1>
         <TableData title="Completed">
-            <>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tofunmi Yinka-Balogun
-                    </td>
-                    <td>Customer@gmail.com</td>
-                    <td>08123456789</td>
-                    <td>Feb 14, 2022</td>
-                    <td>Feb 19, 2022</td>
-                    <td>172,000 </td>
-                    <td>21548954</td>
-                </tr>
-            </>
+        {completed === 'succeeded' && (
+            <>    
+                {completedTransaction?.map((item) => (
+                    <tr key={item.id}>
+                        <td>
+                            {item?.guest_name}
+                        </td>
+                        <td>
+                            {item?.email}
+                        </td>
+                        <td>
+                            {item?.phone_no}
+                        </td>
+                        <td>
+                            {item?.check_in}
+                        </td>
+                        <td>
+                            {item?.check_out}
+                        </td>
+                        <td>
+                            {item?.amount}
+                        </td>
+                        <td>
+                            {item?.pymt_reference}
+                        </td>
+                        <td>
+                            {item?.status}
+                        </td>
+                    </tr>
+                ))}
+                </>
+            )}
         </TableData>
-        </Wrapper>;
+    </Wrapper>;
 };
 
 export default Completed;

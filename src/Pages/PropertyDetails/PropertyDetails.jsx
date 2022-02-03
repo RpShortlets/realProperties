@@ -1,5 +1,5 @@
 import {useState, useRef, useEffect, useMemo} from "react"
-import { useParams} from "react-router-dom"
+import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
 import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
@@ -95,8 +95,10 @@ const initiateState = {cleaning: "", pickup: "" }
 
 const PropertyDetails = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+
     const Query = useMediaQuery("(min-width: 769px)")
-    const {Id, checkIn, checkOut} = useParams()
+    const {Id, checkin, checkout} = useParams()
 
 
     const {status} = useSelector(state => state.propertyDetails)
@@ -147,16 +149,23 @@ const PropertyDetails = () => {
 
 
     //!DEPENDING ISSUE
-    const checkInD = checkIn.slice(8);
-    const checkOutD = checkOut.slice(9);
+    const checkInD = checkin.slice(8);
+    const checkOutD = checkout.slice(9);
     useEffect(() => {
         dispatch(ShortletDetails({checkInD, checkOutD, Id})) 
     },  [checkInD,checkOutD, Id, dispatch])
     
-    useMemo(() => 
-        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id})), 
-    [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+    
+    useMemo(() => {
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
+        navigate(`/apartment/${Id}&checkIn=${checkInDate}&checkOut=${checkOutDate}`, { replace: true })
 
+    }, [dispatch, checkInDate, navigate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+
+    const date1 = new Date(checkInD);
+    const date2 = new Date(checkOutD);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
 
     useEffect(() => {
@@ -300,7 +309,7 @@ const PropertyDetails = () => {
                             </BodyContent>
                         </BodyContainer>
                     </Header>
-                    <PropertyCalender status={reserve} lenghtstay={staylength}  margin="max(3vw,2rem) 0"/> 
+                    <PropertyCalender status={reserve} lenghtstay={diffDays ? diffDays : staylength}  margin="max(3vw,2rem) 0"/> 
                     <PropertyRules  status={status}/>
                 </Main> 
             </Section>

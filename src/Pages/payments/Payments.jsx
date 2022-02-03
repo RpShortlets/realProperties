@@ -54,8 +54,6 @@ const Information = styled.div `
 const Payments = () => {
     const [formdata, setFormData] = useState({card: ''})
 
-    console.log(formdata)
-    
     var num = formdata?.card; 
     
     var newNum = num?.toString()?.match(/.{4}/g)?.join(' ');

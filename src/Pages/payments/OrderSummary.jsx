@@ -86,8 +86,9 @@ const OrderSummary = () => {
     const [addtionService, setAddtionalService] = useState();
 
 
-    // const CleaningFee =  proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning 
-    // const PickupFee =   proceess === 'succeeded' && Ongoing_id_info[0]?.pickup ? Ongoing_id_info[0]?.pickup : 0
+
+    // const CleaningFee =  proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.cleaning && Ongoing_id_info[0]?.cleaning : 0;
+    // const PickupFee =    proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.pickup && Ongoing_id_info[0]?.pickup : 0; 
 
     // useEffect(() => {
     //     if(status === 'succeeded') {
@@ -123,8 +124,10 @@ const OrderSummary = () => {
     }, [dispatch, Id])
 
     // useEffect(() => {
+        
     //     setAddtionalService(CleaningFee + PickupFee)
-    // }, [CleaningFee, PickupFee]);
+        
+    // }, [CleaningFee, PickupFee, proceess]);
 
     if(proceess === 'failed') {
         return (
@@ -154,7 +157,7 @@ const OrderSummary = () => {
                                         {data?.cleaning && (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental || data?.pickup  ? 'Additional Services' : ''}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : addtionService?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : parseInt(data?.car_rental) + parseInt(data?.pickup)}</span>
                                             </CardDetails>
                                         )}
                                         {data?.car_rental && (

@@ -6,7 +6,9 @@ import { CopyIcon } from '../../Svg/svg';
 import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { ManualCancel } from '../../redux/actionCreators/actionCreators';
+import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
 
 const Section = styled.section ` 
     height: 100%;
@@ -109,8 +111,33 @@ const Main = styled.div `
 `
 
 const Transfer = () => {
+    const dispatch = useDispatch();
     const {manualTransfer: {payment_details, pending_id, transaction_info }, status, manualTransfer} = useSelector(state => state.paymentState);
 
+    const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
+
+    console.log(manualTransfer)
+
+    const handleCancel = () => {
+        if(parseInt(pendingId) === Number(pendingId)) {
+            if (window.confirm("You're about to cancel your transaction") === true) {
+                    dispatch(ManualCancel({pendingId}));
+                    window.location.reload()
+                    // navigate('/');
+                } else {
+                console.log('No')
+            }
+        } else {
+            OpenNotificationWithIcon({
+                message: 'No pending transaction',
+                description: 'You have no pending transaction to cancel',
+                type: 'error',
+            })
+        }
+        
+        // const pendingId = pending_id[0]?.max_id
+        // dispatch(ManualCancel({pendingId}));
+    }
 
     if(status === 'failed') {
         return (
@@ -118,120 +145,131 @@ const Transfer = () => {
         )
     }
 
-    console.log(manualTransfer)
+
     return (
         <Section paddingleft="true" paddingRight="true">
             <Main>
-                <div className='transferContainer'>
-                    <div className='transferPaymentCard'>
-                        <h1>Pending payment</h1>
-                        <p>Please transfer to the following account by using your own payment method</p>
-                        <div>
-                            <div >
-                                
-                                <div className='transferBody' >
-                                    {status === 'loading' ? 'loading' : 
-                                        status === 'succeeded' &&
-                                        (<>
-                                            <p>Amount</p>
-                                            <div className='transferCopyIcon'>
-                                                <span>{transaction_info[0]?.amount}</span>
+                {manualTransfer  ? (
+                    <div className='transferContainer'>
+                        <div className='transferPaymentCard'>
+                            <h1>{ status === 'succeeded' && transaction_info[0]?.amount ? 'Pending payment' : 'No pending payment'}</h1>
+                            <p>{ status === 'succeeded' && transaction_info[0]?.amount ? 'Please transfer to the following account by using your own payment method' : ''}</p>
+                            <div>
+                                <div >
+                                    
+                                    <div className='transferBody' >
+                                        {status === 'loading' ? 'loading' : 
+                                            status === 'succeeded' &&
+                                            (<>
+                                                <p>Amount</p>
+                                                <div className='transferCopyIcon'>
+                                                    <span>&#8358;{transaction_info[0]?.amount?.toLocaleString()}</span>
+                                                        <CopyToClipboard 
+                                                            text={transaction_info[0]?.amount}
+                                                            onCopy={() => alert('Copy')}
+                                                        >
+                                                            <span>{CopyIcon}</span>
+                                                        </CopyToClipboard>
+                                                </div>
+                                            </>)
+                                        }
+                                    </div>
+                                    <div className='transferBody'>
+                                        {status === 'loading' ? 'loading' : 
+                                            status === 'succeeded' &&
+                                            (<>
+                                                <p>Bank Name</p>
+                                                <div className='transferCopyIcon'>
+                                                    <span>{payment_details[0]?.bankname}</span>
                                                     <CopyToClipboard 
                                                         text={transaction_info[0]?.amount}
                                                         onCopy={() => alert('Copy')}
                                                     >
                                                         <span>{CopyIcon}</span>
                                                     </CopyToClipboard>
-                                            </div>
-                                        </>)
-                                    }
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className='transferBody'>
+                                        {status === 'loading' ? 'loading' :
+                                            status === 'succeeded' &&
+                                            (<>
+                                                <p>Account Name</p>
+                                                <div className='transferCopyIcon'>
+                                                    <span>{payment_details[0]?.accountname}</span>
+                                                    <CopyToClipboard 
+                                                        text={transaction_info[0]?.amount}
+                                                        onCopy={() => alert('Copy')}
+                                                    >
+                                                        <span>{CopyIcon}</span>
+                                                    </CopyToClipboard>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className='transferBody'>
+                                        {status === 'loading' ? 'loading' :
+                                            status === 'succeeded' &&
+                                            (<>
+                                                <p>Bank account number</p>
+                                                <div className='transferCopyIcon'>
+                                                    <span>{payment_details[0]?.accountno}</span>
+                                                    <CopyToClipboard 
+                                                        text={transaction_info[0]?.amount}
+                                                        onCopy={() => alert('Copy')}
+                                                    >
+                                                        <span>{CopyIcon}</span>
+                                                    </CopyToClipboard>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className='transferBody'>
+                                        {status === 'loading' ? 'loading' :
+                                            status === 'succeeded' &&
+                                            (<>
+                                                <p>Reference number</p>
+                                                <div className='transferCopyIcon'>
+                                                    <span>{transaction_info[0]?.payment_reference}</span>
+                                                    <CopyToClipboard 
+                                                        text={transaction_info[0]?.amount}
+                                                        onCopy={() => alert('Copy')}
+                                                    >
+                                                        <span>{CopyIcon}</span>
+                                                    </CopyToClipboard>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className='transferBody'>
-                                    {status === 'loading' ? 'loading' : 
-                                        status === 'succeeded' &&
-                                        (<>
-                                            <p>Bank Name</p>
-                                            <div className='transferCopyIcon'>
-                                                <span>{payment_details[0]?.bankname}</span>
-                                                <CopyToClipboard 
-                                                    text={transaction_info[0]?.amount}
-                                                    onCopy={() => alert('Copy')}
-                                                >
-                                                    <span>{CopyIcon}</span>
-                                                </CopyToClipboard>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <div className='transferBody'>
-                                    {status === 'loading' ? 'loading' :
-                                        status === 'succeeded' &&
-                                        (<>
-                                            <p>Account Name</p>
-                                            <div className='transferCopyIcon'>
-                                                <span>{payment_details[0]?.accountname}</span>
-                                                <CopyToClipboard 
-                                                    text={transaction_info[0]?.amount}
-                                                    onCopy={() => alert('Copy')}
-                                                >
-                                                    <span>{CopyIcon}</span>
-                                                </CopyToClipboard>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <div className='transferBody'>
-                                    {status === 'loading' ? 'loading' :
-                                        status === 'succeeded' &&
-                                        (<>
-                                            <p>Bank account number</p>
-                                            <div className='transferCopyIcon'>
-                                                <span>{payment_details[0]?.accountno}</span>
-                                                <CopyToClipboard 
-                                                    text={transaction_info[0]?.amount}
-                                                    onCopy={() => alert('Copy')}
-                                                >
-                                                    <span>{CopyIcon}</span>
-                                                </CopyToClipboard>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                                <div className='transferBody'>
-                                    {status === 'loading' ? 'loading' :
-                                        status === 'succeeded' &&
-                                        (<>
-                                            <p>Reference number</p>
-                                            <div className='transferCopyIcon'>
-                                                <span>{transaction_info[0]?.payment_reference}</span>
-                                                <CopyToClipboard 
-                                                    text={transaction_info[0]?.amount}
-                                                    onCopy={() => alert('Copy')}
-                                                >
-                                                    <span>{CopyIcon}</span>
-                                                </CopyToClipboard>
-                                            </div>
-                                        </>
-                                    )}
+                                <div className='transferDesc'>
+                                    <p> {status === 'succeeded' &&  transaction_info[0]?.amount && 'Please include your reference code on your transfer description'}</p>
                                 </div>
                             </div>
-                            <div className='transferDesc'>
-                                <p>Please include your reference code on your transfer description</p>
-                            </div>
+                        </div>
+                        <div className='transferCounter'>
+                            {status === 'succeeded' &&  transaction_info[0]?.amount &&
+                                (
+                                    <>
+                                        <div>
+                                            <Countdown />
+                                        </div>
+                                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                                            <p>You have 30 minutes window to make payment, otherwise, the order will be canceled</p>
+                                        </div>
+                                        <div style={{display: 'contents'}}>
+                                            <Button onClicks={handleCancel} title="Cancel transaction"  color="var(--color-primary)" padding=".9rem" background='transparent' border="3px solid #2193B0"/>
+                                        </div>
+                                    </>
+                                )
+                            }
+        
                         </div>
                     </div>
-                    <div className='transferCounter'>
-                        <div>
-                            <Countdown />
-                        </div>
-                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
-                            <p>You have 30 minutes window to make payment, otherwise, the order will be canceled</p>
-                        </div>
-                        <div style={{display: 'contents'}}>
-                            <Button title="Cancel transaction"  color="var(--color-primary)" padding=".9rem" background='transparent' border="3px solid #2193B0"/>
-                        </div>
-                    </div>
-                </div>
+                ) : (
+                    <Error title="No pending transaction"/>
+                )}
             </Main>
         </Section>
     )

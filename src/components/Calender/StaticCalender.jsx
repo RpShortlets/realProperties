@@ -42,11 +42,11 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 const StaticCalender = ({status, calendars, disablebooked}) => {
     const dispatch = useDispatch();
-    const { checkIn, checkOut} = useParams()
-    const checkInD = checkIn.slice(8);
-    const checkOutD = checkOut.slice(9);
+    const { checkin, checkout} = useParams()
+    const checkInD = checkin.slice(8);
+    const checkOutD = checkout.slice(9);
 
-    console.log( checkIn.slice(8), checkOut.slice(9))
+
     const cached = JSON.parse(localStorage.getItem('getReservation'))
 
     const {PropertyDetails: {booked_dates}} = useSelector(state => state.propertyDetails)
@@ -77,8 +77,6 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;
     };
     
-
-    console.log(status)
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -15,11 +15,11 @@ import Pic4 from "../../../image/largeScreen/picFour.jpeg"
 import Pic5 from "../../../image/largeScreen/picFive.jpeg"
 import Pic12 from "../../../image/largeScreen/picSix.jpeg"
 import Pic13 from "../../../image/largeScreen/picSeven.jpeg"
-import Pic7 from "../../../image/small/picFour.jpg"
-import Pic8 from "../../../image/small/picFive.jpg"
-import Pic9 from "../../../image/small/picThree.jpg"
-import Pic10 from "../../../image/small/picOne.jpg"
-import Pic11 from "../../../image/small/picTwo.jpg"
+import Pic7 from "../../../image/small/picFour.jpeg"
+import Pic8 from "../../../image/small/picFive.jpeg"
+import Pic9 from "../../../image/small/picThree.jpeg"
+import Pic10 from "../../../image/small/picOne.jpeg"
+import Pic11 from "../../../image/small/picTwo.jpeg"
 import Pic14 from "../../../image/small/picSix.jpeg"
 import Pic15 from "../../../image/small/picSeven.jpeg"
 
@@ -200,7 +200,7 @@ const ImageContainer = styled.div `
 const CustomLeftArrowButton = (props) => {
     return (
         <>
-            {props?.currentImageIndex > 0 && <Button boxShadow="var(--shadow)" zIndex='15' left= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineLeft  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+            {props?.currentImageIndex > 0 && <Button alignT="center" display="flex" width="40px" height="40px" boxShadow="var(--shadow)" zIndex='15' left= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineLeft  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
         </>
     )
 }
@@ -208,7 +208,7 @@ const CustomLeftArrowButton = (props) => {
 export const CustomRightArrowButton = (props) => {
     return (
         <>
-            {props?.images?.length > props?.currentImageIndex + 1  && <Button boxShadow="var(--shadow)" zIndex='15' right= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineRight  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+            {props?.images?.length > props?.currentImageIndex + 1  && <Button alignT="center" display= "flex" width="40px" height= "40px" boxShadow="var(--shadow)" zIndex='15' right= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineRight  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
         </>
     )
 }
@@ -294,8 +294,9 @@ const PropertyImage = ({status}) => {
             <ImageContainer>
                 <ImageWrapper>
                     <LargeImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
-                            <div onClick={() => setIsOpen(true)}>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : 
+                            status === "succeeded" && (
+                            <div onClick={() => setIsOpen(true)} style={{height: '100%'}}>
                                 <img data-src={Pic7} alt=""  width='100%' height='100%' className="lazyload"/>
                                 <span style={{cursor: 'pointer'}}>
                                     <AiOutlineCamera /> Click to see all pictures
@@ -305,33 +306,39 @@ const PropertyImage = ({status}) => {
                         
                     </LargeImage>
                     <SmallImage style={{gridColumn: '4/6'}}>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
                             <img data-src={Pic8} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage style={{gridColumn: '6/8'}}>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
                             <img data-src={Pic9} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
                             <img data-src={Pic10} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
                             <img data-src={Pic11} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
                             <img data-src={Pic14} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : (
-                        <img data-src={Pic15} alt=""  width='100%' height='100%' className="lazyload"/>
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                            status === "succeeded" && (
+                            <img data-src={Pic15} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                 </ImageWrapper>

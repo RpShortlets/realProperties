@@ -40,7 +40,7 @@ const TableBod = styled.tbody`
     }
 
     td {
-        padding: max(2vw, 1rem) 0;
+        padding: max(1.6vw, 1rem) 0;
         color: var(--color-dark);
         
     }
@@ -76,6 +76,7 @@ const TableData = ({title, children}) => {
                         <th>Check-out</th>
                         <th>Amount</th>
                         <th>Reference</th>
+                        <th>Status</th>
                     </tr>
                 </TableHea>
                 <TableBod>

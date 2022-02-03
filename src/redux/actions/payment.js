@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ongoingTransaction, RetrieveTransaction, PaymentPayStack, VerifyPayStack, ManualPay } from "../actionCreators/actionCreators";
+import { ongoingTransaction, RetrieveTransaction, PaymentPayStack, VerifyPayStack, ManualPay, ManualCancel } from "../actionCreators/actionCreators";
 
 
 export const PaymentsReducer = createSlice({
@@ -10,6 +10,7 @@ export const PaymentsReducer = createSlice({
         payStack: {},
         verify: {},
         manualTransfer: {},
+        cancelTransfer: {},
     },
     extraReducers:(builder) => {
         builder
@@ -65,6 +66,17 @@ export const PaymentsReducer = createSlice({
             state.manualTransfer = action.payload
         })
         .addCase(ManualPay.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
+        .addCase(ManualCancel.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(ManualCancel.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.cancelTransfer = action.payload
+        })
+        .addCase(ManualCancel.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
         })

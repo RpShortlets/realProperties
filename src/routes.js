@@ -7,9 +7,9 @@ const routes = (isLoggedIn) =>
             path: '/admin/live/bookings',
             element: isLoggedIn ? <AdminDashboard /> : <Navigate to="/login" />,
             children: [
-            { path: 'dashboard', element: <AdminDashboard /> },
             { path: 'pending', element: <AdminDashboard /> },
             { path: 'completed', element: <AdminDashboard /> },
+            { path: 'deleted', element: <AdminDashboard /> }
             ],
         },
         {
@@ -37,7 +37,7 @@ const routes = (isLoggedIn) =>
             path: '/apartment',
             element: <PropertyDetails />,
             children: [
-            { path: ':Id&:checkIn&:checkOut', element: <PropertyDetails /> },
+            { path: ':Id&:checkin&:checkout', element: <PropertyDetails /> },
             ],
         },
         {

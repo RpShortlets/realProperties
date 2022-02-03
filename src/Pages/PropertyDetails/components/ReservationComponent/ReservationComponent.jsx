@@ -164,7 +164,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     }) => {
 
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const {Id, checkin, checkout} = useParams()
 
     const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
     const {proceess} = useSelector(state => state.paymentState)
@@ -175,6 +175,8 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const [disableChild, setDisabledChild]  = useState(false)
 
 
+    const checkInD = checkin.slice(8);
+    const checkOutD = checkout.slice(9);
     const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
     const AdultMinuss =  max_guest &&  max_guest[0]?.allowed_adult
     const AdultAdds = max_guest && max_guest[0]?.allowed_child  
@@ -350,11 +352,14 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         const carPrice = summary_details[0]?.total_car_price;
         const driver = summary_details[0]?.total_driver_price;
 
-        if(checkInDate && checkOutDate ) {
-            dispatch(ongoingTransaction({id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+        if(checkInD !==  '' && checkOutD !== '') {
+            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
             setShowModal(true)
         } else {
-            alert('Please select check in and check out date')
+            OpenNotificationWithIcon({
+                message: 'Please select check in and check out date',
+                type: 'warning',
+            })
         }
     }
 

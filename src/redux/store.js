@@ -6,6 +6,7 @@ import propertyDetails from "./actions/propertyDetails"
 import reservation from "./actions/reservation"
 import PaymentsReducer from "./actions/payment"
 import CustomerRecords from "./actions/saveCustomerRecord"
+import AdminDashboard from "./actions/adminDashboard"
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +17,8 @@ export const store = configureStore({
         reservationState: reservation,
         paymentState: PaymentsReducer,
         customerRecord : CustomerRecords,
+        adminDashboard: AdminDashboard,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

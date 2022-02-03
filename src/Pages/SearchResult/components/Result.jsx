@@ -1,9 +1,9 @@
 import  { useNavigate } from "react-router-dom"
-import {useDispatch, useSelector } from "react-redux"
+import {useSelector } from "react-redux"
 import styled from "styled-components"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
-import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
+// import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
 
 
@@ -139,7 +139,6 @@ const Price = styled.div `
 
 
 const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, data }) => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
@@ -147,7 +146,7 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
     const handleGetDetails = async(Id) => {        
         // dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id}))
         //checkIn=${checkInDate}&checkOut=${checkOutDate 
-        navigate(`/apartment/${apartment_id}&checkIn=${checkInDate}&checkOut=${checkOutDate}`)
+        navigate(`/apartment/${apartment_id}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
     }
 
 
