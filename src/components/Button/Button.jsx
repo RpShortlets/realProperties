@@ -77,6 +77,7 @@ const Button = ({zIndex,position, left, right, bottom, boxShadow, disabledBG, ti
                 right={right}
                 boxShadow={boxShadow}
                 disabledBG={disabledBG}
+                arialLabel={title}
             >
                 {icon}
                 {title}

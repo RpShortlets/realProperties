@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { FlexStyle } from '../../styles/globalStyles';
 import Pending from './components/Pending';
 import Completed from './components/Completed';
-import { AdminPendingTransaction, AdminCompletedTransaction } from '../../redux/actionCreators/actionCreators';
 import Deleted from './components/Deleted';
 
 
@@ -81,14 +80,13 @@ const Admin = () => {
         setPending(true);
         setCompleted(false);
         setDeleted(false);
-        dispatch(AdminPendingTransaction())
+        // dispatch(AdminPendingTransaction())
     }
 
     const handleCompleted = () => {
         setPending(false);
         setCompleted(true);
         setDeleted(false);
-        dispatch(AdminCompletedTransaction())
     }
 
     const handleDeleted = () => {

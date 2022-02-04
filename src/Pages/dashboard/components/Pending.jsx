@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TableData from './TableData';
 import styled from "styled-components"
 import { useSelector } from 'react-redux';
+import { AdminPendingTransaction } from '../../../redux/actionCreators/actionCreators';
+import { useDispatch } from 'react-redux';
 
 const Wrapper = styled.div `
     padding: max(3vw, 1.3rem);
@@ -16,7 +18,12 @@ const Wrapper = styled.div `
 `
 
 const Pending = () => {
+    const dispatch = useDispatch();
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
+
+    useEffect(() => {
+        dispatch(AdminPendingTransaction())
+    }, [dispatch])
 
 
     return <Wrapper>

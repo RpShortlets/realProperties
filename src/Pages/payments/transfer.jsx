@@ -9,6 +9,7 @@ import Countdown from '../../components/Countdown/Countdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { ManualCancel } from '../../redux/actionCreators/actionCreators';
 import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
+import {SkeletonLoader} from "../../components/Loader/Skeleton"
 
 const Section = styled.section ` 
     height: 100%;
@@ -152,13 +153,13 @@ const Transfer = () => {
                 {manualTransfer  ? (
                     <div className='transferContainer'>
                         <div className='transferPaymentCard'>
-                            <h1>{ status === 'succeeded' && transaction_info[0]?.amount ? 'Pending payment' : 'No pending payment'}</h1>
-                            <p>{ status === 'succeeded' && transaction_info[0]?.amount ? 'Please transfer to the following account by using your own payment method' : ''}</p>
+                            <h1>{status === 'loading' ? <SkeletonLoader width="100%" /> :  status === 'succeeded' && transaction_info[0]?.amount ? 'Pending payment' : 'No pending payment'}</h1>
+                            <p>{status === 'loading' ? <SkeletonLoader width="100%" /> :  status === 'succeeded' && transaction_info[0]?.amount ? 'Please transfer to the following account by using your own payment method' : ''}</p>
                             <div>
                                 <div >
                                     
                                     <div className='transferBody' >
-                                        {status === 'loading' ? 'loading' : 
+                                        {status === 'loading' ? <SkeletonLoader width="100%" /> : 
                                             status === 'succeeded' &&
                                             (<>
                                                 <p>Amount</p>
@@ -175,7 +176,7 @@ const Transfer = () => {
                                         }
                                     </div>
                                     <div className='transferBody'>
-                                        {status === 'loading' ? 'loading' : 
+                                        {status === 'loading' ? <SkeletonLoader width="100%" />  : 
                                             status === 'succeeded' &&
                                             (<>
                                                 <p>Bank Name</p>
@@ -192,7 +193,7 @@ const Transfer = () => {
                                         )}
                                     </div>
                                     <div className='transferBody'>
-                                        {status === 'loading' ? 'loading' :
+                                        {status === 'loading' ? <SkeletonLoader width="100%" /> :
                                             status === 'succeeded' &&
                                             (<>
                                                 <p>Account Name</p>
@@ -209,7 +210,7 @@ const Transfer = () => {
                                         )}
                                     </div>
                                     <div className='transferBody'>
-                                        {status === 'loading' ? 'loading' :
+                                        {status === 'loading' ? <SkeletonLoader width="100%" /> :
                                             status === 'succeeded' &&
                                             (<>
                                                 <p>Bank account number</p>
@@ -226,7 +227,7 @@ const Transfer = () => {
                                         )}
                                     </div>
                                     <div className='transferBody'>
-                                        {status === 'loading' ? 'loading' :
+                                        {status === 'loading' ? <SkeletonLoader width="100%" />  :
                                             status === 'succeeded' &&
                                             (<>
                                                 <p>Reference number</p>
@@ -248,10 +249,9 @@ const Transfer = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='transferCounter'>
                             {status === 'succeeded' &&  transaction_info[0]?.amount &&
                                 (
-                                    <>
+                                    <div className='transferCounter'>
                                         <div>
                                             <Countdown />
                                         </div>
@@ -261,12 +261,11 @@ const Transfer = () => {
                                         <div style={{display: 'contents'}}>
                                             <Button onClicks={handleCancel} title="Cancel transaction"  color="var(--color-primary)" padding=".9rem" background='transparent' border="3px solid #2193B0"/>
                                         </div>
-                                    </>
+                                        </div>
                                 )
                             }
-        
                         </div>
-                    </div>
+                    
                 ) : (
                     <Error title="No pending transaction"/>
                 )}

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import TableData from './TableData';
 import styled from "styled-components"
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { AdminDeletedTransaction } from '../../../redux/actionCreators/actionCreators';
 
 const Wrapper = styled.div `
     padding: max(3vw, 1.3rem);
@@ -16,7 +17,12 @@ const Wrapper = styled.div `
 `
 
 const Deleted = () => {
+    const dispatch = useDispatch();
     const {cancelled, cancelledTransaction} = useSelector(state => state.adminDashboard);
+
+    useEffect(() => {
+        dispatch(AdminDeletedTransaction())
+    }, [dispatch])
 
     return <Wrapper>
             <h1>Dashboard Kit</h1>

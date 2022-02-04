@@ -313,7 +313,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                                 />
                             </ButtonContainer>
                             <MobileButton>
-                                <Button  onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff' border='none' />
+                                <Button  arialLabel onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff' border='none' />
                             </MobileButton> 
                             {/* </Form> */}
                         </FilterSearchWrapper>
