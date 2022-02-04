@@ -17,13 +17,18 @@ export const getUserProfile = createAsyncThunk(
 );
 
 export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () => {
-    const response = await axios.get(`${BaseURL}/update-booking`)
-    return response.data;
+    // const response = await axios.get(`${BaseURL}/update-booking`)
+    // return response.data;
 });
 
 
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
-
+    let headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        
+    };
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
             location: searchV, 
@@ -31,7 +36,7 @@ export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async
             check_out_date: checkO, 
             adult: adult,
             child: childr,
-        }
+        },
     });
     return response.data;
 });
@@ -129,6 +134,7 @@ export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction
     }
     
     const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);
+    console.log(response.data)
 
     return response.data;
 

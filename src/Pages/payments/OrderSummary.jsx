@@ -136,9 +136,13 @@ const OrderSummary = () => {
 
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     const {payStack} = useSelector(state => state.paymentState)
-    const guestId =  parseInt(localStorage.getItem('guestId'))
+    // const guestId =  parseInt(localStorage.getItem('guestId'))
     // const [addtionService, setAddtionalService] = useState();
     const [method, setmethod] = useState('transfer');
+
+    console.log(proceess)
+
+    
 
 
     // const CleaningFee =  proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.cleaning && Ongoing_id_info[0]?.cleaning : 0;
@@ -158,7 +162,10 @@ const OrderSummary = () => {
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
-        if(method === 'transfer') {
+        const guestId = Ongoing_id_info[0]?.guest_id;
+
+
+        if(method === 'transfer' && guestId) {
             if (window.confirm("Please note this method require 30mins to make payment.") === true) {
                 dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
                 navigate('/order-summary/payment')
