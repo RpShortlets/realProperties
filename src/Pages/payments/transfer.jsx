@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -140,13 +140,20 @@ const Transfer = () => {
         // dispatch(ManualCancel({pendingId}));
     }
 
+    // useEffect(() => {
+    //     window.history.pushState(null, "", window.location.href);
+    //     window.onpopstate = function () {
+    //         window.history.pushState(null, "", window.location.href);
+    //     };
+    // }, [])
+
     if(status === 'failed') {
         return (
             <Error  title="Something went wrong in confirming your booking"/>
         )
     }
 
-
+    
     return (
         <Section paddingleft="true" paddingRight="true">
             <Main>

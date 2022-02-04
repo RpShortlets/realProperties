@@ -140,7 +140,7 @@ const OrderSummary = () => {
     // const [addtionService, setAddtionalService] = useState();
     const [method, setmethod] = useState('transfer');
 
-    console.log(proceess)
+
 
     
 
