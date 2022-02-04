@@ -29,7 +29,6 @@ const NavBar = styled.nav `
     width: 100%;
     background: var(--color-white);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.12);
-    height: 70px;
     ${FlexStyle}
     ${PaddingStyle}
 `
@@ -38,6 +37,7 @@ const NavItems =  styled.div `
     ${FlexStyle}
     width: 100%;
     justify-content: space-around;
+    margin: 7px 0;
 
     > div:first-child,
     > div:nth-child(2),
@@ -47,6 +47,7 @@ const NavItems =  styled.div `
 
     a {
         color: var(--color-primary);
+        display: flex;
     }
 
 `

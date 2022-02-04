@@ -76,7 +76,7 @@ export const SocialDistance = <svg aria-hidden="true" role="img" width="1em" hei
 
 export const VideoPlayer = <svg  aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
 
-export const CompanyLogo  =  <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const CompanyLogo  =  <svg width="5em" height="5em" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g cilppath="url(#clip0_2368_5202)">
 <path d="M2.50251 45.9037C2.50251 46.3978 2.31001 46.7186 1.925 46.8662L2.69501 47.9654H1.848L1.16463 46.9817H0.689152V47.9654H0V44.8854H1.16848C1.64716 44.8854 1.98917 44.9662 2.19451 45.1279C2.30239 45.2246 2.38637 45.3449 2.43982 45.4796C2.49326 45.6142 2.51472 45.7594 2.50251 45.9037ZM1.67475 46.2714C1.72061 46.2229 1.75564 46.1652 1.77754 46.1021C1.79944 46.0391 1.80771 45.9721 1.8018 45.9056C1.80965 45.8423 1.80162 45.778 1.77843 45.7185C1.75524 45.659 1.71763 45.6062 1.66898 45.5649C1.52682 45.491 1.36662 45.459 1.20698 45.4725H0.689152V46.3927H1.19158C1.36108 46.4077 1.53067 46.3649 1.67283 46.2714H1.67475Z" fill="#000099"/>
 <path d="M5.43041 44.8815V45.4936H3.89041V46.1289H5.27064V46.716H3.89618V47.3551H5.47854V47.9653H3.20703V44.8853L5.43041 44.8815Z" fill="#000099"/>

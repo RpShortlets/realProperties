@@ -83,8 +83,6 @@ const SearchResult = () => {
     const checkI = checkIn?.slice(8)
     const checkO = checkOut?.slice(9)
 
-    console.log(adult)
-
 
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
     const {status, propertyResult: {searchResult}}= useSelector(state => state.propertyResult)
