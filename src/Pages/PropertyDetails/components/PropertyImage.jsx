@@ -64,10 +64,18 @@ const LargeImage = styled.div `
             margin-right: .2rem;
         }
     }
+
+    @media (max-width: 768px) {
+        grid-column: 1/8;
+    }
 `
 
 const SmallImage = styled.div `
-    
+    display: none;
+
+    @media (min-width: 769px) {
+        display: block;
+    }
 `
 
 
@@ -80,122 +88,10 @@ const ImageContainer = styled.div `
         height: 100%;
         cursor: pointer;
     }
-/* 
-    > div:first-of-type {
-        div:first-child {
-            position: relative;
-        }
 
-        > div:nth-child(2),
-        > div:nth-child(3),
-        > div:nth-child(4),
-        > div:nth-child(5),
-        > div:nth-child(6),
-        > div:nth-child(7),
-        > div:last-child {
-            display: none;
-        }
-    } */
-
-
-    /* @media screen and (min-width: 769px) {
-
-        > div:first-of-type {
-            display: grid;
-            grid-template-columns: repeat(5,1fr);
-            grid-template-rows: 1fr 1fr;
-            gap: 2rem;
-
-
-            div:nth-child(2),
-            div:nth-child(3),
-            div:nth-child(4),
-            div:nth-child(5),
-            div:nth-child(6),
-            div:nth-child(7),
-            div:last-child {
-                display: block;
-            }
-
-            div:first-child {
-                grid-column: 1/4;
-                grid-row: 1/3;
-                width: 100%;
-                height: auto;
-            }
-
-            div:nth-child(2) {
-                grid-column: 4/6;
-            }
-
-            div:nth-child(3) {
-                grid-column: 4/6;
-                position: relative;
-            }
-
-        }
-    } */
 
 `
 
-// const MobileIcons = styled.div `
-//     position: absolute;
-//     top: 15px;
-//     right: 15px;
-//     display: flex;
-
-
-//     span:first-child {
-//         margin-right: 0.7rem;
-//     }
-
-//     @media screen and (min-width: 769px) {
-//         display: none !important;
-//     }
-
-// `
-// const SvgStyle = css`
-//     font-size: 14px;
-// `
-
-// const SavedIcon = styled(AiOutlineHeart)`
-//     ${SvgStyle}
-// `
-
-// const LikeIcon = styled(FiShare) `
-//     ${SvgStyle}
-// `
-
-// const IconCard = styled.span `
-//     background: rgb(255, 255, 255);
-//     width: 24px;
-//     height: 24px;
-//     ${FlexStyle}
-//     justify-content: center;
-//     border-radius: var(--border-radius-xtra);
-//     color: var(--color-primary-dark);
-//     opacity: .9;
-//     cursor: pointer;
-
-//     :hover {
-//         opacity: 1;
-//     }
-
-//     @media screen and (min-width: 500px) {
-//         width: 40px;
-//         height: 40px;
-//     }
-// `
-
-// const SeePhotos = styled.div `
-//     position: absolute;
-//     right: 15px;
-//     bottom: 20px;
-
-//     @media screen and (min-width: 769px) {
-//         display: none !important;
-//     }
-// `
 
 
 const CustomLeftArrowButton = (props) => {
@@ -294,7 +190,7 @@ const PropertyImage = ({status}) => {
             />
             <ImageContainer>
                 <ImageWrapper>
-                    <LargeImage height={status === 'loading' ? 'true' : 'false'}>
+                    <LargeImage height={status === 'loading' ? 'true' : ''}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <div onClick={() => setIsOpen(true)} style={{height: '100%'}}>

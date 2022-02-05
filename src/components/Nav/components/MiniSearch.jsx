@@ -9,39 +9,45 @@ import OpenDestination from '../../Dropdowns/OpenDestination';
 
 
 const MiniSearches =  styled.div `
-    position: relative;
-    background: var(--color-secondary);
-    padding: 0.5rem 0.8rem;
-    border-radius: 7px;
-    height: 50px;
-    ${FlexStyle}
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-
-
-    div {
-        flex: 1;
-        cursor: pointer;
-        p {
-            font-size: var(--font-xtra-small-screen);
-            margin: 0; 
-            font-weight: 500;
-        }
-        span {
-            font-size: var(--font-xtraLarge-small);
-            font-weight: 400;
-        }
-
-    }
-
-    div:last-child {
+    display: none;
+    
+    @media (min-width: 769px) {
+        display: block;
+        position: relative;
+        background: var(--color-secondary);
+        padding: 0.5rem 0.8rem;
+        border-radius: 7px;
+        height: 50px;
         ${FlexStyle}
-        justify-content: end;
-        svg {
-            width: 22px;
-            height: 22px;
-            color: var(--color-primary);
+        box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+
+
+        div {
+            flex: 1;
             cursor: pointer;
+            p {
+                font-size: var(--font-xtra-small-screen);
+                margin: 0; 
+                font-weight: 500;
+            }
+            span {
+                font-size: var(--font-xtraLarge-small);
+                font-weight: 400;
+            }
+
         }
+
+        div:last-child {
+            ${FlexStyle}
+            justify-content: end;
+            svg {
+                width: 22px;
+                height: 22px;
+                color: var(--color-primary);
+                cursor: pointer;
+            }
+        }
+
     }
 
 `

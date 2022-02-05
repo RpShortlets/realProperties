@@ -5,13 +5,9 @@ import Tooltips from "../../../../../components/Tooltip"
 
 
 const PriceBody =  styled.div `
-    display: none;
+    display: ${({display}) => display};
 
-    @media screen and (min-width:769px) {
-        display: block;
-        margin: max(1vw, 1rem) 0;
-
-        > div {
+    > div {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -47,14 +43,21 @@ const PriceBody =  styled.div `
             justify-content: space-between;
         }
 
+    @media screen and (min-width:769px) {
+        display: block;
+        margin: max(1vw, 1rem) 0;
+
+        
+
+
     }
 `
 
-const Prices = ({price, summary_details, selectedCar, reserve, radio, TotalAdditionalServices, TotalCarAndDriverPrice}) => {
+const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalServices, TotalCarAndDriverPrice, show}) => {
 
 
     return (
-        <PriceBody>
+        <PriceBody display={show ? 'block' : 'none'}>
             <div>
                 <div>
                     {reserve === 'loading' ? <SkeletonLoader /> : (

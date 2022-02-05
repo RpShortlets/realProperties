@@ -49,6 +49,10 @@ const Main = styled.div `
         h2 { ${Header} }
     }
 
+    @media (max-width: 560px) { 
+        padding: 2rem;
+    }
+
 `
 
 const Card = styled.div `

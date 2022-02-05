@@ -8,14 +8,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 
 const RentalService = styled.div `
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    margin: max(1vw,1rem) 0 0.7rem;
-    z-index: 12;
+    display: ${({display}) => display};
 
-    .RentalContainer {
-        padding: max(1vw, .5rem);
+    @media (min-width: 769px) {
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        margin: max(1vw,1rem) 0 0.7rem;
+        z-index: 12;
+
+        .RentalContainer {
+            padding: max(1vw, .5rem);
+        }
     }
 
 `
@@ -188,14 +193,13 @@ const CarLength = styled.div `
 
 const RentalServices = ({resetData, radio, addDays, minusDays, 
     carlengthValue, openCar, setOpenCar, showBenzRef, BenZ, handleBenz, Suv, 
-    Camry, showCamryRef, showSuvRef, selectedCar, driver, carlength, driverlengthValue, 
-    addDriverLength, minusDriverLength, handlecheckbox}) => {
+    Camry, showCamryRef, showSuvRef, selectedCar, show, carlength}) => {
 
     
     return (
         <>
             
-            <RentalService>
+            <RentalService display={ show ? 'block' : 'none'}>
                 <div className="RentalContainer">
                     <RentalType>
                         <div className="RentalHeader">

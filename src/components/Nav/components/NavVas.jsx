@@ -4,20 +4,25 @@ import { FlexStyle } from '../../../styles/globalStyles';
 
 
 const NavSocialIcons = styled.div `
-    ${FlexStyle}
+    display: none;
 
-    span {
-        font-size: var(--font-small-screen);
-        color: var(--color-primary);
-        text-shadow: 0 0 1px;
-        font-weight: 500px;
-    }
+    @media screen and (min-width: 769px) {
+        ${FlexStyle}
 
-    svg {
-        color: var(--color-primary);
-        margin: 0 max(1.5vw, 1rem);
-        display: flex;
-        align-items: center;
+        span {
+            font-size: var(--font-small-screen);
+            color: var(--color-primary);
+            text-shadow: 0 0 1px;
+            font-weight: 500px;
+        }
+
+        svg {
+            color: var(--color-primary);
+            margin: 0 max(1.5vw, 1rem);
+            display: flex;
+            align-items: center;
+        }
+
     }
 `
 const NavVas = ({Icons}) => {

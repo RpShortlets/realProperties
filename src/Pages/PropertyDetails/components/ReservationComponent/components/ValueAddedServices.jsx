@@ -21,37 +21,57 @@ const ModalDiv = styled.div `
     }
 `
 const ValueAdded = styled.div `
-display: none;
+    display: ${({display}) => display};
+    margin: ${({display}) => display ? '1rem 0' : '0'};
 
-@media screen and (min-width: 768px) {
-    display: block;
-    border: 1px solid rgba(33, 8, 8, 0.5);
-    box-sizing: border-box;
-    border-radius: 5px;
-    position: relative;
+    
 
-    h4 {
-        font-size: var(--font-xtra-small-screen);
-        font-weight: 500;
-        margin: 0;
+    .valueContainer {
+        position: relative;
+        background: #FFFFFF;
+        border: 0.908854px solid rgba(33, 8, 8, 0.22);
+        border-radius: 4.54427px;
+        padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+
+
+
+            svg {
+                font-size: var(--font-big);
+                color: var(--color-dark);
+
+            }
+        
     }
 
-    > div {
-        padding: 10px;
+    @media screen and (min-width: 769px) {
+        display: block;
+
+        .valueContainer { 
+            padding: 10px;
+        }
+        
+
+        svg {
+            font-size: var( --font-small-screen) !important;
+            color: var(--color-dark);
+        }
+        h4 {
+            font-size: var(--font-xtra-small-screen);
+            font-weight: 500;
+            margin: 0;
+        }
     }
 
-}
-
-
+    
 `
 
 
-const ValueAddedServices = ({reserve, modalRef, checkboxes, handleChange, openService, setOpenService}) => {
+const ValueAddedServices = ({reserve, modalRef, show, checkboxes, handleChange, openService, setOpenService}) => {
     return (
-        <ValueAdded>
-            <div> 
+        <ValueAdded display={ show ? 'block' : 'none'}>
+            <div className="valueContainer"> 
                 {reserve === 'loading' ? (<SkeletonLoader /> ) :
-                (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between', cursor: 'pointer'}}  onClick={() => setOpenService(!openService)}>
+                (<div style={{display: 'flex', alignContent: 'center', justifyContent: 'space-between', cursor: 'pointer', alignItems: 'center'}}  onClick={() => setOpenService(!openService)}>
                     <div>
                         <h4>Additional Services</h4>
                     </div>

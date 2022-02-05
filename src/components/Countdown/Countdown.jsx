@@ -1,5 +1,6 @@
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 
 const minuteSeconds = 67;
 const hourSeconds = 3600;
@@ -21,6 +22,7 @@ const renderTime = (dimension, time) => {
 };
 
 const Countdown = () => {
+    const Query = useMediaQuery("(min-width: 561px)")
     const stratTime = Date.now() / 1000; // use UNIX timestamp in seconds
     const endTime = stratTime + 243248; // use UNIX timestamp in seconds
 
@@ -34,7 +36,7 @@ const Countdown = () => {
             colors="#2193B0"
             duration={hourSeconds}
             initialRemainingTime={remainingTime % hourSeconds}
-            size="220"
+            size={Query ? '220' : '120'}
             strokeWidth="16"
             strokeLinecap="butt"
 

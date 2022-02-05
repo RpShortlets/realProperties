@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import TableData from './TableData';
 import styled from "styled-components"
 import { useSelector } from 'react-redux';
-import { AdminPendingTransaction } from '../../../redux/actionCreators/actionCreators';
+import { AdminPendingTransaction, ManualConfirmBookings } from '../../../redux/actionCreators/actionCreators';
 import { useDispatch } from 'react-redux';
 
 const Wrapper = styled.div `
@@ -20,6 +20,16 @@ const Wrapper = styled.div `
 const Pending = () => {
     const dispatch = useDispatch();
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
+    const {status} = useSelector(state => state.paymentState);
+
+    console.log(pendingTransaction, status)
+
+    const  handleCompleted = (id) => {
+        if (window.confirm("You're about to confirm this booking. Press Yes to process or cancel") === true) {
+            dispatch(ManualConfirmBookings({id}));
+            window.location.reload()
+        }
+    }
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())
@@ -33,7 +43,7 @@ const Pending = () => {
                 <>
                 
                 {pendingTransaction?.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item.id} onClick={() => handleCompleted(item?.pending_id)}>
                         <td>
                             {item?.guest_name}
                         </td>

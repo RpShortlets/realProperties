@@ -19,12 +19,16 @@ const Card = styled.div `
 
 const CardContainer = styled.div `
     position: relative;
-    display: grid;    
-    gap: 2rem;
-    grid-template-columns: repeat(5, 1fr);
-    width: 100%; 
-    height: 100%; 
+    display: block;
     /* margin: max(3vw, 1rem) 0;  */
+
+    @media screen and (min-width: 769px) {
+        display: grid;    
+        gap: 2rem;
+        grid-template-columns: repeat(5, 1fr);
+        width: 100%; 
+        height: 100%; 
+    }
 `
 
 const PictureContainer = styled.div `
@@ -82,6 +86,17 @@ const IconCard = styled.div `
     flex: 1;
 
     div:first-child {
+        display: none;
+    }
+
+    div:last-child {
+        span {
+            font-size: var(--font-xtra-small-screen);
+        }
+    }
+
+    @media screen and (min-width: 769px) { 
+        div:first-child {
         background: var(--color-primary);
         width: 20px;
         height: 20px;
@@ -95,13 +110,8 @@ const IconCard = styled.div `
             color: #fff;
             font-size: 12px;
             display: flex;
-            align-items: center;
-        }
-    }
-
-    div:last-child {
-        span {
-            font-size: var(--font-xtra-small-screen);
+                align-items: center;
+            }
         }
     }
 

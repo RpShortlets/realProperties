@@ -31,10 +31,14 @@ const Container = styled.div `
 `
 
 const Main = styled.div `
-    margin: max(5vh, 1rem) 0; 
-    display: ${({error}) => error ? 'block' : 'grid'};
-    grid-template-columns: repeat(6,1fr);
-    gap: 2rem;
+    
+
+    @media screen and (min-width: 769px) {
+        margin: max(5vh, 1rem) 0; 
+        display: ${({error}) => error ? 'block' : 'grid'};
+        grid-template-columns: repeat(6,1fr);
+        gap: 2rem;
+    }
 `
 
 const Results = styled.div `
@@ -42,7 +46,7 @@ const Results = styled.div `
 `
 
 const OtherSearch = styled.div `
-
+    margin: 2rem 0;
     p {
         margin: 0;
         font-size: var(--font-xtra-small-screen);
@@ -68,6 +72,10 @@ const OtherSearch = styled.div `
             font-size: 10px;
         }
 
+    }
+    
+    @media screen and (min-width: 769px) { 
+        margin: 0;
     }
 
 

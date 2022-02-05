@@ -29,25 +29,29 @@ const GeneralDivStyle = css`
 `
 
 const Filter = styled.div `
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    top: 0;
-    ${FlexStyle}
-    ${PaddingStyle}
-    justify-content: center;
-    margin-top: .5rem;
+    display: none;    
 
-
-    > div {
+    @media screen and (min-width: 769px) { 
+        position: sticky;
+        top: 0;
         width: 100%;
-        display: flex;
-        align-items: center;
-    }
+        z-index: 1;
+        top: 0;
+        ${FlexStyle}
+        ${PaddingStyle}
+        justify-content: center;
+        margin-top: .5rem;
 
-    span {
-        font-weight: 300;
+
+        > div {
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        span {
+            font-weight: 300;
+        }
     }
 
 `

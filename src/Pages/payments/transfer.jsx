@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React from 'react';
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -21,8 +21,8 @@ const Section = styled.section `
 const Main = styled.div `
     
     .transferContainer {
-        display: flex;
-        justify-content: space-between;
+        display: block;
+        
 
         div {
             flex: 1;
@@ -97,7 +97,7 @@ const Main = styled.div `
             ${FlexStyle}
             flex-direction: column;
             justify-content: center;
-            margin-left: 3rem;
+            margin-top: 2rem;
 
             p {
                 margin: 0;
@@ -105,6 +105,20 @@ const Main = styled.div `
                 text-align: center;
                 width: 60%;
             }
+        }
+    }
+
+    @media screen and (min-width: 769px) { 
+        .transferContainer { 
+            ${FlexStyle}
+            justify-content: space-between;
+
+            
+        .transferCounter {
+            margin-left: 3rem;
+            margin-top: 0;
+        }
+
         }
     }
 
@@ -117,7 +131,6 @@ const Transfer = () => {
 
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
 
-    console.log(manualTransfer)
 
     const handleCancel = () => {
         if(parseInt(pendingId) === Number(pendingId)) {

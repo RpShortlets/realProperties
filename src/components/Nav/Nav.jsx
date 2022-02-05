@@ -48,6 +48,22 @@ const NavItems =  styled.div `
     a {
         color: var(--color-primary);
         display: flex;
+        align-items: center;
+        margin-bottom: -6px;
+    }
+
+    span {
+        font-size: var(--font-xtra-small);
+        color: var(--color-primary);
+    }
+
+    .navModal { 
+        ${FlexStyle};
+        span {
+            margin-left: -15px;
+            margin-bottom: -3px;
+            font-weight: 600;
+        }
     }
 
 `
@@ -105,9 +121,10 @@ const Nav = () => {
     return (
         <NavBar paddingleft="true" paddingRight="true">
             <NavItems>
-                <div>
+                <div className='navModal'>
                     <Link to='/'>
                         {CompanyLogo}
+                        <span aria-label='Real Property'>Real Property</span>
                     </Link>
                 </div>
                 {checkScroll && window.location.pathname === '/' ? (

@@ -4,6 +4,8 @@ import { Input, InputSelect } from "../../../utils/FormElement/Input"
 
 
 const Identification = ({formdata, setFormData, dropdown, setDropdown, id, FocusID, error, proceess}) => {
+    
+    console.log(dropdown?.nationality)
     return (
         <>
             <div style={{marginTop: 'max(2vw, .1rem)'}}>

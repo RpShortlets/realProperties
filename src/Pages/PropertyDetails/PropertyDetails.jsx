@@ -17,10 +17,11 @@ import PropertyRules from "./components/PropertyRules"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import Backdrop from "../../components/Backdrop"
 import {Reservation} from "../../export"
-import { getReservationUpdate, ShortletDetails } from "../../redux/actionCreators/actionCreators"
+import { getReservationUpdate, ongoingTransaction, ShortletDetails } from "../../redux/actionCreators/actionCreators"
 import { AnimatePresence } from "framer-motion"
 import Error from "../../components/Error/Error"
 import { SearchNotFoundIcon } from "../../Svg/svg"
+import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
 
 
 
@@ -104,7 +105,7 @@ const PropertyDetails = () => {
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
-    const {reservation: {summary_details }} = useSelector(state => state.reservationState)
+    const {reservation: {summary_details, price }} = useSelector(state => state.reservationState)
     const {reserve} = useSelector(state => state.reservationState)
 
 
@@ -121,9 +122,144 @@ const PropertyDetails = () => {
     // const [carType, setCarType] = useState('')
     const [driverlengthValue, setDriverlengthValue] = useState(0)
     const [radio, setRadio] = useState('driver')
+    const [AddtionalServices, setTotalAdditional]  = useState()  
+    const [carDriverTotal, setCarDriverTotal]  = useState()  
 
     const modalRef = useRef()
-    const staylength = summary_details ? summary_details[0]?.stay_length : 1;
+    const BenZ = useRef(null);
+    const Suv = useRef(null);
+    const Camry = useRef(null);
+
+
+
+    const staylength = summary_details ? summary_details[0]?.stay_length : 1;    
+    const CleaningFee =  reserve === 'succeeded' && summary_details[0]?.total_cleaning_price ? parseInt(summary_details[0]?.total_cleaning_price) : 0;
+    const PickupFee =  reserve === 'succeeded' && summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
+    const carPrice =reserve === 'succeeded'&&  summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
+    const driverPrice = reserve === 'succeeded'&& summary_details[0]?.total_driver_price ?  parseInt(summary_details[0]?.total_driver_price) : 0;
+    const checkInD = checkin.slice(8);
+    const checkOutD = checkout.slice(9);
+
+
+    //* HANDLE CHECKBOX CHANGE
+    const handleChange = (e) => {
+        const { value, checked, name } = e.target;
+        setCheckboxes({...checkboxes, [name]: checked ? value : ''})
+        setOpenService(false)
+    }
+
+
+    const handlecheckbox = (e) => {
+        const { value} = e.target;
+        setRadio(value)
+    }
+    //* END OF HANDLE CHECKBOX CHANGE
+
+
+    const handleBenz = () => {
+        alert('Hello')
+    }
+
+    const resetData = () => {
+        setCarlengthValue(0)
+        setCarlength(false)
+        setSelectedCar(null)
+        setDriverlengthValue(0)
+        setRadio(null)
+    }
+
+    const showBenzRef = (id) => {
+        if(BenZ?.current) {
+            // const value = BenZ?.current?.childNodes[1]?.value;
+            const name = BenZ?.current?.childNodes[1]?.name;
+            // setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    const showSuvRef = (id) => {
+        if(Suv?.current) {
+            // const value = Suv?.current?.childNodes[1]?.value;
+            const name = Suv?.current?.childNodes[1]?.name;
+            // setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    const showCamryRef = (id) => {
+        if(Camry?.current) {
+            const name = Camry?.current?.childNodes[1]?.name;
+            // const value = Camry?.current?.childNodes[1]?.value;
+            // setCarType(value)
+            setSelectedCar(name)
+            setOpenCar(false)
+            setCarlength(true)
+            setDriver(true)
+        }
+    }
+
+    
+    const addDays = () => {
+        const days = summary_details[0]?.stay_length && summary_details[0]?.stay_length 
+        if(carlengthValue < days ) {
+            setCarlengthValue((prev) => prev + 1)
+        }
+    }
+
+
+    const minusDays = () => {
+        if(carlengthValue > 0) {
+            setCarlengthValue((prev) => prev - 1)
+        }
+    }
+
+    
+    const addDriverLength = () => {
+        const days = summary_details[0]?.stay_length && summary_details[0]?.stay_length 
+        if(driverlengthValue <  days && driverlengthValue < carlengthValue) {
+            setDriverlengthValue((prev) => prev + 1)
+        }
+    }
+
+    const minusDriverLength = () => {
+        if(driverlengthValue > 0) {
+            setDriverlengthValue((prev) => prev - 1)
+        }
+    }
+
+    
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const stayLenght =  summary_details[0]?.stay_length;
+        const totalPrice =  summary_details[0]?.total;
+        const security =  summary_details[0]?.security_deposit;
+        const apartmentPrice = price[0]?.price;
+        const totalApartmentPrice =  summary_details[0]?.total_apt_price;
+        const cleaning =  summary_details[0]?.total_cleaning_price;
+        const pickup = summary_details[0]?.total_pickup_dropoff_price;
+        const carPrice = summary_details[0]?.total_car_price;
+        const driver = summary_details[0]?.total_driver_price;
+
+        if(checkInD !==  '' && checkOutD !== '') {
+            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+            setShowModal(true)
+            setshow(false)
+        } else {
+            OpenNotificationWithIcon({
+                message: 'Please select check in and check out date',
+                type: 'warning',
+            })
+        }
+    }
 
 
 
@@ -137,6 +273,13 @@ const PropertyDetails = () => {
         }
     }, [show])
 
+    useEffect(() => {
+        setTotalAdditional(CleaningFee + PickupFee)
+    }, [CleaningFee, PickupFee]);
+
+    useEffect(() => {
+        setCarDriverTotal(carPrice + driverPrice)
+    }, [carPrice, driverPrice]);
     
 
     // useEffect(() => {
@@ -149,8 +292,7 @@ const PropertyDetails = () => {
 
 
     //!DEPENDING ISSUE
-    const checkInD = checkin.slice(8);
-    const checkOutD = checkout.slice(9);
+
     useEffect(() => {
         dispatch(ShortletDetails({checkInD, checkOutD, Id})) 
     },  [checkInD,checkOutD, Id, dispatch])
@@ -207,7 +349,46 @@ const PropertyDetails = () => {
         <>
             {openService  && <Backdrop onClick={()=> setOpenService(false)} zIndex="10" /> }
             {showModal  && <Backdrop onClick={()=> setShowModal(false)} theme="rgba(0, 0, 0, .5)" /> }
-            {!Query && <MobileModal show={show} setshow={setshow}/>}
+            {!Query && show && 
+                <MobileModal 
+                    show={show} 
+                    setshow={setshow}
+                    modalRef={modalRef}
+                    openGuest={openGuest}
+                    setOpenGuest={setOpenGuest}  
+                    checkboxes={checkboxes}
+                    openService={openService}
+                    setOpenService={setOpenService} 
+                    handleChange={handleChange} 
+                    handleSubmit={handleSubmit} 
+                    TotalAdditionalServices={AddtionalServices}
+                    TotalCarAndDriverPrice={carDriverTotal}
+                    selectedCar={selectedCar}
+                    resetData={resetData} 
+                    radio={radio} 
+                    addDays={addDays} 
+                    minusDays={minusDays}
+                    carlengthValue={carlengthValue} 
+                    openCar={openCar} 
+                    setOpenCar={setOpenCar} 
+                    showBenzRef={showBenzRef} 
+                    BenZ={BenZ} 
+                    handleBenz={handleBenz}
+                    showCamryRef={showCamryRef}
+                    Camry={Camry}
+                    showSuvRef={showSuvRef}
+                    Suv={Suv}
+                    driver={driver}
+                    setDriver={setDriver}
+                    carlength={carlength}
+                    handlecheckbox={handlecheckbox}
+                    setRadio={setRadio}
+                    addDriverLength={addDriverLength}
+                    minusDriverLength={minusDriverLength}
+                    driverlengthValue={driverlengthValue}
+
+                />
+            }
             <AnimatePresence  initial={false} exitBeforeEnter={false}>
                 {showModal && (
                     <Reservation  setShowModal={setShowModal} proceess={proceess}/>
@@ -296,6 +477,20 @@ const PropertyDetails = () => {
                                         radio={radio}
                                         reserve={reserve}
                                         setShowModal={setShowModal}
+                                        MobileModal={setshow}
+                                        handleChange={handleChange}
+                                        handleSubmit={handleSubmit}
+                                        TotalAdditionalServices={AddtionalServices}
+                                        TotalCarAndDriverPrice={carDriverTotal}
+                                        resetData={resetData} 
+                                        showBenzRef={showBenzRef} 
+                                        BenZ={BenZ} 
+                                        handleBenz={handleBenz}
+                                        showCamryRef={showCamryRef}
+                                        Camry={Camry}
+                                        showSuvRef={showSuvRef}
+                                        Suv={Suv}
+                                        
                                     />
                                 )}            
                                 {status === "loading" ? 

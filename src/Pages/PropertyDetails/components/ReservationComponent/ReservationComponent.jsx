@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from "react"
-import  { useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import {useDispatch, useSelector} from "react-redux"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
@@ -9,7 +8,6 @@ import styled from "styled-components"
 import {Pulse} from "../../../../components/Loader/Spinner"
 import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../../redux/actions/componentState"
-import {ongoingTransaction} from "../../../../redux/actionCreators/actionCreators"
 import styles from "../../../../styles/home.module.css"
 import RentalServices from "./components/RentalServices"
 import SelectDateInput from "./components/SelectDateInput"
@@ -62,6 +60,13 @@ const ReservationContent = styled.div `
 
     @media screen and (min-width:  769px) {
         display: block;
+
+        .reserveSvg {
+            svg {
+                font-size: var( --font-small-screen) !important;
+                color: var(--color-dark);
+            }
+        }
         > div:nth-child(2) {
             display: block;
             border: 1px solid rgba(33, 8, 8, 0.5);
@@ -157,26 +162,26 @@ const ReserveButton = styled.div `
 
 
 const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService, 
-    setOpenService, setshow, show, Query, setCheckboxes, checkboxes, setOpenCar,
-    openCar, setSelectedCar, selectedCar, setDriver, driver, setCarlength, carlength,
-    setCarType, setDriverlengthValue,  setRadio, radio, setCarlengthValue, driverlengthValue,
-    carlengthValue, setShowModal
+    setOpenService, Query, handleChange, checkboxes, setOpenCar,
+    openCar, selectedCar, setDriver, driver, carlength,  setRadio, radio, driverlengthValue,
+    carlengthValue, handleSubmit, MobileModal, TotalCarAndDriverPrice, TotalAdditionalServices,
+    showBenzRef,  resetData, addDriverLength,
+    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef,   showCamryRef, handleBenz, BenZ, Camry, Suv
     }) => {
 
-    const dispatch = useDispatch();
-    const {Id, checkin, checkout} = useParams()
 
-    const {adultcount, childrencount, checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
+    
+
+    const dispatch = useDispatch();
+
+    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
     const {proceess} = useSelector(state => state.paymentState)
     const {reserve, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
 
-    const [AddtionalServices, setTotalAdditional]  = useState()  
-    const [carDriverTotal, setCarDriverTotal]  = useState()  
+    // const [AddtionalServices, setTotalAdditional]  = useState()  
+    // const [carDriverTotal, setCarDriverTotal]  = useState()  
     const [disableChild, setDisabledChild]  = useState(false)
 
-
-    const checkInD = checkin.slice(8);
-    const checkOutD = checkout.slice(9);
     const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
     const AdultMinuss =  max_guest &&  max_guest[0]?.allowed_adult
     const AdultAdds = max_guest && max_guest[0]?.allowed_child  
@@ -187,107 +192,10 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
 
 
     const reserveRef = useRef();
-    const BenZ = useRef(null);
-    const Suv = useRef(null);
-    const Camry = useRef(null);
 
-    const CleaningFee = summary_details[0]?.total_cleaning_price ? parseInt(summary_details[0]?.total_cleaning_price) : 0;
-    const PickupFee =  summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
-    const carPrice = summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
-    const driverPrice = summary_details[0]?.total_driver_price ?  parseInt(summary_details[0]?.total_driver_price) : 0;
+
+
     const  TotalGuest = useAddGuestTotal({adultcount, childrencount, AdultMinuss});
-
-    
-    const handleBenz = () => {
-        alert('Hello')
-    }
-
-
-    const handlecheckbox = (e) => {
-        const { value} = e.target;
-        setRadio(value)
-    }
-
-    const handleChange = (e) => {
-        const { value, checked, name } = e.target;
-        setCheckboxes({...checkboxes, [name]: checked ? value : ''})
-        setOpenService(false)
-    }
-
-    const showBenzRef = (id) => {
-        if(BenZ?.current) {
-            // const value = BenZ?.current?.childNodes[1]?.value;
-            const name = BenZ?.current?.childNodes[1]?.name;
-            // setCarType(value)
-            setSelectedCar(name)
-            setOpenCar(false)
-            setCarlength(true)
-            setDriver(true)
-        }
-    }
-
-    const showSuvRef = (id) => {
-        if(Suv?.current) {
-            // const value = Suv?.current?.childNodes[1]?.value;
-            const name = Suv?.current?.childNodes[1]?.name;
-            // setCarType(value)
-            setSelectedCar(name)
-            setOpenCar(false)
-            setCarlength(true)
-            setDriver(true)
-        }
-    }
-
-    const showCamryRef = (id) => {
-        if(Camry?.current) {
-            const name = Camry?.current?.childNodes[1]?.name;
-            // const value = Camry?.current?.childNodes[1]?.value;
-            // setCarType(value)
-            setSelectedCar(name)
-            setOpenCar(false)
-            setCarlength(true)
-            setDriver(true)
-        }
-    }
-
-    
-
-    const addDays = () => {
-        const days = summary_details[0]?.stay_length && summary_details[0]?.stay_length 
-        if(carlengthValue < days ) {
-            setCarlengthValue((prev) => prev + 1)
-        }
-    }
-
-    const addDriverLength = () => {
-        const days = summary_details[0]?.stay_length && summary_details[0]?.stay_length 
-        if(driverlengthValue <  days && driverlengthValue < carlengthValue) {
-            setDriverlengthValue((prev) => prev + 1)
-        }
-    }
-
-    const minusDriverLength = () => {
-        if(driverlengthValue > 0) {
-            setDriverlengthValue((prev) => prev - 1)
-        }
-    }
-
-    const minusDays = () => {
-        if(carlengthValue > 0) {
-            setCarlengthValue((prev) => prev - 1)
-        }
-    }
-
-    const resetData = () => {
-        setCarlengthValue(0)
-        setCarlength(false)
-        setSelectedCar(null)
-        setDriverlengthValue(0)
-        setCarType('')
-        setRadio(null)
-    }
-
-
 
     const scrollHandler = () => {
         if(window.scrollY >= 1327) {
@@ -340,36 +248,15 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         }
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const stayLenght =  summary_details[0]?.stay_length;
-        const totalPrice =  summary_details[0]?.total;
-        const security =  summary_details[0]?.security_deposit;
-        const apartmentPrice = price[0]?.price;
-        const totalApartmentPrice =  summary_details[0]?.total_apt_price;
-        const cleaning =  summary_details[0]?.total_cleaning_price;
-        const pickup = summary_details[0]?.total_pickup_dropoff_price;
-        const carPrice = summary_details[0]?.total_car_price;
-        const driver = summary_details[0]?.total_driver_price;
 
-        if(checkInD !==  '' && checkOutD !== '') {
-            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-            setShowModal(true)
-        } else {
-            OpenNotificationWithIcon({
-                message: 'Please select check in and check out date',
-                type: 'warning',
-            })
-        }
-    }
 
-    useEffect(() => {
-        setTotalAdditional(CleaningFee + PickupFee)
-    }, [CleaningFee, PickupFee]);
+    // useEffect(() => {
+    //     setTotalAdditional(CleaningFee + PickupFee)
+    // }, [CleaningFee, PickupFee]);
 
-    useEffect(() => {
-        setCarDriverTotal(carPrice + driverPrice)
-    }, [carPrice, driverPrice]);
+    // useEffect(() => {
+    //     setCarDriverTotal(carPrice + driverPrice)
+    // }, [carPrice, driverPrice]);
 
     useEffect(() => {
         if(adultcount === countAdultAdd ) {
@@ -413,7 +300,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                         <h4>Guests</h4>
                                         <span>{reserve === 'loading' ? <SkeletonLoader /> : TotalGuest > 1 ? TotalGuest : countAdultMinus } { GeneralInfo > 1 ? 'guests' : 'guest' }</span> 
                                     </div>
-                                    <div>
+                                    <div className="reserveSvg">
                                         {openGuest ? (<FiChevronUp />) : (<FiChevronDown />)}
                                     </div>
                                 </div>
@@ -478,10 +365,11 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                             addDriverLength={addDriverLength}
                             minusDriverLength={minusDriverLength}
                             driverlengthValue={driverlengthValue}
+                        
                         />)}
                         <ReserveButton>
                         {reserve === 'loading' ? (<SkeletonLoader />) :  
-                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={handleSubmit} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query? handleSubmit : () => MobileModal(prev => !prev)} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         )}
                         </ReserveButton>
                         <Condition>
@@ -496,8 +384,8 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                                 selectedCar={selectedCar} 
                                 reserve={reserve} 
                                 radio={radio}
-                                TotalAdditionalServices={AddtionalServices}
-                                TotalCarAndDriverPrice={carDriverTotal}
+                                TotalAdditionalServices={TotalAdditionalServices}
+                                TotalCarAndDriverPrice={TotalCarAndDriverPrice}
                             />
                         )}
                     </ReservationContent>
