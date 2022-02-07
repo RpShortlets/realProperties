@@ -124,7 +124,7 @@ const Nav = () => {
                 <div className='navModal'>
                     <Link to='/'>
                         {CompanyLogo}
-                        <span aria-label='Real Property'>Real Property</span>
+                        {/* <span aria-label='Real Property'>Real Property</span> */}
                     </Link>
                 </div>
                 {checkScroll && window.location.pathname === '/' ? (

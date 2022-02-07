@@ -3,13 +3,13 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCounts } from '../../redux/actions/componentState';
 import { SectionStyle } from '../../styles/globalStyles';
-import useClickOutside from "../../hooks/useClickOutside/useClickOutside"
 import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
 import { useNavigate } from 'react-router';
 import { saveSearchValue } from '../../redux/actions/componentState';
-import { searchShortlets } from "../../redux/actionCreators/actionCreators"
 import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
+import Drawer from "../../components/Drawer/Drawer";
+import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 
 
 
@@ -28,18 +28,11 @@ const Home = () => {
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
+    const [openDrawer, setOpenDrawer] = useState(false)
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
+    const Query = useMediaQuery("(min-width: 769px)")
     const myRef = useRef(null)
-
-
-    useClickOutside(myRef, () => {
-        // if (openModal || openGuest) {
-        //     setOpenModal(false)
-        //     setOpenGuest(false)
-        // }
-            // If user clicks outside of modal, close it.
-    })
 
 
     const openDestinationModal = () => {
@@ -66,12 +59,12 @@ const Home = () => {
 
     const SubmitForm = async(e) => {
         e.preventDefault();
-        // dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
         navigate(`/s/location=${searchValue}&adults=${adultcount === null || 'null' ? "" : adultcount}&children=${childrencount === null || 'null' ? "" : childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
     return (
         <> 
+            {!Query && <Drawer openDrawer={openDrawer}  setOpenDrawer={setOpenDrawer}/>}
             <Section>
                 <SearchFilter 
                     openModal={openModal} 
@@ -89,6 +82,8 @@ const Home = () => {
                     SubmitForm={SubmitForm} 
                     setIsOpenCalender={setIsOpenCalender}
                     isOpenCalender={isOpenCalender}
+                    setOpenDrawer={setOpenDrawer}
+                    openDrawer={openDrawer}
                 
                 />
                 <WhyRealShortlets />

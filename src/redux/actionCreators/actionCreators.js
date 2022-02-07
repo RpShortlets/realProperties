@@ -27,12 +27,12 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 
 //* SEARCH BOOKINGS
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
-    let headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    // let headers = {
+    //     'Content-Type': 'application/json',
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
         
-    };
+    // };
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
             location: searchV, 

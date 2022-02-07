@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { CompanyLogo, PendingIcon, CompletedIcon } from '../../Svg/svg';
 import { Link } from 'react-router-dom';
@@ -68,7 +67,6 @@ const LeftBar = styled.div `
 `
 
 const Admin = () => {
-    const dispatch = useDispatch();
 
     const [pending, setPending] = useState(true);
     const [completed, setCompleted] = useState(false);

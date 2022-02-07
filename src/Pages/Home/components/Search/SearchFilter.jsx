@@ -15,6 +15,7 @@ import { checkScrollState } from '../../../../redux/actions/componentState';
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from 'framer-motion';
 
+
 const FilterContainer = styled.div `
     background-image: url(${props => props.backgroundImage});
     background-size: cover;
@@ -64,46 +65,20 @@ const Header = styled.div `
 `
 
 const ButtonContainer = styled.div `
-    display: none;
+        position: absolute;
+        right: 10%;
+        top: 21px;
 
-    @media screen and (min-width: 850px) {
+    @media screen and (min-width: 769px) {
         display: block;
+        position: static;
     }
 
-`
-
-const MobileButton = styled.div `
-    height: 35px;
-    width: 35px;
-    border-radius: 57px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    /* right: 35px;
-    top: 17px; */
-    right: 40px;
-    top: 30px;
-    z-index: 1;
-    transform: translate(-15%, -5%);
-
-    svg {
-        color: var(--color-primary);
-    }
-
-
-    @media screen and (min-width: 720px) and (max-width: 850px) {
-        transform: translate(-60%, -5%);
-    }
-
-    @media screen and (min-width: 851px) {
-        display: none;
-    }
 `
 
 const FilterSearchWrapper = styled.div `
     display: flex;
-    position: fixed;
+    position: relative;
     top: 0;
     ${PaddingStyle}
     width: 100%;
@@ -139,7 +114,7 @@ const Fiter = styled.div `
     padding: 10px;
 
 
-    @media screen and (max-width: 849px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         border-radius: var(--border-radius-xtra);
         margin-right: 0;
@@ -157,8 +132,9 @@ const Fiter = styled.div `
 // `
 
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
-    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender}) => {
+    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender, setOpenDrawer}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
+        const Query = useMediaQuery("(min-width: 769px)")
         const dispatch = useDispatch();
         let controls = useAnimation()
         const ScrollRef = useRef()
@@ -297,25 +273,26 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                             </Fiter>
                             <ButtonContainer className="mt-10">
                                 <Button 
-                                    title='Find Shortlets'
+                                    title={Query ? 'Find Shortlets' : ''}
                                     type="submit" 
-                                    background="var(--linear-primary)" 
-                                    height="70px" 
-                                    color="var(--color-white)" 
+                                    background={Query ? "var(--linear-primary)" : 'var(--color-white)'} 
+                                    height={Query ? '70px' : '3rem'} 
+                                    color={Query ? 'var(--color-white)' : 'var(--color-primary)'}
                                     padding="1rem"
                                     fontSize="1rem"
                                     className="flex"
-                                    width="150px"
-                                    hover="var(--color-primary)"
+                                    width={Query ? '150px' : '3rem'}
+                                    hover={Query && "var(--color-primary)"}
                                     hoverText="Search"
-                                    onClicks={SubmitForm} 
-                                    border= 'none'   
+                                    onClicks={Query ? SubmitForm: ()=> setOpenDrawer(prev => !prev)} 
+                                    border= 'none' 
+                                    borderRadius={Query ? '' : '57px'}
+                                    icon={!Query && <FiSearch />} 
+                                    display={!Query && 'flex'}
+                                    alignT={!Query && 'center'}
+                                    justify={!Query && 'center'}
                                 />
                             </ButtonContainer>
-                            <MobileButton>
-                                <Button  arialLabel onClicks={SubmitForm}  icon={<FiSearch />}  display="flex" alignT="center" justify="center" width='100%' height='100%' padding='5px' borderRadius='21px' background='#fff' border='none' />
-                            </MobileButton> 
-                            {/* </Form> */}
                         </FilterSearchWrapper>
                     </FilterWrapper>
                 </FilterContainer>

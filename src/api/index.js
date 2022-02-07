@@ -4,7 +4,6 @@ import axios from "axios";
 export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
 
 
-
 export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDeparture) => {
     let formData = {
         firstname: formdata.firstname,

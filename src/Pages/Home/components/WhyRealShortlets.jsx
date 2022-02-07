@@ -62,7 +62,7 @@ const IconDivs = styled.div `
 
     > div:first-child {
         height: 100%;
-        padding: 2rem;
+        padding: max(2vw, 1.2rem);
     }
 
     > div:first-child div {

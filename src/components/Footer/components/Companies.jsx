@@ -8,21 +8,21 @@ const Companies = () => {
                 <div>
                     <div>
                         <NavLink to="/">
-                            Brand Story
+                            About Us
                         </NavLink>
                     </div>
-                    <div>
+                    {/* <div>
                         <NavLink to="/">
                             How its works
                         </NavLink>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <NavLink to="/">
                             Purchase a Trip
                         </NavLink>
-                    </div>
+                    </div> */}
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/gallery">
                             Gallery
                         </NavLink>
                     </div>

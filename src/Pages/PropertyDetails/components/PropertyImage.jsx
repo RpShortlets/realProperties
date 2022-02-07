@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import styled  from "styled-components/macro"
+import { useSelector } from "react-redux"
 import Lightbox from 'react-spring-lightbox';
 import {AiOutlineCamera, AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
@@ -8,20 +9,9 @@ import Button from "../../../components/Button/Button"
 // import ReactPlayer from 'react-player'
 // import Video from "../../../video/a4.mp4"
 
-import Pic1 from "../../../image/largeScreen/picOne.jpeg"
-import Pic2 from "../../../image/largeScreen/picTwo.jpeg"
-import Pic3 from "../../../image/largeScreen/picThree.jpeg"
-import Pic4 from "../../../image/largeScreen/picFour.jpeg"
-import Pic5 from "../../../image/largeScreen/picFive.jpeg"
-import Pic12 from "../../../image/largeScreen/picSix.jpeg"
-import Pic13 from "../../../image/largeScreen/picSeven.jpeg"
-import Pic7 from "../../../image/small/picFour.jpeg"
-import Pic8 from "../../../image/small/picFive.jpeg"
-import Pic9 from "../../../image/small/picThree.jpeg"
-import Pic10 from "../../../image/small/picOne.jpeg"
-import Pic11 from "../../../image/small/picTwo.jpeg"
+
 import Pic14 from "../../../image/small/picSix.jpeg"
-import Pic15 from "../../../image/small/picSeven.jpeg"
+
 
 
 
@@ -114,41 +104,43 @@ export const CustomRightArrowButton = (props) => {
 const PropertyImage = ({status}) => {
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    // const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
+    const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
+
+
 
     const images = [
         {
-            src: Pic1,
+            src: status === "succeeded" && pictures[10]?.src && pictures[10]?.src,
             loading: 'lazy',
             alt: '',
         },
         {
-            src: Pic2,
+            src: status === "succeeded" && pictures[11]?.src,
             loading: 'lazy',
             alt: '',
         },
         {
-            src: Pic3,
+            src: status === "succeeded" &&  pictures[9]?.src,
             loading: 'lazy',
             alt: '',
         },
         {
-            src: Pic4 ,
+            src: status === "succeeded" && pictures[7]?.src && pictures[7]?.src ,
             loading: 'lazy',
             alt: '',
         },
         {
-            src: Pic5,
+            src: status === "succeeded" && pictures[8]?.src && pictures[8]?.src,
             loading: 'lazy',
             alt: '',
         },
         {
-            src: Pic12,
+            src: status === "succeeded" && pictures[12]?.src && pictures[12]?.src,
             loading: 'lazy',
             alt: ''
         },
         {
-            src: Pic13,
+            src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
             loading: 'lazy',
             alt: ''
         }
@@ -194,7 +186,7 @@ const PropertyImage = ({status}) => {
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <div onClick={() => setIsOpen(true)} style={{height: '100%'}}>
-                                <img data-src={Pic7} alt=""  width='100%' height='100%' className="lazyload"/>
+                                <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                                 <span style={{cursor: 'pointer'}}>
                                     <AiOutlineCamera /> Click to see all pictures
                                 </span>
@@ -205,25 +197,25 @@ const PropertyImage = ({status}) => {
                     <SmallImage style={{gridColumn: '4/6'}}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic8} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[4]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage style={{gridColumn: '6/8'}}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic9} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[2]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic10} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[3]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic11} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[1]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage>
@@ -235,7 +227,7 @@ const PropertyImage = ({status}) => {
                     <SmallImage>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic15} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[6]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                 </ImageWrapper>

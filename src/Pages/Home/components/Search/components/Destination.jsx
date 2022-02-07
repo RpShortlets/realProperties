@@ -20,15 +20,14 @@ const Label = styled.label `
 `
 
 const Search = styled.div `
-flex: 1; 
-position: relative;
-margin: 0 15px;
-z-index: 122;
-
+    flex: 1; 
+    position: relative;
+    margin: 0 15px;
 `
 
 const Destination = ({handleModal, openModal, myRef, handleOption, setOpenModal}) => {
     const checkedQuery = useMediaQuery("(min-width: 601px)");
+    const Query = useMediaQuery("(min-width: 769px)")
     const {searchValue} = useSelector(state => state.ComponentState)
 
     let widths = checkedQuery ? '35vw' : '100%';
@@ -43,15 +42,18 @@ const Destination = ({handleModal, openModal, myRef, handleOption, setOpenModal}
                     <span> Where to you want to stay?</span>
                 </div>
             </Label>
-            <OpenDestination 
-                openModal={openModal}
-                myRef={myRef}
-                widths={widths}
-                location={Destlocation}
-                handleOption={handleOption} 
-                setOpenModal={setOpenModal}
-                zIndex='0'       
-            /> 
+            {Query && (
+                <OpenDestination 
+                    openModal={openModal}
+                    myRef={myRef}
+                    widths={widths}
+                    location={Destlocation}
+                    handleOption={handleOption} 
+                    setOpenModal={setOpenModal}
+                    zIndex='0'       
+                /> 
+            )}
+            
             
         </Search>
     )

@@ -10,7 +10,7 @@ import "../../styles/utilities.css"
 
 
 const MainModal = styled.div`
-    z-index: 100;
+    z-index: 11;
     position: fixed;
     top: ${({ top }) => top};
     left: ${({ left }) => left};

@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import {Login, AdminDashboard, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer} from "./export"
+import { Navigate } from 'react-router-dom';
+import {Login, AdminDashboard, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery} from "./export"
 
 const routes = (isLoggedIn) => 
     [
@@ -67,6 +67,10 @@ const routes = (isLoggedIn) =>
             children: [
             { path: 'shortlet', element: <Verify /> },
             ],
+        },
+        {
+            path: '/gallery',
+            element: <Gallery />,
         },
         {
             path: '*',

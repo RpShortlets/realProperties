@@ -5,14 +5,11 @@ import {Helmet} from "react-helmet"
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
-import { useDispatch } from "react-redux";
-import { UpdateBooks } from "./redux/actionCreators/actionCreators";
 import { useRoutes } from 'react-router-dom';
 import routes from "./routes";
 
 
 const App = () => {
-  const dispatch = useDispatch();
   const location = useLocation();
   const isLoggedIn = true;
   const routing = useRoutes(routes(isLoggedIn));
@@ -26,9 +23,9 @@ const App = () => {
     invokeGA();
   }, []);
 
-  useEffect(() => {
-    dispatch(UpdateBooks())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(UpdateBooks())
+  // }, [dispatch])
 
   useEffect(() => {
     const tawkId = '1fpjikfdf'
@@ -60,21 +57,6 @@ const App = () => {
           <Clip type='TailSpin' />
         </div>}>
           {routing}
-          {/* <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/s/:id" element={<SearchResult />} />
-            <Route path="/apartment/:id" element={<PropertyDetails />} />
-            <Route path='/payment' element={<Payments />}  />
-            <Route path="/order-summary/ref/:id" element={<OrderSummary />} />
-            <Route path="/order-summary/payment" element={<Transfer />} />
-            <Route path="/paystack/callback/shortlet" element={<Verify />} />
-            <Route path="admin/live/bookings" element={<AdminDashboard />}>
-              <Route path="pending" element={<AdminDashboard />} />
-              <Route path="completed" element={<AdminDashboard />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes> */}
       </Suspense>
       {location.pathname ==='/admin/live/bookings' || location.pathname ==='/admin/live/bookings/deleted'  || location.pathname ==='/admin/live/bookings/completed' ||  location.pathname ==='/admin/live/bookings/pending' || location.pathname ==='/login' ? null :  (<Footer />)}
   </>

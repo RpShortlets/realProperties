@@ -7,7 +7,7 @@ import GuestDropdowns from './GuestDropdown';
 const GuestDiv = styled.div `
     display: none;
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 769px) {
         display: block;
         flex: 1;
         position: relative;
