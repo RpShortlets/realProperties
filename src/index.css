@@ -197,3 +197,7 @@ a:hover {
     /* height: calc(80% - 56px) !important; */
     overflow: visible !important;
 }
+
+.css-1ab1x7 {
+    display: none !important;
+}

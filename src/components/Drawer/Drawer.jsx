@@ -3,9 +3,12 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import TextMobileStepper from '../Stepper/Stepper';
+import MobileDesitination from '../Mobile Destination/MobileDesitination';
+import MobileDates from '../Mobile Destination/MobileDates';
+import MobileGuests from '../Mobile Destination/MobileGuests';
 
 const drawerBleeding = 56;
 
@@ -29,12 +32,36 @@ const Puller = styled(Box)(({ theme }) => ({
     left: 'calc(50% - 15px)',
 }));
 
-function SwipeableEdgeDrawer({openDrawer, setOpenDrawer}) {
+const steps = ['Destination', 'Dates', 'Guest'];
 
+function SwipeableEdgeDrawer({openDrawer, setOpenDrawer, SubmitForm}) {
+    const [activeStep, setActiveStep] = React.useState(0);
 
     const toggleDrawer = (newOpen) => () => {
         setOpenDrawer(newOpen);
     };
+
+    const handleNext = () => { // handle next button
+        if(activeStep === steps.length - 1 ) {
+            return;
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+    };
+
+    const handleBack = () => { // handle back button
+        if(activeStep === 0) {
+            return;
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        }
+    };
+
+    const handleReset = () => { // handle reset button
+        setActiveStep(0);
+    };
+
+    const Display = activeStep === 0 ? ( <MobileDesitination  /> ) : activeStep === 1 ? ( <MobileDates  /> ) : activeStep === 2 ? ( <MobileGuests /> ) : null;
 
 
     return (
@@ -43,7 +70,7 @@ function SwipeableEdgeDrawer({openDrawer, setOpenDrawer}) {
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                    height: `calc(80% - ${drawerBleeding}px)`,
+                    height: `calc(90% - ${drawerBleeding}px)`,
                     overflow: 'visible',
                     },
                 }}
@@ -62,7 +89,7 @@ function SwipeableEdgeDrawer({openDrawer, setOpenDrawer}) {
                 <StyledBox
                     sx={{
                         position: 'absolute',
-                        top: openDrawer && '-55px',
+                        top: openDrawer && '-32px',
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
                         visibility: 'visible',
@@ -71,17 +98,30 @@ function SwipeableEdgeDrawer({openDrawer, setOpenDrawer}) {
                     }}
                 >
                     <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}>51 results</Typography>
+                    <Typography sx={{ p: 2, color: 'text.secondary' }}></Typography>
                 </StyledBox>
                 <StyledBox
                     sx={{
-                        px: 2,
+                        px: 3,
                         pb: 2,
                         height: '100%',
                         overflow: 'auto',
                     }}
                 >
+
+                    <TextMobileStepper
+                        handleNext={handleNext}
+                        activeStep={activeStep}
+                        handleBack={handleBack}
+                        handleReset={handleReset}
+                        steps={steps}
+                        SubmitForm={SubmitForm}
+                    >
                     
+                        {Display}
+                        
+            
+                    </TextMobileStepper>
                 </StyledBox>
             </SwipeableDrawer>
         </Root>

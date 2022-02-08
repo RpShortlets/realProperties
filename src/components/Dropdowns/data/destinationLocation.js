@@ -1,14 +1,14 @@
 export const Destlocation = [
     {
         id: 0,
-        name: 'Ikoyi'
+        name: 'Ikoyi, Nigeria'
     }, 
     {
         id: 1,
-        name: 'Lekki'
+        name: 'Lekki, Nigeria'
     },
     {
         id: 2,
-        name: 'Ikeja'
+        name: 'Ikeja, Nigeria'
     }
 ]

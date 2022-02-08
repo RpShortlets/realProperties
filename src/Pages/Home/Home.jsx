@@ -10,6 +10,7 @@ import { saveSearchValue } from '../../redux/actions/componentState';
 import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
 import Drawer from "../../components/Drawer/Drawer";
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
+import { AnimatePresence } from "framer-motion"
 
 
 
@@ -64,7 +65,12 @@ const Home = () => {
 
     return (
         <> 
-            {!Query && <Drawer openDrawer={openDrawer}  setOpenDrawer={setOpenDrawer}/>}
+
+            {!Query && 
+                <AnimatePresence initial={true}>
+                    <Drawer openDrawer={openDrawer}  setOpenDrawer={setOpenDrawer} SubmitForm={SubmitForm}/>
+                </AnimatePresence>
+            }
             <Section>
                 <SearchFilter 
                     openModal={openModal} 

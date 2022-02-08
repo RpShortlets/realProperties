@@ -40,7 +40,7 @@ const DateRangePickerDay = styled(MuiDateRangePickerDay)(
 
 
 
-const StaticCalender = ({status, calendars, disablebooked}) => {
+const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const dispatch = useDispatch();
     const { checkin, checkout} = useParams()
     const checkInD = checkin?.slice(8);
@@ -62,6 +62,7 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
         const checkout = value[1]?.toLocaleDateString('en-CA');
         const useCheckinDate = value[0]?.toLocaleDateString('en-US', options);
         const useCheckoutDate = value[1]?.toLocaleDateString('en-US', options);
+
     
         if(checkin && checkout) {
             dispatch(checkInDate(checkin))
@@ -91,7 +92,7 @@ const StaticCalender = ({status, calendars, disablebooked}) => {
                     return dates?.includes(day)
                 }: null}
                 renderDay={renderWeekPickerDay}
-                displayStaticWrapperAs="desktop"
+                displayStaticWrapperAs={type ? 'mobile' : 'desktop' }
                 value={ useCheckInDate && useCheckOutDate ? [new Date(useCheckInDate), new Date(useCheckOutDate)]  : checkInD && checkOutD ?  [new Date(checkInD), new Date(checkOutD)] : value} 
                 onChange={(newValue) => {
                 setValue(newValue);
