@@ -34,6 +34,15 @@ const CardContainer = styled.div `
 const PictureContainer = styled.div `
     grid-column: 1/3;
     border-radius: 10px 0px 0px 10px;
+
+    img {
+        border-radius: 10px 10px 0 0; 
+        object-fit: cover;
+    }
+
+    @media screen and (min-width: 769px) {
+        border-radius: 10px 0px 0px 10px; 
+    }
 `
 
 const ContentContainer = styled.div `
@@ -174,7 +183,7 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                                 data-srcset={picture}
                                 media="(min-width: 560px)" />
                             
-                            <img data-src={picture} alt="" width="100%" height="100%" style={{borderRadius: '10px 0px 0px 10px', objectFit: 'cover'}} className="lazyload"/>
+                            <img data-src={picture} alt="" width="100%" height="100%" className="lazyload"/>
                         </picture>
                     </div>
                 </PictureContainer>
