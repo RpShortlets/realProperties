@@ -103,7 +103,7 @@ const Terms = () => {
                             Terms and Condtions
                         </NavLink>
                     </div>
-                    <NewsDiv>
+                    {/* <NewsDiv>
                         <h4>Newsletter</h4>
                         <form ref={emailRef}>
                             <div>
@@ -117,7 +117,7 @@ const Terms = () => {
                                 <label htmlFor="check">Please tick if you would like to receive prompts on special offers and more from us.</label>
                             </div>
                         </form>
-                    </NewsDiv>
+                    </NewsDiv> */}
                     
                 </div>
             </div>

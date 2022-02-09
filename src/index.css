@@ -198,6 +198,7 @@ a:hover {
     overflow: visible !important;
 }
 
-.css-1ab1x7 {
+.css-1ab1x7,
+.tawk-min-container{
     display: none !important;
 }

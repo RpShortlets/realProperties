@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MobileStepper from '@mui/material/MobileStepper';
-import Button from '@mui/material/Button';
+import Button from "../Button/Button"
 
 
 const steps = ['Bio', 'Company', 'Address'];
@@ -30,20 +30,24 @@ export default function TextMobileStepper(props) {
                 nextButton={
                     //! Next Button
                     <Button
-                        size="small"
-                        onClick={props.activeStep === steps.length - 1 ? props.SubmitForm : props.handleNext}
-                    >
-                        {props.activeStep === steps.length - 1 ? 'Search' : 'Next'}
-                    </Button>
+                        onClicks={props.activeStep === steps.length - 1 ? props.SubmitForm : props.handleNext}
+                        title={props.activeStep === steps.length - 1 ? 'Search' : 'Next'}
+                        border="none"
+                        background={props.activeStep === steps.length - 1 ? 'var(--linear-primary)' : 'var(--color-secondary)'}
+                        color={props.activeStep === steps.length - 1 ? '#fff' : 'var(--color-primary-dark)'}
+                        padding="0.5rem 1.3rem"
+                    />
                 }
                 //! Back Button
                 backButton={
                     <Button 
-                        size="small" 
-                        onClick={props.handleBack} 
-                    >
-                        Back
-                    </Button>
+                        onClicks={props.handleBack} 
+                        title="Back"
+                        border="none"
+                        background='var(--color-secondary)'
+                        color={props.activeStep === steps.length - 1 ? '#fff' : 'var(--color-primary-dark)'}
+                        padding="0.5rem 1.3rem"
+                    />
                 }
             />
         </div>

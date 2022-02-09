@@ -16,21 +16,21 @@ const Support = () => {
                             Cancellation options
                         </NavLink>
                     </div>
-                    <div>
+                    {/* <div>
                         <NavLink to="/">
                             List a Property
                         </NavLink>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <NavLink to="/">
                             Hire an Experience Curator
                         </NavLink>
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <NavLink to="/">
                             Take a Virtual Tour of a Property
                         </NavLink>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

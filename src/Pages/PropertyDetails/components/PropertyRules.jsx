@@ -24,7 +24,7 @@ const RulesContainer = styled.div `
 
 const RuleContent = styled.div `
     ${FlexStyle}
-    align-items: flex-end !important;
+    /* align-items: flex-end !important; */
     margin: max(1vw, 1rem) 0;
 
     svg {
@@ -33,6 +33,7 @@ const RuleContent = styled.div `
 
     span:first-child {
         margin-right: .7rem;
+        ${FlexStyle}
     }
 
     span:last-child {

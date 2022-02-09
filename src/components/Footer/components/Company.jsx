@@ -46,7 +46,7 @@ const GridWrapper = styled.div `
     }
 
     @media screen and (min-width: 990px) {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
 
     }
 
@@ -61,7 +61,7 @@ const Company = () => {
             <RealProperties />
             <Companies />
             <Support />
-            <Terms />
+            {/* <Terms /> */}
         </GridWrapper>
     )
 }

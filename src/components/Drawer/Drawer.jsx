@@ -70,7 +70,7 @@ function SwipeableEdgeDrawer({openDrawer, setOpenDrawer, SubmitForm}) {
             <Global
                 styles={{
                     '.MuiDrawer-root > .MuiPaper-root': {
-                    height: `calc(90% - ${drawerBleeding}px)`,
+                    height: activeStep === 0 ? `calc(57% - ${drawerBleeding}px)` : activeStep === 1 ? `calc(92% - ${drawerBleeding}px)` : `calc(72% - ${drawerBleeding}px)`,
                     overflow: 'visible',
                     },
                 }}
