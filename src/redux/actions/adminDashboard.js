@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { AdminPendingTransaction, AdminCompletedTransaction, AdminDeletedTransaction } from '../actionCreators/actionCreators';
+import { AdminPendingTransaction, AdminCompletedTransaction, AdminDeletedTransaction, AdminLogin } from '../actionCreators/actionCreators';
 
 export const AdminDashboard = createSlice({
     name: 'adminDashboard',
@@ -7,8 +7,14 @@ export const AdminDashboard = createSlice({
         pendingTransaction: {},
         completedTransaction: {},
         cancelledTransaction: {},
+        login: {},
+        profile: {},
     },
-    reducers: {},
+    reducers: {
+        getAdminProfile: (state, action) => {
+            state.profile = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
         .addCase(AdminPendingTransaction.pending, (state, action) => {
@@ -44,7 +50,21 @@ export const AdminDashboard = createSlice({
             state.cancelled = 'failed'
             state.error = action.error.message
         })
+        .addCase(AdminLogin.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(AdminLogin.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.login = action.payload
+        })
+        .addCase(AdminLogin.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        }
+        )
     }
 });
+
+export const { getAdminProfile } = AdminDashboard.actions;
 
 export default AdminDashboard.reducer;

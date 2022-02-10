@@ -10,10 +10,12 @@ import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
 import useProgressiveImage  from "../../../../hooks/useProgressiveImage/useProgressiveImage";
 import BG from "../../../../image/background.webp"
+import BG2 from "../../../../image/back.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";
 import { checkScrollState } from '../../../../redux/actions/componentState';
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from 'framer-motion';
+
 
 
 const FilterContainer = styled.div `
@@ -22,15 +24,14 @@ const FilterContainer = styled.div `
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
+    position: relative;
 
 
     @media (max-width: 480px) { 
         height: 90vh;
     }
 
-    @media (min-width: 481px) {
-        height: 100vh;
-    }
+
 
     @media screen and (max-width: 850px) {
         position: relative;
@@ -44,6 +45,8 @@ const FilterWrapper = styled.div `
     justify-content: center;
     height: 100%;
     width: 100%;
+    position: absolute;
+    top: 6%;
 `
 
 const Header = styled.div `
@@ -89,6 +92,7 @@ const FilterSearchWrapper = styled.div `
     padding-bottom: 1rem;
     z-index: 1;
     
+    
     @media screen and (min-width: 850px) { 
         position: static;
         background: transparent;
@@ -131,6 +135,7 @@ const Fiter = styled.div `
 //     width: 100%;
 // `
 
+
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
     guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender, setOpenDrawer}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
@@ -139,6 +144,9 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         let controls = useAnimation()
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
+        const loaded2 = useProgressiveImage(BG2)
+       
+
 
         //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
         // const handleScroll = useCallback(() => {
@@ -222,7 +230,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
 
         //* HIDE SCROLL BAR WHILE HEADER IMAGE IS STILL LOADING AT HOME PAGE
         useEffect(() => {
-            if(!loaded) {
+            if(!loaded ) {
                 document.body.style.overflow = 'hidden'
             } 
             return () => {
@@ -233,8 +241,18 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         
     return (
         <>
-            {loaded ? (
-                <FilterContainer className={styles.HomeFilterBackground} backgroundImage={loaded}>
+            {loaded  ? (
+                <FilterContainer className={styles.HomeFilterBackground} >
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel"  style={{height: '100%'}}>
+                        <div class="carousel-inner"  style={{height: '100%', }}>
+                            <div class="carousel-item active" style={{height: '100%', }}>
+                                <img src={BG} class="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
+                            </div>
+                            <div class="carousel-item" style={{height: '100%', }}>
+                                <img src={BG2} class="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
+                            </div>
+                        </div>
+                    </div>
                     <FilterWrapper className="justify-center">
                         <Header>
                             <h1>Reserve Your Luxury Short Let</h1>
@@ -296,6 +314,8 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                         </FilterSearchWrapper>
                     </FilterWrapper>
                 </FilterContainer>
+
+                
             )
         
             : (

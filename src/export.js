@@ -9,6 +9,7 @@ export const OrderSummary = lazy(() => import('./Pages/payments/OrderSummary'))
 export const Verify = lazy(() => import('./Pages/payments/Verify.jsx'))
 export const Transfer = lazy(() => import('./Pages/payments/transfer.jsx'))
 export const AdminDashboard = lazy(() => import('./Pages/dashboard/Admin'))
+export const AdminLogin = lazy(() => import('./Pages/dashboard/components/Login'))
 export const Login = lazy(() => import('./auth/Login'))
 export const Gallery = lazy(() => import('./Pages/Gallery/Gallery'))
 

@@ -19,10 +19,9 @@ const Wrapper = styled.div `
 
 const Pending = () => {
     const dispatch = useDispatch();
-    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
-    const {status} = useSelector(state => state.paymentState);
+    const {pending, pendingTransaction, profile} = useSelector(state => state.adminDashboard);
+    // const {status} = useSelector(state => state.paymentState);
 
-    console.log(pendingTransaction, status)
 
     const  handleCompleted = (id) => {
         if (window.confirm("You're about to confirm this booking. Press Yes to process or cancel") === true) {
@@ -37,7 +36,7 @@ const Pending = () => {
 
 
     return <Wrapper>
-            <h1>Dashboard Kit</h1>
+        <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
         <TableData title="Pending">
             {pending === 'succeeded' && (
                 <>

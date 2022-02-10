@@ -1,11 +1,10 @@
-import { Navigate } from 'react-router-dom';
-import {Login, AdminDashboard, NotFound, Home, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery} from "./export"
+import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery} from "./export"
 
 const routes = (isLoggedIn) => 
     [
         {
-            path: '/admin/live/bookings',
-            element: isLoggedIn ? <AdminDashboard /> : <Navigate to="/login" />,
+            path: '/admin/live',
+            element: isLoggedIn ? <AdminDashboard /> : <AdminLogin/>,
             children: [
             { path: 'pending', element: <AdminDashboard /> },
             { path: 'completed', element: <AdminDashboard /> },
@@ -71,6 +70,10 @@ const routes = (isLoggedIn) =>
         {
             path: '/gallery',
             element: <Gallery />,
+        },
+        {
+            path: '/admin/live/login',
+            element: <AdminLogin />,
         },
         {
             path: '*',

@@ -91,7 +91,6 @@ const MobileDesitination = () => {
         
     }
 
-    console.log(searchValue)
 
     return(
         <Container 

@@ -236,7 +236,7 @@ const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal
                         )}
                     </Dates>
                     {showCalender && (
-                        <CalenderModal show={showCalender} setShow={setShowCalender} theme="" left="15%" calanders={2} initial={{opacity: 0, y: 0, x: 50}} animate={{opacity: 1, y: 5}}/>
+                        <CalenderModal show={showCalender} setShow={setShowCalender} theme="" left="15%" right="30%" calanders={2} initial={{opacity: 0, y: 0, x: 50}} animate={{opacity: 1, y: 5}}/>
                     )}
                 </DateContainer>
                 <Guest style={{marginRight: '.6rem'}}>

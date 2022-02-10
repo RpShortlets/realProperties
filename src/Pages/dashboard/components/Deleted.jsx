@@ -18,14 +18,14 @@ const Wrapper = styled.div `
 
 const Deleted = () => {
     const dispatch = useDispatch();
-    const {cancelled, cancelledTransaction} = useSelector(state => state.adminDashboard);
+    const {cancelled, cancelledTransaction, profile} = useSelector(state => state.adminDashboard);
 
     useEffect(() => {
         dispatch(AdminDeletedTransaction())
     }, [dispatch])
 
     return <Wrapper>
-            <h1>Dashboard Kit</h1>
+            <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
         <TableData title="Deleted">
         {cancelled === 'succeeded' && (
             <>    

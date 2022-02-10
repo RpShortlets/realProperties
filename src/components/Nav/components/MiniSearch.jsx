@@ -16,7 +16,7 @@ const MiniSearches =  styled.div `
         position: relative;
         background: var(--color-secondary);
         padding: 0.5rem 0.8rem;
-        border-radius: 7px;
+        border-radius: 32px;
         height: 50px;
         ${FlexStyle}
         box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
@@ -40,6 +40,7 @@ const MiniSearches =  styled.div `
         div:last-child {
             ${FlexStyle}
             justify-content: end;
+            flex: 0;
             svg {
                 width: 22px;
                 height: 22px;
@@ -67,8 +68,8 @@ const MiniSearch = ({myRef, openNavMini, setOpenNavMini, handleOption, SubmitFor
         
         >
             <div onClick={() => setOpenNavMini(prev => !prev)}>
-                <p>{searchValue ? searchValue : 'Destination'}</p>
-                <span> Where to you want to stay?</span>
+                <p>{searchValue ? searchValue : ' Where to you want to stay?'}</p>
+            
             </div>
             <OpenDestination
                 openModal={openNavMini}

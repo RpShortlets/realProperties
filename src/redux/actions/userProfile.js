@@ -7,7 +7,12 @@ export const userProfile = createSlice({
         userProfile: {},
     
     },
-    reducers: {},
+    reducers: {
+        getUserInfo: (state, action) => {
+            state.userProfile = action.payload
+        }
+
+    },
     extraReducers(builder) {
         builder
             .addCase(getUserProfile.pending, (state, action) => {

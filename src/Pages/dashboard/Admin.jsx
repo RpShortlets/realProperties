@@ -6,11 +6,13 @@ import { FlexStyle } from '../../styles/globalStyles';
 import Pending from './components/Pending';
 import Completed from './components/Completed';
 import Deleted from './components/Deleted';
+import { Logout } from '../../hooks/function/Logout';
 
 
 const Section = styled.section `
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 `
 const Main = styled.div `
     display: grid;
@@ -30,6 +32,15 @@ const SideBar = styled.div `
         padding: max(2.5vw, 1rem) 0 0 max(2.5vw, 1rem) ;
     }
 
+    .sideBarContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 80%;
+        width: 100%;
+        margin: 1.2rem 0;
+    }
+
     .sideBarBorder {
         border-left: 2px solid var(--color-primary);
         background: var(--color-secondary);
@@ -37,16 +48,21 @@ const SideBar = styled.div `
     }
 
     .sideBarLink { 
-        margin-top: max(8vw, 2rem);
+        /* margin-top: max(8vw, 2rem); */
 
         a {
             color: var(--color-primary);
             ${FlexStyle}
+            width: 100%;
 
             span:last-child {
                 font-size: var(--font-small-screen);
                 font-weight: 400;
                 margin-left: max(.9vw, .5rem);
+            }
+
+            div {
+                width: 100%;
             }
         }
 
@@ -57,6 +73,26 @@ const SideBar = styled.div `
         div:hover {
             cursor: pointer;
         }
+    }
+
+    .adminLogout {
+        a {
+            display: flex;
+            width: 100%;
+            font-size: 1.2rem;
+        }
+
+        div {
+            padding: 0 3rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        span {
+            width: 100%;
+        }
+        
     }
 `
 
@@ -102,25 +138,35 @@ const Admin = () => {
                     <div className='adminLogo'>
                         {CompanyLogo}
                     </div>
-                    <div className='sideBarLink'>
-                        <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
-                            <div style={{display: 'flex' , alignItems: 'center'}}>
-                                <span>{PendingIcon}</span>
-                                <span>Pending</span>
-                            </div>
-                        </Link>
-                        <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
-                            <div style={{display: 'flex' , alignItems: 'center'}}>
-                                <span>{CompletedIcon}</span>
-                                <span>Completed</span>
-                            </div>
-                        </Link>
-                        <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
-                            <div style={{display: 'flex' , alignItems: 'center'}}>
-                                <span>{CompletedIcon}</span>
-                                <span>Deleted</span>
-                            </div>
-                        </Link>
+                    <div className='sideBarContainer'>
+                        <div className='sideBarLink'>
+                            <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                                <div style={{display: 'flex' , alignItems: 'center'}}>
+                                    <span>{PendingIcon}</span>
+                                    <span>Pending</span>
+                                </div>
+                            </Link>
+                            <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
+                                <div style={{display: 'flex' , alignItems: 'center'}}>
+                                    <span>{CompletedIcon}</span>
+                                    <span>Completed</span>
+                                </div>
+                            </Link>
+                            <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
+                                <div style={{display: 'flex' , alignItems: 'center'}}>
+                                    <span>{CompletedIcon}</span>
+                                    <span>Deleted</span>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="adminLogout">
+                            <Link to='#' onClick={Logout} className={deleted ? 'sideBarBorder' : undefined} >
+                                <div style={{display: 'flex' , alignItems: 'center'}}>
+                                    
+                                    <span>Logout</span>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </SideBar>
                 <LeftBar>

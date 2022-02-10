@@ -248,6 +248,35 @@ export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (
 
 //* Admin */
 
+export const AdminLogin = createAsyncThunk("adminDashboard/adminLogin", async ({email, password}) => {
+    const formdat = {
+        email: email,
+        password: password
+    }
+    const {data} = await axios.post(`${BaseURL}/admin-login`, formdat);
+    if(data.msg === 'Password Updated Successfully!') {
+        localStorage.setItem("admin", JSON.stringify(data))
+        return data;
+    }
+
+});
+
+export const HandleSignIn = async(formData) => {
+    const Fdata = {
+        email: formData.email,
+        password: formData.password
+    }
+
+    try{
+        const {data} = await axios.post(`${BaseURL}/admin-login`, Fdata)
+        return data
+    }catch(error){
+        return error.message
+    }
+
+}
+
+
 export const AdminPendingTransaction = createAsyncThunk("adminDashboard/adminPendingTransaction", async () => {
     const {data} = await axios.get(`${BaseURL}/admin/pending-payments`);
     return data.results;

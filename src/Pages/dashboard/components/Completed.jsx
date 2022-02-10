@@ -18,14 +18,15 @@ const Wrapper = styled.div `
 
 const Completed = () => {
     const dispatch = useDispatch();
-    const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
+    const {completed, completedTransaction, profile} = useSelector(state => state.adminDashboard);
+    
 
     useEffect(() => {
         dispatch(AdminCompletedTransaction())
     }, [dispatch])
 
     return <Wrapper>
-            <h1>Dashboard Kit</h1>
+            <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
         <TableData title="Completed">
         {completed === 'succeeded' && (
             <>    
