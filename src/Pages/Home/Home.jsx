@@ -60,7 +60,7 @@ const Home = () => {
 
     const SubmitForm = async(e) => {
         e.preventDefault();
-        navigate(`/s/location=${searchValue}&adults=${adultcount === null || 'null' ? "" : adultcount}&children=${childrencount === null || 'null' ? "" : childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+        navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
     return (

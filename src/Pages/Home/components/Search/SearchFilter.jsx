@@ -46,7 +46,7 @@ const FilterWrapper = styled.div `
     height: 100%;
     width: 100%;
     position: absolute;
-    top: 6%;
+    top: -7%;
 `
 
 const Header = styled.div `
@@ -243,13 +243,13 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         <>
             {loaded  ? (
                 <FilterContainer className={styles.HomeFilterBackground} >
-                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel"  style={{height: '100%'}}>
-                        <div class="carousel-inner"  style={{height: '100%', }}>
-                            <div class="carousel-item active" style={{height: '100%', }}>
+                    <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel"  style={{height: '100%'}}>
+                        <div className="carousel-inner"  style={{height: '100%', }}>
+                            <div className="carousel-item active" style={{height: '100%', }}>
                                 <img src={BG} class="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
                             </div>
-                            <div class="carousel-item" style={{height: '100%', }}>
-                                <img src={BG2} class="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
+                            <div className="carousel-item" style={{height: '100%', }}>
+                                <img src={BG2} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
                             </div>
                         </div>
                     </div>
@@ -306,7 +306,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                                     border= 'none' 
                                     borderRadius={Query ? '' : '57px'}
                                     icon={!Query && <FiSearch />} 
-                                    display={!Query && 'flex'}
+                                    display={Query ? '' : 'flex'}
                                     alignT={!Query && 'center'}
                                     justify={!Query && 'center'}
                                 />

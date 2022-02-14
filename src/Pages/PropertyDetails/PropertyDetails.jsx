@@ -490,6 +490,8 @@ const PropertyDetails = () => {
                                         Camry={Camry}
                                         showSuvRef={showSuvRef}
                                         Suv={Suv}
+                                        addDays={addDays} 
+                                        minusDays={minusDays}
                                         
                                     />
                                 )}            

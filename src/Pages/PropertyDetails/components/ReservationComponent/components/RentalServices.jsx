@@ -43,7 +43,7 @@ const RentalType = styled.div `
         padding: 10px;
 
         h4 {
-            font-size: var(--font-xtra-small-screen);
+            font-size: var(--font-xtraLarge-small);
             font-weight: 500;
             margin: 0;
         }
@@ -209,7 +209,7 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                             </Tooltips>
                         </div>
                         <div onClick={() => setOpenCar(!openCar)} className="carTypeButton" style={{marginTop: 'max(0.5vw,0.3rem)'}}>
-                            <h4>{selectedCar ? selectedCar : 'Car Type'}</h4>
+                            <h4>{selectedCar ? selectedCar : 'Car Type (Select from the list below)'}</h4>
                             {openCar ? (<FiChevronUp />) : (<FiChevronDown />)}
                         </div>
                         

@@ -107,6 +107,12 @@ const PropertyImage = ({status}) => {
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
 
 
+    const showPictures = (id) => {
+        setIsOpen(true)
+        setCurrentIndex(id)
+    }
+
+
 
     const images = [
         {
@@ -185,7 +191,7 @@ const PropertyImage = ({status}) => {
                     <LargeImage height={status === 'loading' ? 'true' : ''}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <div onClick={() => setIsOpen(true)} style={{height: '100%'}}>
+                            <div onClick={() => showPictures(0)} style={{height: '100%'}}>
                                 <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                                 <span style={{cursor: 'pointer'}}>
                                     <AiOutlineCamera /> Click to see all pictures
@@ -194,37 +200,37 @@ const PropertyImage = ({status}) => {
                         )}
                         
                     </LargeImage>
-                    <SmallImage style={{gridColumn: '4/6'}}>
+                    <SmallImage style={{gridColumn: '4/6'}} onClick={() => showPictures(1)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={pictures[4]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage style={{gridColumn: '6/8'}}>
+                    <SmallImage style={{gridColumn: '6/8'}} onClick={() => showPictures(2)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={pictures[2]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage>
+                    <SmallImage onClick={() => showPictures(3)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={pictures[3]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage>
+                    <SmallImage onClick={() => showPictures(4)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={pictures[1]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage>
+                    <SmallImage onClick={() => setIsOpen(true)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={Pic14} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage>
+                    <SmallImage onClick={() => showPictures(6)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
                             <img data-src={pictures[6]?.src} alt=""  width='100%' height='100%' className="lazyload"/>

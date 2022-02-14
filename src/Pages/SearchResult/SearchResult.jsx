@@ -81,10 +81,29 @@ const OtherSearch = styled.div `
 
 `
 
+const Count = styled.div `
+    margin-top: max(2.4vw, 1.2rem);
+    p {
+        margin: 0;
+        font-size: var(--font-xtra-small-screen);
+        font-weight: 600;
+
+        span:first-child {
+            color: var(--color-primary) !important;
+        }
+
+        span:last-child { 
+            color: var(--color-dark-gray) !important;
+        }
+    }
+
+`
+
 const SearchResult = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const {location, adults, children, checkIn, checkOut,} = useParams();
+
     const searchV = location?.slice(9)
     const adult = adults?.slice(7) === 'null' ? '' : adults?.slice(7)
     const childr = children?.slice(9) === 'null' ? '' : children?.slice(9)
@@ -93,7 +112,9 @@ const SearchResult = () => {
 
 
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
-    const {status, propertyResult: {searchResult}}= useSelector(state => state.propertyResult)
+    const {status, propertyResult: {searchResult, count}}= useSelector(state => state.propertyResult)
+
+    console.log(count)
 
     const [guest, setguest] = useState(false)
     const [openModal, setOpenModal] = useState(false)
@@ -163,7 +184,7 @@ const SearchResult = () => {
     const handlesubmit = (e) => {
         e.preventDefault();
         // dispatch(searchShortlets({searchV, checkI, checkO, adult, childr}))
-        navigate(`/s/location=${searchValue}&adults=${adultcount === null || 'null' ? "" : adultcount}&children=${childrencount === null || 'null' ? "" : childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+        navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
 
@@ -225,6 +246,12 @@ const SearchResult = () => {
                             
                             />
                         )}
+                        <Count>
+                            {status === 'loading' ? <SkeletonLoader/> : 
+                                status === 'succeeded' &&
+                                <p>Search result <span>{searchV} Shortlets</span> <span>{count[0]?.count} {count[0]?.count > 1 ? 'properties' : 'property'} found</span></p>
+                            }
+                        </Count>
                     <Main error={searchResult?.length > 0 ? false : true}>
                         {searchResult?.length > 0 && (
                             <OtherSearch>
