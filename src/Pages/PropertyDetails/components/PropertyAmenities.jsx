@@ -1,7 +1,8 @@
 import styled, {css} from "styled-components/macro"
 import { AmenitiesOne, AmenitiesTwo } from "../data/index"
 import Button from "../../../components/Button/Button"
-
+import  { useState} from "react"
+import {motion, AnimatePresence} from "framer-motion"
 
 
 const BorderStyle = css`
@@ -64,16 +65,18 @@ const AmenitiesHeader = styled.div `
 
 `
 const PropertyAmenities = ({status}) => {
+    const [show, setShow] = useState(false)
     return (
         <Amenities>
             <h2>Amenities</h2>
             <AmenitiesHeader>
-                <div>
+                <motion.div initial={{height: '0%'}} animate={{height: '100%'}} transition={{duration: 1}}>
                     <AmenitiesOne />
                     <AmenitiesTwo />
-                </div>
+                    {show &&  ( <AmenitiesOne />)}
+                </motion.div>
                 <div>
-                    <Button  color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title="Show all 23 ameninities" border="1.78224px solid #000000" borderRadius= '8.91119px' />
+                    <Button  onClicks={() => setShow((prev) => !prev)} color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title="Show all ameninities" border="1.78224px solid #000000" borderRadius= '8.91119px' />
                 </div>
             </AmenitiesHeader>
         </Amenities>
