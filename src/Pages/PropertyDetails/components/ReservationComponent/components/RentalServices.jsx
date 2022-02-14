@@ -30,7 +30,7 @@ const RentalType = styled.div `
     
     h3 {
         margin: 0;
-        font-size: var(--font-xtra-small-screen);
+        font-size: var(--font-small-screen);
     }
 
     .carTypeButton {
@@ -43,16 +43,21 @@ const RentalType = styled.div `
         padding: 10px;
 
         h4 {
-            font-size: var(--font-xtraLarge-small);
+            font-size: var(--font-xtra-small);
             font-weight: 500;
             margin: 0;
+        }
+
+        svg {
+            font-size: var(--font-big);
+            color: var(--color-dark);
         }
     }
 
     .RentalHeader {
         ${FlexStyle}
         justify-content: space-between;
-        font-size: var(--font-xtraLarge-small);
+        font-size: var(--font-xtra-small-screen);
         cursor: pointer;
 
         span {
@@ -60,6 +65,24 @@ const RentalType = styled.div `
         }
     }
 
+
+    @media screen and (min-width: 768px) {
+        .carTypeButton {
+            h4 {
+                font-size: var( --font-xtra-small-screen) !important;
+            }
+        }
+
+        h3 {
+            font-size: var( --font-xtra-small-screen);
+        }
+
+        .carTypeButton  {
+            svg {
+                font-size: var( --font-small-screen) !important;
+            }
+        }
+    }
 `
 
 const CarModal = styled.div `
@@ -83,7 +106,7 @@ const CarModal = styled.div `
 
         span { 
             flex: 1;
-            font-size: var( --font-xtraLarge-small);
+            font-size: var(--font-small-screen);
         }
 
         :hover {
@@ -98,9 +121,17 @@ const CarModal = styled.div `
         ${FlexStyle}
         span {
             background: transparent;
-            font-size: var(--font-xtra-small-screen);
+            font-size: var(--font-xtra-small);
             width: 100%;
             text-align: end;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .carModalInputContainer {
+            span {
+                font-size: var( --font-xtraLarge-small);
+            }
         }
     }
 `

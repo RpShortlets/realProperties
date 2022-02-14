@@ -7,7 +7,7 @@ import Checkbox from "../../../../../utils/FormElement/CheckBox"
 
 const ModalDiv = styled.div `
     ${ModalStyle}
-    z-index: 11;
+    z-index: 15;
 
     > div {
         padding: 1rem;
@@ -24,8 +24,13 @@ const ValueAdded = styled.div `
     display: ${({display}) => display};
     margin: ${({display}) => display ? '1rem 0' : '0'};
 
-    
+    h4 {
+        font-size: var(--font-xtra-small) !important;
+        font-weight: 500;
+        margin: 0;
+    }
 
+    
     .valueContainer {
         position: relative;
         background: #FFFFFF;
@@ -55,10 +60,9 @@ const ValueAdded = styled.div `
             font-size: var( --font-small-screen) !important;
             color: var(--color-dark);
         }
+
         h4 {
-            font-size: var(--font-xtra-small-screen);
-            font-weight: 500;
-            margin: 0;
+            font-size: var( --font-xtra-small-screen) !important;
         }
     }
 

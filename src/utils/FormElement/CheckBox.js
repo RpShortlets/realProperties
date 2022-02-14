@@ -4,7 +4,11 @@ import './checkbox.css'
 import styled from "styled-components"
 
 const Label = styled.label `
-    font-size: var(--font-xtra-small-screen);
+    font-size: var(--font-small-screen);
+
+    @media (min-width: 768px) { 
+        font-size: var(--font-xtra-small-screen);
+    }
 
 `
 

@@ -55,10 +55,14 @@ const GuestandDates = styled.div `
             padding: 0.5rem;
             flex: 1;
             h4 {
-                font-size: var( --font-small);
-                font-weight: 600;
+                font-size: var(--font-xtra-small);
+                font-weight: 500;
                 text-transform: uppercase;
                 margin: 0;
+            }
+
+            span {
+                font-size: var(--font-small-screen);
             }
 
             > div:last-child { 

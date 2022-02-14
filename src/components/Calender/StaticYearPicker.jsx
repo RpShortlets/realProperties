@@ -4,6 +4,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DatePicker';
 import '../../styles/utilities.css'
 import styled from "styled-components"
+import { Asterik } from '../../Svg/svg';
 
 
 
@@ -24,29 +25,36 @@ const InputForm = styled.input `
     
 
     :focus-within {
-        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+      border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
     }
 
     :focus {
-        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+      border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
     }
 
     ::placeholder {
-        color: var(--color-primary);
+      color: var(--color-primary);
     }
 
     
     :disabled {
-        background-color: #ccc;
+      background-color: #ccc;
     }
 
 `
 
 const Label = styled.label `
-  display: block;
-    font-size: var( --font-small-screen) !important;
-    color: #fff;
-    color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  font-size: var( --font-small-screen) !important;
+  color: #fff;
+  color: var(--color-dark);
+
+    
+  svg {
+    font-size: var(--font-small);
+    margin-left: 5px;
+  }
 
 `
 
@@ -66,7 +74,7 @@ export default function CustomInput({value, setValue, label, disabled}) {
         }}
         renderInput={({ inputRef, inputProps, InputProps }) => (
           <div onClick={() => setIsOpen(!isOpen)}>
-            <Label>{label}</Label>
+            <Label>{label}{Asterik}</Label>
             <InputForm disabled={disabled} readOnly={readOnly} ref={inputRef} {...inputProps} label="Date of Birth"  value={value?.toLocaleDateString('en-CA')}  onChange={() => console.log('dates')} />
           </div>
         )}

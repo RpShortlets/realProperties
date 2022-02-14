@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState} from "react"
 import { useNavigate} from "react-router-dom"
 import styled from "styled-components"
 import {FlexStyle} from "../../styles/globalStyles"
@@ -134,7 +134,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.length > 11 ) {
+        if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.match(/[0-9]/).length > 11 ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
             navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
             // dispatch(RetrieveTransaction({ongoingId}))
@@ -148,7 +148,6 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
     }
     
-
 
     // useMemo(() => {
     //     if(status === 'succeeded') {

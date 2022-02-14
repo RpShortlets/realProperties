@@ -12,7 +12,8 @@ const InputContainer = styled.div`
     position: relative;
 
     label {
-        display: block;
+        display: flex;
+        align-items: center;
         font-size: var( --font-small-screen) !important;
         color: #fff;
         color: var(--color-dark);
@@ -21,7 +22,7 @@ const InputContainer = styled.div`
 
     label svg {
         margin-left: 5px;
-        margin-bottom: 3px;
+        /* margin-bottom: 3px; */
     }
 
     span {
@@ -81,11 +82,11 @@ const InputForm = styled.input `
 `
 
 
-export const Input = ({Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
+export const Input = ({min, Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
         <InputContainer Icon={Icon}>
             {label && <label> {label}{!asterik && Asterik}</label>}
-            <InputForm disabled={disabled} onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
+            <InputForm min={min} disabled={disabled} onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
         </InputContainer>
     )

@@ -55,8 +55,8 @@ const InputContainer = styled.div`
         flex: 1;
 
         span {
-            font-size: var( --font-small);
-            font-weight: 600;
+            font-size: var(--font-small-screen);
+            font-weight: 500;
             text-transform: uppercase;
         }
     }
