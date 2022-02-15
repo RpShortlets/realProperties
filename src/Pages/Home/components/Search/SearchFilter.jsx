@@ -146,21 +146,6 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         const loaded = useProgressiveImage(BG)
 
 
-        //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
-        // const handleScroll = useCallback(() => {
-        //     if (Medium && ScrollRef?.current) {
-        //             ScrollRef.current.style.opacity = '1';
-        //             ScrollRef.current.style.backgroundColor = '#fff';
-                    
-        //         } 
-        //         else {
-        //             if(ScrollRef?.current) {
-        //                 ScrollRef.current.style.opacity = '1';
-        //                 ScrollRef.current.style.backgroundColor = 'transparent';
-        //             }
-        //         }
-            
-        // }, [Medium]);
 
         //* MAKE SEARCH FILTER STICKY ON SCROLL AND FIXED ON MOBILE
         const handleScrollMobile = useCallback(() => {
@@ -187,32 +172,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                     }))
                 }
             }
-            // if (!Medium && ScrollRef?.current) {
-            //     ScrollRef.current.style.position = 'sticky';
-            //     ScrollRef.current.style.backgroundColor = 'transparent';
-            //     ScrollRef.current.style.top = '0';
-            //     //! Testing : Add background color to destination
-            //     if(window.scrollY > 520 && Medium) {
-            //         console.log(window.scrollY)
-            //         ScrollRef.current.childNodes[0].style.borderRadius = '32px';
-            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
-            //     }
-            //     else if(window.scrollY > 10 && !Medium) {
-            //         ScrollRef.current.childNodes[0].style.borderRadius = '32px';
-            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '32px';
-            //     }else {
-            //         ScrollRef.current.childNodes[0].style.borderRadius = '7px';
-            //         ScrollRef.current.childNodes[1].childNodes[0].style.borderRadius = '7px';
-            //     }
-            // }
-            // else {
-            //     if(Medium && ScrollRef?.current) {
-            //         ScrollRef.current.style.position = 'fixed';
-            //         ScrollRef.current.style.top = '0';
-            //         ScrollRef.current.style.backgroundColor = '#fff';
-            //     }
-            // }
-
+        
         }, [dispatch, controls]);
 
         //* CALL: ADD AND REMOVE BACKGROUND 
@@ -221,9 +181,9 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         // }, [Medium, handleScroll])
 
         // //* CALL: MAKE SEARCH FILTER STICKY 
-        useEffect(() => {
-            window.addEventListener('scroll', handleScrollMobile)
-        }, [Medium, handleScrollMobile])
+        // useEffect(() => {
+        //     window.addEventListener('scroll', handleScrollMobile)
+        // }, [Medium, handleScrollMobile])
 
 
         //* HIDE SCROLL BAR WHILE HEADER IMAGE IS STILL LOADING AT HOME PAGE
