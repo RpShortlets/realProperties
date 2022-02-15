@@ -36,11 +36,7 @@ const NavBar = styled.nav `
 const NavItems =  styled.div `
     ${FlexStyle}
     width: 100%;
-    justify-content: space-around !important;
-    -webkit-justify-content: space-around !important;
-    -moz-justify-content: space-around  !important;
-    -ms-justify-content: space-around !important;
-    -o-justify-content: space-around !important;
+    justify-content: space-between;
     margin: 7px 0;
 
     > div:first-child,
@@ -72,6 +68,14 @@ const NavItems =  styled.div `
             margin-bottom: -3px;
             font-weight: 600;
         }
+    }
+
+    @media screen and (max-width: 768px) { 
+        justify-content: space-around !important;
+        -webkit-justify-content: space-around !important;
+        -moz-justify-content: space-around  !important;
+        -ms-justify-content: space-around !important;
+        -o-justify-content: space-around !important;
     }
 
 `
