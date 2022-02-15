@@ -37,6 +37,12 @@ const NavItems =  styled.div `
     ${FlexStyle}
     width: 100%;
     justify-content: space-between;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between !important;
+    -ms-justify-content: space-between !important;
+    -o-justify-content: space-between !important;
+
     margin: 7px 0;
 
     > div:first-child,
@@ -148,7 +154,7 @@ const Nav = () => {
                         {/* <span aria-label='Real Property'>Real Property</span> */}
                     </Link>
                 </div>
-                {checkScroll && window.location.pathname === '/' ? (
+                {/* {checkScroll && window.location.pathname === '/' ? (
                     <MiniSearch 
                         myRef={myRef} 
                         setOpenNavMini={setOpenNavMini} 
@@ -158,7 +164,7 @@ const Nav = () => {
                     />
                 ) : (
                     <NavVas  Icons={svgs} />
-                )}
+                )} */}
                 <NavDropdown>
                     <Link to='#' onClick={() => setShow(prev => !prev)}>
                         {HamburgerIcon}
