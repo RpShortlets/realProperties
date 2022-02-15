@@ -88,6 +88,11 @@ const NavItems =  styled.div `
 
 
 const NavDropdown = styled.div `
+    flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    -o-flex: 1;
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
@@ -154,7 +159,7 @@ const Nav = () => {
                         {/* <span aria-label='Real Property'>Real Property</span> */}
                     </Link>
                 </div>
-                {/* {checkScroll && window.location.pathname === '/' ? (
+                {checkScroll && window.location.pathname === '/' ? (
                     <MiniSearch 
                         myRef={myRef} 
                         setOpenNavMini={setOpenNavMini} 
@@ -164,24 +169,25 @@ const Nav = () => {
                     />
                 ) : (
                     <NavVas  Icons={svgs} />
-                )} */}
+                )}
                 <NavDropdown>
                     <Link to='#' onClick={() => setShow(prev => !prev)}>
                         {HamburgerIcon}
                     </Link>
-                    {show && (
+                    
                         <AnimatePresence>
-                            <Modal
-                                as={motion.div}
-                                initial={{y: -5}}
-                                animate={{ y: [0, 5, 0], opacity: 1}}
-                                transition={{ ease: "easeOut", duration: 0.7 }}
-                                exit={{opacity: 0, y: [0, 10, 0]}}
-                            >
-                                Hello
-                            </Modal>
+                            {show && (
+                                <Modal
+                                    as={motion.div}
+                                    initial={{y: -5}}
+                                    animate={{ y: [0, 5, 0], opacity: 1}}
+                                    transition={{ ease: "easeOut", duration: 0.7 }}
+                                    exit={{opacity: 0, y: [0, 10, 0]}}
+                                >
+                                    Hello
+                                </Modal>
+                            )}
                         </AnimatePresence>
-                    )}
                 </NavDropdown>
             </NavItems>
         </NavBar>
