@@ -12,6 +12,7 @@ import Button from "../../../components/Button/Button"
 
 import Pic14 from "../../../image/small/picSix.jpeg"
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
+import useProgressiveImage from "../../../hooks/useProgressiveImage/useProgressiveImage";
 
 
 
@@ -25,8 +26,8 @@ const ImageWrapper = styled.div `
 const LargeImage = styled.div `
     grid-column: 1/4;
     grid-row: 1/3;
-    height: ${({height}) => height ? '400px': 'auto'};
-
+    height: ${({height}) => height ? '400px': 'calc(100% - 0px)'};
+    
     div {
         position: relative;
         span {
@@ -58,6 +59,7 @@ const LargeImage = styled.div `
 
     @media (max-width: 768px) {
         grid-column: 1/8;
+        height: ${({height}) => height ? '400px': 'calc(100% - 10px)'};
     }
 `
 
@@ -85,9 +87,7 @@ const ImageContainer = styled.div `
 
 
 
-const CustomLeftArrowButton = (props) => {
-    console.log(props.Query)
-    
+const CustomLeftArrowButton = (props) => { 
     return (
         <>
             {props?.currentImageIndex > 0 && 
@@ -146,9 +146,14 @@ export const CustomRightArrowButton = (props) => {
 
 const PropertyImage = ({status}) => {
     const Query = useMediaQuery("(min-width: 769px)")
+
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
+    const firstImage =  status === 'succeeded' && pictures[0]?.src 
+    
+    const loaded = useProgressiveImage(firstImage) 
+    console.log(loaded)
 
 
     const showPictures = (id) => {
@@ -237,9 +242,11 @@ const PropertyImage = ({status}) => {
                             status === "succeeded" && (
                             <div onClick={() => showPictures(0)} style={{height: '100%'}}>
                                 <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
-                                <span style={{cursor: 'pointer'}}>
-                                    <AiOutlineCamera /> Click to see all pictures
-                                </span>
+                                {loaded && (
+                                    <span style={{cursor: 'pointer'}}>
+                                        <AiOutlineCamera /> Click to see all pictures
+                                    </span>
+                                )}
                             </div>
                         )}
                         

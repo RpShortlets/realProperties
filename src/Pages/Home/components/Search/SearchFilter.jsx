@@ -144,8 +144,6 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         let controls = useAnimation()
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
-        const loaded2 = useProgressiveImage(BG2)
-       
 
 
         //* ADD AND REMOVE BACKGROUND COLOR IF MOBILE AND REMOVE IF NOT MOBILE
