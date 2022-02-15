@@ -283,17 +283,20 @@ const SearchResult = () => {
                             <Results>
                                 {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : (
                                     <>
-                                        {searchResult?.length > 0 ? (
+                                        {status === 'succeeded' && (
                                             <>
-                                                {searchResult?.map((property) => (
-                                                    <Result data={property} key={property.apartment_id}  status={status}/>
-                                                ))}
+                                                {searchResult?.length > 0 ? (
+                                                    <>
+                                                        {searchResult?.map((property) => (
+                                                            <Result data={property} key={property.apartment_id}  status={status}/>
+                                                        ))}
+                                                    </>
+                                                ) : (
+                                                    <Error title="Oops! We can’t find any property that matches your search" Icon={SearchNotFoundIcon} />
+                                                )}
                                             </>
-                                        ) : (
-                                            <Error title="Oops! We can’t find any property that matches your search" Icon={SearchNotFoundIcon} />
-                                        )
-                                        }
-                                    </>
+                                        )}
+                                    </> 
                                 )}
                             </Results>                  
                     </Main>
