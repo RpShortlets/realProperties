@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
-import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon } from '../../Svg/svg';
+import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
 import {motion, AnimatePresence} from "framer-motion"
 import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
@@ -75,6 +75,26 @@ const NavItems =  styled.div `
             margin-left: -15px;
             margin-bottom: -3px;
             font-weight: 600;
+        }
+    }
+
+    .mobileMiniSearch {
+        width: 100%;
+        height: 45px;
+        background: var(--color-light-gray);
+        flex: 20;
+        -webkit-box-flex: 20 !important;
+        -webkit-flex: 20 !important;
+        margin: 0 0.5rem;
+        border-radius: 26px;
+    }
+
+    .mobileHomeIcon {
+        ${FlexStyle}
+
+        svg {
+            font-size: 1.2rem;
+            color: var(--color-primary);
         }
     }
 
@@ -173,22 +193,45 @@ const Nav = () => {
     return (
         <NavBar paddingleft="true" paddingRight="true">
             <NavItems>
-                <div className='navModal'>
-                    <Link to='/'>
-                        {CompanyLogo}
-                        {/* <span aria-label='Real Property'>Real Property</span> */}
-                    </Link>
-                </div>
-                {checkScroll && window.location.pathname === URL ? (
-                    <MiniSearch 
-                        myRef={myRef} 
-                        setOpenNavMini={setOpenNavMini} 
-                        openNavMini={openNavMini} 
-                        handleOption={handleOption} 
-                        SubmitForm={SubmitForm}
-                    />
+                {Query ? (
+                    <div className='navModal'>
+                        <Link to='/'>
+                            {CompanyLogo}
+                            {/* <span aria-label='Real Property'>Real Property</span> */}
+                        </Link>
+                    </div>
                 ) : (
-                    <NavVas  Icons={svgs} />
+                    <>
+                        {newURL ? (<div className='mobileHomeIcon'>
+                            <Link to='/'>
+                                {HomeIcon}
+                            </Link>
+                        </div>) : (
+                            <div className='navModal'>
+                                <Link to='/'>
+                                    {CompanyLogo}
+                                    {/* <span aria-label='Real Property'>Real Property</span> */}
+                                </Link>
+                            </div>
+                        )}
+                    </>
+                )}
+                {newURL ? ( 
+                    <div className="mobileMiniSearch"></div>
+                ) : (
+                    <>
+                        {checkScroll && window.location.pathname === '/' ? (
+                            <MiniSearch 
+                                myRef={myRef} 
+                                setOpenNavMini={setOpenNavMini} 
+                                openNavMini={openNavMini} 
+                                handleOption={handleOption} 
+                                SubmitForm={SubmitForm}
+                            />
+                        ) : (
+                            <NavVas  Icons={svgs} />
+                        )}
+                    </>
                 )}
                 
                 {Query ? (
@@ -196,7 +239,7 @@ const Nav = () => {
                         <Link to='#' onClick={() => setShow(prev => !prev)}>
                             {HamburgerIcon}
                         </Link>
-                        <AnimatePresence>
+                        {/* <AnimatePresence>
                             {show && (
                                 <Modal
                                     as={motion.div}
@@ -208,7 +251,7 @@ const Nav = () => {
                                     Hello
                                 </Modal>
                             )}
-                        </AnimatePresence>
+                        </AnimatePresence> */}
                     </NavDropdown>
                 ) : (
                     <>

@@ -9,7 +9,7 @@ import OpenDestination from '../../Dropdowns/OpenDestination';
 
 
 const MiniSearches =  styled.div `
-    display: none;
+    /* display: none; */
     
     @media (min-width: 769px) {
         display: block;
@@ -68,7 +68,7 @@ const MiniSearch = ({myRef, openNavMini, setOpenNavMini, handleOption, SubmitFor
         
         >
             <div onClick={() => setOpenNavMini(prev => !prev)}>
-                <p>{searchValue ? searchValue : ' Where to you want to stay?'}</p>
+                <p>{searchValue ? searchValue : ' Where do you want to stay?'}</p>
             
             </div>
             <OpenDestination
