@@ -15,6 +15,7 @@ import { Pulse } from "../../../../components/Loader/Spinner";
 import { checkScrollState } from '../../../../redux/actions/componentState';
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from 'framer-motion';
+import { setOpenDrawer } from "../../../../redux/actions/componentState";
 
 
 
@@ -137,13 +138,17 @@ const Fiter = styled.div `
 
 
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
-    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender, setOpenDrawer}) => {
+    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const Query = useMediaQuery("(min-width: 769px)")
         const dispatch = useDispatch();
         let controls = useAnimation()
         const ScrollRef = useRef()
         const loaded = useProgressiveImage(BG)
+
+        const handleDrawer = () => {
+            dispatch(setOpenDrawer(true))
+        }
 
 
 
@@ -257,7 +262,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                                     width={Query ? '150px' : '3rem'}
                                     hover={Query && "var(--color-primary)"}
                                     hoverText="Search"
-                                    onClicks={Query ? SubmitForm: ()=> setOpenDrawer(prev => !prev)} 
+                                    onClicks={Query ? SubmitForm: handleDrawer} 
                                     border= 'none' 
                                     borderRadius={Query ? '' : '57px'}
                                     icon={!Query && <FiSearch />} 

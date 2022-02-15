@@ -9,6 +9,8 @@ import TextMobileStepper from '../Stepper/Stepper';
 import MobileDesitination from '../Mobile Destination/MobileDesitination';
 import MobileDates from '../Mobile Destination/MobileDates';
 import MobileGuests from '../Mobile Destination/MobileGuests';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpenDrawer } from '../../redux/actions/componentState';
 
 const drawerBleeding = 56;
 
@@ -34,11 +36,15 @@ const Puller = styled(Box)(({ theme }) => ({
 
 const steps = ['Destination', 'Dates', 'Guest'];
 
-function SwipeableEdgeDrawer({openDrawer, setOpenDrawer, SubmitForm}) {
+function SwipeableEdgeDrawer({SubmitForm}) {
+    const dispatch = useDispatch();
     const [activeStep, setActiveStep] = React.useState(0);
+    const {openDrawer} = useSelector(state => state.ComponentState)
+
 
     const toggleDrawer = (newOpen) => () => {
-        setOpenDrawer(newOpen);
+        dispatch(setOpenDrawer(false))
+        // setOpenDrawer(newOpen);
     };
 
     const handleNext = () => { // handle next button

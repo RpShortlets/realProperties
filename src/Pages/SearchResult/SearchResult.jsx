@@ -14,6 +14,12 @@ import FilterComponent from "./components/Filter"
 import Error from "../../components/Error/Error";
 import { Error404Icon, SearchNotFoundIcon } from "../../Svg/svg";
 import { PaddingStyle } from "../../styles/globalStyles";
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
+import { AnimatePresence } from "framer-motion"
+import Drawer from "../../components/Drawer/Drawer";
+import { setOpenDrawer } from "../../redux/actions/componentState";
+
+
 
 
 
@@ -46,6 +52,7 @@ const Results = styled.div `
 `
 
 const OtherSearch = styled.div `
+    display: none;
     margin: 2rem 0;
     p {
         margin: 0;
@@ -76,13 +83,15 @@ const OtherSearch = styled.div `
     
     @media screen and (min-width: 769px) { 
         margin: 0;
+        display: block;
     }
 
 
 `
 
 const Count = styled.div `
-    margin-top: max(2.4vw, 1.2rem);
+    margin: 1.2rem 0;
+
     p {
         margin: 0;
         font-size: var(--font-xtra-small-screen);
@@ -97,6 +106,10 @@ const Count = styled.div `
         }
     }
 
+    @media screen and (min-width: 769px) { 
+        margin: max(2.4vw, 1.2rem) 0 0 0;
+    }
+
 `
 
 const SearchResult = () => {
@@ -104,6 +117,7 @@ const SearchResult = () => {
     const navigate = useNavigate()
     const {location, adults, children, checkIn, checkOut,} = useParams();
 
+    //! NEED TO FIX THE REPLICA OF THIS CODE IN THE NAV BAR
     const searchV = location?.slice(9)
     const adult = adults?.slice(7) === 'null' ? '' : adults?.slice(7)
     const childr = children?.slice(9) === 'null' ? '' : children?.slice(9)
@@ -111,15 +125,16 @@ const SearchResult = () => {
     const checkO = checkOut?.slice(9)
 
 
-    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, openDrawer} = useSelector(state => state.ComponentState)
     const {status, propertyResult: {searchResult, count}}= useSelector(state => state.propertyResult)
-
-    console.log(count)
 
     const [guest, setguest] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [slidervalue, setSliderValue] = useState([70000, 150000]);
     const [showCalender, setShowCalender] = useState(false)
+
+
+    const Query = useMediaQuery("(min-width: 769px)")
 
 
     const myRef = useRef(null)
@@ -183,7 +198,7 @@ const SearchResult = () => {
 
     const handlesubmit = (e) => {
         e.preventDefault();
-        // dispatch(searchShortlets({searchV, checkI, checkO, adult, childr}))
+        dispatch(setOpenDrawer(false))
         navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
@@ -215,6 +230,11 @@ const SearchResult = () => {
 
     return (
         <>
+            {!Query && 
+                <AnimatePresence>
+                    <Drawer openDrawer={!openDrawer} SubmitForm={handlesubmit}/>
+                </AnimatePresence>
+            }
             <Section>
                 <Container  paddingleft='true' paddingRight='true'>
                     {status === 'loading' ?(

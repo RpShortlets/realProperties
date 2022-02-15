@@ -153,7 +153,6 @@ const PropertyImage = ({status}) => {
     const firstImage =  status === 'succeeded' && pictures[0]?.src 
     
     const loaded = useProgressiveImage(firstImage) 
-    console.log(loaded)
 
 
     const showPictures = (id) => {

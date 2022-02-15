@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
-import { resetCounts } from '../../redux/actions/componentState';
+import { resetCounts, setOpenDrawer } from '../../redux/actions/componentState';
 import { SectionStyle } from '../../styles/globalStyles';
 import SearchFilter from './components/Search/SearchFilter';
 import WhyRealShortlets from './components/WhyRealShortlets';
@@ -15,6 +15,7 @@ import { AnimatePresence } from "framer-motion"
 
 
 
+
 const Section = styled.section `
     ${SectionStyle}
 `
@@ -24,12 +25,12 @@ const Home = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, openDrawer} = useSelector(state => state.ComponentState)
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
-    const [openDrawer, setOpenDrawer] = useState(false)
+
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
     const Query = useMediaQuery("(min-width: 769px)")
@@ -60,6 +61,7 @@ const Home = () => {
 
     const SubmitForm = async(e) => {
         e.preventDefault();
+        dispatch(setOpenDrawer(false))
         navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
@@ -68,7 +70,7 @@ const Home = () => {
 
             {!Query && 
                 <AnimatePresence initial={true}>
-                    <Drawer openDrawer={openDrawer}  setOpenDrawer={setOpenDrawer} SubmitForm={SubmitForm}/>
+                    <Drawer openDrawer={openDrawer}  SubmitForm={SubmitForm}/>
                 </AnimatePresence>
             }
             <Section>
@@ -88,7 +90,7 @@ const Home = () => {
                     SubmitForm={SubmitForm} 
                     setIsOpenCalender={setIsOpenCalender}
                     isOpenCalender={isOpenCalender}
-                    setOpenDrawer={setOpenDrawer}
+                    // setOpenDrawer={setOpenDrawer}
                     openDrawer={openDrawer}
                 
                 />

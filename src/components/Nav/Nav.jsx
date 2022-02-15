@@ -4,12 +4,13 @@ import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
-import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon } from '../../Svg/svg';
+import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon } from '../../Svg/svg';
 import {motion, AnimatePresence} from "framer-motion"
 import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
-import { saveSearchValue } from '../../redux/actions/componentState';
+import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
 import { searchShortlets } from '../../redux/actionCreators/actionCreators';
+import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 
 
 const svgs = [
@@ -85,6 +86,10 @@ const NavItems =  styled.div `
         -o-justify-content: space-around !important;
     }
 
+    .filterLink {
+        font-size: 2rem;
+    }
+
 `
 
 
@@ -108,7 +113,14 @@ const NavDropdown = styled.div `
 
 
     a {
-        font-size: var(--font-medium);
+        font-size: 2rem;
+    }
+
+
+    @media screen and (min-width: 769px) { 
+        a {
+            font-size: var(--font-medium);
+        }
     }
 
 
@@ -132,10 +144,12 @@ const Nav = () => {
     const {checkScroll} = useSelector(state =>  state.ComponentState)
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
 
-
     const [show, setShow] = useState(false)
     const [openNavMini, setOpenNavMini] = useState(false)
     const myRef = useRef(null)
+    const URL = window.location.href;
+    const newURL = URL.includes('location', 's')
+    const Query = useMediaQuery("(min-width: 769px)")
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -151,6 +165,10 @@ const Nav = () => {
         navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
+    const handleDrawer = () => {
+        dispatch(setOpenDrawer(true))
+    }
+
 
     return (
         <NavBar paddingleft="true" paddingRight="true">
@@ -161,7 +179,7 @@ const Nav = () => {
                         {/* <span aria-label='Real Property'>Real Property</span> */}
                     </Link>
                 </div>
-                {checkScroll && window.location.pathname === '/' ? (
+                {checkScroll && window.location.pathname === URL ? (
                     <MiniSearch 
                         myRef={myRef} 
                         setOpenNavMini={setOpenNavMini} 
@@ -172,11 +190,12 @@ const Nav = () => {
                 ) : (
                     <NavVas  Icons={svgs} />
                 )}
-                <NavDropdown style={{display: '-webkit-box'}}>
-                    <Link to='#' onClick={() => setShow(prev => !prev)}>
-                        {HamburgerIcon}
-                    </Link>
-                    
+                
+                {Query ? (
+                    <NavDropdown style={{display: '-webkit-box'}}>
+                        <Link to='#' onClick={() => setShow(prev => !prev)}>
+                            {HamburgerIcon}
+                        </Link>
                         <AnimatePresence>
                             {show && (
                                 <Modal
@@ -190,7 +209,35 @@ const Nav = () => {
                                 </Modal>
                             )}
                         </AnimatePresence>
-                </NavDropdown>
+                    </NavDropdown>
+                ) : (
+                    <>
+                        {newURL ? (
+                            <Link to='#' className="filterLink" onClick={handleDrawer}>
+                                {FilterIcon}
+                            </Link>
+                        ) : (
+                            <NavDropdown style={{display: '-webkit-box'}}>
+                                <Link to='#' onClick={() => setShow(prev => !prev)}>
+                                    {HamburgerIcon}
+                                </Link>
+                                <AnimatePresence>
+                                    {show && (
+                                        <Modal
+                                            as={motion.div}
+                                            initial={{y: -5}}
+                                            animate={{ y: [0, 5, 0], opacity: 1}}
+                                            transition={{ ease: "easeOut", duration: 0.7 }}
+                                            exit={{opacity: 0, y: [0, 10, 0]}}
+                                        >
+                                            Hello
+                                        </Modal>
+                                    )}
+                                </AnimatePresence>
+                            </NavDropdown>
+                        )}
+                    </>
+                )}                
             </NavItems>
         </NavBar>
     )

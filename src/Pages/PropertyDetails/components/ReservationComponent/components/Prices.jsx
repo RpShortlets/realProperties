@@ -77,8 +77,7 @@ const PriceBody =  styled.div `
 `
 
 const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalServices, TotalCarAndDriverPrice, show}) => {
-    console.log(summary_details)
-
+    
     return (
         <PriceBody display={show ? 'block' : 'none'}>
             <div>

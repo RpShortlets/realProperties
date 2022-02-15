@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 export const ComponentState = createSlice({
     name: 'componentState',
     initialState: {
-        adultcount: null,
-        childrencount: null,
+        adultcount: 0,
+        childrencount: 0,
         guest: 0,
         textTitle: 'Find Shortlets',
         unformattedDates: [],
@@ -13,7 +13,8 @@ export const ComponentState = createSlice({
         useCheckInDate: null,
         useCheckOutDate: null,
         searchValue: '',
-        checkScroll: false
+        checkScroll: false,
+        openDrawer: false,
     }, 
     reducers: {
         incrementAdult: (state) => {
@@ -62,12 +63,15 @@ export const ComponentState = createSlice({
         },
         checkScrollState: (state, action) => {
             state.checkScroll = action.payload
-        }
+        },
+        setOpenDrawer: (state, action) => {
+            state.openDrawer = action.payload
+        },
 
     },
     extraReducers: {}
 })
 
-export const { checkScrollState, newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
+export const { checkScrollState, setOpenDrawer, newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
 
 export default ComponentState.reducer
