@@ -48,11 +48,12 @@ const NavItems =  styled.div `
     > div:first-child,
     > div:nth-child(2),
     > div:last-child  {
-        flex: 1;
-        -webkit-flex: 1;
         -moz-flex: 1;
         -ms-flex: 1;
         -o-flex: 1;
+        flex:1; 
+        -webkit-box-flex:1; 
+        -webkit-flex:1;
     }
 
     a {
