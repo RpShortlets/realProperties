@@ -36,17 +36,21 @@ const NavBar = styled.nav `
 const NavItems =  styled.div `
     ${FlexStyle}
     width: 100%;
-    justify-content: space-around;
-    -webkit-justify-content: space-around;
-    -moz-justify-content: space-around;
-    -ms-justify-content: space-around;
-    -o-justify-content: space-around;
+    justify-content: space-around !important;
+    -webkit-justify-content: space-around !important;
+    -moz-justify-content: space-around  !important;
+    -ms-justify-content: space-around !important;
+    -o-justify-content: space-around !important;
     margin: 7px 0;
 
     > div:first-child,
     > div:nth-child(2),
     > div:last-child  {
         flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        -ms-flex: 1;
+        -o-flex: 1;
     }
 
     a {
@@ -80,10 +84,11 @@ const NavDropdown = styled.div `
     display: -ms-flex;
     display: -o-flex;
     justify-content: end;
-    -webkit-justify-content: end;
-    -moz-justify-content: end;
-    -ms-justify-content: end;
-    -o-justify-content: end;
+    -webkit-justify-content: end !important;
+    -moz-justify-content: end !important;
+    -ms-justify-content: end !important;
+    -o-justify-content: end !important;
+
 
     a {
         font-size: var(--font-medium);
