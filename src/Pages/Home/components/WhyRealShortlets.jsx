@@ -16,8 +16,12 @@ const Wrapper = styled.div `
 
     h2 {
         margin: 0;
-        font-size: var(--font-small);
+        font-size: var(--font-medium);
         font-weight: 600;
+    }
+
+    @media (min-width: 769px) { 
+        font-size: var(--font-small);
     }
 
 `
@@ -55,9 +59,7 @@ const IconDivs = styled.div `
     }
 
     p {
-        /* color: var(--color-dark); */
         margin: .5rem 0 0 0;
-        font-size: var(--font-small-screen)
     }
 
     > div:first-child {
@@ -74,10 +76,20 @@ const IconDivs = styled.div `
 
 
         svg {
-            font-size: var(--font-big);
-            /* color: var(--color-primary); */
+            font-size: 2.5rem;
         }
 
+    }
+
+    @media screen and (min-width: 769px) {
+
+        p {
+            font-size: var(--font-small-screen)
+        }
+
+        svg {
+            font-size: var(--font-big);
+        }
     }
 `
 
