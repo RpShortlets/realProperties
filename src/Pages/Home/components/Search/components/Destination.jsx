@@ -39,7 +39,7 @@ const Destination = ({handleModal, openModal, myRef, handleOption, setOpenModal}
             <Label isActive={openModal} onClick={handleModal}>
                 <div style={{marginLeft: '15px'}}>
                     <p style={{margin: 0, fontWeight: '600'}}>{searchValue ? searchValue : 'Destination'}</p>
-                    <span> Where to you want to stay?</span>
+                    <span> Where do you want to stay?</span>
                 </div>
             </Label>
             {Query && (
