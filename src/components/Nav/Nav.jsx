@@ -75,7 +75,15 @@ const NavItems =  styled.div `
 
 const NavDropdown = styled.div `
     display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
     justify-content: end;
+    -webkit-justify-content: end;
+    -moz-justify-content: end;
+    -ms-justify-content: end;
+    -o-justify-content: end;
 
     a {
         font-size: var(--font-medium);
