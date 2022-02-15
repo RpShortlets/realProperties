@@ -216,9 +216,8 @@ const Nav = () => {
                         )}
                     </>
                 )}
-                {newURL ? ( 
-                    <div className="mobileMiniSearch"></div>
-                ) : (
+
+                {Query ? (
                     <>
                         {checkScroll && window.location.pathname === '/' ? (
                             <MiniSearch 
@@ -230,6 +229,12 @@ const Nav = () => {
                             />
                         ) : (
                             <NavVas  Icons={svgs} />
+                        )}
+                    </>
+                ) : (
+                    <>
+                        {newURL && ( 
+                            <div className="mobileMiniSearch"></div>
                         )}
                     </>
                 )}
@@ -264,7 +269,7 @@ const Nav = () => {
                                 <Link to='#' onClick={() => setShow(prev => !prev)}>
                                     {HamburgerIcon}
                                 </Link>
-                                <AnimatePresence>
+                                {/* <AnimatePresence>
                                     {show && (
                                         <Modal
                                             as={motion.div}
@@ -276,7 +281,7 @@ const Nav = () => {
                                             Hello
                                         </Modal>
                                     )}
-                                </AnimatePresence>
+                                </AnimatePresence> */}
                             </NavDropdown>
                         )}
                     </>
