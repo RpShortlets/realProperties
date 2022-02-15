@@ -5,6 +5,7 @@ import Button from "./Button/Button"
 import { FiMinus } from "react-icons/fi"
 import { IoMdAdd } from "react-icons/io"
 import Backdrop from './Backdrop';
+import useMediaQuery from '../hooks/useMediaQuery/useMediaQuery';
 
 
 
@@ -17,24 +18,28 @@ const AdultDiv = styled.div `
     display: flex;
     align-items: baseline;
     justify-content: space-between;
+    margin-bottom: 1rem;
 
 
     div:first-child {
+        flex: 2;
         h3 {
-            font-size: var(--font-small-screen);
-            font-weight: 600;
+            font-size: var(--font-big);
+            font-weight: 500;
             margin: 0;
 
         }
 
         span {
-            font-size: var(--font-xtraLarge-small);
+            font-size: var(--font-small);
+
         }
     }
 
     div:last-child {
+        flex: 1;
         ${FlexStyle}
-        min-width: 120px;
+        /* min-width: 120px; */
 
         span {
             padding: 5px;
@@ -50,13 +55,45 @@ const AdultDiv = styled.div `
         }
     }
 
+    .adultButton {
+        flex: 1;
+        margin: 0 0.5rem;
+    }
+
+    @media (min-width: 768px) { 
+
+        .adultButton {
+            flex: 1;
+            ${FlexStyle}
+            justify-content: center;
+        }
+
+        div:first-child { 
+            
+            h3 {
+                font-size: var(--font-small-screen);
+            }
+
+            span {
+                font-size: var(--font-xtraLarge-small);
+            }
+        }
+    
+
+    }
 
 `
 
 const SpanCount = styled.div `
-    margin: 0 1rem;
-    font-size: var(--font-xtra-small-screen);
-    color: var(--color-dark)!important;    
+    font-size: var( --font-xtra-small); 
+    color: var(--color-dark)!important;  
+    ${FlexStyle}
+    flex: 1;
+    justify-content: center;  
+
+    @media screen and (min-width: 768px) { 
+        font-size: var(--font-xtra-small-screen);
+    }
 
 `
 
@@ -78,7 +115,7 @@ const ModalDiv = styled.div`
 
 
 const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenGuest,openGuest,border,countAdultMinus, zIndex, countAdultAdd,countMinusChild, countAddChild, myRef, adultcount, styles, MinusAdult, childrencount, AddAdult, MinusChildren, AddChildren}) => {
-
+    const Query = useMediaQuery("(min-width: 769px)")
     return (
         <>
             {openGuest  && <Backdrop onClick={()=> setOpenGuest(false)} zIndex={zIndex} /> }
@@ -93,24 +130,28 @@ const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenG
                                 <span>Ages 18 and above</span>
                             </div>
                             <div>
-                                <Button 
-                                    disabled={adultcount < countAdultMinus} 
-                                    classNames={adultcount < countAdultMinus ? styles.CountNotActive : styles.CountActive} 
-                                    onClicks={MinusAdult} 
-                                    icon={<FiMinus color='var(--color-primary-dark)' />} 
-                                    display="flex" 
-                                    padding="5px"  
-                                    background="transparent"
-                                />
-                                    <SpanCount>{adultcount}</SpanCount>
-                                <Button  
-                                    classNames={adultcount < countAdultAdd ? styles.CountActive : styles.CountNotActive} 
-                                    onClicks={AddAdult} 
-                                    icon={<IoMdAdd  color='var(--color-primary-dark)'/>} 
-                                    background="transparent" 
-                                    padding="5px" 
-                                    display="flex" 
-                                />
+                                <div className="adultButton">
+                                    <Button 
+                                        disabled={adultcount < countAdultMinus} 
+                                        classNames={adultcount < countAdultMinus ? styles.CountNotActive : styles.CountActive} 
+                                        onClicks={MinusAdult} 
+                                        icon={<FiMinus color='var(--color-primary-dark)' />} 
+                                        display="flex" 
+                                        padding={Query ? "5px" : '10px'}  
+                                        background="transparent"
+                                    />
+                                </div>
+                                <SpanCount>{adultcount}</SpanCount>
+                                <div className='adultButton'>
+                                    <Button  
+                                        classNames={adultcount < countAdultAdd ? styles.CountActive : styles.CountNotActive} 
+                                        onClicks={AddAdult} 
+                                        icon={<IoMdAdd  color='var(--color-primary-dark)'/>} 
+                                        background="transparent" 
+                                        padding={Query ? "5px" : '10px'}  
+                                        display="flex" 
+                                    />
+                                </div>
                             </div>
                         </AdultDiv>
                         <AdultDiv>
@@ -119,9 +160,13 @@ const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenG
                                 <span>Age 0 - 1</span>
                             </div>
                             <div>
-                                <Button disabled={DisabledChild}  classNames={childrencount < countMinusChild || DisabledChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex" padding="5px" background="#fff" />
+                                <div className="adultButton">
+                                    <Button disabled={DisabledChild}  classNames={childrencount < countMinusChild || DisabledChild ? styles.CountNotActive : styles.CountActive} onClicks={MinusChildren} icon={<FiMinus  color='var(--color-primary-dark)' />} display="flex"  padding={Query ? "5px" : '10px'} background="#fff" />
+                                </div>
                                     <SpanCount>{AllowAdult ? adultcount === countAdultAdd ? 0 : childrencount : childrencount}</SpanCount>
-                                <Button disabled={DisabledChild} classNames={childrencount < countAddChild  ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd  color='var(--color-primary-dark)' />} background="#fff" padding="5px" display="flex" />
+                                <div className="adultButton">
+                                    <Button disabled={DisabledChild} classNames={childrencount < countAddChild  ? styles.CountActive : styles.CountNotActive} onClicks={AddChildren} icon={<IoMdAdd  color='var(--color-primary-dark)' />} background="#fff"  padding={Query ? "5px" : '10px'}  display="flex" />
+                                </div>
                             </div>
                         </AdultDiv>
                     </GuestDropdown>

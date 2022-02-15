@@ -3,6 +3,10 @@ import { FlexStyle } from "../../../../../styles/globalStyles"
 import styled from "styled-components"
 import Tooltips from "../../../../../components/Tooltip"
 import { motion, AnimatePresence } from 'framer-motion';
+import Button from "../../../../../components/Button/Button";
+import { FiMinus } from "react-icons/fi"
+import { IoMdAdd } from "react-icons/io"
+import useMediaQuery from "../../../../../hooks/useMediaQuery/useMediaQuery";
 
 
 
@@ -226,7 +230,8 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
     carlengthValue, openCar, setOpenCar, showBenzRef, BenZ, handleBenz, Suv, 
     Camry, showCamryRef, showSuvRef, selectedCar, show, carlength}) => {
 
-    
+    const Query = useMediaQuery("(min-width: 769px)")
+
     return (
         <>
             
@@ -291,11 +296,30 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                                         </div>
                                         <div className="carLenghtBtnsDiv">
                                             <Tooltips title='Cannot decrease below 1'>
-                                                <span className="carLengthBtn" onClick={minusDays}>-</span>
+                                                <Button 
+                                                    onClick={minusDays}
+                                                    icon={<FiMinus color='var(--color-primary-dark)' />} 
+                                                    display="flex" 
+                                                    padding={Query ? "5px" : '10px'}  
+                                                    background="transparent"
+                                                    border="1px solid #ccc"
+                                                    borderRadius="32px"
+                                                />
+                                                {/* <span className="carLengthBtn" onClick={minusDays}>-</span> */}
                                             </Tooltips>
+                                            
                                             <span className="carDays">{carlengthValue}</span>
                                             <Tooltips title='Cannot increase above length of stay'>
-                                                <span className="carLengthBtn" onClick={addDays}>+</span>
+                                                <Button  
+                                                    icon={<IoMdAdd  color='var(--color-primary-dark)'/>} 
+                                                    background="transparent" 
+                                                    padding={Query ? "5px" : '10px'}  
+                                                    display="flex" 
+                                                    onClicks={addDays}
+                                                    border="1px solid #ccc"
+                                                    borderRadius="32px"
+                                                />
+                                                {/* <span className="carLengthBtn" onClick={addDays}>+</span> */}
                                             </Tooltips>
                                         </div>
                                     </div>

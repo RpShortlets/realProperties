@@ -3,6 +3,7 @@ import { AmenitiesOne, AmenitiesTwo } from "../data/index"
 import Button from "../../../components/Button/Button"
 import  { useState} from "react"
 import {motion, AnimatePresence} from "framer-motion"
+import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery"
 
 
 const BorderStyle = css`
@@ -35,48 +36,45 @@ const Amenities = styled.div `
 
 const AmenitiesHeader = styled.div `
 
-    > div:nth-child(2) {
+    .showButton {
         display: block;
-        margin-top: max(2vw, 1rem);
-    }
-
-    > div:first-child > div:last-child {
-        display: none; 
+        margin-top: 1.5rem;
     }
 
     @media screen and (min-width: 769px) {
-        
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
         ${BorderStyle}
 
-        > div:first-child {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        > div:first-child > div:last-child {
-            display: block; 
-        }
-
-        > div:nth-child(2) {
+        .showButton {
             display: none;
         }
+
     }
 
 `
-const PropertyAmenities = ({status}) => {
+const PropertyAmenities = () => {
     const [show, setShow] = useState(false)
+    const Query = useMediaQuery("(min-width: 769px)")
+
     return (
         <Amenities>
             <h2>Amenities</h2>
-            <AmenitiesHeader>
-                <motion.div initial={{height: '0%'}} animate={{height: '100%'}} transition={{duration: 1}}>
-                    <AmenitiesOne />
-                    <AmenitiesTwo />
-                    {show &&  ( <AmenitiesOne />)}
-                </motion.div>
-                <div>
-                    <Button  onClicks={() => setShow((prev) => !prev)} color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title="Show all ameninities" border="1.78224px solid #000000" borderRadius= '8.91119px' />
+            <AmenitiesHeader>        
+                <AmenitiesOne />
+                {Query ? (<AmenitiesTwo />) : (
+                    <AnimatePresence>
+                        {show && (
+                        <motion.div initial={{height: '0', opacity: 0}} animate={{height: '100%', opacity: 1}} exit={{height: '0', opacity: 0}} transition={{duration: .5, type: { type: 'spring'}}}>
+                            <AmenitiesTwo />
+                        </motion.div>
+                        )}
+                    </AnimatePresence>     
+                )}
+                
+                <div className="showButton">
+                    <Button  onClicks={() => setShow((prev) => !prev)} color='var(--color-dark)' padding='12px' fontWeight='600' fontSize="var(--font-xtraLarge-small)" background='transparent' title={show  ? "Show less ameninities" : "Show all ameninities"} border="1.78224px solid #000000" borderRadius= '8.91119px' />
                 </div>
             </AmenitiesHeader>
         </Amenities>

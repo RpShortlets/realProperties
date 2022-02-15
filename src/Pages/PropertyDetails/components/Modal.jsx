@@ -92,7 +92,7 @@ const Condition = styled.div `
     justify-content: center;
 
     p {
-        font-size: var(--font-xtra-small-screen);
+        font-size: var(--font-xtra-small);
         margin: 0;
     }
     
@@ -101,15 +101,8 @@ const Condition = styled.div `
 
 const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modalRef, handleChange,
     handleSubmit, checkboxes, openService, setOpenService, TotalAdditionalServices, TotalCarAndDriverPrice,
-
-
-    Query,  setOpenCar,
-    openCar, setDriver, driver, carlength,
-    setRadio, radio, driverlengthValue,
-    carlengthValue, showBenzRef, BenZ, resetData, addDriverLength,
-    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef, Suv, Camry, showCamryRef, handleBenz
-
-}) => {
+    setOpenCar,openCar, setDriver, driver, carlength,setRadio, radio, driverlengthValue, carlengthValue, showBenzRef, BenZ, resetData, addDriverLength,
+    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef, Suv, Camry, showCamryRef, handleBenz }) => {
 
     const dispatch = useDispatch();
     const {adultcount, childrencount} = useSelector(state => state.ComponentState)
@@ -192,7 +185,7 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
                                     countAdultAdd={countAdultAdd}
                                     countMinusChild={countMinusChild}
                                     countAddChild={countAddChild}
-                                    top="75px" 
+                                    top="62px" 
                                     width= "100%" 
                                     left='0'   
                                     border="1px solid rgba(33, 8, 8, 0.22)"
@@ -250,10 +243,7 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
                         reserve={reserve}
                         TotalAdditionalServices={TotalAdditionalServices}
                         TotalCarAndDriverPrice={TotalCarAndDriverPrice}
-                    
                     />
-                    
-                    
                 </Container>
             </Wrapper>
         </Modal>
