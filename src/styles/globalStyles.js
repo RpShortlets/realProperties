@@ -65,6 +65,10 @@ export const FlexStyle = css`
     display: -moz-flex;
     display: -o-flex;
     align-items: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -moz-align-items: center;
+    -o-align-items: center;
 `
 
 //* COMPONENTS STYLES

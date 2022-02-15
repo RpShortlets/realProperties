@@ -37,6 +37,10 @@ const NavItems =  styled.div `
     ${FlexStyle}
     width: 100%;
     justify-content: space-around;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    -o-justify-content: space-around;
     margin: 7px 0;
 
     > div:first-child,
