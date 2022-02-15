@@ -175,15 +175,12 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         
         }, [dispatch, controls]);
 
-        //* CALL: ADD AND REMOVE BACKGROUND 
-        // useEffect(() => {
-        //     handleScroll()
-        // }, [Medium, handleScroll])
+    
 
         // //* CALL: MAKE SEARCH FILTER STICKY 
-        // useEffect(() => {
-        //     window.addEventListener('scroll', handleScrollMobile)
-        // }, [Medium, handleScrollMobile])
+        useEffect(() => {
+            window.addEventListener('scroll', handleScrollMobile)
+        }, [Medium, handleScrollMobile])
 
 
         //* HIDE SCROLL BAR WHILE HEADER IMAGE IS STILL LOADING AT HOME PAGE

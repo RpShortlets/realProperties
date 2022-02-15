@@ -95,6 +95,7 @@ const NavDropdown = styled.div `
     -ms-flex: 1;
     -o-flex: 1;
     display: flex;
+    display: -webkit-box;
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flex;
@@ -171,7 +172,7 @@ const Nav = () => {
                 ) : (
                     <NavVas  Icons={svgs} />
                 )}
-                <NavDropdown>
+                <NavDropdown style={{display: '-webkit-box'}}>
                     <Link to='#' onClick={() => setShow(prev => !prev)}>
                         {HamburgerIcon}
                     </Link>
