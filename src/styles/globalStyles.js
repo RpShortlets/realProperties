@@ -60,6 +60,10 @@ export const SearchFilterLabel = css`
 //* DISPLAY STYLES
 export const FlexStyle = css`
     display: flex;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -o-flex;
     align-items: center;
 `
 
