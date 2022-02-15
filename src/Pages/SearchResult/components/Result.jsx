@@ -1,6 +1,7 @@
 import  { useNavigate } from "react-router-dom"
 import {useSelector } from "react-redux"
 import styled from "styled-components"
+import {FlexStyle} from "../../../styles/globalStyles"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
 // import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
@@ -34,7 +35,13 @@ const CardContainer = styled.div `
 const PictureContainer = styled.div `
     grid-column: 1/3;
     border-radius: 10px 0px 0px 10px;
+    height: ${({height}) => height ? 'auto' : '250px'};
 
+    div {
+        height: 100%;
+        width: 100%;
+    }
+    
     img {
         border-radius: 10px 10px 0 0; 
         object-fit: cover;
@@ -95,7 +102,19 @@ const IconCard = styled.div `
     flex: 1;
 
     div:first-child {
-        display: none;
+        /* display: none; */
+        background: var(--color-primary);
+        border-radius: 32px;
+        ${FlexStyle}
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        justify-content: center;
+        margin-right: 0.2rem;
+
+        span {
+            display: inline-flex;
+        }
     }
 
     div:last-child {
@@ -110,16 +129,14 @@ const IconCard = styled.div `
         width: 20px;
         height: 20px;
         border-radius: 32px; 
-        display: flex;
-        align-items: center;
+        ${FlexStyle}
         justify-content: center;
         margin-right: 7px;
 
         svg {
             color: #fff;
             font-size: 12px;
-            display: flex;
-                align-items: center;
+            ${FlexStyle}
             }
         }
     }
@@ -157,7 +174,7 @@ const Price = styled.div `
 
 
 
-const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, data }) => {
+const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, status }) => {
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
@@ -169,12 +186,11 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
     }
 
 
-    return (
-        
+    return (        
         <Card >
             <CardContainer onClick={handleGetDetails}>
-                <PictureContainer>
-                    <div style={{width: '100%', height: '100%'}}>
+                <PictureContainer height={status === 'succeeded' ? 'true' : 'false'}>
+                    <div>
                         <picture>
                             <source
                                 data-srcset={picture}
@@ -198,41 +214,49 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                         </div>
                         <IconDiv>
                             <IconContent>
-                                    <IconCard>
-                                        <div>
-                                            <span><IoBed/></span>
-                                        </div>
-                                        <div>
-                                            <span>{bed}</span>
-                                            <span>Beds</span>
-                                        </div>
-                                    </IconCard>
-                                    <IconCard>
-                                        <div>
-                                            <span> {Baths}</span> 
-                                        </div>
-                                        <div>
-                                            <span>{bath}</span>
-                                            <span>Bathroom</span>
-                                        </div>
-                                    </IconCard>
-                                    <IconCard>
-                                        <div>
-                                            <span>{Washer}</span> 
-                                        </div>
-                                        <div>
-                                            <span>{washer}</span>   
-                                        </div>                            
-                                    </IconCard>
-                                    <IconCard>
-                                        <div>
-                                            <span>{Rooms}</span>
-                                        </div>
-                                        <div>
-                                            <span>{room} </span>
-                                            <span>Rooms</span>
-                                        </div>
-                                    </IconCard>
+                                    {bed && (
+                                        <IconCard>
+                                            <div>
+                                                <span><IoBed/></span>
+                                            </div>
+                                            <div>
+                                                <span>{bed}</span>
+                                                <span>Beds</span>
+                                            </div>
+                                        </IconCard>
+                                    )}
+                                    {bath && (
+                                        <IconCard>
+                                            <div>
+                                                <span> {Baths}</span> 
+                                            </div>
+                                            <div>
+                                                <span>{bath}</span>
+                                                <span>Bath</span>
+                                            </div>
+                                        </IconCard>
+                                    )}
+                                    {washer && (
+                                        <IconCard>
+                                            <div>
+                                                <span>{Washer}</span> 
+                                            </div>
+                                            <div>
+                                                <span>{washer}</span>   
+                                            </div>                            
+                                        </IconCard>
+                                    )}
+                                    {room && (
+                                        <IconCard>
+                                            <div>
+                                                <span>{Rooms}</span>
+                                            </div>
+                                            <div>
+                                                <span>{room} </span>
+                                                <span>Rooms</span>
+                                            </div>
+                                        </IconCard>
+                                    )}
                             </IconContent>
                         </IconDiv>
                     </div>
