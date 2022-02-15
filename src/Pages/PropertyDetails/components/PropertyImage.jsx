@@ -11,6 +11,7 @@ import Button from "../../../components/Button/Button"
 
 
 import Pic14 from "../../../image/small/picSix.jpeg"
+import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 
 
 
@@ -85,9 +86,31 @@ const ImageContainer = styled.div `
 
 
 const CustomLeftArrowButton = (props) => {
+    console.log(props.Query)
+    
     return (
         <>
-            {props?.currentImageIndex > 0 && <Button alignT="center" display="flex" width="40px" height="40px" boxShadow="var(--shadow)" zIndex='15' left= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineLeft  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+            {props?.currentImageIndex > 0 && 
+                <Button 
+                    alignT="center" 
+                    display="flex" 
+                    width={props.Query ? "40px" : ""} 
+                    height={props.Query ? "40px" : ""} 
+                    boxShadow="var(--shadow)" 
+                    zIndex='15' 
+                    left={props.Query ? '12%' :  '1%'}
+                    position='absolute' 
+                    onClicks={props.onClicks}  
+                    icon={<AiOutlineLeft />} 
+                    color="var(--color-primary)"  
+                    fontSize={props.Query ? "var(--font-small)" : "var(--font-small)" } 
+                    border="0" 
+                    outline="0" 
+                    background="#fff" 
+                    borderRadius="20px"
+                    padding={props.Query ? "6px 10px" : '15px'} 
+                />
+            }
         </>
     )
 }
@@ -95,13 +118,34 @@ const CustomLeftArrowButton = (props) => {
 export const CustomRightArrowButton = (props) => {
     return (
         <>
-            {props?.images?.length > props?.currentImageIndex + 1  && <Button alignT="center" display= "flex" width="40px" height= "40px" boxShadow="var(--shadow)" zIndex='15' right= '12%' position='absolute' onClicks={props.onClicks}  icon={<AiOutlineRight  color="var(--color-primary)"  fontSize="var(--font-small)"/>} border="0" outline="0" background="#fff" borderRadius="20px" padding="6px 10px" />}
+            {props?.images?.length > props?.currentImageIndex + 1  && 
+                <Button 
+                    alignT="center" 
+                    display= "flex" 
+                    width={props.Query ? "40px" : ""} 
+                    height={props.Query ? "40px" : ""}  
+                    boxShadow="var(--shadow)" 
+                    zIndex='15' 
+                    right={props.Query ? '12%' : '1%'} 
+                    position='absolute' 
+                    onClicks={props.onClicks}  
+                    icon={<AiOutlineRight />} 
+                    color="var(--color-primary)"  
+                    fontSize={props.Query ? "var(--font-small)" : "var(--font-small)" } 
+                    border="0" 
+                    outline="0" 
+                    background="#fff" 
+                    borderRadius="20px" 
+                    padding={props.Query ? "6px 10px" : '15px'}  
+                />
+            }
         </>
     )
 }
 
 
 const PropertyImage = ({status}) => {
+    const Query = useMediaQuery("(min-width: 769px)")
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const {PropertyDetails: {pictures}} = useSelector(state => state.propertyDetails)
@@ -183,8 +227,8 @@ const PropertyImage = ({status}) => {
                 images={images}
                 currentIndex={currentImageIndex}
                 onClose={() => setIsOpen(false)} 
-                renderPrevButton={() => (<CustomLeftArrowButton onClicks={gotoPrevious}  currentImageIndex={currentImageIndex}/>)}
-                renderNextButton={() => (<CustomRightArrowButton  onClicks={gotoNext} currentImageIndex={currentImageIndex} images={images} />)}
+                renderPrevButton={() => (<CustomLeftArrowButton Query={Query} onClicks={gotoPrevious}  currentImageIndex={currentImageIndex}/>)}
+                renderNextButton={() => (<CustomRightArrowButton Query={Query} onClicks={gotoNext} currentImageIndex={currentImageIndex} images={images} />)}
             />
             <ImageContainer>
                 <ImageWrapper>
