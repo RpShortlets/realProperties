@@ -31,6 +31,11 @@ const Companies = () => {
                             About our Value Added Service
                         </NavLink>
                     </div>
+                    <div>
+                        <NavLink to="/">
+                            Terms and Condition
+                        </NavLink>
+                    </div>
                 </div>
             </div>
         </div>

@@ -34,7 +34,7 @@ const AdultDiv = styled.div `
     div:first-child {
         h3 {
             font-size: var( --font-big);
-            font-weight: 600;
+            font-weight: 500;
             margin: 0;
 
         }
@@ -62,13 +62,19 @@ const AdultDiv = styled.div `
         }
     }
 
+    .drawerButton {
+        margin: 0 0.8rem;
+        flex: 1;
+    }
+
 
 `
 
 const SpanCount = styled.div `
-    margin: 0 1rem;
-    font-size: var(   --font-medium);
-    color: var(--color-dark)!important;    
+    font-size: var(--font-medium);
+    color: var(--color-dark)!important; 
+    flex: 1;
+    
 
 `
 
@@ -125,27 +131,31 @@ const MobileGuests = () => {
                     <span>Ages 18 and above</span>
                 </div>
                 <div>
-                    <Button 
-
-                        classNames={adultcount < countAdultMinus ? styles.CountNotActive : styles.CountActive} 
-                        onClicks={MinusAdult} 
-                        icon={<FiMinus color='var(--color-primary-dark)' />} 
-                        display="flex" 
-                        padding="5px"  
-                        background="transparent"
-                        fontSize="var(--font-medium)"
-                    />
+                    <div className="drawerButton">
+                        <Button 
+                            classNames={adultcount < countAdultMinus ? styles.CountNotActive : styles.CountActive} 
+                            onClicks={MinusAdult} 
+                            icon={<FiMinus color='var(--color-primary-dark)' />} 
+                            display="flex" 
+                            padding="5px"  
+                            background="transparent"
+                            fontSize="var(--font-medium)"
+                        />
+                    </div>
                         <SpanCount>{adultcount}</SpanCount>
-                    <Button  
-                        classNames={adultcount < countAdultAdd ? styles.CountActive : styles.CountNotActive} 
-                        onClicks={AddAdult} 
-                        icon={<IoMdAdd  
-                        color='var(--color-primary-dark)'/>} 
-                        background="transparent" 
-                        padding="5px" 
-                        display="flex" 
-                        fontSize="var(--font-medium)"
-                    />
+                    <div className="drawerButton">
+                        <Button  
+                            classNames={adultcount < countAdultAdd ? styles.CountActive : styles.CountNotActive} 
+                            onClicks={AddAdult} 
+                            icon={<IoMdAdd  />}
+                            color='var(--color-primary-dark)'
+                            background="transparent" 
+                            padding="5px" 
+                            display="flex" 
+                            fontSize="var(--font-medium)"
+                        />
+                    </div>
+                    
                 </div>
             </AdultDiv>
             <AdultDiv>
@@ -154,25 +164,28 @@ const MobileGuests = () => {
                     <span>Age 0 - 1</span>
                 </div>
                 <div>
-                    <Button   
-                        classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} 
-                        onClicks={MinusChildren} 
-                        icon={<FiMinus  color='var(--color-primary-dark)' />} 
-                        display="flex" 
-                        padding="5px" 
-                        background="#fff"  
-                        fontSize="var(--font-medium)"
-                    />
+                    <div className="drawerButton">
+                        <Button   
+                            classNames={childrencount < countMinusChild ? styles.CountNotActive : styles.CountActive} 
+                            onClicks={MinusChildren} 
+                            icon={<FiMinus  color='var(--color-primary-dark)' />} 
+                            display="flex" 
+                            padding="5px" 
+                            background="#fff"  
+                            fontSize="var(--font-medium)"
+                        />
+                    </div>
                         <SpanCount>{childrencount }</SpanCount>
-                    <Button  
-                        classNames={childrencount < countAddChild  ? styles.CountActive : styles.CountNotActive} 
-                        onClicks={AddChildren} 
-                        icon={<IoMdAdd  color='var(--color-primary-dark)' />} 
-                        background="#fff" 
-                        padding="5px" display="flex"  
-                
-                        fontSize="var(--font-medium)"
-                    />
+                    <div className="drawerButton">
+                        <Button  
+                            classNames={childrencount < countAddChild  ? styles.CountActive : styles.CountNotActive} 
+                            onClicks={AddChildren} 
+                            icon={<IoMdAdd  color='var(--color-primary-dark)' />} 
+                            background="#fff" 
+                            padding="5px" display="flex"  
+                            fontSize="var(--font-medium)"
+                        />
+                    </div>
                 </div>
             </AdultDiv>
         </GuestDropdown>

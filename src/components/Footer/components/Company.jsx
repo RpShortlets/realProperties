@@ -2,7 +2,7 @@ import styled from "styled-components"
 import RealProperties from "./RealProperties"
 import Companies from "./Companies"
 import Support from "./Support"
-import Terms from "./Terms"
+// import Terms from "./Terms"
 import { PaddingStyle } from "../../../styles/globalStyles"
 
 
@@ -21,7 +21,7 @@ const GridWrapper = styled.div `
 
         h3 {
             color: #F7F7F7;
-            font-size: var(--font-small-screen);
+            font-size: var(--font-medium);
             margin: 0;
         }
 
@@ -31,7 +31,7 @@ const GridWrapper = styled.div `
 
         a {
             color: var(--color-light-gray);
-            font-size: .6rem;
+            font-size: var(--font-small-screen);
             opacity: .8;
         }
 
@@ -41,8 +41,16 @@ const GridWrapper = styled.div `
     }
     
     
-    @media screen and (max-width: 786px) {
+    @media screen and (min-width: 786px) {
+        div:last-child {
+            h3 {
+                font-size: var(--font-small) !important;
+            }
 
+            a {
+                font-size: var( --font-xtraLarge-small);
+            }
+        }
     }
 
     @media screen and (min-width: 990px) {

@@ -16,6 +16,11 @@ const Support = () => {
                             Cancellation options
                         </NavLink>
                     </div>
+                    <div>
+                        <NavLink to="/">
+                            Privacy Policy
+                        </NavLink>
+                    </div>
                     {/* <div>
                         <NavLink to="/">
                             List a Property
