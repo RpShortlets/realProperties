@@ -11,6 +11,8 @@ import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
 import Drawer from "../../components/Drawer/Drawer";
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AnimatePresence } from "framer-motion"
+import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
+import BG from "../../image/background.webp"
 
 
 
@@ -33,6 +35,7 @@ const Home = () => {
 
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
+    const loaded = useProgressiveImage(BG)
     const Query = useMediaQuery("(min-width: 769px)")
     const myRef = useRef(null)
 
@@ -92,9 +95,10 @@ const Home = () => {
                     isOpenCalender={isOpenCalender}
                     // setOpenDrawer={setOpenDrawer}
                     openDrawer={openDrawer}
+                    loaded={loaded}
                 
                 />
-                <WhyRealShortlets />
+                {loaded && <WhyRealShortlets />}
             </Section>
         </>
     )

@@ -8,7 +8,6 @@ import {FiSearch} from "react-icons/fi"
 import Destination from "./components/Destination";
 import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
-import useProgressiveImage  from "../../../../hooks/useProgressiveImage/useProgressiveImage";
 import BG from "../../../../image/background.webp"
 import BG2 from "../../../../image/back.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";
@@ -138,13 +137,12 @@ const Fiter = styled.div `
 
 
 const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
-    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender}) => {
+    guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender, loaded}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const Query = useMediaQuery("(min-width: 769px)")
         const dispatch = useDispatch();
         let controls = useAnimation()
         const ScrollRef = useRef()
-        const loaded = useProgressiveImage(BG)
 
         const handleDrawer = () => {
             dispatch(setOpenDrawer(true))

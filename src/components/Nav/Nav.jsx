@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
-import {motion, AnimatePresence} from "framer-motion"
 import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
 import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
 import { searchShortlets } from '../../redux/actionCreators/actionCreators';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
+import { AiOutlineMinus } from 'react-icons/ai'
 
 
 const svgs = [
@@ -87,6 +87,38 @@ const NavItems =  styled.div `
         -webkit-flex: 20 !important;
         margin: 0 0.5rem;
         border-radius: 26px;
+        width: 100%;
+        padding: min(1rem, .3rem);
+        cursor: pointer;
+
+        div {
+            ${FlexStyle};
+            justify-content: center;
+            height: 100%;
+        }
+
+        p {
+            margin: 0;
+            font-size: var( --font-small);
+        }
+
+        p:first-child { 
+            /* font-weight: 600; */
+        }
+
+        p:nth-child(2) { 
+            /* margin: 0 .7rem !important; */
+        }
+
+        div:last-child { 
+            margin: 0 0 0 0.6rem;
+        }
+
+        svg {
+            ${FlexStyle};
+            font-size: 12px;
+            margin: 0 0.2rem;
+        }
     }
 
     .mobileHomeIcon {
@@ -108,6 +140,12 @@ const NavItems =  styled.div `
 
     .filterLink {
         font-size: 2rem;
+    }
+
+    @media screen and (max-width: 320px) {
+        .mobileMiniSearch {
+            display: none;
+        }
     }
 
 `
@@ -162,14 +200,17 @@ const Nav = () => {
     const navigate = useNavigate();
 
     const {checkScroll} = useSelector(state =>  state.ComponentState)
-    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
 
     const [show, setShow] = useState(false)
     const [openNavMini, setOpenNavMini] = useState(false)
     const myRef = useRef(null)
+
     const URL = window.location.href;
     const newURL = URL.includes('location', 's')
     const Query = useMediaQuery("(min-width: 769px)")
+    const checKIn = useCheckInDate?.split(",")[1]
+    const checkOut = useCheckOutDate?.split(",")[1]
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -234,7 +275,16 @@ const Nav = () => {
                 ) : (
                     <>
                         {newURL && ( 
-                            <div className="mobileMiniSearch"></div>
+                            <div className="mobileMiniSearch">
+                                <div>
+                                    <p>{searchValue}</p>
+                                    <div>
+                                        <p>{checKIn}</p>
+                                        {checKIn && checkOut ? <AiOutlineMinus /> : null}
+                                        <p>{checkOut}</p>
+                                    </div>
+                                </div>
+                            </div>
                         )}
                     </>
                 )}
