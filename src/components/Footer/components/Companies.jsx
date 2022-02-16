@@ -7,7 +7,7 @@ const Companies = () => {
                 <h3>Company</h3>
                 <div>
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/about">
                             About Us
                         </NavLink>
                     </div>

@@ -1,4 +1,4 @@
-import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation} from "./export"
+import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About} from "./export"
 import {Navigate} from "react-router-dom";
 
 const routes = (isLoggedIn, Query) => 
@@ -79,6 +79,10 @@ const routes = (isLoggedIn, Query) =>
         {
             path: '/reservation',
             element: Query ? <Navigate to="/" /> : <MobileReservation />,
+        },
+        {
+            path: '/about',
+            element: <About />,
         },
         {
             path: '*',

@@ -9,7 +9,7 @@ const Container = styled.div `
 `
 
 const Wrapper = styled.div `
-    ${PaddingStyle}
+    ${({about}) => about ? '' : PaddingStyle };
     padding-top: 3rem;
     padding-bottom: 3rem;
     overflow: hidden;
@@ -18,6 +18,7 @@ const Wrapper = styled.div `
         margin: 0;
         font-size: var(--font-medium);
         font-weight: 600;
+        text-align: ${({about}) => about ? 'center' : ''};
     }
 
     @media (min-width: 769px) { 
@@ -94,11 +95,11 @@ const IconDivs = styled.div `
 `
 
 
-const WhyRealShortlets = () => {
+const WhyRealShortlets = ({about}) => {
     
     return (
         <Container>
-            <Wrapper paddingleft='true' paddingRight='true'>
+            <Wrapper  about={about} paddingleft='true' paddingRight='true'>
                 <h2>Why Real Shortlets</h2>
                 <Content >
                     {RealShortlets.map((item) => (
