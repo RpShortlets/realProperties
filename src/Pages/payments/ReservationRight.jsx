@@ -18,6 +18,7 @@ import { CancelIcon } from "../../Svg/svg"
 import { Pulse } from "../../components/Loader/Spinner"
 import {useValidate, useValidateId, useValidateLast} from "../../hooks/useValidate/useValidate"
 import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
+import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 
 
 const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others'];
@@ -25,22 +26,24 @@ const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'Nat
 
 const SectionRight = styled.div `
     background: #fff;
-    width: 100%; 
-    z-index: 11; 
-    height: 100vh;
-    position: absolute; 
-    /* top: 0;  */
-    right: 0px;
-    overflow-y: scroll;
+
 
     @media screen and (min-width: 769px) {
         width: 40%; 
+        height: 100vh;
+        width: 100%; 
+        z-index: 11; 
+        position: absolute; 
+        /* top: 0;  */
+        right: 0px;
+        overflow-y: scroll;
     }
 
 `
 
 const MainRight = styled.div `
-    padding:  2rem 3rem;
+    padding:  1rem 2rem;
+
     h1 {
         font-size: var(--font-small);
         font-weight: 600;
@@ -50,11 +53,14 @@ const MainRight = styled.div `
     .reservationHeader {
         ${FlexStyle}
         justify-content: space-between;
-        /* margin-bottom: max(4vw, 2rem); */
     }
 
     .FormHeader {
         margin: 2rem 0;
+    }
+
+    @media screen and (min-width: 769px) { 
+        padding:  2rem 3rem;
     }
 
 `
@@ -66,8 +72,10 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
     const {status} = useSelector(state => state.customerRecord)
     const {ongoingTransactions: {Ongoing_id, apartment_id}} = useSelector(state => state.paymentState)
-    
-    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: "", dateofBirth: ''})
+    const Query = useMediaQuery("(min-width: 769px)")
+
+
+    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
     const [value, setValue] = useState(new Date());
     const [phn, setPhone] = useState("")
@@ -84,6 +92,8 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const {validatedName} = useValidate({name, focus})
     const {validatedLastName} =  useValidateLast({lastname, focusLast})
     const {validatedID} = useValidateId({Idnum, focusId})
+
+    console.log(formdata, dropdown, value, phn)
 
     const Focus = (e) => {
         if(e.target.name) {
@@ -109,11 +119,6 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const countryList = Country.map((x) => x.name)
 
 
-    // var regmm = '^([0|+[0-9]{1,5})?([7-9][0-9]{9})$';
-    // var regmob = new RegExp(regmm)
-
-
-
     //* Validate Email
     const checkEmail = value => {
         if(validator.isEmail(value)) {
@@ -134,7 +139,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validatedName && formdata.firstname && validatedLastName  && formdata.lastname && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.match(/[0-9]/).length > 11 ) {
+        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.match(/[0-9]/) ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
             navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
             // dispatch(RetrieveTransaction({ongoingId}))
@@ -173,21 +178,23 @@ const ReservationRight = ({setShowModal, proceess}) => {
                         <div>
                             <h1>Contact Information</h1>
                         </div>
-                        <div>
-                            <Button 
-                                background="var(--color-white)" 
-                                icon={CancelIcon} 
-                                border= '2px solid #ccc' 
-                                borderRadius= '32px'
-                                width= '25px'
-                                height= '25px'
-                                display='flex'
-                                alignT= 'center'
-                                justify= 'center'
-                                fontSize= '12px'
-                                onClicks={() => setShowModal(false)}
-                            />
-                        </div>
+                        {Query && (
+                            <div>
+                                <Button 
+                                    background="var(--color-white)" 
+                                    icon={CancelIcon} 
+                                    border= '2px solid #ccc' 
+                                    borderRadius= '32px'
+                                    width= '25px'
+                                    height= '25px'
+                                    display='flex'
+                                    alignT= 'center'
+                                    justify= 'center'
+                                    fontSize= '12px'
+                                    onClicks={() => setShowModal(false)}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className="FormHeader">
                         <form onSubmit={submitFormReservation} className="noselect"  style={{marginBottom: '3rem'}}>

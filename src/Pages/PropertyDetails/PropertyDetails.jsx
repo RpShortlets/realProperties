@@ -234,9 +234,6 @@ const PropertyDetails = () => {
     }
 
     
-
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const stayLenght =  summary_details[0]?.stay_length;
@@ -249,16 +246,23 @@ const PropertyDetails = () => {
         const carPrice = summary_details[0]?.total_car_price;
         const driver = summary_details[0]?.total_driver_price;
 
-        if(checkInD !==  '' && checkOutD !== '') {
-            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-            setShowModal(true)
-            setshow(false)
+        if(Query) {
+            if(checkInD !==  '' && checkOutD !== '') {
+                dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+                setShowModal(true)
+                setshow(false)
+            } else {
+                OpenNotificationWithIcon({
+                    message: 'Please select check in and check out date',
+                    type: 'warning',
+                })
+            }
         } else {
-            OpenNotificationWithIcon({
-                message: 'Please select check in and check out date',
-                type: 'warning',
-            })
+            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+            navigate('/reservation')
+            setshow(false)
         }
+        
     }
 
 
@@ -328,14 +332,14 @@ const PropertyDetails = () => {
     }, [showModal])
 
 
-    useEffect(() => {
-        if(status === 'loading') {            
-            document.body.style.overflow = 'hidden'
-        }
-        return () => {
-            document.body.style.overflow = 'auto'
-        }
-    }, [status])
+    // useEffect(() => {
+    //     if(status === 'loading') {            
+    //         document.body.style.overflow = 'hidden'
+    //     }
+    //     return () => {
+    //         document.body.style.overflow = 'auto'
+    //     }
+    // }, [status])
 
 
     if(status === 'failed') {

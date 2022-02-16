@@ -204,7 +204,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                     <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel"  style={{height: '100%'}}>
                         <div className="carousel-inner"  style={{height: '100%', }}>
                             <div className="carousel-item active" style={{height: '100%', }}>
-                                <img src={BG} class="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
+                                <img src={BG} className="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
                             </div>
                             <div className="carousel-item" style={{height: '100%', }}>
                                 <img src={BG2} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>

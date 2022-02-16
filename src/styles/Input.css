@@ -5,7 +5,7 @@
 
 .input-container label {
     display: block;
-    font-size: var( --font-small-screen) !important;
+    font-size: var( --font-small) !important;
     color: #fff;
     color: var(--color-dark);
 }
@@ -19,7 +19,7 @@
     background: #FFFFFF;
     border: 1px solid #2193B0;
     color: var(--color-primary);
-    font-size: var(--font-xtra-small-screen);
+    font-size: var(--font-small);
     outline: 0;
     padding: 10px;
     padding-left: max(4vw, 2rem);
@@ -83,7 +83,7 @@ input[type="date"] {
     box-shadow: none;
     border: 1px solid #2193B0;
     color: var(--color-primary);
-    font-size: var(--font-xtra-small-screen);
+    font-size: var(--font-small);
 }
 
 .input-container .react-tel-input .form-control:focus {
@@ -101,5 +101,18 @@ input[type="date"] {
 @media screen and (max-width: 560px) {
     .input-container label {
         font-size: .8rem;
+    }
+}
+
+/*************** MEDIA******************************/
+
+@media screen and (min-width:769px) {
+    .input-container select,
+    .input-container .react-tel-input .form-control  {
+        font-size: var(--font-xtra-small-screen);
+    }
+
+    .input-container label {
+        font-size: var(--font-small-screen);
     }
 }

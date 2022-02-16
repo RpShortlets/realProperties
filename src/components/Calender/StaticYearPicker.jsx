@@ -13,7 +13,7 @@ const InputForm = styled.input `
     background: #FFFFFF;
     border: 1px solid ${({error}) => error ? 'red' : '#2193B0'};
     color: var(--color-primary);
-    font-size: var(--font-xtra-small-screen);
+    font-size: var(--font-small);
     outline: 0;
     padding: 10px;
     padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
@@ -41,12 +41,16 @@ const InputForm = styled.input `
       background-color: #ccc;
     }
 
+    @media screen and (min-width: 768px) {
+      font-size: var(--font-xtra-small-screen);
+    }
+
 `
 
 const Label = styled.label `
   display: flex;
   align-items: center;
-  font-size: var( --font-small-screen) !important;
+  font-size: var( --font-small) !important;
   color: #fff;
   color: var(--color-dark);
 
@@ -54,6 +58,10 @@ const Label = styled.label `
   svg {
     font-size: var(--font-small);
     margin-left: 5px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: var(--font-small-screen);
   }
 
 `

@@ -7,13 +7,15 @@ import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
 import { useRoutes } from 'react-router-dom';
 import routes from "./routes";
+import useMediaQuery from "./hooks/useMediaQuery/useMediaQuery";
 
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem('admin'))
   const location = useLocation();
   const isLoggedIn = user ? true : false;
-  const routing = useRoutes(routes(isLoggedIn));
+  const Query = useMediaQuery("(min-width: 769px)")
+  const routing = useRoutes(routes(isLoggedIn, Query));
   
   const invokeGA = () => {
     ReactGa.initialize('UA-181778020-1');
