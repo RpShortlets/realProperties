@@ -238,7 +238,7 @@ console.log(open)
                             </div>
                             <div>
                                 
-                                        <a href="https://wa.me/09044777700?text=Welcome%20to%20Real%20Shortlet"  target='_blank' rel="noreferrer" >
+                                        <a href="https://wa.me/+2349044777700?text=Welcome%20to%20Real%20Shortlet"  target='_blank' rel="noreferrer" >
                                         <div className="contactWrapperBody">
                                             <div>
                                                 <span>{WhatsAppIcon}</span>
