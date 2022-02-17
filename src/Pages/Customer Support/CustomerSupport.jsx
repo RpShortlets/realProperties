@@ -83,6 +83,7 @@ const FAQ = styled.div`
         .FaqContentHeader { 
             ${FlexStyle}
             justify-content: space-between;
+            cursor: pointer;
         }
 
         .FaqContentBody {
@@ -175,7 +176,7 @@ const CustomerSupport = () => {
 console.log(open)
     return (
         <Section>
-            {loadedImg && (
+            {/* {loadedImg && ( */}
                 <Main>
                     <ParallaxBanner
                         layers={[
@@ -255,7 +256,7 @@ console.log(open)
                             <>
                                 {FaqData?.map((data, index) => (
                                     <div className='FaqContent' key={data.id}>
-                                        <div className="FaqContentHeader">
+                                        <div className="FaqContentHeader"onClick={() => handleFaq(data?.id)}>
                                             <h3>{data.header}</h3>
                                             <Button 
                                                 icon={open.id === data?.id && open.open ? <FiMinus/> : <IoMdAdd/>} 
@@ -265,7 +266,6 @@ console.log(open)
                                                 display="flex"
                                                 borderRadius="32px"
                                                 padding=".4rem"
-                                                onClicks={() => handleFaq(data?.id)}
                                             />
                                         </div>
                                         <AnimatePresence initial={false}>
@@ -292,7 +292,7 @@ console.log(open)
                         </FAQ>
                     </Container>
                 </Main>
-            )}
+            {/* )} */}
         </Section>
     )
 };
