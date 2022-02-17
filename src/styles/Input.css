@@ -5,8 +5,9 @@
 
 .input-container label {
     display: block;
-    font-size: 1rem;
+    font-size: var( --font-small) !important;
     color: #fff;
+    color: var(--color-dark);
 }
 
 .input-container label svg {
@@ -18,15 +19,20 @@
     background: #FFFFFF;
     border: 1px solid #2193B0;
     color: var(--color-primary);
-    box-shadow: 0px 7px 64px rgb(0 0 0 / 7%);
+    font-size: var(--font-small);
     outline: 0;
-    /* border: 0; */
     padding: 10px;
-    padding-left: 2.2rem;
+    padding-left: max(4vw, 2rem);
     border-radius: 4px;
     width: 100%;
     height: 45px;
     margin-top: 7px;
+    transition: border .2s;
+}
+
+.input-container input {
+    box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
+    border-radius: 6px;
 }
 
 .input-container input:focus,
@@ -51,10 +57,10 @@ select {
 .input-container span {
     position: absolute;
     z-index: 1;
-    left: 10px;
+    left: 15px;
     top: 50%;
-    transform: translateY(15%);
-    font-size: 1.1rem;
+    transform: translateY(5%);
+    /* font-size: var(--font-small); */
     color: var(--color-primary);
 }
 
@@ -74,85 +80,39 @@ input[type="date"] {
 .input-container .react-tel-input .form-control {
     width: 100% !important;
     height: 45px;
+    box-shadow: none;
+    border: 1px solid #2193B0;
+    color: var(--color-primary);
+    font-size: var(--font-small);
 }
+
+.input-container .react-tel-input .form-control:focus {
+    border: 2px solid var(--color-primary);
+}
+
 
 .input-container .react-tel-input {
     margin-top: 8px;
 }
 
-/******************** DATE INPUT STYLE ****************************/
-
-.input-container .ant-picker {
-    width: 100% !important;
-    margin-top: 10px !important;
-    border-radius: 4px;
-}
-
-.input-container .ant-picker-input input{
-    outline: 0 !important;
-    border: 0 !important;
-    padding-left: 10px !important;
-    margin: 0 !important;
-    padding: 6px !important;
-    padding-left: 2.2rem !important;
-    color: var(--color-primary);
-}
-
-.input-container .ant-picker-input span {
-    left: 3px;
-    top: 18%;
-}
-
-.input-container .ant-picker-input input::-webkit-input-placeholder {
-    color: var(--color-primary);
-}
-
-.ant-picker {
-    padding: 0 !important;
-}
-
-.ant-picker input {
-    height: 40px !important;
-}
-
-.ant-picker-cell .ant-picker-cell-inner {
-    min-width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-}
-
-.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
-    border: 0 !important;
-}
-
-.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner, .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
-    color: #fff;
-    background: linear-gradient(225deg, #70B4C6 0%, #17677B 100%) !important;
-    border-radius: 14px !important;
-}
-
-.ant-picker-cell:hover:not(.ant-picker-cell-in-view) .ant-picker-cell-inner, .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end) .ant-picker-cell-inner {
-    background: #D8E3FF !important;
-    color: #2193B0;
-    border-radius: 15px;
-    min-width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-}
-
-.ant-picker-range-separator {
-    display: none !important;
-}
-
-.input-range-picker span {
-    left: 3px !important;
-    top: 18% !important;
-}
 
 /************************** END OF DATE STYLES ****************************************/
 
 @media screen and (max-width: 560px) {
     .input-container label {
         font-size: .8rem;
+    }
+}
+
+/*************** MEDIA******************************/
+
+@media screen and (min-width:769px) {
+    .input-container select,
+    .input-container .react-tel-input .form-control  {
+        font-size: var(--font-xtra-small-screen);
+    }
+
+    .input-container label {
+        font-size: var(--font-small-screen);
     }
 }

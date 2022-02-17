@@ -1,62 +1,106 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router"
-import Button from "../../components/Button"
-import "../../styles/home.css"
-import Items from "./components/Items";
-import {Helmet} from "react-helmet"
+import { useState, useRef } from 'react';
+import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux';
+import { resetCounts, setOpenDrawer } from '../../redux/actions/componentState';
+import { SectionStyle } from '../../styles/globalStyles';
+import SearchFilter from './components/Search/SearchFilter';
+import WhyRealShortlets from './components/WhyRealShortlets';
+import { useNavigate } from 'react-router';
+import { saveSearchValue } from '../../redux/actions/componentState';
+import useAddGuestTotal from '../../hooks/useAddGuestTotal/useAddGuestTotal';
+import Drawer from "../../components/Drawer/Drawer";
+import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
+import { AnimatePresence } from "framer-motion"
+import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
+import BG from "../../image/background.webp"
 
+
+
+
+
+const Section = styled.section `
+    ${SectionStyle}
+`
 
 
 const Home = () => {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const handleClick = () => {
-        navigate("/reservation")
+    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, openDrawer} = useSelector(state => state.ComponentState)
+    const [homeDateValue, setHomeDateValue] = useState([null, null]);
+    const [openModal, setOpenModal] = useState(false)
+    const [openGuest, setOpenGuest] = useState(false)
+    const [isOpenCalender, setIsOpenCalender] = useState(false)
+
+
+    const TotalGuest = useAddGuestTotal({adultcount, childrencount});
+    const loaded = useProgressiveImage(BG)
+    const Query = useMediaQuery("(min-width: 769px)")
+    const myRef = useRef(null)
+
+
+    const openDestinationModal = () => {
+        setOpenModal(!openModal)
+    }
+
+    const handleGuest = () => {
+        setOpenGuest(!openGuest)
+    }
+
+
+    const resetCount = () => {
+        dispatch(resetCounts())
+    }
+
+
+    const handleOption = (id) => {
+        if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
+            const value = myRef.current.childNodes[id].childNodes[1]?.value
+            dispatch(saveSearchValue(value))
+            setOpenModal(false)
+        }
+    }
+
+    const SubmitForm = async(e) => {
+        e.preventDefault();
+        dispatch(setOpenDrawer(false))
+        navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
     return (
-        <section>
-            <Helmet>
-                <meta charSet="utf-8" />
-                <title>Real Properties Nigeria</title>
-                <meta name="description" content="Home of Real Properties Nigeria Limited. Luxury and Affordable Shortlet" />
-                <meta name="keywords" content="Real Properties,  Real Estate, Properties, Real Shortlet, Shortlets, Affordable Shortlet, Shortlets Nigeria" />
-                <meta name="author" content="Real Properties Nigeria Limited" />
-            </Helmet>
-            <div style={{display: 'flex', width: '100%', height: '100vh'}}>
-                <div style={{flex: '2', width: '100%', height: '100%'}}>
-                    <div className="Home-background">
-                        <div  className="Home-overlay">
-                            <div className="Home-content-wrapper Home-hide">
-                                <h1>Our Shortlet's Outstanding Traits</h1>
-                                <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
-                                <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick} styles="Home-mobile-btn"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="Home-content-header">
-                    <div className="Home-content">
-                        <div className="Home-content-wrapper">
-                            <h1>Our Shortlet's Outstanding Traits</h1>
-                            <p>Real Properties appreciates nature. If you love nature too, please water our plants</p>
-                            <Button text="Make Reservation"  className="Home-btn" onClicks={handleClick}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="Home-features">
-                <div className="Home-features-content">
-                    <h2>A4 Apartment Features</h2>
-                    <Items show={show}/>
-                </div>
-                <Link to="#" onClick={() => setShow(!show)} style={{textDecoration: 'none'}}>
-                    <p style={{marginTop: '40px', textAlign: 'left'}}>{show ? 'Show Less' : 'Show More'}</p>
-                </Link>
-            </div>
-        </section>
+        <> 
+
+            {!Query && 
+                <AnimatePresence initial={true}>
+                    <Drawer openDrawer={openDrawer}  SubmitForm={SubmitForm}/>
+                </AnimatePresence>
+            }
+            <Section>
+                <SearchFilter 
+                    openModal={openModal} 
+                    setOpenModal={setOpenModal}
+                    handleModal={openDestinationModal} 
+                    myRef={myRef} 
+                    handleGuest={handleGuest} 
+                    guest={TotalGuest} 
+                    resetCount={resetCount} 
+                    homeDateValue={homeDateValue} 
+                    setHomeDateValue={setHomeDateValue}
+                    openGuest={openGuest} 
+                    setOpenGuest={setOpenGuest}
+                    handleOption={handleOption}
+                    SubmitForm={SubmitForm} 
+                    setIsOpenCalender={setIsOpenCalender}
+                    isOpenCalender={isOpenCalender}
+                    // setOpenDrawer={setOpenDrawer}
+                    openDrawer={openDrawer}
+                    loaded={loaded}
+                
+                />
+                {loaded && <WhyRealShortlets about={false} />}
+            </Section>
+        </>
     )
 }
 

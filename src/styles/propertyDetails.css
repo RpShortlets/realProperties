@@ -1,0 +1,32 @@
+
+.AntD {
+    border: none !important;
+}
+
+.AntDesign .ant-picker-panel-container {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+
+
+.AntDesign .ant-picker-header,
+.AntDesign .ant-picker-panel,
+.PropertyDetails .ant-picker {
+    border-bottom: none !important;
+}
+
+.AntD .ant-picker-range-separator,
+.AntD .ant-picker-suffix,
+.AntDesign .ant-picker-range-arrow {
+    display: none !important;
+}
+
+
+.AntDesign {
+    background: transparent;
+    top: 1450px !important;
+    left: 100px !important;
+    transform: translate(0%, 0%) !important;
+}

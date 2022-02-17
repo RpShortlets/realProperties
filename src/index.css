@@ -1,7 +1,60 @@
+  /* montserrat-500 - latin */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/montserrat-v21-latin-500.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('./fonts/montserrat-v21-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./fonts/montserrat-v21-latin-500.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./fonts/montserrat-v21-latin-500.woff') format('woff'), /* Modern Browsers */
+         url('./fonts/montserrat-v21-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./fonts/montserrat-v21-latin-500.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities; 
+
 
 :root {
     --color-primary: rgba(33, 147, 176, 1);
+    --color-secondary: rgba(220, 239, 244, 1);
+    --color-primary-dark: rgba(23, 103, 123, 1);
+    --color-white: #fff;
+    --color-dark:rgba(0, 0, 0, 1);
+    --color-light-gray: rgba(245, 245, 245, 1);
+    --color-dark-gray: rgba(128, 128, 128, 1);
+    --color-darker-gray: rgba(89, 80, 80, 1);
+    --linear-primary: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
+    --font-Xtrabig: clamp(1.5rem, calc(0.68rem + 2.9vw), 3rem);
+    --font-big: clamp(1.20rem, calc(0.66rem + 2.71vw), 2.59rem);
+    --font-medium:  clamp(1.07rem, calc(0.64rem + 2.13vw), 2.16rem);
+    --font-small: clamp(0.84rem, calc(0.59rem + 1.28vw), 1.50rem);
+    --font-xtra-small: clamp(0.75rem, calc(0.55rem + 0.98vw), 1.25rem);
+    --font-small-screen: clamp(0.67rem, calc(0.52rem + 0.73vw), 1.04rem);
+    --font-xtra-small-screen: clamp(0.59rem, calc(0.48rem + 0.54vw), 0.87rem);
+    --font-xtraLarge-small: clamp(0.49rem, calc(0.32rem + 0.40vw), 0.6rem);
+    --shadow:  0px 7.5669px 15.1338px rgba(0, 0, 0, 0.12);
+    --border-radius-lg: 4.72931px;
+    --border-radius-xtra: 32px;
+    --line-height: 2;
+    
 }
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+a {
+    text-decoration: none !important;
+}
+
 
 /*****ERROR*********/
 .error {
@@ -11,6 +64,28 @@
     color: red;
 }
 
+/********** SearchModal *************/
+.search-enter {
+    transform: translateY(-1rem);
+    opacity: 0;
+}
+
+.search-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 400ms;
+}
+
+.search-exit {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.search-exit-active {
+    transform: translateY(-1rem);
+    opacity: 0;
+    transition: all 400ms;
+}
 
 /**STEPPERS**/
 .mode-enter {
@@ -38,14 +113,14 @@
 
 /***MODAL***/
 .modal-enter {
-    transform: translateY(-10rem);
+    transform: translateY(-100%);
     opacity: 0;
 }
 
 .modal-enter-active {
     transform: translateY(0);
     opacity: 1;
-    transition: all 200ms;
+    transition: all 8s;
 }
 
 .modal-exit {
@@ -54,10 +129,50 @@
 }
 
 .modal-exit-active {
-    transform: translateY(-10rem);
+    transform: translateY(-100%);
     opacity: 0;
-    transition: all 200ms;
+    transition: all 8s;
 }
+
+.SmallModal-enter {
+    opacity: 0;
+    transform: translateY(-2000px);
+    transition: transform 700s ease-in-out;
+}
+
+.SmallModal-enter-active{
+    opacity: 1;
+    transform: translateY(0px);
+    transition: transform 700s ease-in-out;
+}
+
+.SmallModal-exit{
+    opacity: 0;
+    transform: translateY(-2000px);
+    transition: transform 700s ease-in-out;
+}
+
+.SmallModal-exit-active{
+    opacity: 0;
+    transform: translateY(0px);
+    transition: transform 700s ease-in-out;
+}
+
+.my-node-enter {
+    opacity: 0;
+}
+.my-node-enter-active {
+opacity: 1;
+transition: opacity 200ms;
+}
+.my-node-exit {
+opacity: 1;
+}
+.my-node-exit-active {
+opacity: 0;
+transition: opacity 200ms;
+}
+
 
 a {
     color: var(--color-primary);
@@ -69,6 +184,22 @@ a:hover {
     text-decoration: none;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@media screen and (max-width: 768px) {
+    .css-17vdz66 {
+        display: none !important;
+    }
+}
+
+
+/***** MUI DRAWER STYLES *********/
+
+.MuiDrawer-root>.MuiPaper-root {
+    /* height: calc(80% - 56px) !important; */
+    overflow: visible !important;
+}
+
+.css-1ab1x7,
+.tawk-min-container{
+    display: none !important;
+}
