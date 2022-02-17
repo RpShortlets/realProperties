@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { PaddingStyle, FlexStyle } from '../../styles/globalStyles';
 import Intro from "../../image/faq.webp"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
@@ -236,16 +237,20 @@ console.log(open)
                                 </div>
                             </div>
                             <div>
-                                <div className="contactWrapperBody">
-                                        <div>
-                                            <span>{WhatsAppIcon}</span>
+                                
+                                        <a href="https://wa.me/09044777700?text=Welcome%20to%20Real%20Shortlet"  target='_blank' rel="noreferrer" >
+                                        <div className="contactWrapperBody">
+                                            <div>
+                                                <span>{WhatsAppIcon}</span>
+                                            </div>
+                                            <div>
+                                                <h5>Whatsapp</h5>
+                                                <p>09044777700</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h5>Whatsapp</h5>
-                                            <p>09044777700</p>
-                                        </div>
-                                    </div>
-                            </div>
+                            
+                                        </a>
+                            </div> 
                         </div>
                     </Contact>
                     <Container paddingRight="true" paddingleft="true">
