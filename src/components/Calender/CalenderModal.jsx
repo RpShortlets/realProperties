@@ -10,8 +10,6 @@ import { checkInDate, checkOutDate, newCheckInDate, newCheckOutDate } from "../.
 const CalenderModal = ({show, setShow, theme, right, calanders, disablebooked, initial, animate}) => {
     const dispatch = useDispatch();
 
- 
-
     const handleReset = () => {
         dispatch(checkInDate(null))
         dispatch(checkOutDate(null))

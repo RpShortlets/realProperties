@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { motion } from "framer-motion"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
 import NavVas from './components/NavVas';
@@ -209,9 +210,14 @@ const Nav = () => {
     const {checkScroll} = useSelector(state =>  state.ComponentState)
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
 
-    const [show, setShow] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [openNavMini, setOpenNavMini] = useState(false)
     const myRef = useRef(null)
+
+    const variants = {
+        open: { opacity: 1, x: 0 },
+        closed: { opacity: 0, x: "-100%" },
+    }
 
     const URL = window.location.href;
     const newURL = URL.includes('location', 's')
@@ -297,8 +303,13 @@ const Nav = () => {
                 )}
                 
                 {Query ? (
-                    <NavDropdown style={{display: '-webkit-box'}}>
-                        <Link to='#' onClick={() => setShow(prev => !prev)}>
+                    <NavDropdown style={{display: '-webkit-box'}}
+                        as={motion.nav}
+                        intial={false}
+                        animate={isOpen ? true : false}
+                        variants={variants}
+                    >
+                        <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
                             {HamburgerIcon}
                         </Link>
                         {/* <AnimatePresence>
@@ -321,25 +332,25 @@ const Nav = () => {
                             <Link to='#' className="filterLink" onClick={handleDrawer}>
                                 {FilterIcon}
                             </Link>
-                        ) : (
-                            <NavDropdown style={{display: '-webkit-box'}}>
-                                <Link to='#' onClick={() => setShow(prev => !prev)}>
-                                    {HamburgerIcon}
-                                </Link>
-                                {/* <AnimatePresence>
-                                    {show && (
-                                        <Modal
-                                            as={motion.div}
-                                            initial={{y: -5}}
-                                            animate={{ y: [0, 5, 0], opacity: 1}}
-                                            transition={{ ease: "easeOut", duration: 0.7 }}
-                                            exit={{opacity: 0, y: [0, 10, 0]}}
-                                        >
-                                            Hello
-                                        </Modal>
-                                    )}
-                                </AnimatePresence> */}
-                            </NavDropdown>
+                        ) : (""
+                            // <NavDropdown style={{display: '-webkit-box'}}>
+                            //     <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
+                            //         {HamburgerIcon}
+                            //     </Link>
+                            //     {/* <AnimatePresence>
+                            //         {show && (
+                            //             <Modal
+                            //                 as={motion.div}
+                            //                 initial={{y: -5}}
+                            //                 animate={{ y: [0, 5, 0], opacity: 1}}
+                            //                 transition={{ ease: "easeOut", duration: 0.7 }}
+                            //                 exit={{opacity: 0, y: [0, 10, 0]}}
+                            //             >
+                            //                 Hello
+                            //             </Modal>
+                            //         )}
+                            //     </AnimatePresence> */}
+                            // </NavDropdown>
                         )}
                     </>
                 )}                

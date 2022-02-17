@@ -1,5 +1,5 @@
-import { BsYoutube, BsInstagram } from "react-icons/bs"
-import { FaFacebookSquare } from "react-icons/fa"
+import { BsInstagram, BsLinkedin } from "react-icons/bs"
+import { FaFacebookSquare, FaTwitter } from "react-icons/fa"
 import styled from "styled-components"
 
 const Container = styled.div `
@@ -30,7 +30,8 @@ const Container = styled.div `
         opacity: .7;
     }
 
-    a:nth-child(2) {
+    a:nth-child(2),
+    a:last-child {
         margin: 0 10px;
     }
 
@@ -74,9 +75,10 @@ const RealProperties = () => {
                     consumer.
                 </p>
                 <div>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebookSquare fontSize={16} /></a>
-                    <a  href="https://facebook.com" target="_blank" rel="noopener noreferrer"><BsInstagram  fontSize={16} /></a>
-                    <a  href="https://facebook.com" target="_blank" rel="noopener noreferrer"><BsYoutube  fontSize={16} /></a>
+                    <a href="https://www.facebook.com/profile.php?id=100078048180424" target="_blank" rel="noopener noreferrer"><FaFacebookSquare fontSize={16} /></a>
+                    <a  href="https://www.instagram.com/rpshortlets" target="_blank" rel="noopener noreferrer"><BsInstagram  fontSize={16} /></a>
+                    <a  href="https://twitter.com/rpshortlets/status/1490687071119454210?t=daQAvp1wfYXmnt0WxzAehg&s=19" target="_blank" rel="noopener noreferrer"><FaTwitter  fontSize={16} /></a>
+                    <a  href="https://www.linkedin.com/in/real-property-assets-and-technologies-limited-868b89231" target="_blank" rel="noopener noreferrer"><BsLinkedin  fontSize={16} /></a>
                 </div>
             </div>
         </Container>
