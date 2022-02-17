@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { PaddingStyle, FlexStyle } from '../../styles/globalStyles';
+import { PaddingStyle, FlexStyle} from '../../styles/globalStyles';
 import Intro from "../../image/faq.webp"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
 import Button from "../../components/Button/Button"
@@ -10,8 +9,12 @@ import { ParallaxBanner, Parallax } from 'react-scroll-parallax';
 import { FiMinus } from "react-icons/fi"
 import { IoMdAdd } from "react-icons/io"
 import { MapPinIcon, Phone, Envelop, WhatsAppIcon } from '../../Svg/svg'
+import validator from 'validator'
+import ContactModal from "./ContactModal"
 
 import {FaqData} from './Data/data'
+import { Clip } from '../../components/Loader/Spinner';
+import { useValidate, useValidateLast } from '../../hooks/useValidate/useValidate';
 
 const Section =  styled.section`
     background: #fff;
@@ -166,6 +169,13 @@ const Contact = styled.div`
 const CustomerSupport = () => {
     const loadedImg = useProgressiveImage(Intro)
     const [open, setOpen] = useState({id: Number, open: false})
+    const [openModal, setOpenModal] = useState(false)
+    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", subject: "", message: ""})
+    const [focus, setFocus] = useState(false)
+    const [focusLast, setFocusLast] = useState(false)
+    const [validated, setValidated] = useState(false)
+    const [emailerror, setEmailError] = useState(false)
+
 
     const handleFaq = (id) => {
         setOpen({
@@ -174,71 +184,126 @@ const CustomerSupport = () => {
         })
     }
 
-console.log(open)
+    //* Validate Email
+    const checkEmail = value => {
+        if(validator.isEmail(value)) {
+            setFormData({...formdata, email: value })
+            setValidated(true)
+            setEmailError(false)
+        }
+        else {
+            setFormData({...formdata, email: value })
+            setValidated(false)
+            setEmailError(true)
+        }
+    }
+
+    const name = formdata.firstname 
+    const lastname = formdata.lastname;
+
+    const {validatedName} = useValidate({name, focus})
+    const {validatedLastName} =  useValidateLast({lastname, focusLast})
+
+
+
+    const Focus = (e) => {
+        if(e.target.name) {
+            setFocus(true)
+        }
+    }
+
+    const FocusLastName = (e) => {
+        if(e.target.name) {
+            setFocusLast(true)
+        }
+    }
+
+    const SubmitContactForm = (e) => {
+        e.preventDefault();
+        console.log(formdata)
+        setOpenModal(false)
+    }
+
+
     return (
-        <Section>
-            {/* {loadedImg && ( */}
-                <Main>
-                    <ParallaxBanner
-                        layers={[
-                            { image: loadedImg, speed: -20 },
-                        ]}
-                        className="aspect-[2/1]"
-                    >
-                        <Parallax 
-                            translateY={['100px', '-80px']}
-                            easing="easeInQuad"
-                            scale={[0.75, 1]}
+        <>
+            {openModal && 
+                (<ContactModal 
+                    openModal={openModal} 
+                    setOpenModal={setOpenModal} 
+                    SubmitContactForm={SubmitContactForm} 
+                    validatedName={validatedName} 
+                    validatedLastName={validatedLastName} 
+                    emailerror={emailerror} 
+                    formdata={formdata} 
+                    setFormData={setFormData} 
+                    checkEmail={checkEmail} 
+                    Focus={Focus} 
+                    FocusLastName={FocusLastName}
+                />)}
+            <Section>
+                {loadedImg ? (
+                    <Main>
+                        <ParallaxBanner
+                            layers={[
+                                { image: loadedImg, speed: -20 },
+                            ]}
+                            className="aspect-[2/1]"
                         >
-                            <Header>
+                            <Parallax 
+                                translateY={['100px', '-80px']}
+                                easing="easeInQuad"
+                                scale={[0.75, 1]}
+                            >
+                                <Header>
+                                    <div>
+                                        <h2>Hello, how can we help you?</h2>
+                                        <Button 
+                                            title="Log a complaint"
+                                            background="var(--linear-primary)"
+                                            border="none"
+                                            color="var(--color-white)"
+                                            borderRadius="32px"
+                                            padding="1rem 3rem"
+                                            onClicks={() => setOpenModal((prev) => !prev)}
+                                        />
+                                    </div>
+                                </Header>
+                            </Parallax>
+                        </ParallaxBanner>
+                        <Contact paddingRight="true" paddingleft="true">
+                            <div className="contactWrapper">
                                 <div>
-                                    <h2>Hello, how can we help you?</h2>
-                                    <Button 
-                                        title="Log a complaint"
-                                        background="var(--linear-primary)"
-                                        border="none"
-                                        color="var(--color-white)"
-                                        borderRadius="32px"
-                                        padding="1rem 3rem"
-                                    />
-                                </div>
-                            </Header>
-                        </Parallax>
-                    </ParallaxBanner>
-                    <Contact paddingRight="true" paddingleft="true">
-                        <div className="contactWrapper">
-                            <div>
-                                <div className="contactWrapperBody contactAddress">
-                                    <div>
-                                        <span>{MapPinIcon}</span>
+                                    <div className="contactWrapperBody contactAddress">
+                                        <div>
+                                            <span>{MapPinIcon}</span>
+                                        </div>
+                                        <div>
+                                            <h5>Address</h5>
+                                            <address>No 7, Sumbo Jibowu street, Off Ribadu street, Ikoyi.</address>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5>Address</h5>
-                                        <address>No 7, Sumbo Jibowu street, Off Ribadu street, Ikoyi.</address>
+                                    <div className="contactWrapperBody">
+                                        <div>
+                                            <span>{Phone}</span>
+                                        </div>
+                                        <div>
+                                            <h5>Call us on</h5>
+                                            <p>+2349044777700</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="contactWrapperBody">
-                                    <div>
-                                        <span>{Phone}</span>
-                                    </div>
-                                    <div>
-                                        <h5>Call</h5>
-                                        <p>09044777700</p>
+                                    <div className="contactWrapperBody">
+                                        <div>
+                                            <span>{Envelop}</span>
+                                        </div>
+                                        <div>
+                                            <h5>Email</h5>
+                                            <p>info@realpropertyasset.com</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="contactWrapperBody">
-                                    <div>
-                                        <span>{Envelop}</span>
-                                    </div>
-                                    <div>
-                                        <h5>Email</h5>
-                                        <p>info@realpropertyasset.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                
-                                        <a href="https://wa.me/+2349044777700?text=Welcome%20to%20Real%20Shortlet"  target='_blank' rel="noreferrer" >
+                                <div>
+                                    <a href="https://wa.me/+2349044777700?text=Welcome%20to%20Real%20Shortlet"  target='_blank' rel="noreferrer" >
                                         <div className="contactWrapperBody">
                                             <div>
                                                 <span>{WhatsAppIcon}</span>
@@ -248,57 +313,59 @@ console.log(open)
                                                 <p>09044777700</p>
                                             </div>
                                         </div>
-                            
-                                        </a>
-                            </div> 
-                        </div>
-                    </Contact>
-                    <Container paddingRight="true" paddingleft="true">
-                        <FAQ>
-                            <div className="FaqHeader">
-                                <h2>Frequently Asked Questions</h2>
+                                    </a>
+                                </div> 
                             </div>
-                            <>
-                                {FaqData?.map((data, index) => (
-                                    <div className='FaqContent' key={data.id}>
-                                        <div className="FaqContentHeader"onClick={() => handleFaq(data?.id)}>
-                                            <h3>{data.header}</h3>
-                                            <Button 
-                                                icon={open.id === data?.id && open.open ? <FiMinus/> : <IoMdAdd/>} 
-                                                background="var(--linear-primary)"
-                                                color="var(--color-white)"
-                                                border="none"
-                                                display="flex"
-                                                borderRadius="32px"
-                                                padding=".4rem"
-                                            />
+                        </Contact>
+                        <Container paddingRight="true" paddingleft="true">
+                            <FAQ>
+                                <div className="FaqHeader">
+                                    <h2>Frequently Asked Questions</h2>
+                                </div>
+                                <>
+                                    {FaqData?.map((data, index) => (
+                                        <div className='FaqContent' key={data.id}>
+                                            <div className="FaqContentHeader"onClick={() => handleFaq(data?.id)}>
+                                                <h3>{data.header}</h3>
+                                                <Button 
+                                                    icon={open.id === data?.id && open.open ? <FiMinus/> : <IoMdAdd/>} 
+                                                    background="var(--linear-primary)"
+                                                    color="var(--color-white)"
+                                                    border="none"
+                                                    display="flex"
+                                                    borderRadius="32px"
+                                                    padding=".4rem"
+                                                />
+                                            </div>
+                                            <AnimatePresence initial={false}>
+                                            {open.id === data?.id && open.open && (
+                                                <motion.div 
+                                                    className="FaqContentBody"
+                                                    initial={{ opacity: 0, x: -100}}
+                                                    animate={{ opacity: 1, x: 0}}
+                                                    exit={{ opacity: 0, x: -100}}
+                                                    transition={{ duration: 0.5,
+                                                        type: { opacity: 'tween', x: 'tween' }
+                                                    }}
+                                                >
+                                                    <p>
+                                                        {data?.content}
+                                                    </p>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                        
                                         </div>
-                                        <AnimatePresence initial={false}>
-                                        {open.id === data?.id && open.open && (
-                                            <motion.div 
-                                                className="FaqContentBody"
-                                                initial={{ opacity: 0, x: -100}}
-                                                animate={{ opacity: 1, x: 0}}
-                                                exit={{ opacity: 0, x: -100}}
-                                                transition={{ duration: 0.5,
-                                                    type: { opacity: 'tween', x: 'tween' }
-                                                }}
-                                            >
-                                                <p>
-                                                    {data?.content}
-                                                </p>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                    
-                                    </div>
-                                ))}
-                            </>
-                        </FAQ>
-                    </Container>
-                </Main>
-            {/* )} */}
-        </Section>
+                                    ))}
+                                </>
+                            </FAQ>
+                        </Container>
+                    </Main>
+                ): (<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
+                    <Clip type='TailSpin' />
+                </div>)}
+            </Section>
+        </>
     )
 };
 

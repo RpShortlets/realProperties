@@ -142,14 +142,11 @@ const About = () => {
                     <h2>Our Mission</h2>
                     <div className='ourMissionContent'>
                         <p>
-                            We’re dedicated to helping guests find the perfect upscale short let from the comfort of their homes by providing a virtual tour of our first-rate rentals in real-time so anyone can take a look around to verify for themselves that every feature is as advertised. 
-                        </p>
-                        <p>
-                            We’re dedicated to helping guests find the perfect upscale short let from the comfort of their homes by providing a virtual tour of our first-rate rentals in real-time so anyone can take a look around to verify for themselves that every feature is as advertised. 
+                            To provide travellers a platform to choose the perfect home away from home, by redefining Nigeria’s online real estate space.                        
                         </p>
                     </div>
                 </div>
-                <div className="ourMission">
+                {/* <div className="ourMission">
                     <h2>Our Vision</h2>
                     <div className='ourMissionContent'>
                         <p>
@@ -159,7 +156,7 @@ const About = () => {
                             We’re dedicated to helping guests find the perfect upscale short let from the comfort of their homes by providing a virtual tour of our first-rate rentals in real-time so anyone can take a look around to verify for themselves that every feature is as advertised. 
                         </p>
                     </div>
-                </div>
+                </div> */}
                 <div>
                     <WhyRealShortlets about={true}/>
                 </div>

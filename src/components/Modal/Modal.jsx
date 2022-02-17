@@ -18,7 +18,7 @@ const MainModal = styled.div`
     transform: translateX(-50%);
     width: ${({ width }) => width};
     height: ${({ height }) => height};
-    background: white;
+    background: ${({ background }) => background ? background : 'var(--color-white)'};
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     border-radius: 8px;
     padding: 1rem;
@@ -66,7 +66,7 @@ const MainModal = styled.div`
 
 
 
-const ModalOverLay = ({top, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show}) => {
+const ModalOverLay = ({top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show}) => {
 
     const content = (
         <AnimatePresence>
@@ -75,7 +75,7 @@ const ModalOverLay = ({top, width, overFlow, right, height, left, initial, child
                 as={motion.div}
                 initial={initial}
                 animate={animate}
-                exit={{ opacity: 0 }}
+                exit={exit ? exit : { opacity: 0 }}
                 transition={transition}
                 className="Modal" 
                 top={top} 
@@ -84,6 +84,7 @@ const ModalOverLay = ({top, width, overFlow, right, height, left, initial, child
                 overflow={overFlow}
                 height={height}
                 right={right}
+                background={background}
             >
                 {btn ? "" : (
                     <div  style={{display:'flex', justifyContent: 'flex-start', marginBottom: 'max(0.5vw, 1rem)'}}>
@@ -106,7 +107,7 @@ const Modal = (props) => {
         <>
             {props.show && <Backdrop onClick={()=> props.setShow(false)} theme={props.theme} /> }
             
-            <ModalOverLay height={props.height} right={props.right} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left}>
+            <ModalOverLay height={props.height} background={props.background} right={props.right} exit={props.exit} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left}>
                 {props.children}
             </ModalOverLay>
         </>

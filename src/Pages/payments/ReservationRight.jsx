@@ -93,7 +93,6 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const {validatedLastName} =  useValidateLast({lastname, focusLast})
     const {validatedID} = useValidateId({Idnum, focusId})
 
-    console.log(formdata, dropdown, value, phn)
 
     const Focus = (e) => {
         if(e.target.name) {

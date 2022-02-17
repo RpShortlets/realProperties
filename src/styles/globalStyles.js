@@ -87,5 +87,47 @@ export const ModalStyle = css`
     box-shadow: var(--shadow);
     color: ${({color}) => color};
 
+`
 
+export const InputStyle = css`
+    background: #FFFFFF;
+    border: 1px solid ${({error}) => error ? 'red' : '#2193B0'};
+    color: var(--color-primary);
+    font-size: var(--font-small);
+    outline: 0;
+    padding: 10px;
+    padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
+    border-radius: 4px;
+    width: 100%;
+    height: 45px;
+    margin-top: ${({marginTop}) => marginTop ? marginTop : '7px'};
+    transition: all .2s;
+    
+
+    :focus-within {
+        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+    }
+
+    :focus {
+        border: 2px solid ${({error}) => error ? 'red' : '#2193B0'};
+    }
+
+    ::placeholder {
+        color: var(--color-primary);
+    }
+
+    :-internal-autofill-selected {
+        appearance: menulist-button;
+        background-image: none !important;
+        background-color: -internal-light-dark(white) !important;
+        color: -internal-light-dark(black, white) !important;
+    }
+
+    :disabled {
+        background-color: #ccc;
+    }
+
+    @media screen and (min-width: 769px) { 
+        font-size: var(--font-xtra-small-screen);
+    }
 `
