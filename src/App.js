@@ -8,6 +8,8 @@ import TawkTo from 'tawkto-react'
 import { useRoutes } from 'react-router-dom';
 import routes from "./routes";
 import useMediaQuery from "./hooks/useMediaQuery/useMediaQuery";
+import ScrollToTop from "./scrollTop"
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 
 const App = () => {
@@ -59,7 +61,11 @@ const App = () => {
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />
         </div>}>
-          {routing}
+          <ScrollToTop>
+            <ParallaxProvider>
+              {routing}
+            </ParallaxProvider>
+          </ScrollToTop>
       </Suspense>
       {location.pathname ==='/admin/live' || location.pathname ==='/admin/live/deleted'  || location.pathname ==='/admin/live/completed' ||  location.pathname ==='/admin/live/pending' || location.pathname ==='/login' ? null :  (<Footer />)}
   </>

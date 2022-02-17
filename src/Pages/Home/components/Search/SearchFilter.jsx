@@ -16,8 +16,6 @@ import { useDispatch } from "react-redux";
 import { motion, useAnimation } from 'framer-motion';
 import { setOpenDrawer } from "../../../../redux/actions/componentState";
 
-
-
 const FilterContainer = styled.div `
     background-image: url(${props => props.backgroundImage});
     background-size: cover;

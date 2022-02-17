@@ -4,6 +4,7 @@ import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
 import { motion, AnimatePresence } from "framer-motion"
 import {Link} from "react-router-dom"
 import WhyRealShortlets from '../Home/components/WhyRealShortlets';
+import { Parallax } from 'react-scroll-parallax';
 
 
 const SectStyle = css`
@@ -79,7 +80,7 @@ const Main = styled.main`
         .ourMission {
             
             .ourMissionContent {
-                max-width: 60%;
+                /* max-width: 60%; */
 
                 p {
                     line-height: 2;
@@ -96,7 +97,10 @@ const About = () => {
         <Section>
             <Main paddingRight="true" paddingleft="true">
                 <div className="AboutReal"> 
-                    <h1>About Real property</h1>
+                    <Parallax speed={-5}>
+                        <h1>About Real property</h1>
+                    </Parallax>
+                    
                     <div className="AboutRealContent">
                         <p>
                             Welcome to Real Property Assets and Technologies Limited, your number one source for luxurious and affordable Short Lets. We're dedicated to providing you with the very best of accommodations, the total service package and the perfect way to make reservations.
@@ -114,7 +118,9 @@ const About = () => {
                                     initial={{ opacity: 0}}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.4 }}
+                                    transition={{ duration: 0.4,
+                                        opacity: { ease: "linear" } 
+                                    }}
 
                                 >
                                     <p>

@@ -7,7 +7,7 @@ const Support = () => {
                 <h3>Support</h3>
                 <div>
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/customer-support">
                             Contact Customer Support
                         </NavLink>
                     </div>

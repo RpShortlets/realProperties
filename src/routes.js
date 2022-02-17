@@ -1,4 +1,7 @@
-import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About} from "./export"
+import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, 
+    Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService
+} 
+    from "./export"
 import {Navigate} from "react-router-dom";
 
 const routes = (isLoggedIn, Query) => 
@@ -83,6 +86,10 @@ const routes = (isLoggedIn, Query) =>
         {
             path: '/about',
             element: <About />,
+        },
+        {
+            path: '/customer-support',
+            element: <CustomerService />,
         },
         {
             path: '*',

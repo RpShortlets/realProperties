@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { RealShortlets } from "../data/data"
 import {motion} from "framer-motion"
 import { PaddingStyle } from "../../../styles/globalStyles"
+import { useParallax } from 'react-scroll-parallax';
+
 
 
 const Container = styled.div `
@@ -96,19 +98,21 @@ const IconDivs = styled.div `
 
 
 const WhyRealShortlets = ({about}) => {
+    const frog = useParallax({
+        rotateY: [0, 360],
+    });
     
     return (
         <Container>
             <Wrapper  about={about} paddingleft='true' paddingRight='true'>
                 <h2>Why Real Shortlets</h2>
-                <Content >
+                <Content  >
                     {RealShortlets.map((item) => (
                         <IconDivs key={item.id} as={motion.div}
-                        whileHover={{ scale: 1.06 }}
-                        whileTap={{ scale: 0.9 }}
+                            whileHover={{ scale: 1.06 }}
+                            whileTap={{ scale: 0.9 }} 
                         >
-        
-                            <div>
+                            <div ref={frog.ref}>
                                 <div>
                                     {item.image} 
                                     <p>{item.title}</p>
