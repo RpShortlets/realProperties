@@ -46,6 +46,13 @@ const NavItems =  styled.div `
 
     margin: 7px 0;
 
+    /* .navModal, .mobileHomeIcon {
+        svg {
+            width: max(3.5vw, 3rem);
+            height: max(3.5vw, 3rem);
+        }
+    } */
+
     > div:first-child,
     > div:nth-child(2),
     > div:last-child  {

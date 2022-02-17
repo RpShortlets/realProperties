@@ -49,10 +49,10 @@ const App = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Real Properties Nigeria</title>
-        <meta name="description" content="The official website of Real Properties Nigeria Limited. Luxury and Affordable Shortlet" />
-        <meta name="keywords" content="Real Properties,  Real Estate, Properties, Real Shortlet, Shortlets, Affordable Shortlet, Shortlets Nigeria" />
-        <meta name="author" content="Real Properties Nigeria Limited" />
+        <title>Real Property Assets And Technologies Limited</title>
+        <meta name="description" content="The official website of Real Property Assets And Technologies Limited. Luxury and Affordable Shortlet, Lagos, Nigeria" />
+        <meta name="author" content="Real Property Assets And Technologies Limited" />
+        <meta content= "Short term Let, Aparthotel, Short term house rentals, Furnished Shortlets rentals, Affordable homes, Luxury, Secure Transaction, Rentals, Home away from home, House, Flats, Housing Rentals, Vacation rental property, Vacation homes, Housing, Suites, Lodging, Daily Rental Accommodation, Luxury Vacation rentals, Luxury property management, Property Management, Top Quality Homes, Luxury and Ultra luxury homes, Reserve/ Reservation, Reserve your apartment for your short stay, Luxury vacation homes, Trusted brands, Contemporary homes, Extraordinary homes, 2 bedrooms apartments, Modern Luxury Apartments, 1 bedroom apartment, Serene Environment, Rental Agents, Vacation rental property manager, Short let Consultant, Accommodation websites, Staycation, Romantic Weekend, Short lets in Lekki, Short lets in Ikoyi, Ocean View Apartments, Mini vacation homes, Car Hire Services, Drop off and Pick up, Real Property, Real Estate, Short lets homes, Short stay, Short term rentals, Luxury car rentals, Vacation rental organization, Best vacation rental management companies, Midak Mews, Short lets in Lagos, Lagos Short lets, Studio Apartments, Urban Luxury Apartments, Penthouses in Lagos, Reliable Short let platform, Luxury homes, Luxe, Real estate services, Affordable Short lets, Cosy Apartment, Apartments in Lagos, Fully Serviced apartment, Vacation destination, Comfortable houses, Experience Curator, Short let Apartments in Lagos, Apartment house, Short lets Flat, Holiday homes, Holiday Apartment Rentals, 24 hours power supply apartments in Lagos, Short lets in Nigeria, Accommodation in Serene Environment, Shortlets Available in Lagos, Serviced Apartment with a pool and Gym" name="keywords" class="next-head" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
