@@ -249,9 +249,9 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                                 <Button 
                                     title={Query ? 'Find Shortlets' : ''}
                                     type="submit" 
-                                    background={Query ? "var(--linear-primary)" : 'var(--color-white)'} 
+                                    background={Query ? "var(--linear-primary)" : 'var(--color-primary)'} 
                                     height={Query ? '70px' : '3rem'} 
-                                    color={Query ? 'var(--color-white)' : 'var(--color-primary)'}
+                                    color={Query ? 'var(--color-white)' : 'var(--color-white)'}
                                     padding="1rem"
                                     fontSize="1rem"
                                     className="flex"

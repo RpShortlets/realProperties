@@ -8,6 +8,7 @@ import { saveSearchValue } from '../../redux/actions/componentState';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+
 const Container = styled.div `
     background: var(--color-white);
 `
@@ -43,6 +44,7 @@ const Wrapper = styled.div `
     .destinationPlaceItems {
         ${FlexStyle}
         margin: 1rem 0;
+        cursor: pointer;
 
         > div:first-child { 
             width: 1.8rem;
@@ -74,6 +76,12 @@ const Wrapper = styled.div `
         }
     }
 
+    .isActive {
+        background: var(--color-secondary);
+        padding: 8px 8px;
+        border-radius: 10px;
+    }
+
 `
 
 const MobileDesitination = () => {
@@ -90,6 +98,8 @@ const MobileDesitination = () => {
         dispatch(saveSearchValue(e.target.value))
         
     }
+
+    console.log(value)
 
 
     return(
@@ -111,26 +121,35 @@ const MobileDesitination = () => {
                     </div>
                     <div>
                         {/* {Destlocation.map((data, i)  =>  */}
-                            <div className='destinationPlaceItems'>
+                            <motion.div 
+                                className={`${value === "Ikoyi, Nigeria" ? `isActive` : ''} destinationPlaceItems` } 
+                                whileHover={{ scale: 1 }}
+                                whileTap={{ scale: 0.9 }}
+                            >
                                 <div>
-                                    <span>{MapPinIcon}</span>
+                                    <span className={`${value === "Ikoyi, Nigeria" ? `isActive` : ''}`}>{MapPinIcon}</span>
                                 </div>
                                 <div>
                                     <label htmlFor='ikoyi'>Ikoyi, Nigeria
                                         <input ref={ikoyiRef} id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </div>
-                            <div className='destinationPlaceItems'>
+                            </motion.div>
+                            <motion.div 
+                                className={`${value === "Lekki, Nigeria" ? `isActive` : ''} destinationPlaceItems` }
+                                whileHover={{ scale: 1 }}
+                                whileTap={{ scale: 0.9 }}
+                                
+                            >
                                 <div>
-                                    <span>{MapPinIcon}</span>
+                                    <span className={`${value === "Lekki, Nigeria" ? `isActive` : ''}` }>{MapPinIcon}</span>
                                 </div>
                                 <div>
                                     <label htmlFor='lekki'>Lekki, Nigeria
                                         <input ref={lekkiRef} id='lekki' name='lekki' value='Lekki, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </div>
+                            </motion.div>
                         {/* )} */}
                     </div>
                 </div>
