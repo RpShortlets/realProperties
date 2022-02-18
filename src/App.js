@@ -61,11 +61,11 @@ const App = () => {
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />
         </div>}>
-          <ScrollToTop>
+          {/* <ScrollToTop> */}
             <ParallaxProvider>
               {routing}
             </ParallaxProvider>
-          </ScrollToTop>
+          {/* </ScrollToTop> */}
       </Suspense>
       {location.pathname ==='/admin/live' || location.pathname ==='/admin/live/deleted'  || location.pathname ==='/admin/live/completed' ||  location.pathname ==='/admin/live/pending' || location.pathname ==='/login' ? null :  (<Footer />)}
   </>

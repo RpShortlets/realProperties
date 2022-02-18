@@ -7,28 +7,34 @@ import { Navigation } from "./Navigation";
 import styled from "styled-components";
 
 const NavStyle = styled(motion.nav)`
-    position: absolute;
-    top: -16px;
-    right: 0;
-    bottom: 0;
-    width: 300px;
     height: 70vh;
     overflow: hidden;
-
-`
-
-const BackGround = styled(motion.div)`
     position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 300px;
-  background: #fff;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 230px;
+
 `
+
+const Back = styled(motion.div) `
+  
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: ${({background}) => background ? 'var(--color-white)' : 'transparent' };
+    box-shadow: var(--shadow);
+    border-radius: 0 10px;
+
+
+`
+
 
 const sidebar = {
   open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+    clipPath: `circle(${height * 2 + -200}px )`,
     transition: {
       type: "spring",
       stiffness: 20,
@@ -36,11 +42,11 @@ const sidebar = {
     }
   }),
   closed: {
-    clipPath: "circle(30px at 40px 40px)",
+    // clipPath: "circle(30px at 40px 40px)",
     transition: {
-      delay: 0.5,
+      delay: 0.1,
       type: "spring",
-      stiffness: 400,
+      stiffness: 600,
       damping: 40
     }
   }
@@ -51,6 +57,8 @@ export const MainNav = () => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
 
+  console.log(isOpen)
+
   return (
         <NavStyle
             initial={false}
@@ -58,7 +66,7 @@ export const MainNav = () => {
             custom={height}
             ref={containerRef}
         >
-        <motion.div className="background" variants={sidebar}/>
+        <Back variants={sidebar} background={isOpen}/>
         <Navigation />
         <MenuToggle toggle={() => toggleOpen()} />
         </NavStyle>

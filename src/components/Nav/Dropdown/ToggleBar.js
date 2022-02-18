@@ -9,14 +9,19 @@ const Btn = styled.button`
     -moz-user-select: none;
     -ms-user-select: none;
     cursor: pointer;
+    cursor: pointer;
     position: absolute;
-    top: 18px;
-    right: 58px;
+    top: 5px;
+    right: 20px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background: transparent;
-    color: hsl(0, 0%, 18%);
+    color: var(--color-primary) !important;
+
+    @media screen and (min-width: 769px) {
+        right: 70px;
+    }
 `
 
 const Path = props => (

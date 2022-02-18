@@ -3,16 +3,17 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { motion } from "framer-motion"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
-import { CompanyLogo,HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
+import { CompanyLogo, FilterIcon, HomeIcon } from '../../Svg/svg';
 // import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
 import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
 import { searchShortlets } from '../../redux/actionCreators/actionCreators';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
-// import {MainNav} from "./Dropdown/MainNav"
+
+
+import {MainNav} from "./Dropdown/MainNav"
 
 
 // const svgs = [
@@ -165,38 +166,38 @@ const NavItems =  styled.div `
 `
 
 
-const NavDropdown = styled.div `
-    flex: 1;
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    -o-flex: 1;
-    display: flex;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    justify-content: end;
-    -webkit-justify-content: end !important;
-    -moz-justify-content: end !important;
-    -ms-justify-content: end !important;
-    -o-justify-content: end !important;
+// const NavDropdown = styled.div `
+//     flex: 1;
+//     -webkit-flex: 1;
+//     -moz-flex: 1;
+//     -ms-flex: 1;
+//     -o-flex: 1;
+//     display: flex;
+//     display: -webkit-box;
+//     display: -webkit-flex;
+//     display: -moz-flex;
+//     display: -ms-flex;
+//     display: -o-flex;
+//     justify-content: end;
+//     -webkit-justify-content: end !important;
+//     -moz-justify-content: end !important;
+//     -ms-justify-content: end !important;
+//     -o-justify-content: end !important;
 
 
-    a {
-        font-size: 2rem;
-    }
+//     a {
+//         font-size: 2rem;
+//     }
 
 
-    @media screen and (min-width: 769px) { 
-        a {
-            font-size: var(--font-medium);
-        }
-    }
+//     @media screen and (min-width: 769px) { 
+//         a {
+//             font-size: var(--font-medium);
+//         }
+//     }
 
 
-`
+// `
 
 // const Modal =  styled.div`
 //     position: absolute;
@@ -216,14 +217,9 @@ const Nav = () => {
     const {checkScroll} = useSelector(state =>  state.ComponentState)
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
 
-    const [isOpen, setIsOpen] = useState(false)
     const [openNavMini, setOpenNavMini] = useState(false)
     const myRef = useRef(null)
 
-    const variants = {
-        open: { opacity: 1, x: 0 },
-        closed: { opacity: 0, x: "-100%" },
-    }
 
     const URL = window.location.href;
     const newURL = URL.includes('location', 's')
@@ -309,30 +305,7 @@ const Nav = () => {
                 )}
                 
                 {Query ? (
-                    // <MainNav />
-                    <NavDropdown style={{display: '-webkit-box'}}
-                        as={motion.nav}
-                        intial={false}
-                        animate={isOpen ? true : false}
-                        variants={variants}
-                    >
-                        <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
-                            {HamburgerIcon}
-                        </Link>
-                        {/* <AnimatePresence>
-                            {show && (
-                                <Modal
-                                    as={motion.div}
-                                    initial={{y: -5}}
-                                    animate={{ y: [0, 5, 0], opacity: 1}}
-                                    transition={{ ease: "easeOut", duration: 0.7 }}
-                                    exit={{opacity: 0, y: [0, 10, 0]}}
-                                >
-                                    Hello
-                                </Modal>
-                            )}
-                        </AnimatePresence> */}
-                    </NavDropdown>
+                    <MainNav />
                 ) : (
                     <>
                         {newURL ? (
@@ -340,24 +313,7 @@ const Nav = () => {
                                 {FilterIcon}
                             </Link>
                         ) : (
-                            <NavDropdown style={{display: '-webkit-box'}}>
-                                <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
-                                    {HamburgerIcon}
-                                </Link>
-                                {/* <AnimatePresence>
-                                    {show && (
-                                        <Modal
-                                            as={motion.div}
-                                            initial={{y: -5}}
-                                            animate={{ y: [0, 5, 0], opacity: 1}}
-                                            transition={{ ease: "easeOut", duration: 0.7 }}
-                                            exit={{opacity: 0, y: [0, 10, 0]}}
-                                        >
-                                            Hello
-                                        </Modal>
-                                    )}
-                                </AnimatePresence> */}
-                            </NavDropdown>
+                            <MainNav />   
                         )}
                     </>
                 )}                

@@ -204,12 +204,24 @@ a:hover {
     display: none !important;
 }
 
-
-.background {
-    position: absolute;
-    top: 0;
-    right: 0 !important;
-    bottom: 0;
-    width: 100%;
-    background: #fff;
+.css-1jsolut {
+    min-height: 230px !important;
 }
+
+
+.icon-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 40px 0;
+    margin-right: 20px;
+  }
+  
+  .text-placeholder {
+    border-radius: 5px;
+    width: 200px;
+    height: 20px;
+    flex: 1;
+  }
+
+ 

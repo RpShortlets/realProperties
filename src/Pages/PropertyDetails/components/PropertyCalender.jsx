@@ -5,6 +5,8 @@ import  "../../../styles/utilities.css"
 import StaticCalender from "../../../components/Calender/StaticCalender";
 import { motion } from 'framer-motion';
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
+// import Button from "../../../components/Button/Button"
+// import { useDispatch } from 'react-redux';
 
 
 
@@ -29,8 +31,15 @@ const Calenders = styled.div `
 
 
 
-export const PropertyCalender = ({status, lenghtstay, margin}) => { 
+export const PropertyCalender = ({status, lenghtstay, margin, checkOutD, checkInD}) => { 
     const Medium = useMediaQuery("(max-width: 768px)");
+
+
+    // const handleReset = () => {
+    //     checkInD = null
+    //     checkOutD = null
+    //     console.log('dates')
+    // }
 
     return (
         <Calenders 
@@ -42,6 +51,9 @@ export const PropertyCalender = ({status, lenghtstay, margin}) => {
                 <p>{status === 'loading' ? <SkeletonLoader width='40%' height='20' /> : 'Select your check-in date for exact pricing'}</p>
             </div>
             <StaticCalender calendars={Medium ? 1 : 2} disablebooked='true' status={status} />
+            {/* <div>
+                <Button  onClicks={handleReset} title="Clear dates" background="transparent" border='none' fontSize='var(--font-xtra-small-screen)'/>
+            </div> */}
         </Calenders>
     )
 }
