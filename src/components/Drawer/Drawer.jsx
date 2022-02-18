@@ -98,7 +98,7 @@ function SwipeableEdgeDrawer({SubmitForm}) {
                         top: openDrawer && '-32px',
                         borderTopLeftRadius: 8,
                         borderTopRightRadius: 8,
-                        visibility: 'visible',
+                        visibility: openDrawer ? 'visible' : 'hidden',
                         right: 0,
                         left: 0,
                     }}

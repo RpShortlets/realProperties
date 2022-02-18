@@ -14,7 +14,8 @@ const ModalContent = styled.div `
         margin: max(2vw, 1rem);
     }
 
-    .formSpacing {
+    .formSpacing,
+    .formInput > div:first-child {
         margin: max(1vw, 0.5rem) 0;
     }
 
@@ -24,9 +25,6 @@ const ModalContent = styled.div `
             flex: 1 !important;
         }
 
-        > div:first-child{
-            margin-right: max(1vw, 0.5rem);
-        }
     }
 
     .contactUsHeader {
@@ -63,6 +61,10 @@ const ModalContent = styled.div `
         .formInput {
             display: flex;
             align-items: end;
+
+            > div:first-child{
+                margin: 0 max(1vw, 0.5rem) 0 0;
+            }
 
         }
     }

@@ -4,7 +4,7 @@ import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
 import { motion, AnimatePresence } from "framer-motion"
 import {Link} from "react-router-dom"
 import WhyRealShortlets from '../Home/components/WhyRealShortlets';
-import { Parallax } from 'react-scroll-parallax';
+// import { Parallax } from 'react-scroll-parallax';
 
 
 const SectStyle = css`
@@ -97,9 +97,9 @@ const About = () => {
         <Section>
             <Main paddingRight="true" paddingleft="true">
                 <div className="AboutReal"> 
-                    <Parallax speed={-5}>
+                    {/* <Parallax speed={-5}> */}
                         <h1>About Real property</h1>
-                    </Parallax>
+                    {/* </Parallax> */}
                     
                     <div className="AboutRealContent">
                         <p>
@@ -158,7 +158,7 @@ const About = () => {
                     </div>
                 </div> */}
                 <div>
-                    <WhyRealShortlets about={true}/>
+                    <WhyRealShortlets about="true" />
                 </div>
             </Main>
         </Section>
