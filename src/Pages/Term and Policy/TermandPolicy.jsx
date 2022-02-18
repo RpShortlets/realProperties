@@ -123,7 +123,6 @@ const TermandPolicy = () => {
                         <Menu>
                             <ol>
                                 {PolicyData.map((item, index) => (
-                                    console.log(item.id),
                                     <li key={item.id} id={item.id} data={item} className='firstChild'>
                                         <Link to="#" style={{color: item.id === policyId && 'rgba(28, 123, 147, 1)'}} onClick={() => setPolicyId(item?.id)}>
                                             {item.title}

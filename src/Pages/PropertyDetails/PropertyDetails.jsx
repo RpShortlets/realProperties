@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect, useMemo} from "react"
+import {useState, useRef, useEffect} from "react"
 import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
@@ -302,7 +302,7 @@ const PropertyDetails = () => {
     },  [checkInD,checkOutD, Id, dispatch])
     
     
-    useMemo(() => {
+    useEffect(() => {
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
         navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
 

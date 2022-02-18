@@ -5,25 +5,25 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { motion } from "framer-motion"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
-import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
-import NavVas from './components/NavVas';
+import { CompanyLogo,HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
+// import NavVas from './components/NavVas';
 import MiniSearch from './components/MiniSearch';
 import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
 import { searchShortlets } from '../../redux/actionCreators/actionCreators';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
-import {MainNav} from "./Dropdown/MainNav"
+// import {MainNav} from "./Dropdown/MainNav"
 
 
-const svgs = [
-    {
-        id: 1,
-        icon: TaxiIcon
-    }, {
-        id: 2,
-        icon: ChefIcon
-    }
-]
+// const svgs = [
+//     {
+//         id: 1,
+//         icon: TaxiIcon
+//     }, {
+//         id: 2,
+//         icon: ChefIcon
+//     }
+// ]
 
 const NavBar = styled.nav `
     position: sticky;
@@ -76,6 +76,11 @@ const NavItems =  styled.div `
     span {
         font-size: var(--font-xtra-small);
         color: var(--color-primary);
+        margin-left: -10px !important;
+        margin-bottom: -9px !important;
+        font-weight: 600;
+        word-spacing: -2px;
+
     }
 
     .navModal { 
@@ -193,16 +198,16 @@ const NavDropdown = styled.div `
 
 `
 
-const Modal =  styled.div`
-    position: absolute;
-    background: #fff;
-    border-radius: 3px;
-    top: 61px;
-    right: 85px;
-    height: 100px;
-    width: 200px;
+// const Modal =  styled.div`
+//     position: absolute;
+//     background: #fff;
+//     border-radius: 3px;
+//     top: 61px;
+//     right: 85px;
+//     height: 100px;
+//     width: 200px;
 
-`
+// `
 
 const Nav = () => {
     const dispatch = useDispatch();
@@ -252,7 +257,7 @@ const Nav = () => {
                     <div className='navModal'>
                         <Link to='/'>
                             {CompanyLogo}
-                            {/* <span aria-label='Real Property'>Real Property</span> */}
+                            <span aria-label='Real Property'>Real Property Shortlets</span>
                         </Link>
                     </div>
                 ) : (
@@ -282,8 +287,8 @@ const Nav = () => {
                                 handleOption={handleOption} 
                                 SubmitForm={SubmitForm}
                             />
-                        ) : (
-                            <NavVas  Icons={svgs} />
+                        ) : (""
+                            // <NavVas  Icons={svgs} />
                         )}
                     </>
                 ) : (

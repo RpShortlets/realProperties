@@ -11,6 +11,7 @@ import  "../../styles/utilities.css"
 import MuiDateRangePickerDay from "@mui/lab/DateRangePickerDay";
 import { styled } from "@mui/material/styles";
 import '../../styles/utilities.css'
+import { OpenNotificationWithIcon } from '../Notification/Notification';
 
 
 
@@ -50,28 +51,55 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
     const [value, setValue] = React.useState([null, null]);
 
+    //*  GET DATES VALUE AND CONVERT TO US AND CANADA DATES
+    var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+    const checkins = value[0]?.toLocaleDateString('en-CA');
+    const checkouts = value[1]?.toLocaleDateString('en-CA');
+    const useCheckinDate = value[0]?.toLocaleDateString('en-US', options);
+    const useCheckoutDate = value[1]?.toLocaleDateString('en-US', options);
+
+
+    //* GET TEMPORARY BOOKINGS AND BOOKING ALREADY CONFIRM: CONCAT 
     const tem = temp_booked_dates?.map((data) => data.temp_booked_dates) 
     const booked = booked_dates?.map((data) => data.booked_dates)
     const newBookedDate = booked?.concat(tem)
     const dates = newBookedDate?.map((data) => data)
 
+    //* GET DATES BTW THE CHECK IN AND OUT CALANDER
+    const listDate = []
+    const startDate = checkins;
+    const endDate = checkouts;
+    const dateMove = new Date(startDate);
+    let strDate = startDate;
+
+    while (strDate < endDate) {
+        strDate = dateMove.toISOString().slice(0, 10);
+        listDate.push(strDate);
+        dateMove.setDate(dateMove.getDate() + 1);
+    };
+
 
     React.useEffect(() => {
-        var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-        const checkin = value[0]?.toLocaleDateString('en-CA');
-        const checkout = value[1]?.toLocaleDateString('en-CA');
-        const useCheckinDate = value[0]?.toLocaleDateString('en-US', options);
-        const useCheckoutDate = value[1]?.toLocaleDateString('en-US', options);
 
-    
-        if(checkin && checkout) {
-            dispatch(checkInDate(checkin))
-            dispatch(checkOutDate(checkout))
-            dispatch(newCheckInDate(useCheckinDate))
-            dispatch(newCheckOutDate(useCheckoutDate))
+        if(!listDate?.toString()?.includes(dates?.toString())) {
+            if(checkins && checkouts) {
+                dispatch(checkInDate(checkins))
+                dispatch(checkOutDate(checkouts))
+                dispatch(newCheckInDate(useCheckinDate))
+                dispatch(newCheckOutDate(useCheckoutDate))
+            }
+        } else {
+            setValue([null, null])
+            dispatch(checkInDate(null))
+            dispatch(checkOutDate(null))
+            dispatch(newCheckInDate(null))
+            dispatch(newCheckOutDate(null)) 
+            OpenNotificationWithIcon({
+                message: 'You cannot select a date that has been booked',
+                type: 'warning'
+            })
         }
-    
-    }, [value, dispatch])
+    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, dates])
 
     const renderWeekPickerDay = (date, dateRangePickerDayProps) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;
