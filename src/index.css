@@ -203,3 +203,13 @@ a:hover {
 .tawk-min-container{
     display: none !important;
 }
+
+
+.background {
+    position: absolute;
+    top: 0;
+    right: 0 !important;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+}

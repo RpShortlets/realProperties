@@ -12,6 +12,7 @@ import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentSta
 import { searchShortlets } from '../../redux/actionCreators/actionCreators';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
+import {MainNav} from "./Dropdown/MainNav"
 
 
 const svgs = [
@@ -303,6 +304,7 @@ const Nav = () => {
                 )}
                 
                 {Query ? (
+                    // <MainNav />
                     <NavDropdown style={{display: '-webkit-box'}}
                         as={motion.nav}
                         intial={false}
@@ -332,25 +334,25 @@ const Nav = () => {
                             <Link to='#' className="filterLink" onClick={handleDrawer}>
                                 {FilterIcon}
                             </Link>
-                        ) : (""
-                            // <NavDropdown style={{display: '-webkit-box'}}>
-                            //     <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
-                            //         {HamburgerIcon}
-                            //     </Link>
-                            //     {/* <AnimatePresence>
-                            //         {show && (
-                            //             <Modal
-                            //                 as={motion.div}
-                            //                 initial={{y: -5}}
-                            //                 animate={{ y: [0, 5, 0], opacity: 1}}
-                            //                 transition={{ ease: "easeOut", duration: 0.7 }}
-                            //                 exit={{opacity: 0, y: [0, 10, 0]}}
-                            //             >
-                            //                 Hello
-                            //             </Modal>
-                            //         )}
-                            //     </AnimatePresence> */}
-                            // </NavDropdown>
+                        ) : (
+                            <NavDropdown style={{display: '-webkit-box'}}>
+                                <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
+                                    {HamburgerIcon}
+                                </Link>
+                                {/* <AnimatePresence>
+                                    {show && (
+                                        <Modal
+                                            as={motion.div}
+                                            initial={{y: -5}}
+                                            animate={{ y: [0, 5, 0], opacity: 1}}
+                                            transition={{ ease: "easeOut", duration: 0.7 }}
+                                            exit={{opacity: 0, y: [0, 10, 0]}}
+                                        >
+                                            Hello
+                                        </Modal>
+                                    )}
+                                </AnimatePresence> */}
+                            </NavDropdown>
                         )}
                     </>
                 )}                
