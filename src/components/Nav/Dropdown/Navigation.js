@@ -19,10 +19,10 @@ const variants = {
     }
 };
 
-export const Navigation = () => (
+export const Navigation = ({toggleOpen, isOpen}) => (
     <Ul variants={variants}>
         {itemIds.map(item => (
-            <MenuItem i={item.id} key={item.id} data={item} />
+            <MenuItem i={item.id} key={item.id} data={item}  toggleOpen={toggleOpen} isOpen={isOpen}/>
         ))}
     </Ul>
 );
@@ -37,5 +37,15 @@ const itemIds = [
         id: 1,
         title: 'Gallery',
         path: '/gallery'
+    },
+    {
+        id: 2,
+        title: 'Terms and Condition',
+        path: '/terms'
+    },
+    {
+        id: 3,
+        title: 'Customer Support',
+        path: '/customer-support'
     }
 ];

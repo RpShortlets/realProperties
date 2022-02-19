@@ -7,7 +7,7 @@ import { Navigation } from "./Navigation";
 import styled from "styled-components";
 
 const NavStyle = styled(motion.nav)`
-    height: ${({height}) => height ? '70vh' : ''};
+    height: ${({height}) => height ? '40vh' : ''};
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -57,8 +57,6 @@ export const MainNav = () => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
 
-  console.log(isOpen)
-
   return (
         <NavStyle
             initial={false}
@@ -68,7 +66,7 @@ export const MainNav = () => {
             height={isOpen}
         >
         <Back variants={sidebar} background={isOpen}/>
-        <Navigation />
+        <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />
         <MenuToggle toggle={() => toggleOpen()} />
         </NavStyle>
     );

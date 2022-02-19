@@ -31,7 +31,7 @@ const variants = {
 
 const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
 
-export const MenuItem = ({ i, data }) => {
+export const MenuItem = ({ i, data , toggleOpen, isOpen}) => {
     const style = { border: `2px solid ${colors[i]}` };
     return (
         <LI
@@ -41,7 +41,7 @@ export const MenuItem = ({ i, data }) => {
         >
             {/* <div className="icon-placeholder" style={style} />
             <div className="text-placeholder" style={style} /> */}
-            <Link to={data.path} style={style}>
+            <Link to={data.path} onClick={() => toggleOpen(!isOpen)}>
               {data.title}
             </Link>
         </LI>

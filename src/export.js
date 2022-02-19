@@ -15,7 +15,8 @@ export const Gallery = lazy(() => import('./Pages/Gallery/Gallery'))
 export const MobileReservation = lazy(() => import('./Pages/payments/MobileReservation'))
 export const About = lazy(() => import('./Pages/About/About'))
 export const CustomerService = lazy(() => import('./Pages/Customer Support/CustomerSupport'))
-export const TermsandPolicy = lazy(() => import('./Pages/Term and Policy/TermandPolicy'))
+export const Policy = lazy(() => import('./Pages/Term and Policy/Policy'))
+export const TermsandPolicy = lazy(() => import('./Pages/Term and Policy/TermandPolicy.jsx'))
 
 export { default as Footer } from "./components/Footer/Footer"
 export { default as NotFound } from "./components/NotFound"

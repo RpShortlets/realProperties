@@ -1,14 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, FilterIcon, HomeIcon } from '../../Svg/svg';
 // import NavVas from './components/NavVas';
-import MiniSearch from './components/MiniSearch';
-import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
-import { searchShortlets } from '../../redux/actionCreators/actionCreators';
+// import MiniSearch from './components/MiniSearch';
+import { setOpenDrawer } from '../../redux/actions/componentState';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
 
@@ -212,13 +210,13 @@ const NavItems =  styled.div `
 
 const Nav = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
 
     const {checkScroll} = useSelector(state =>  state.ComponentState)
-    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
+    const {searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
 
-    const [openNavMini, setOpenNavMini] = useState(false)
-    const myRef = useRef(null)
+    // const [openNavMini, setOpenNavMini] = useState(false)
+ 
 
 
     const URL = window.location.href;
@@ -227,19 +225,19 @@ const Nav = () => {
     const checKIn = useCheckInDate?.split(",")[1]
     const checkOut = useCheckOutDate?.split(",")[1]
 
-    const handleOption = (id) => {
-        if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
-            const value = myRef.current.childNodes[id].childNodes[1]?.value
-            dispatch(saveSearchValue(value))
-            setOpenNavMini(false)
-        }
-    }
+    // const handleOption = (id) => {
+    //     if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
+    //         const value = myRef.current.childNodes[id].childNodes[1]?.value
+    //         dispatch(saveSearchValue(value))
+    //         setOpenNavMini(false)
+    //     }
+    // }
 
-    const SubmitForm = async(e) => {
-        e.preventDefault();
-        dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
-        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
-    }
+    // const SubmitForm = async(e) => {
+    //     e.preventDefault();
+    //     dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
+    //     navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
+    // }
 
     const handleDrawer = () => {
         dispatch(setOpenDrawer(true))
@@ -275,14 +273,14 @@ const Nav = () => {
 
                 {Query ? (
                     <>
-                        {checkScroll && window.location.pathname === '/' ? (
-                            <MiniSearch 
-                                myRef={myRef} 
-                                setOpenNavMini={setOpenNavMini} 
-                                openNavMini={openNavMini} 
-                                handleOption={handleOption} 
-                                SubmitForm={SubmitForm}
-                            />
+                        {checkScroll && window.location.pathname === '/' ? (""
+                            // <MiniSearch 
+                            //     myRef={myRef} 
+                            //     setOpenNavMini={setOpenNavMini} 
+                            //     openNavMini={openNavMini} 
+                            //     handleOption={handleOption} 
+                            //     SubmitForm={SubmitForm}
+                            // />
                         ) : (""
                             // <NavVas  Icons={svgs} />
                         )}

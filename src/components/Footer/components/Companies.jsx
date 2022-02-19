@@ -32,7 +32,7 @@ const Companies = () => {
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/terms">
                             Terms and Condition
                         </NavLink>
                     </div>

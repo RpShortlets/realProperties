@@ -65,6 +65,10 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const newBookedDate = booked?.concat(tem)
     const dates = newBookedDate?.map((data) => data)
 
+    // const newNow = dates?.forEach(function (item, index) {
+    //     return item;
+    // });
+
     //* GET DATES BTW THE CHECK IN AND OUT CALANDER
     const listDate = []
     const startDate = checkins;
@@ -77,6 +81,14 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
         listDate.push(strDate);
         dateMove.setDate(dateMove.getDate() + 1);
     };
+
+    // let newList;
+
+    // listDate?.forEach(function (item, index) {
+    //     newList =  item;
+    // });
+
+    // console.log(newList, newNow)
 
 
     React.useEffect(() => {
@@ -99,12 +111,12 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
                 type: 'warning'
             })
         }
-    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, dates])
+    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, dates, listDate])
 
     const renderWeekPickerDay = (date, dateRangePickerDayProps) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;
     };
-    
+
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>

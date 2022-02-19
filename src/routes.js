@@ -1,6 +1,6 @@
 import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, 
     Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService,
-    TermsandPolicy
+    TermsandPolicy, Policy
 } 
     from "./export"
 import {Navigate} from "react-router-dom";
@@ -95,6 +95,10 @@ const routes = (isLoggedIn, Query) =>
         {
             path: '/policy',
             element: <TermsandPolicy />,
+        },
+        {
+            path: '/terms',
+            element: < Policy/>
         },
         {
             path: '*',

@@ -2,7 +2,7 @@ import  { useState } from 'react';
 import styled, {css} from 'styled-components/macro';
 import  {Link} from 'react-router-dom'
 import { PaddingStyle } from '../../styles/globalStyles';
-import { PolicyData } from "./Data/data"
+import { TermsData } from "./Data/data"
 
 
 
@@ -64,6 +64,7 @@ const Menu = styled.div`
     ol {
         margin: 0;
         padding: 0;
+        padding-right: 10px;
     }
 
 
@@ -120,7 +121,7 @@ const TermandPolicy = () => {
                     <MainMenu >
                         <Menu>
                             <ol>
-                                {PolicyData.map((item, index) => (
+                                {TermsData.map((item, index) => (
                                     <li key={item.id} id={item.id} data={item} className='firstChild'>
                                         <Link to="#" style={{color: item.id === policyId && 'rgba(28, 123, 147, 1)'}} onClick={() => setPolicyId(item?.id)}>
                                             {item.title}
@@ -133,30 +134,53 @@ const TermandPolicy = () => {
                     </MainMenu>
                     <SideBar>
                         <SideMenu>
-                            <h1>{PolicyData[policyId].title}</h1>
+                            <h1>{TermsData[policyId].title}</h1>
                             <p>
-                                {PolicyData[policyId].content}
+                                {TermsData[policyId].content}
                             </p>
-                            {PolicyData[policyId]?.content2 && (
+                            {TermsData[policyId]?.content2 && (
                                 <p>
-                                    {PolicyData[policyId]?.content2}
+                                    {TermsData[policyId]?.content2}
                                 </p>
                             )}
-                            {PolicyData[policyId]?.content3 && (
+                            {TermsData[policyId]?.content3 && (
                                 <p>
-                                    {PolicyData[policyId]?.content3}
+                                    {TermsData[policyId]?.content3}
                                 </p>
                             )}
-                            {PolicyData[policyId]?.content4 && (
+                            {TermsData[policyId]?.content4 && (
                                 <p>
-                                    {PolicyData[policyId]?.content4}
+                                    {TermsData[policyId]?.content4}
+                                </p>
+                            )}
+                            {TermsData[policyId]?.content5 && (
+                                <p>
+                                    {TermsData[policyId]?.content5}
                                 </p>
                             )}
                             <ol>
-                                {PolicyData[policyId]?.subContent?.map((item, index) => (
-                                    <li key={item.id} className="secondLink">
-                                        {item.content}
-                                    </li>
+                                {TermsData[policyId]?.subContent?.map((item, index) => (
+                                    <>
+                                        <li key={item.id} className="secondLink">
+                                            {item.content}
+                                            {item.content2  && (
+                                                <ul>
+                                                    <li>{item.content2}</li>
+                                                </ul>
+                                            )}
+                                            {item.content3 && (
+                                                <ul>
+                                                    <li>{item.content3}</li>
+                                                </ul>
+                                            )}
+                                            {item.content4 && (
+                                                <ul>
+                                                    <li>{item.content4}</li>
+                                                </ul>
+                                            )}
+                                        </li>
+                                        <p style={{fontWeight: '600'}}>{item.warming}</p>
+                                    </>
                                 ))}
                             </ol>
                         </SideMenu>

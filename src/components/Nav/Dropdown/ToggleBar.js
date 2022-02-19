@@ -26,9 +26,9 @@ const Btn = styled.button`
 
 const Path = props => (
     <motion.path
-        fill="transparent"
+        fill="white"
         strokeWidth="3"
-        stroke="hsl(0, 0%, 18%)"
+        stroke="var(--color-primary)"
         strokeLinecap="round"
         {...props}
     />
@@ -36,7 +36,7 @@ const Path = props => (
 
 export const MenuToggle = ({ toggle }) => (
     <Btn onClick={toggle}>
-        <svg width="23" height="23" viewBox="0 0 23 23">
+        <svg width="23" height="23" viewBox="0 0 23 23" style={{color: 'whitesmoke'}}>
         <Path
             variants={{
             closed: { d: "M 2 2.5 L 20 2.5" },
