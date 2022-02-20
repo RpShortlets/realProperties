@@ -46,6 +46,7 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
         const checkout = homeDateValue[1]?.toLocaleDateString('en-CA');
         const useCheckinDate = homeDateValue[0]?.toLocaleDateString('en-US', options);
         const useCheckoutDate = homeDateValue[1]?.toLocaleDateString('en-US', options);
+
         
     
         if(checkin && checkout) {
@@ -54,6 +55,11 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
             dispatch(newCheckInDate(useCheckinDate))
             dispatch(newCheckOutDate(useCheckoutDate))
             
+        } else {
+            dispatch(checkInDate(null))
+            dispatch(checkOutDate(null))
+            dispatch(newCheckInDate(null))
+            dispatch(newCheckOutDate(null))
         }
     
     }, [homeDateValue, dispatch,  ])

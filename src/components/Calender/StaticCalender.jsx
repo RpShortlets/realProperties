@@ -47,6 +47,7 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const checkInD = checkin?.slice(8);
     const checkOutD = checkout?.slice(9);
 
+
     const {PropertyDetails: {booked_dates, temp_booked_dates}} = useSelector(state => state.propertyDetails)
     const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
     const [value, setValue] = React.useState([null, null]);
@@ -65,10 +66,7 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const newBookedDate = booked?.concat(tem)
     const dates = newBookedDate?.map((data) => data)
 
-    // const newNow = dates?.forEach(function (item, index) {
-    //     return item;
-    // });
-
+    
     //* GET DATES BTW THE CHECK IN AND OUT CALANDER
     const listDate = []
     const startDate = checkins;
@@ -82,25 +80,20 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
         dateMove.setDate(dateMove.getDate() + 1);
     };
 
-    // let newList;
-
-    // listDate?.forEach(function (item, index) {
-    //     newList =  item;
-    // });
-
-    // console.log(newList, newNow)
-
-
+    
+    const intersection = listDate?.filter(element => dates?.includes(element));
+    
     React.useEffect(() => {
 
-        if(!listDate?.toString()?.includes(dates?.toString())) {
+        if(!intersection?.length > 0) {
             if(checkins && checkouts) {
                 dispatch(checkInDate(checkins))
                 dispatch(checkOutDate(checkouts))
                 dispatch(newCheckInDate(useCheckinDate))
                 dispatch(newCheckOutDate(useCheckoutDate))
             }
-        } else {
+        }
+        else {
             setValue([null, null])
             dispatch(checkInDate(null))
             dispatch(checkOutDate(null))
@@ -111,7 +104,7 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
                 type: 'warning'
             })
         }
-    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, dates, listDate])
+    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, intersection])
 
     const renderWeekPickerDay = (date, dateRangePickerDayProps) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;

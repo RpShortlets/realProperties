@@ -161,7 +161,6 @@ const PropertyImage = ({status}) => {
     }
 
 
-
     const images = [
         {
             src: status === "succeeded" && pictures[10]?.src && pictures[10]?.src,
@@ -197,10 +196,51 @@ const PropertyImage = ({status}) => {
             src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
             loading: 'lazy',
             alt: ''
-        }
+        },
+        // {
+        //     src: status === "succeeded" && pictures[14]?.src && pictures[14]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[15]?.src && pictures[15]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[16]?.src && pictures[16]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[17]?.src && pictures[17]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[18]?.src && pictures[18]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[19]?.src && pictures[19]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // },
+        // {
+        //     src: status === "succeeded" && pictures[20]?.src && pictures[20]?.src,
+        //     loading: 'lazy',
+        //     alt: ''
+        // }
 
     ];
 
+    
 
 
     const gotoPrevious = () =>

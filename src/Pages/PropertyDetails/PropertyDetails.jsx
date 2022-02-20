@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react"
+import {useState, useRef, useEffect, useMemo} from "react"
 import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
@@ -137,8 +137,8 @@ const PropertyDetails = () => {
     const PickupFee =  reserve === 'succeeded' && summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
     const carPrice =reserve === 'succeeded'&&  summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
     const driverPrice = reserve === 'succeeded'&& summary_details[0]?.total_driver_price ?  parseInt(summary_details[0]?.total_driver_price) : 0;
-    let checkInD = checkin.slice(8);
-    let checkOutD = checkout.slice(9);
+    const checkInD = checkin.slice(8);
+    const checkOutD = checkout.slice(9);
 
 
     //* HANDLE CHECKBOX CHANGE
@@ -510,7 +510,7 @@ const PropertyDetails = () => {
                             </BodyContent>
                         </BodyContainer>
                     </Header>
-                    <PropertyCalender status={reserve} checkInD={checkInD} checkOutD={checkOutD} lenghtstay={diffDays ? diffDays : staylength}  margin="max(3vw,2rem) 0"/> 
+                    <PropertyCalender status={reserve} lenghtstay={diffDays ? diffDays : staylength}  margin="max(3vw,2rem) 0"/> 
                     <PropertyRules  status={status}/>
                 </Main> 
             </Section>
