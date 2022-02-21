@@ -94,7 +94,13 @@ const MobileDesitination = () => {
 
 
     const handleOption = (e) => {
-        setValue(e.target.value) 
+        setValue(ikoyiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
+        dispatch(saveSearchValue(e.target.value))
+        
+    }
+
+    const handleOption2 = (e) => {
+        setValue(lekkiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
         dispatch(saveSearchValue(e.target.value))
         
     }
@@ -121,35 +127,40 @@ const MobileDesitination = () => {
                     </div>
                     <div>
                         {/* {Destlocation.map((data, i)  =>  */}
-                            <motion.div 
-                                className={`${value === "Ikoyi, Nigeria" ? `isActive` : ''} destinationPlaceItems` } 
+                            <motion.label 
+                                className={`${searchValue === "Ikoyi, Nigeria" ? `isActive` : ''} destinationPlaceItems` } 
                                 whileHover={{ scale: 1 }}
                                 whileTap={{ scale: 0.9 }}
+                                ref={ikoyiRef} 
+                                onChange={handleOption}
+                                htmlFor='ikoyi'
                             >
                                 <div>
-                                    <span className={`${value === "Ikoyi, Nigeria" ? `isActive` : ''}`}>{MapPinIcon}</span>
+                                    <span className={`${searchValue === "Ikoyi, Nigeria" ? `isActive` : ''}`}>{MapPinIcon}</span>
                                 </div>
                                 <div>
-                                    <label htmlFor='ikoyi'>Ikoyi, Nigeria
-                                        <input ref={ikoyiRef} id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
+                                    <label>Ikoyi, Nigeria
+                                        <input id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria'  type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </motion.div>
-                            <motion.div 
-                                className={`${value === "Lekki, Nigeria" ? `isActive` : ''} destinationPlaceItems` }
+                            </motion.label>
+                            <motion.label 
+                                className={`${searchValue === "Lekki, Nigeria" ? `isActive` : ''} destinationPlaceItems` }
                                 whileHover={{ scale: 1 }}
                                 whileTap={{ scale: 0.9 }}
-                                
+                                ref={lekkiRef}
+                                onClick={handleOption2}
+                                htmlFor='lekki'
                             >
                                 <div>
-                                    <span className={`${value === "Lekki, Nigeria" ? `isActive` : ''}` }>{MapPinIcon}</span>
+                                    <span className={`${searchValue === "Lekki, Nigeria" ? `isActive` : ''}` }>{MapPinIcon}</span>
                                 </div>
                                 <div>
-                                    <label htmlFor='lekki'>Lekki, Nigeria
-                                        <input ref={lekkiRef} id='lekki' name='lekki' value='Lekki, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
+                                    <label>Lekki, Nigeria
+                                        <input id='lekki' name='lekki' value='Lekki, Nigeria' type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </motion.div>
+                            </motion.label>
                         {/* )} */}
                     </div>
                 </div>
