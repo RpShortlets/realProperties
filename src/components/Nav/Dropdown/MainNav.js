@@ -57,13 +57,14 @@ export const MainNav = () => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
 
+
   return (
         <NavStyle
             initial={false}
             animate={isOpen ? "open" : "closed"}
             custom={height}
             ref={containerRef}
-            height={isOpen}
+            height={isOpen ? "true" : "false"}
         >
         <Back variants={sidebar} background={isOpen}/>
         <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />

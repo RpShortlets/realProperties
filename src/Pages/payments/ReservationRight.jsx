@@ -26,18 +26,13 @@ const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'Nat
 
 const SectionRight = styled.div `
     background: #fff;
+    width: 40%; 
+    height: 100vh;
+    z-index: 11; 
+    position: absolute; 
+    right: 0px;
+    overflow-y: scroll;
 
-
-    @media screen and (min-width: 769px) {
-        width: 40%; 
-        height: 100vh;
-        width: 100%; 
-        z-index: 11; 
-        position: absolute; 
-        /* top: 0;  */
-        right: 0px;
-        overflow-y: scroll;
-    }
 
 `
 
@@ -77,7 +72,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
-    const [value, setValue] = useState(new Date());
+    const [value, setValue] = useState(null);
     const [phn, setPhone] = useState("")
     const [validated, setValidated] = useState(false)
     const [emailerror, setEmailError] = useState(false)

@@ -8,6 +8,7 @@ import {FlexStyle} from "../../styles/globalStyles"
 // import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import { ManualPay, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
+import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
 import {motion } from "framer-motion"
 import { BankTransferIcon } from '../../Svg/svg';
@@ -140,9 +141,11 @@ const OrderSummary = () => {
 
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     const {payStack} = useSelector(state => state.paymentState)
-    // const guestId =  parseInt(localStorage.getItem('guestId'))
-    // const [addtionService, setAddtionalService] = useState();
+    
+
     const [method, setmethod] = useState('transfer');
+    const [showDialog, setShowDialog] = useState(false)
+    const [confirm, setConfirm ] = useState('No')
 
 
 
@@ -163,6 +166,7 @@ const OrderSummary = () => {
     }
 
     const processPayment = () => {
+        setShowDialog(!showDialog)
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
@@ -170,6 +174,9 @@ const OrderSummary = () => {
 
 
         if(method === 'transfer' && guestId) {
+            // if(showDialog) {
+            //     alert('show')
+            // }
             if (window.confirm("Please note this method require 30mins to make payment.") === true) {
                 dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
                 navigate('/order-summary/payment')
@@ -210,8 +217,10 @@ const OrderSummary = () => {
         )
     }
 
+
     return (
         <>
+            <Dialog confirm={confirm} setConfirm={setConfirm} showDialog={showDialog} setShowDialog={setShowDialog} title="Please note this method require 30mins to make payment" />
             <Section>
                 <Main>
                     
@@ -292,7 +301,7 @@ const OrderSummary = () => {
                                             {BankTransferIcon}
                                             <span>PayStack</span>
                                         </Label>
-                                        <input i
+                                        <input 
                                             id="paystack" 
                                             type="radio" 
                                             name='paystack'
@@ -300,7 +309,7 @@ const OrderSummary = () => {
                                             checked={method === 'paystack'}
                                             onChange={(e) => setmethod(e.target.value)}
                                             style={{display: 'none'}}
-                                            disabled
+                                            disabled={true}
                                         />
                                     </div>
                                 </div>

@@ -29,10 +29,10 @@ const variants = {
   }
 };
 
-const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
+// const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
 
 export const MenuItem = ({ i, data , toggleOpen, isOpen}) => {
-    const style = { border: `2px solid ${colors[i]}` };
+    // const style = { border: `2px solid ${colors[i]}` };
     return (
         <LI
           variants={variants}

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { CopyIcon } from '../../Svg/svg';
+import { CopyIcon, CheckedIcon } from '../../Svg/svg';
 import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
@@ -128,8 +128,9 @@ const Main = styled.div `
 const Transfer = () => {
     const dispatch = useDispatch();
     const {manualTransfer: {payment_details, pending_id, transaction_info }, status, manualTransfer} = useSelector(state => state.paymentState);
-
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
+
+    const [copied, setCopied] = useState("")
 
 
     const handleCancel = () => {
@@ -187,9 +188,9 @@ const Transfer = () => {
                                                     <span>&#8358;{transaction_info[0]?.amount?.toLocaleString()}</span>
                                                         <CopyToClipboard 
                                                             text={transaction_info[0]?.amount}
-                                                            onCopy={() => alert('Copy')}
+                                                            onCopy={() => setCopied('amount')}
                                                         >
-                                                            <span>{CopyIcon}</span>
+                                                            <span>{copied === 'amount' ? CheckedIcon : CopyIcon}</span>
                                                         </CopyToClipboard>
                                                 </div>
                                             </>)
@@ -203,10 +204,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.bankname}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.bankname}
+                                                        onCopy={() => setCopied('bankname')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'bankname' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -220,10 +221,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.accountname}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.accountname}
+                                                        onCopy={() => setCopied('accountname')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'accountname' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -237,10 +238,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.accountno}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.accountno}
+                                                        onCopy={() => setCopied('accountno')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'accountno' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -254,10 +255,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{transaction_info[0]?.payment_reference}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={transaction_info[0]?.payment_reference}
+                                                        onCopy={() => setCopied('payment_reference')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'payment_reference' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -275,7 +276,7 @@ const Transfer = () => {
                                         <div>
                                             <Countdown />
                                         </div>
-                                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center', margin: 'max(1.2rem, .9rem) 0'}}>
                                             <p>You have 30 minutes window to make payment, otherwise, the order will be canceled</p>
                                         </div>
                                         <div style={{display: 'contents'}}>

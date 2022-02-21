@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 
@@ -29,7 +29,12 @@ const Countdown = () => {
     const remainingTime = endTime - stratTime;
     const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
 
-    console.log(getTimeMinutes(remainingTime));
+    useEffect(() => {
+        getTimeMinutes(remainingTime)
+        console.log(getTimeMinutes(remainingTime));
+    }, [remainingTime])
+
+    
     return (
         <CountdownCircleTimer
             {...timerProps}

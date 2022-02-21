@@ -26,7 +26,7 @@ const ImageWrapper = styled.div `
 const LargeImage = styled.div `
     grid-column: 1/4;
     grid-row: 1/3;
-    height: ${({height}) => height ? '400px': 'calc(100% - 0px)'};
+    height: ${({height}) => height ? '100%': 'calc(100% - 0px)'};
     
     div {
         position: relative;
@@ -277,7 +277,7 @@ const PropertyImage = ({status}) => {
             <ImageContainer>
                 <ImageWrapper>
                     <LargeImage height={status === 'loading' ? 'true' : ''}>
-                        {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
+                        {status === 'loading' ? <SkeletonLoader width='100%' height='300px'/> : 
                             status === "succeeded" && (
                             <div onClick={() => showPictures(0)} style={{height: '100%'}}>
                                 <img data-src={pictures[0]?.src} alt=""  width='100%' height='100%' className="lazyload"/>

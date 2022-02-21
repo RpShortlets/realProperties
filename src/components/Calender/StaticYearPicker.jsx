@@ -76,14 +76,15 @@ export default function CustomInput({value, setValue, label, disabled}) {
         open={isOpen}
         disableHighlightToday={true}
         onAccept={() => setIsOpen(!isOpen)}
-        value={value}
+        clearable={true}
+        value={value ? value : 'DD'}
         onChange={(newValue) => {
           setValue(newValue);
         }}
         renderInput={({ inputRef, inputProps, InputProps }) => (
           <div onClick={() => setIsOpen(!isOpen)}>
             <Label>{label}{Asterik}</Label>
-            <InputForm disabled={disabled} readOnly={readOnly} ref={inputRef} {...inputProps} label="Date of Birth"  value={value?.toLocaleDateString('en-CA')}  onChange={() => console.log('dates')} />
+            <InputForm disabled={disabled} readOnly={readOnly} ref={inputRef} {...inputProps} label="Date of Birth"    onChange={() => console.log('dates')} />
           </div>
         )}
       />
