@@ -121,7 +121,7 @@ const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalSe
                                 </>
                             )}
                         </div>
-                        <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price || summary_details[0]?.total_pickup_dropoff_price ? TotalAdditionalServices.toLocaleString() : ''}</p>
+                        <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price || summary_details[0]?.total_pickup_dropoff_price ? TotalAdditionalServices?.toLocaleString() : ''}</p>
                     </div>
                 ): ''}
                 {/* <div>

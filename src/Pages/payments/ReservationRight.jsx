@@ -26,12 +26,16 @@ const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'Nat
 
 const SectionRight = styled.div `
     background: #fff;
-    width: 40%; 
-    height: 100vh;
-    z-index: 11; 
-    position: absolute; 
-    right: 0px;
-    overflow-y: scroll;
+    width: 100%;
+
+    @media screen and (min-width: 769px) {
+        width: 40%; 
+        height: 100vh;
+        z-index: 11; 
+        position: absolute; 
+        right: 0px;
+        overflow-y: scroll;
+    }
 
 
 `

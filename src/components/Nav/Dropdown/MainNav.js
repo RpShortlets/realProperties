@@ -25,7 +25,6 @@ const Back = styled(motion.div) `
     bottom: 0;
     width: 100%;
     background: ${({background}) => background ? 'var(--color-white)' : 'transparent' };
-    box-shadow: var(--shadow);
     border-radius: 0 10px;
 
 
@@ -64,11 +63,11 @@ export const MainNav = () => {
             animate={isOpen ? "open" : "closed"}
             custom={height}
             ref={containerRef}
-            height={isOpen ? "true" : "false"}
+            height={isOpen  ? true : false}
         >
-        <Back variants={sidebar} background={isOpen}/>
-        <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />
-        <MenuToggle toggle={() => toggleOpen()} />
+          <Back variants={sidebar} background={isOpen}/>
+          <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />
+          <MenuToggle toggle={() => toggleOpen()} />
         </NavStyle>
     );
 };

@@ -8,6 +8,7 @@ const Ul = styled(motion.ul) `
     position: absolute;
     top: 50px;
     width: 100%;
+    display: ${({isOpen}) => isOpen ? 'block' : 'none'};
 `
 
 const variants = {
@@ -20,7 +21,7 @@ const variants = {
 };
 
 export const Navigation = ({toggleOpen, isOpen}) => (
-    <Ul variants={variants}>
+    <Ul variants={variants} isOpen={isOpen}>
         {itemIds.map(item => (
             <MenuItem i={item.id} key={item.id} data={item}  toggleOpen={toggleOpen} isOpen={isOpen}/>
         ))}
