@@ -147,13 +147,12 @@ const OrderSummary = () => {
     const [showDialog, setShowDialog] = useState(false)
     const [confirm, setConfirm ] = useState('No')
 
-
-
-    
-
-
-    // const CleaningFee =  proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.cleaning && Ongoing_id_info[0]?.cleaning : 0;
-    // const PickupFee =    proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.pickup && Ongoing_id_info[0]?.pickup : 0; 
+    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) : 0;
+    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup)  : 0; 
+    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
+    const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
+    const AddService =  proceess === 'succeeded' && parseInt(CleaningFee) + parseInt(PickupFee)
+    const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
 
     // useEffect(() => {
     //     if(status === 'succeeded') {
@@ -166,12 +165,11 @@ const OrderSummary = () => {
     }
 
     const processPayment = () => {
-        setShowDialog(!showDialog)
+        // setShowDialog(!showDialog)
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
         const guestId = Ongoing_id_info[0]?.guest_id;
-
 
         if(method === 'transfer' && guestId) {
             // if(showDialog) {
@@ -239,24 +237,19 @@ const OrderSummary = () => {
                                                 {proceess === 'loading' ? <SkeletonLoader /> : <span> {data?.total_apartment_price?.toLocaleString()}</span>}
                                             </CardDetails>
                                         )}
-                                        {data?.cleaning && (
+                                        {data?.cleaning || data?.pickup  ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental || data?.pickup  ? 'Additional Services' : ''}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : parseInt(data?.car_rental) + parseInt(data?.pickup)}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : AddService?.toLocaleString()}</span>
                                             </CardDetails>
-                                        )}
-                                        {data?.car_rental && (
+                                        ): ""}
+                                        {data?.car_rental || data?.driver ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental && 'Car Rental'} </p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarService?.toLocaleString()}</span>
                                             </CardDetails>
-                                        )} 
-                                        {data?.driver && (
-                                            <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver && 'Driver'}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver?.toLocaleString()}</span>
-                                            </CardDetails>
-                                        )}
+                                        ): ''} 
+        
                                         {data?.security_deposit && (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>

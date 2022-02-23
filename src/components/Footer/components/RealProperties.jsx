@@ -19,7 +19,7 @@ const Container = styled.div `
         line-height: 1.5;
         margin: 0;
         white-space: pre-wrap;
-        word-spacing: -2px;
+        word-spacing: 0px;
         word-break: break-all;
     }
 

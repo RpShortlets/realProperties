@@ -7,7 +7,7 @@ import { Navigation } from "./Navigation";
 import styled from "styled-components";
 
 const NavStyle = styled(motion.nav)`
-    height: ${({height}) => height ? '40vh' : ''};
+    height: ${({height}) => height ? '35vh' : ''};
     overflow: hidden;
     position: absolute;
     top: 0;
