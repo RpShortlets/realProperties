@@ -118,7 +118,7 @@ export const TermsData = [
     },
     {
         id: 3,
-        title: '. Cancellations, Travel Issues, Refunds and Booking Modifications',
+        title: 'Cancellations, Travel Issues, Refunds and Booking Modifications',
         content: '3.1 Cancellations, Travel Issues, and Refunds. In general, if as a Guest you cancel a reservation, the amount refunded to you is determined by the cancellation policy that applies to that reservation. But, in certain situations, other policies take precedence and determine what amount is refunded to you. If something outside your control forces you to cancel a reservation, you may be eligible for a partial or full refund. If the Host cancels, or you experience a Travel Issue you may be eligible for rebooking assistance or a partial or full refund.',
         content2: '3.2 Booking Modifications. Guests and Hosts are responsible for any booking modifications they agree to make via the Real Property Platform or direct Real Property customer service to make on their behalf, and agree to pay any additional amounts, fees, or taxes associated with any Booking Modification.'
     },

@@ -82,7 +82,7 @@ const SideMenu = styled.div`
     }
 
     p {
-        font-size: var(--font-xtra-small-screen);
+        font-size: var(--font-small);
         color: var(--color-primary);
         margin: 0;
         line-height: 2;
@@ -91,6 +91,12 @@ const SideMenu = styled.div`
     p:nth-of-type(2),
     p:nth-of-type(4) { 
         margin: max(2vw, .9rem) 0;
+    }
+
+    @media screen and (min-width: 769px) {
+        p {
+            font-size: var(--font-xtra-small-screen)
+        }
     }
 
 `

@@ -18,14 +18,15 @@ const Wrapper = styled.div `
 
 const Deleted = () => {
     const dispatch = useDispatch();
-    const {cancelled, cancelledTransaction, profile} = useSelector(state => state.adminDashboard);
+    const data = JSON.parse(localStorage.getItem('admin'))
+    const {cancelled, cancelledTransaction} = useSelector(state => state.adminDashboard);
 
     useEffect(() => {
         dispatch(AdminDeletedTransaction())
     }, [dispatch])
 
     return <Wrapper>
-            <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
+            <h1>{data?.firstname && `Welcome ${data?.firstname}`}</h1>
         <TableData title="Deleted">
         {cancelled === 'succeeded' && (
             <>    

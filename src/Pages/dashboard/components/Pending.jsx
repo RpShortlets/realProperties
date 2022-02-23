@@ -19,7 +19,8 @@ const Wrapper = styled.div `
 
 const Pending = () => {
     const dispatch = useDispatch();
-    const {pending, pendingTransaction, profile} = useSelector(state => state.adminDashboard);
+    const data = JSON.parse(localStorage.getItem('admin'))
+    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
     // const {status} = useSelector(state => state.paymentState);
 
 
@@ -36,7 +37,7 @@ const Pending = () => {
 
 
     return <Wrapper>
-        <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
+        <h1>{data?.firstname && `Welcome ${data?.firstname}`}</h1>
         <TableData title="Pending">
             {pending === 'succeeded' && (
                 <>

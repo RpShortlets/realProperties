@@ -18,7 +18,8 @@ const Wrapper = styled.div `
 
 const Completed = () => {
     const dispatch = useDispatch();
-    const {completed, completedTransaction, profile} = useSelector(state => state.adminDashboard);
+    const data = JSON.parse(localStorage.getItem('admin'))
+    const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
     
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const Completed = () => {
     }, [dispatch])
 
     return <Wrapper>
-            <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
+            <h1>{data?.firstname && `Welcome ${data?.firstname}`}</h1>
         <TableData title="Completed">
         {completed === 'succeeded' && (
             <>    
