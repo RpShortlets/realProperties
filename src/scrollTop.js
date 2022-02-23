@@ -3,9 +3,15 @@ import { useLocation } from "react-router";
 
 const ScrollToTop = (props) => {
     const location = useLocation();
+    const newUrl = location.pathname.includes('apartment')
+
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [location]);
+        if(newUrl) {
+            return;
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location, newUrl]);
 
     return <>{props.children}</>
 };
