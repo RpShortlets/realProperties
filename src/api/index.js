@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const BaseURL = 'http://localhost:5050';
+export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
 
 
 
