@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { PaddingStyle, FlexStyle} from '../../styles/globalStyles';
 import Intro from "../../image/faq.webp"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
@@ -11,10 +12,12 @@ import { IoMdAdd } from "react-icons/io"
 import { MapPinIcon, Phone, Envelop, WhatsAppIcon } from '../../Svg/svg'
 import validator from 'validator'
 import ContactModal from "./ContactModal"
+import { ContactSupport } from "../../redux/actionCreators/actionCreators"
 
 import {FaqData} from './Data/data'
 import { Clip } from '../../components/Loader/Spinner';
 import { useValidate, useValidateLast } from '../../hooks/useValidate/useValidate';
+import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
 
 const Section =  styled.section`
     background: #fff;
@@ -167,6 +170,8 @@ const Contact = styled.div`
 `
 
 const CustomerSupport = () => {
+    const dispatch = useDispatch();
+    const { pending, enquiry } = useSelector(state =>  state.customerSupport)
     const loadedImg = useProgressiveImage(Intro)
     const [open, setOpen] = useState({id: Number, open: false})
     const [openModal, setOpenModal] = useState(false)
@@ -220,10 +225,54 @@ const CustomerSupport = () => {
 
     const SubmitContactForm = (e) => {
         e.preventDefault();
-        console.log(formdata)
-        setOpenModal(false)
+        if(validatedName) {
+            if(validatedLastName) {
+                if(validated) {
+                    if(formdata.message) {
+                        dispatch(ContactSupport({formdata}))
+                        setOpenModal(false)
+                    } else {
+                        OpenNotificationWithIcon({
+                            type: 'warning',
+                            description: 'Please enter a valid message'
+                        })
+                    }
+                } else {
+                    OpenNotificationWithIcon({
+                        type: 'warning',
+                        description: 'Please enter a valid email'
+                    })
+                }
+
+            } else {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    description: 'Please enter last name'
+                })
+            }
+
+        }else {
+            OpenNotificationWithIcon({
+                type: 'warning',
+                description: 'Please enter first name'
+            })
+        }
     }
 
+
+    useEffect(() => {
+        if(pending === 'succeeded' && enquiry === 'Emails sent out') {
+            OpenNotificationWithIcon({
+                type: 'success',
+                description: 'Enquiry submitted'
+            })
+        } else if(pending === 'failed') {
+            OpenNotificationWithIcon({
+                type: 'error',
+                description: 'Something went wrong in submitting your request'
+            })
+        }
+    }, [pending, enquiry])
 
     return (
         <>

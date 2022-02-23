@@ -84,8 +84,27 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     const intersection = listDate?.filter(element => dates?.includes(element));
     
     React.useEffect(() => {
-
-        if(!intersection?.length > 0) {
+        if(disablebooked) {
+            if(!intersection?.length > 0) {
+                if(checkins && checkouts) {
+                    dispatch(checkInDate(checkins))
+                    dispatch(checkOutDate(checkouts))
+                    dispatch(newCheckInDate(useCheckinDate))
+                    dispatch(newCheckOutDate(useCheckoutDate))
+                }
+            }
+            else {
+                setValue([null, null])
+                dispatch(checkInDate(null))
+                dispatch(checkOutDate(null))
+                dispatch(newCheckInDate(null))
+                dispatch(newCheckOutDate(null)) 
+                OpenNotificationWithIcon({
+                    message: 'You cannot select a date that has been booked',
+                    type: 'warning'
+                })
+            }
+        } else {
             if(checkins && checkouts) {
                 dispatch(checkInDate(checkins))
                 dispatch(checkOutDate(checkouts))
@@ -93,18 +112,9 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
                 dispatch(newCheckOutDate(useCheckoutDate))
             }
         }
-        else {
-            setValue([null, null])
-            dispatch(checkInDate(null))
-            dispatch(checkOutDate(null))
-            dispatch(newCheckInDate(null))
-            dispatch(newCheckOutDate(null)) 
-            OpenNotificationWithIcon({
-                message: 'You cannot select a date that has been booked',
-                type: 'warning'
-            })
-        }
-    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, intersection])
+
+
+    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, intersection, disablebooked])
 
     const renderWeekPickerDay = (date, dateRangePickerDayProps) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;

@@ -293,5 +293,21 @@ export const AdminDeletedTransaction = createAsyncThunk("adminDashboard/adminDel
     return data.results;
 });
 
+//* END OF ADMIN PAYMENT
 
+//* CONTACT CUSTOMER SUPPORT
+export const ContactSupport = createAsyncThunk("support/contactSupport", async ({formdata}) => {
 
+    const formdat = {
+        firstname: formdata.firstname,
+        lastname:  formdata.lastname,
+        email: formdata.email,
+        subject: formdata.subject,
+        message: formdata.message
+    }
+    
+    const response = await axios.post(`${BaseURL}/contact-customer`, formdat);
+
+    return response.data;
+
+});

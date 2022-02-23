@@ -19,6 +19,8 @@ const Container = styled.div `
         line-height: 1.5;
         margin: 0;
         white-space: pre-wrap;
+        word-spacing: -2px;
+        word-break: break-all;
     }
 
     div > div {
