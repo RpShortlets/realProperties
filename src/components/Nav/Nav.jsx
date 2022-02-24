@@ -214,7 +214,7 @@ const Nav = () => {
                                     {showMobileReserveButton && (
                                         <motion.div 
                                             className="" 
-                                            style={{display: 'flex', flex: '3'}}
+                                            style={{display: 'flex', flex: '3', marginLeft: '1rem'}}
                                             initial={{opacity: 0, y: 70, scale: 0.5}}
                                             animate={{opacity: 1, y: 0, scale: 1 }}
                                             exit={{opacity: 0, y: 70, scale: 0.5}}
@@ -232,7 +232,7 @@ const Nav = () => {
                                                 border='none' 
                                                 background='var(--linear-primary)'
                                                 color='var(--color-white)' 
-                                                width='65%' 
+                                                width='100%' 
                                                 padding='.7rem' 
                                                 fontSize='var(--font-xtra-small-screen)'
                                             />
@@ -244,19 +244,14 @@ const Nav = () => {
                     </>
                 )}
                 
-                {Query ? (
-                    <MainNav />
-                ) : (
-                    <>
-                        {newURL ? (
-                            <Link to='#' className="filterLink" onClick={handleDrawer}>
-                                {FilterIcon}
-                            </Link>
-                        ) : (
-                            <MainNav />   
-                        )}
-                    </>
-                )}                
+                {Query ? (<MainNav />) 
+                    : newURL ? (
+                        <Link to='#' className="filterLink" onClick={handleDrawer}>
+                            {FilterIcon}
+                        </Link>) 
+                    :  showMobileReserveButton && ApartmentUrl ? ("")
+                    : (<MainNav />)
+                }                
             </NavItems>
         </NavBar>
     )
