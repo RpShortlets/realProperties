@@ -50,7 +50,6 @@ const NavItems =  styled.div `
         color: var(--color-primary);
         display: flex;
         align-items: center;
-        margin-bottom: -6px;
     }
 
     span {
@@ -173,7 +172,6 @@ const Nav = () => {
                     <div className='navModal'>
                         <Link to='/'>
                             {CompanyLogo}
-                            <span aria-label='Real Property'>Real Property Shortlets</span>
                         </Link>
                     </div>
                 ) : (
