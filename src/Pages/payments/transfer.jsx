@@ -137,7 +137,6 @@ const Transfer = () => {
         if(parseInt(pendingId) === Number(pendingId)) {
             if (window.confirm("You're about to cancel your transaction") === true) {
                     dispatch(ManualCancel({pendingId}));
-                    window.location.reload()
                     navigate('/');
                 } else {
             }
