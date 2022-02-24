@@ -104,7 +104,7 @@ const PropertyDetails = () => {
 
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
-    const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
+    const {checkInDate, checkOutDate, showMobileReserveModal} = useSelector(state => state.ComponentState)
     const {reservation: {summary_details, price }} = useSelector(state => state.reservationState)
     const {reserve} = useSelector(state => state.reservationState)
 
@@ -195,8 +195,6 @@ const PropertyDetails = () => {
     const showCamryRef = (id) => {
         if(Camry?.current) {
             const name = Camry?.current?.childNodes[1]?.name;
-            // const value = Camry?.current?.childNodes[1]?.value;
-            // setCarType(value)
             setSelectedCar(name)
             setOpenCar(false)
             setCarlength(true)
@@ -258,9 +256,16 @@ const PropertyDetails = () => {
                 })
             }
         } else {
-            dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-            navigate('/reservation')
-            setshow(false)
+            if(checkInD !==  '' && checkOutD !== '') {
+                dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+                navigate('/reservation')
+                setshow(false)
+            } else {
+                OpenNotificationWithIcon({
+                    message: 'Please select check in and check out date',
+                    type: 'warning',
+                })
+            }
         }
         
     }
@@ -286,14 +291,6 @@ const PropertyDetails = () => {
     }, [carPrice, driverPrice]);
     
 
-    // useEffect(() => {
-    //     if(proceess === 'succeeded') {
-    //         setShowModal(true)
-    //     } else {
-    //         setShowModal(false)
-    //     }
-    // }, []);
-
 
     //!DEPENDING ISSUE
 
@@ -316,8 +313,6 @@ const PropertyDetails = () => {
 
     useEffect(() => {
         if(showModal) {
-
-            //document.body.style.overflowX = 'hidden'
             window.scrollTo({
                 top: 0,
                 left: 0,
@@ -332,16 +327,6 @@ const PropertyDetails = () => {
     }, [showModal])
 
 
-    // useEffect(() => {
-    //     if(status === 'loading') {            
-    //         document.body.style.overflow = 'hidden'
-    //     }
-    //     return () => {
-    //         document.body.style.overflow = 'auto'
-    //     }
-    // }, [status])
-
-
     if(status === 'failed') {
         return (
             <Error title="Property not found" Icon={SearchNotFoundIcon} />
@@ -353,10 +338,9 @@ const PropertyDetails = () => {
         <>
             {openService  && <Backdrop onClick={()=> setOpenService(false)} zIndex="10" /> }
             {showModal  && <Backdrop onClick={()=> setShowModal(false)} theme="rgba(0, 0, 0, .5)" /> }
-            {!Query && show && 
+            {!Query && showMobileReserveModal && 
                 <MobileModal 
-                    show={show} 
-                    setshow={setshow}
+                    show={showMobileReserveModal} 
                     modalRef={modalRef}
                     openGuest={openGuest}
                     setOpenGuest={setOpenGuest}  
@@ -390,7 +374,6 @@ const PropertyDetails = () => {
                     addDriverLength={addDriverLength}
                     minusDriverLength={minusDriverLength}
                     driverlengthValue={driverlengthValue}
-
                 />
             }
             <AnimatePresence  initial={false} exitBeforeEnter={false}>

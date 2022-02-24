@@ -7,7 +7,7 @@ import SelectDateInput from "../components/ReservationComponent/components/Selec
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import OpenGuestDropdown from "../../../components/OpenGuestDropdown"
 import useAddGuestTotal from "../../../hooks/useAddGuestTotal/useAddGuestTotal"
-import { decrementAdult, decrementChildren, incrementAdult, incrementChildren } from "../../../redux/actions/componentState"
+import { decrementAdult, decrementChildren, incrementAdult, incrementChildren, setShowMobileReserveModal } from "../../../redux/actions/componentState"
 import styles from "../../../styles/home.module.css"
 import ValueAddedServices from "./ReservationComponent/components/ValueAddedServices"
 import Button from "../../../components/Button/Button"
@@ -105,7 +105,7 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
     minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef, Suv, Camry, showCamryRef, handleBenz }) => {
 
     const dispatch = useDispatch();
-    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, showMobileReserveModal} = useSelector(state => state.ComponentState)
     const {reserve, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
 
     const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
@@ -150,7 +150,7 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
 
 
     return (
-        <Modal  height='90%' overFlow='scroll' zIndex="11" show={show} setShow={setshow} theme="" left="-30px" top="10vh" width="90%" calanders={2} initial={{opacity: 0, y: 0, x: 50}} animate={{opacity: 1, y: 5}}>
+        <Modal height='90%' overFlow='scroll' zIndex="11" show={showMobileReserveModal} setShowMobileReserveModal={setShowMobileReserveModal}  reserveModal theme="" left="-30px" top="10vh" width="90%" calanders={2} initial={{opacity: 0, y: 0, x: 50}} animate={{opacity: 1, y: 5}}>
             <Wrapper>
                 <PriceNight style={{flex: '1'}}>
                     <span>&#8358;{reserve === 'loading' ? <SkeletonLoader /> : `${price[0]?.price?.toLocaleString()}/night `}</span>

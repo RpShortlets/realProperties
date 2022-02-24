@@ -57,9 +57,6 @@ const Main = styled.div `
 `
 
 const Card = styled.div `
-    /* border: 2px solid #2193B0;
-    border-radius: 10px;
-    padding: max(2vw, 1rem); */
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.3);
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
@@ -68,6 +65,10 @@ const Card = styled.div `
 
     .orderBody {
         margin: 0 max(1.5vw, 1rem);
+    }
+
+    .labelSecond {
+        margin-left: .6rem;
     }
 `
 
@@ -85,6 +86,10 @@ const CardDetails =  styled.div `
 
     span {
         font-size: var(--font-xtra-small-screen);
+    }
+
+    @media screen and (width:320px) {
+        flex-wrap: wrap;
     }
 
 `
@@ -112,7 +117,6 @@ const Label = styled.label `
     ${FlexStyle}
     padding: max(1vw, .5rem);
     justify-content: center;
-    margin-right: max(4vw, 1.5rem);
     cursor: pointer;
     background-color: ${({check}) => check ? '#DCEFF4' : 'transparent'};
     transition: background-color 0.2s ease-in-out;
@@ -130,6 +134,10 @@ const Label = styled.label `
 
     :disabled { 
         cursor: not-allowed;
+    }
+
+    @media screen and (max-width: 560px) {
+        margin-right: 0;
     }
 
 `
@@ -289,10 +297,10 @@ const OrderSummary = () => {
                                             
                                         />
                                     </div>
-                                    <div>
+                                    <div className="labelSecond">
                                         <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
                                             {BankTransferIcon}
-                                            <span>PayStack</span>
+                                            <span>Card Payment</span>
                                         </Label>
                                         <input 
                                             id="paystack" 
@@ -308,10 +316,10 @@ const OrderSummary = () => {
                                 </div>
                                 <div style={{display: 'flex'}}>
                                     <div style={{flex: '1'}}>
-                                        <Button onClicks={handleBackBtn} fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="2px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button onClicks={handleBackBtn}  fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="8px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                     <div style={{flex: '2'}}>
-                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="2px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="8px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                 </div>
                             </Card>

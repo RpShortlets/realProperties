@@ -7,6 +7,7 @@ import styled from "styled-components"
 import {motion, AnimatePresence} from "framer-motion"
 
 import "../../styles/utilities.css"
+import { useDispatch } from "react-redux"
 
 
 const MainModal = styled.div`
@@ -66,7 +67,7 @@ const MainModal = styled.div`
 
 
 
-const ModalOverLay = ({top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show}) => {
+const ModalOverLay = ({top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show, setShowMobileReserveModal, reserveModal, dispatch}) => {
 
     const content = (
         <AnimatePresence>
@@ -85,10 +86,13 @@ const ModalOverLay = ({top, exit, background, width, overFlow, right, height, le
                 height={height}
                 right={right}
                 background={background}
+                setShowMobileReserveModal={setShowMobileReserveModal}
+                reserveModal={reserveModal}
+                dispatch={dispatch}
             >
                 {btn ? "" : (
                     <div  style={{display:'flex', justifyContent: 'flex-start', marginBottom: 'max(0.5vw, 1rem)'}}>
-                        <Button borderRadius='27px' padding="3px" display='flex' alignT='center' justify='center' height='35px' width='35px' background='var(--color-primary)' border='none' icon={CancelIcon} onClicks={() => setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
+                        <Button borderRadius='27px' padding="3px" display='flex' alignT='center' justify='center' height='35px' width='35px' background='var(--color-primary)' border='none' icon={CancelIcon}  onClicks={reserveModal ? () => dispatch(setShowMobileReserveModal(false)) : ()=> setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
                     </div>
                 )}
                 {children}
@@ -103,11 +107,12 @@ const ModalOverLay = ({top, exit, background, width, overFlow, right, height, le
 
 
 const Modal = (props) => {
+    const dispatch= useDispatch()
     return (
         <>
-            {props.show && <Backdrop onClick={()=> props.setShow(false)} theme={props.theme} /> }
+            {props.show && <Backdrop onClick={props.reserveModal ? () => dispatch(props.setShowMobileReserveModal(false)) : ()=> props.setShow(false)} theme={props.theme} /> }
             
-            <ModalOverLay height={props.height} background={props.background} right={props.right} exit={props.exit} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left}>
+            <ModalOverLay dispatch={dispatch} reserveModal={props.reserveModal} setShowMobileReserveModal={props.setShowMobileReserveModal} height={props.height} background={props.background} right={props.right} exit={props.exit} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left}>
                 {props.children}
             </ModalOverLay>
         </>

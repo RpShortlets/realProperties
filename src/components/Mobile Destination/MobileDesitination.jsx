@@ -105,8 +105,6 @@ const MobileDesitination = () => {
         
     }
 
-    console.log(value)
-
 
     return(
         <Container 

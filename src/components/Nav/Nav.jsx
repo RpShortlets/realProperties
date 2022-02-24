@@ -4,25 +4,13 @@ import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import { CompanyLogo, FilterIcon, HomeIcon } from '../../Svg/svg';
-// import NavVas from './components/NavVas';
-// import MiniSearch from './components/MiniSearch';
-import { setOpenDrawer } from '../../redux/actions/componentState';
+import Button from "../../components/Button/Button"
+import { setOpenDrawer, setShowMobileReserveModal } from '../../redux/actions/componentState';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
-
-
 import {MainNav} from "./Dropdown/MainNav"
+import { motion, AnimatePresence } from "framer-motion"
 
-
-// const svgs = [
-//     {
-//         id: 1,
-//         icon: TaxiIcon
-//     }, {
-//         id: 2,
-//         icon: ChefIcon
-//     }
-// ]
 
 const NavBar = styled.nav `
     position: sticky;
@@ -46,13 +34,6 @@ const NavItems =  styled.div `
     -o-justify-content: space-between !important;
 
     margin: 7px 0;
-
-    /* .navModal, .mobileHomeIcon {
-        svg {
-            width: max(3.5vw, 3rem);
-            height: max(3.5vw, 3rem);
-        }
-    } */
 
     > div:first-child,
     > div:nth-child(2),
@@ -116,11 +97,10 @@ const NavItems =  styled.div `
         }
 
         p:first-child { 
-            /* font-weight: 600; */
+        
         }
 
         p:nth-child(2) { 
-            /* margin: 0 .7rem !important; */
         }
 
         div:last-child { 
@@ -164,83 +144,25 @@ const NavItems =  styled.div `
 `
 
 
-// const NavDropdown = styled.div `
-//     flex: 1;
-//     -webkit-flex: 1;
-//     -moz-flex: 1;
-//     -ms-flex: 1;
-//     -o-flex: 1;
-//     display: flex;
-//     display: -webkit-box;
-//     display: -webkit-flex;
-//     display: -moz-flex;
-//     display: -ms-flex;
-//     display: -o-flex;
-//     justify-content: end;
-//     -webkit-justify-content: end !important;
-//     -moz-justify-content: end !important;
-//     -ms-justify-content: end !important;
-//     -o-justify-content: end !important;
-
-
-//     a {
-//         font-size: 2rem;
-//     }
-
-
-//     @media screen and (min-width: 769px) { 
-//         a {
-//             font-size: var(--font-medium);
-//         }
-//     }
-
-
-// `
-
-// const Modal =  styled.div`
-//     position: absolute;
-//     background: #fff;
-//     border-radius: 3px;
-//     top: 61px;
-//     right: 85px;
-//     height: 100px;
-//     width: 200px;
-
-// `
-
 const Nav = () => {
     const dispatch = useDispatch();
-
-
-    const {checkScroll} = useSelector(state =>  state.ComponentState)
-    const {searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
-
-    // const [openNavMini, setOpenNavMini] = useState(false)
- 
+    const {searchValue, useCheckOutDate, useCheckInDate, showMobileReserveButton, checkScroll} = useSelector(state => state.ComponentState)
 
 
     const URL = window.location.href;
     const newURL = URL.includes('location', 's')
+    const ApartmentUrl = URL.includes('apartment')
     const Query = useMediaQuery("(min-width: 769px)")
     const checKIn = useCheckInDate?.split(",")[1]
     const checkOut = useCheckOutDate?.split(",")[1]
 
-    // const handleOption = (id) => {
-    //     if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
-    //         const value = myRef.current.childNodes[id].childNodes[1]?.value
-    //         dispatch(saveSearchValue(value))
-    //         setOpenNavMini(false)
-    //     }
-    // }
-
-    // const SubmitForm = async(e) => {
-    //     e.preventDefault();
-    //     dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
-    //     navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
-    // }
 
     const handleDrawer = () => {
         dispatch(setOpenDrawer(true))
+    }
+
+    const showReserveModal = () => {
+        dispatch(setShowMobileReserveModal(true))
     }
 
 
@@ -264,7 +186,6 @@ const Nav = () => {
                             <div className='navModal'>
                                 <Link to='/'>
                                     {CompanyLogo}
-                                    {/* <span aria-label='Real Property'>Real Property</span> */}
                                 </Link>
                             </div>
                         )}
@@ -274,20 +195,11 @@ const Nav = () => {
                 {Query ? (
                     <>
                         {checkScroll && window.location.pathname === '/' ? (""
-                            // <MiniSearch 
-                            //     myRef={myRef} 
-                            //     setOpenNavMini={setOpenNavMini} 
-                            //     openNavMini={openNavMini} 
-                            //     handleOption={handleOption} 
-                            //     SubmitForm={SubmitForm}
-                            // />
-                        ) : (""
-                            // <NavVas  Icons={svgs} />
-                        )}
+                        ) : ("")}
                     </>
                 ) : (
                     <>
-                        {newURL && ( 
+                        {newURL ? ( 
                             <div className="mobileMiniSearch">
                                 <div>
                                     <p>{searchValue}</p>
@@ -298,6 +210,38 @@ const Nav = () => {
                                     </div>
                                 </div>
                             </div>
+                        ) : ApartmentUrl && (
+                            <>
+                                <AnimatePresence initial={false}>
+                                    {showMobileReserveButton && (
+                                        <motion.div 
+                                            className="" 
+                                            style={{display: 'flex', flex: '3'}}
+                                            initial={{opacity: 0, y: 70, scale: 0.5}}
+                                            animate={{opacity: 1, y: 0, scale: 1 }}
+                                            exit={{opacity: 0, y: 70, scale: 0.5}}
+                                            transition={{ 
+                                                duration: 0.3,
+                                                type: {
+                                                    type: 'spring'
+                                                }
+                                            }}
+                                        >
+                                            <Button 
+                                                title="Reserve"
+                                                disabledBG="var(--linear-primary)" 
+                                                onClicks={showReserveModal} 
+                                                border='none' 
+                                                background='var(--linear-primary)'
+                                                color='var(--color-white)' 
+                                                width='65%' 
+                                                padding='.7rem' 
+                                                fontSize='var(--font-xtra-small-screen)'
+                                            />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </>
                         )}
                     </>
                 )}

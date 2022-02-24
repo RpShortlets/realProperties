@@ -43,9 +43,9 @@ export default function TextMobileStepper(props) {
                     <Button 
                         onClicks={props.handleBack} 
                         title="Back"
-                        border="none"
-                        background='var(--color-secondary)'
-                        color={props.activeStep === steps.length - 1 ? '#fff' : 'var(--color-primary-dark)'}
+                        background={props.activeStep === steps.length - 1 ? 'transparent' : 'var(--color-secondary)'}
+                        border={props.activeStep === steps.length - 1  ? '1px solid #ccc' : 'none'}
+                        color={props.activeStep === steps.length - 1 ? 'var(--color-primary-dark)' : 'var(--color-primary-dark)'}
                         padding="0.5rem 1.3rem"
                     />
                 }

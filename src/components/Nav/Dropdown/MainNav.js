@@ -5,6 +5,7 @@ import { useDimensions } from "./useDimension";
 import { MenuToggle } from "./ToggleBar";
 import { Navigation } from "./Navigation";
 import styled from "styled-components";
+import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 
 const NavStyle = styled(motion.nav)`
     height: ${({height}) => height ? '35vh' : ''};
@@ -13,7 +14,7 @@ const NavStyle = styled(motion.nav)`
     top: 0;
     right: 0;
     bottom: 0;
-    width: 230px;
+    width: ${({width}) => width ? width : '230px'};
 
 `
 
@@ -55,6 +56,7 @@ export const MainNav = () => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
+  const Query = useMediaQuery("(min-width: 769px)")
 
 
   return (
@@ -64,6 +66,7 @@ export const MainNav = () => {
             custom={height}
             ref={containerRef}
             height={isOpen  ? true : false}
+            width={Query && !isOpen ? '230px' :  Query && isOpen ? '230px' : !Query && isOpen ? '230px': '60px'}
         >
           <Back variants={sidebar} background={isOpen}/>
           <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />
