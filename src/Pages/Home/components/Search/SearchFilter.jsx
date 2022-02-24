@@ -10,6 +10,8 @@ import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
 import BG from "../../../../image/background.webp"
 import BG2 from "../../../../image/back.webp"
+import BG3 from "../../../../image/back2.webp"
+import BG4 from "../../../../image/back3.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";
 import { checkScrollState } from '../../../../redux/actions/componentState';
 import { useDispatch } from "react-redux";
@@ -206,6 +208,12 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                             </div>
                             <div className="carousel-item" style={{height: '100%', }}>
                                 <img src={BG2} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
+                            </div>
+                            <div className="carousel-item" style={{height: '100%', }}>
+                                <img src={BG3} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
+                            </div>
+                            <div className="carousel-item" style={{height: '100%', }}>
+                                <img src={BG4} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
                             </div>
                         </div>
                     </div>

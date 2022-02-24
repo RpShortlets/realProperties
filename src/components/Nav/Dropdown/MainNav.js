@@ -8,7 +8,7 @@ import styled from "styled-components";
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 
 const NavStyle = styled(motion.nav)`
-    height: ${({height}) => height ? '35vh' : ''};
+    height: ${({height}) => height ? '40vh' : ''};
     overflow: hidden;
     position: absolute;
     top: 0;

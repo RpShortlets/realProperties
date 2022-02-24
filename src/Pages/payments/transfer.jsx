@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -127,20 +128,18 @@ const Main = styled.div `
 
 const Transfer = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const {manualTransfer: {payment_details, pending_id, transaction_info }, status, manualTransfer} = useSelector(state => state.paymentState);
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
-
     const [copied, setCopied] = useState("")
-
 
     const handleCancel = () => {
         if(parseInt(pendingId) === Number(pendingId)) {
             if (window.confirm("You're about to cancel your transaction") === true) {
                     dispatch(ManualCancel({pendingId}));
                     window.location.reload()
-                    // navigate('/');
+                    navigate('/');
                 } else {
-                console.log('No')
             }
         } else {
             OpenNotificationWithIcon({
