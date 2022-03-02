@@ -42,9 +42,6 @@ const Error = ({title, Icon, error, height}) => {
                 <div className='paragraph'>
                     <p>{title}</p>
                 </div>
-                {/* <div className='btn-container'>
-                    <Button  title="Go Back"  border="0" width="50%" padding="1rem" background="var(--linear-primary)" color="var(--color-white)"/>
-                </div> */}
             </div>
         </Section>
     )

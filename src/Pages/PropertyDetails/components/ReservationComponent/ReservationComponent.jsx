@@ -166,11 +166,10 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     openCar, selectedCar, setDriver, driver, carlength,  setRadio, radio, driverlengthValue,
     carlengthValue, handleSubmit, MobileModal, TotalCarAndDriverPrice, TotalAdditionalServices,
     showBenzRef,  resetData, addDriverLength,
-    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef,   showCamryRef, handleBenz, BenZ, Camry, Suv
+    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef,   
+    showCamryRef, handleBenz, BenZ, Camry, Suv, checkInD, checkOutD
     }) => {
 
-
-    
 
     const dispatch = useDispatch();
 
@@ -371,18 +370,17 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                             <p>{reserve === 'loading' ? <SkeletonLoader /> : 'You won’t be charged yet'}</p>
                         </Condition>
                         {reserve === 'succeeded' &&
-                        (
-                            
-                            <Prices 
-                                price={price} 
-                                summary_details={summary_details} 
-                                selectedCar={selectedCar} 
-                                reserve={reserve} 
-                                radio={radio}
-                                TotalAdditionalServices={TotalAdditionalServices}
-                                TotalCarAndDriverPrice={TotalCarAndDriverPrice}
-                            />
-                        )}
+                            checkInD && checkInD ?
+                                (<Prices 
+                                    price={price} 
+                                    summary_details={summary_details} 
+                                    selectedCar={selectedCar} 
+                                    reserve={reserve} 
+                                    radio={radio}
+                                    TotalAdditionalServices={TotalAdditionalServices}
+                                    TotalCarAndDriverPrice={TotalCarAndDriverPrice}
+                                />
+                        ) : ''}
                     </ReservationContent>
                 </ReservationBody>
             </Reservations>

@@ -124,10 +124,6 @@ const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalSe
                         <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_cleaning_price || summary_details[0]?.total_pickup_dropoff_price ? TotalAdditionalServices?.toLocaleString() : ''}</p>
                     </div>
                 ): ''}
-                {/* <div>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_pickup_dropoff_price && 'Pickup/Drop Off'}</p>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.total_pickup_dropoff_price?.toLocaleString()}</p>
-                </div> */}
                 {selectedCar && (
                     <div>
                         <div className="priceHeader">
@@ -146,10 +142,17 @@ const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalSe
                     </div>
                 )}
                 
-                {/* <div>
-                    <p style={{textTransform: 'capitalize'}}>{reserve === 'loading' ? <SkeletonLoader /> : radio && radio}</p>
-                    <p>{reserve === 'loading' ? <SkeletonLoader /> :  summary_details[0]?.total_driver_price && summary_details[0]?.total_driver_price?.toLocaleString()}</p>
-                </div> */}
+                <div>
+                    <div className="priceHeader">
+                        <p>{reserve === 'loading' ? <SkeletonLoader /> : 'Transaction Fee'}</p>
+                        {reserve === 'loading' ? <SkeletonLoader /> : (
+                            <Tooltips title='Cost for completing this transaction'>
+                                <span>{QuestionMark}</span>
+                            </Tooltips>
+                        )}
+                    </div>
+                    <p>{reserve === 'loading' ? <SkeletonLoader /> : summary_details[0]?.transaction_fee  && summary_details[0]?.transaction_fee?.toLocaleString()}</p>
+                </div>
                 <div>
                     {reserve === 'loading' ? (<SkeletonLoader />) : 
                         (

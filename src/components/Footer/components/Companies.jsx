@@ -27,7 +27,7 @@ const Companies = () => {
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/value-added-services">
                             About our Value Added Service
                         </NavLink>
                     </div>

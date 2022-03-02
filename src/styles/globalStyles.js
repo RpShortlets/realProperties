@@ -131,3 +131,54 @@ export const InputStyle = css`
         font-size: var(--font-xtra-small-screen);
     }
 `
+
+//* ADMIN DASHBOARD STYLES
+export const AdminContainer = css`
+    padding: max(3vw, 1.3rem);
+    height: 100%;
+    overflow-y: auto;
+    height: 100%;
+
+`
+
+export const AdminHeader = css`
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: var(--font-big);
+`
+
+//* HORIZONTAL SCROLL
+export const MediaScroller = css`
+    --spacer: 1rem;
+    display: grid;
+    gap: var(--spacer);
+    grid-auto-flow: column;
+    padding: 0 var(--spacer) var(--spacer);
+    
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+`
+export const MediaElement = css`
+    display: grid;
+    grid-template-rows: min-content; 
+    gap: var(--spacer);
+    padding: var(--spacer);
+    /* background: var(--color-light-gray);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-2); */
+`
+
+// export const mediaElement > img {
+//     inline-size: fit-content;
+//     aspect-ratio: 16 / 9;
+//     object-fit: cover;
+// }
+
+export const SnapsInline = css`
+    scroll-snap-type:  both mandatory;
+    /* scroll-padding-inline: var(--spacer); */
+`
+
+// .snaps-inline > * {
+//     scroll-snap-align: start;
+// }

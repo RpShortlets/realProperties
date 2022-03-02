@@ -18,9 +18,9 @@ import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery";
 import { AnimatePresence } from "framer-motion"
 import Drawer from "../../components/Drawer/Drawer";
 import { setOpenDrawer } from "../../redux/actions/componentState";
-import Scrollable from "../../components/Scrollable/Scrollable";
+// import Scrollable from "../../components/Scrollable/Scrollable";
 
-import { RecommendationData } from "./Data/data";
+// import { RecommendationData } from "./Data/data";
 
 
 
@@ -317,7 +317,7 @@ const SearchResult = () => {
                                                 ) : (
                                                     <>
                                                         <Error height='60vh' title="Oops! We can’t find any property that matches your search but we provided recommendation" Icon={SearchNotFoundIcon} />
-                                                        <Scrollable title="Recommendations of nearby shortlets" data={RecommendationData}/>
+                                                        {/* <Scrollable title="Recommendations of nearby shortlets" data={RecommendationData}/> */}
                                                     </>
                                                 )}
                                             </>

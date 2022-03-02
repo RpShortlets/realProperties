@@ -77,7 +77,7 @@ const IconDivs = styled.div `
 
 
         svg {
-            font-size: 2.5rem;
+            font-size: 2.5rem !important;
         }
 
     }
@@ -89,7 +89,7 @@ const IconDivs = styled.div `
         }
 
         svg {
-            font-size: var(--font-big);
+            font-size: var(--font-big) !important;
         }
     }
 `

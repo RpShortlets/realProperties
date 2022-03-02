@@ -1,20 +1,73 @@
 import React, { useEffect} from 'react';
-import TableData from './TableData';
+import Table from "../../../components/Table/Tab"
 import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
 import { AdminDeletedTransaction } from '../../../redux/actionCreators/actionCreators';
+import { Clip } from '../../../components/Loader/Spinner';
+import { Error404Icon } from '../../../Svg/svg';
+import Error from '../../../components/Error/Error';
+import {AdminContainer, AdminHeader } from "../../../styles/globalStyles"
+
 
 const Wrapper = styled.div `
-    padding: max(3vw, 1.3rem);
-    /* height: 100%; */
-
-    h1 {
-        color: var(--color-primary);
-        font-weight: 600;
-        font-size: var(--font-big);
-    }
-
+    ${AdminContainer}
 `
+
+const H1 = styled.h1 `
+    ${AdminHeader}
+`
+
+const headcells = [
+    {
+        id: 'Name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Name',
+    },
+    {
+        id: 'Ref',
+        numeric: true,
+        disablePadding: false,
+        label: 'Ref',
+    },
+    {
+        id: 'In',
+        numeric: true,
+        disablePadding: false,
+        label: 'In',
+    },
+    {
+        id: 'Out',
+        numeric: true,
+        disablePadding: false,
+        label: 'Out',
+    },
+    {
+        id: 'Amount',
+        numeric: true,
+        disablePadding: false,
+        label: 'Amount',
+    },
+    {
+        id: 'Number',
+        numeric: true,
+        disablePadding: false,
+        label: 'Number',
+    },
+    {
+        id: 'Email',
+        numeric: true,
+        disablePadding: false,
+        label: 'Email',
+    },
+    {
+        id: 'Status',
+        numeric: true,
+        disablePadding: false,
+        label: 'Status',
+    },
+    
+];
 
 const Deleted = () => {
     const dispatch = useDispatch();
@@ -25,42 +78,25 @@ const Deleted = () => {
         dispatch(AdminDeletedTransaction())
     }, [dispatch])
 
+    if(cancelled === 'failed') {
+        return (
+            <>
+                <Error  title="Something went wrong in fetching records." Icon={Error404Icon}/>
+            </>
+        )
+    }
+
     return <Wrapper>
-            <h1>{data?.firstname && `Welcome ${data?.firstname}`}</h1>
-        <TableData title="Deleted">
-        {cancelled === 'succeeded' && (
-            <>    
-                {cancelledTransaction?.map((item) => (
-                    <tr key={item.id}>
-                        <td>
-                            {item?.guest_name}
-                        </td>
-                        <td>
-                            {item?.email}
-                        </td>
-                        <td>
-                            {item?.phone_no}
-                        </td>
-                        <td>
-                            {item?.check_in}
-                        </td>
-                        <td>
-                            {item?.check_out}
-                        </td>
-                        <td>
-                            {item?.amount}
-                        </td>
-                        <td>
-                            {item?.pymt_reference}
-                        </td>
-                        <td>
-                            {item?.status}
-                        </td>
-                    </tr>
-                ))}
-                </>
-            )}
-        </TableData>
+        {cancelled === 'loading' ? (
+            <div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
+                <Clip type='TailSpin' />
+            </div>
+        ) :
+            <>
+                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                {cancelled === 'succeeded' && (<Table  title="Deleted Bookings" headData={headcells} records={cancelledTransaction}/>)}
+            </>
+        }
     </Wrapper>;
 };
 

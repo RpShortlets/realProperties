@@ -1,9 +1,14 @@
 import axios from "axios";
 
 
-export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
+export const BaseURL = 'http://localhost:5050';
+axios.interceptors.request.use((req) => {
+    if (localStorage.getItem('admin')) {
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('admin')).token}`;
+    }
 
-
+    return req;
+});
 
 export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDeparture) => {
     let formData = {

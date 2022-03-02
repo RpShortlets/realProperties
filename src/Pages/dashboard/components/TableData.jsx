@@ -1,91 +1,83 @@
-import React from 'react';
-import styled from 'styled-components';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { AiOutlineDown, AiOutlineUp} from "react-icons/ai"
 
 
-const TableWrapper = styled.div`
-    width: 100%;
-    background: #FFFFFF;
-    border: 2px solid #1C7B93;
-    border-radius: 10px;   
-    padding: max(2vw, 1rem); 
-    margin-top: max(4vw, 1.2rem);
-    
+function Row(props) {
+    const { row } = props;
+    const [open, setOpen] = React.useState(false);
 
-    h4 {
-        font-size: var(--font-small-screen);
-    }
-`
-
-
-const Tables = styled.table`
-    width: 100%;
-    height: 100%;
-    
-`
-const TableBod = styled.tbody`
-    
-    td {
-        font-size: var(--font-xtraLarge-small);
-    }
-
-    tr:hover {
-        background: var(--color-secondary);
-        opacity: 0.9;
-        border-top: 1px solid var(--color-primary);
-        border-bottom: 1px solid var(--color-primary);
-    }
-
-    tr {
-        cursor: pointer;
-    }
-
-    td {
-        padding: max(1.6vw, 1rem) 0;
-        color: var(--color-dark);
-        
-    }
-
-`
-
-const TableHea = styled.thead`
-
-    th {
-        font-size: var(--font-xtraLarge-small);
-        color: rgba(159, 162, 180, 1);
-        padding: 0.5rem 0;
-        font-weight: 300;
-        text-align: left;
-
-    }
-    
-`
-
-
-const TableData = ({title, children}) => {
     return (
-        
-        <TableWrapper>
-            <h4>{title}</h4>
-            <Tables style={{width: '100%', borderCollapse: 'collapse'}}>
-                <TableHea>
-                    <tr>
-                        <th>Customer name</th>
-                        <th>Email</th>
-                        <th>Phone number</th>
-                        <th>Check-in</th>
-                        <th>Check-out</th>
-                        <th>Amount</th>
-                        <th>Reference</th>
-                        <th>Status</th>
-                    </tr>
-                </TableHea>
-                <TableBod>
-                    {children}
-                </TableBod>
-            </Tables>
-        </TableWrapper>
-        
-    )
-};
+        <React.Fragment>
+            <TableRow sx={{ '& > *': { borderBottom: 'none' } }}>
+            <TableCell style={{background: 'transparent !important'}}>
+                <IconButton
+                    aria-label="expand row"
+                    size="small"
+                    onClick={() => setOpen(!open)}
+                >
+                {open ?  <AiOutlineUp/>  : <AiOutlineDown />}
+                </IconButton>
+            </TableCell>
+            <TableCell component="th" scope="row"  padding="none">
+                {row.firstname } {row?.lastname}
+            </TableCell>
+            <TableCell align="left"  padding="none">{row.subject}</TableCell>
+            <TableCell align="left"  padding="none">{row.email}</TableCell>
+            </TableRow>
+            <TableRow>
+            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Box sx={{ margin: 5 }}>
+                    <Typography variant="h6" gutterBottom component="div">
+                        {row.customer}
+                    </Typography>
+                    <Table size="small" aria-label="message">
+                        <TableBody>
+                            <TableRow key={row.message}>
+                                <TableCell component="th" scope="row" padding="none" style={{border: '0 !important', lineHeight: '2 !important'}}>
+                                    {row.message}
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </Box>
+                </Collapse>
+            </TableCell>
+            </TableRow>
+        </React.Fragment>
+        );
+    }
 
-export default TableData;
+
+export default function CollapsibleTable({data}) {
+    return (
+        <TableContainer component={Paper}>
+            <Table aria-label="collapsible table">
+            <TableHead>
+                <TableRow>
+                    <TableCell />
+                    <TableCell padding="none">Customer Name</TableCell>
+                    <TableCell padding="none" align="left">Subject</TableCell>
+                    <TableCell padding="none" align="left">Email</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data?.map((row) => (
+                    <Row key={row.firstname} row={row} />
+                ))}
+            </TableBody>
+            </Table>
+        </TableContainer>
+    );
+}

@@ -137,7 +137,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.match(/[0-9]/) ) {
+        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
             navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
             // dispatch(RetrieveTransaction({ongoingId}))

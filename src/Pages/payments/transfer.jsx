@@ -8,7 +8,7 @@ import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { ManualCancel } from '../../redux/actionCreators/actionCreators';
+import { ManualCancel, ExpiredBooking } from '../../redux/actionCreators/actionCreators';
 import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 
@@ -129,9 +129,39 @@ const Main = styled.div `
 const Transfer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const {manualTransfer: {payment_details, pending_id, transaction_info }, status, manualTransfer} = useSelector(state => state.paymentState);
+    const {manualTransfer: {payment_details, pending_id, transaction_info, time }, status, manualTransfer, expiredBookings} = useSelector(state => state.paymentState);
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
+    const expiredTime =  status === 'succeeded' && time[0]?.expired_time;
     const [copied, setCopied] = useState("")
+    
+    var distance = new Date(expiredTime)?.getTime() - new Date().getTime();
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const [countDown, setCountDown] = useState(minutes)
+
+    React.useEffect(() => {
+        let timerId;
+            if(minutes === 0 ) {
+                dispatch(ExpiredBooking({pendingId}))
+                navigate('/');
+            } else {
+                timerId = setInterval(() => {
+                    setCountDown((countDown) => countDown - 1);
+                }, 1000);
+                return () => clearInterval(timerId)
+            };
+        }, [countDown, minutes, pendingId, dispatch, navigate]);
+
+    
+    // React.useEffect(() => {
+    //     console.log('Hello')
+    //     if(new Date(expiredTime)?.getTime() === new Date().getTime() ) {
+    //        
+    //         console.log('Hello')
+    //     }
+    // }, []);
+
+
+
 
     const handleCancel = () => {
         if(parseInt(pendingId) === Number(pendingId)) {

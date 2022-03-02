@@ -10,6 +10,7 @@ import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import { ManualPay, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
 import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
+import Tooltip from "../../components/Tooltip"
 import {motion } from "framer-motion"
 import { BankTransferIcon } from '../../Svg/svg';
 
@@ -155,12 +156,15 @@ const OrderSummary = () => {
     const [showDialog, setShowDialog] = useState(false)
     const [confirm, setConfirm ] = useState('No')
 
-    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) : 0;
-    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup)  : 0; 
+    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) !== null && Ongoing_id_info?.map((item) => item.cleaning) : 0;
+    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup) !== null && Ongoing_id_info?.map((item) => item.pickup) : 0; 
     const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
     const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
-    const AddService =  proceess === 'succeeded' && parseInt(CleaningFee) + parseInt(PickupFee)
+    // const newPickup =   proceess === 'succeeded' ? PickupFee[0] === null ? 0 : PickupFee[0] : 0;
+    // const newCleaning =   proceess ===  'succeeded' ? CleaningFee[0] === null ? 0 : CleaningFee[0]: 0;
+    const AddService =  proceess === 'succeeded' &&  parseInt(CleaningFee) + parseInt(PickupFee)
     const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
+
 
     // useEffect(() => {
     //     if(status === 'succeeded') {
@@ -211,11 +215,7 @@ const OrderSummary = () => {
         dispatch(RetrieveTransaction({Id}))
     }, [dispatch, Id])
 
-    // useEffect(() => {
-        
-    //     setAddtionalService(CleaningFee + PickupFee)
-        
-    // }, [CleaningFee, PickupFee, proceess]);
+
 
     if(proceess === 'failed') {
         return (
@@ -247,7 +247,7 @@ const OrderSummary = () => {
                                         )}
                                         {data?.cleaning || data?.pickup  ? (
                                             <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental || data?.pickup  ? 'Additional Services' : ''}</p>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning|| data?.pickup  ? 'Additional Services' : ''}</p>
                                                 <span>{proceess === 'loading' ? <SkeletonLoader /> : AddService?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ""}
@@ -298,10 +298,12 @@ const OrderSummary = () => {
                                         />
                                     </div>
                                     <div className="labelSecond">
-                                        <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
-                                            {BankTransferIcon}
-                                            <span>Card Payment</span>
-                                        </Label>
+                                        <Tooltip title="This payment is currently unavailable">
+                                            <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
+                                                {BankTransferIcon}
+                                                <span>Card Payment</span>
+                                            </Label>
+                                        </Tooltip>
                                         <input 
                                             id="paystack" 
                                             type="radio" 

@@ -41,18 +41,14 @@ const ScrollContainer =  styled.div `
     }
 `
 
-const H3 = styled.h3 `
-    font-size: var( --font-small);
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 1.2rem;
-`
 
 
-const Scrollable = ({data, title}) => {
+
+const Scrollable = ({children}) => {
     return (
         <ScrollContainer>
-            <H3>{title}</H3>
+            {children}
+            {/* <H3>{title}</H3>
             <div className="media-scroller with-overscroll snaps-inline snaps--individual">
                 {data?.map((item) => (
                     <div className="media-element">
@@ -60,7 +56,7 @@ const Scrollable = ({data, title}) => {
                         <p className="title">{item?.title}</p>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </ScrollContainer>
     )
 }

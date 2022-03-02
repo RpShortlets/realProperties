@@ -132,7 +132,7 @@ const PropertyDetails = () => {
 
 
 
-    const staylength = summary_details ? summary_details[0]?.stay_length : 1;    
+    const staylength = summary_details ? summary_details[0]?.stay_length : null;    
     const CleaningFee =  reserve === 'succeeded' && summary_details[0]?.total_cleaning_price ? parseInt(summary_details[0]?.total_cleaning_price) : 0;
     const PickupFee =  reserve === 'succeeded' && summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
     const carPrice =reserve === 'succeeded'&&  summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
@@ -479,6 +479,8 @@ const PropertyDetails = () => {
                                         Suv={Suv}
                                         addDays={addDays} 
                                         minusDays={minusDays}
+                                        checkInD={checkInD}
+                                        checkOutD={checkOutD}
                                         
                                     />
                                 )}            

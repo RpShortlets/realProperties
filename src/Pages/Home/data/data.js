@@ -1,4 +1,4 @@
-import { HouseIcon, LockIcon, CustomerCare, FingerPrint, ServiceIcon } from "../../../Svg/svg"
+import { HouseIcon, LockIcon, CustomerCare, FingerPrint, ServiceIcon, CashIcon, PackagesIcon, CardsBank } from "../../../Svg/svg"
 
 export const RealShortlets = [
     {
@@ -8,13 +8,13 @@ export const RealShortlets = [
     }, 
     {
         id: 2,
-        title: 'Virtual Property Trips/Tours',
-        image: ''
+        title: 'Accept card and bank transfer',
+        image: CardsBank
     },
     {
         id: 3,
         title: "Affordable prices",
-        image: ''
+        image: CashIcon
     }, 
     {
         id: 4,
@@ -24,7 +24,7 @@ export const RealShortlets = [
     {
         id: 5,
         title: 'Total Service Package',
-        image: ''
+        image: PackagesIcon
     },
     {
         id: 6,
@@ -38,7 +38,7 @@ export const RealShortlets = [
     },
     {
         id: 8,
-        title: 'Value added Services at no extra cost',
+        title: 'Value added Services',
         image: ServiceIcon
     }
 ] 

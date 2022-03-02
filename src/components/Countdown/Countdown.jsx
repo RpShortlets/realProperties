@@ -30,7 +30,7 @@ const Countdown = () => {
     const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
 
     useEffect(() => {
-        getTimeMinutes(remainingTime)
+        const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
         console.log(getTimeMinutes(remainingTime));
     }, [remainingTime])
 
