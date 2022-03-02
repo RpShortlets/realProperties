@@ -202,14 +202,24 @@ export const ManualCancel = createAsyncThunk("payment/manualCancel", async ({pen
 
 });
 
-export const ManualConfirmBookings = createAsyncThunk("payment/manualTransfer", async ({id }) => {
-    console.log(id)
+export const ManualConfirmBookings = createAsyncThunk("payment/manualTransfer", async ({penId, formdata, time }) => {
     const formdat = {
-        pending_id: id,
+        pending_id: penId,
+        bank_transaction_id: formdata.transactionId,
+        payment_time: time
     }
     
     const response = await axios.post(`${BaseURL}/confirm-book-manual`, formdat);
-    console.log(response.data)
+    return response.data;
+
+});
+
+export const ExpiredBooking =  createAsyncThunk("payment/expiredBooking", async ({pendingId}) => {
+    const formdat = {
+        pending_id: pendingId,
+    }
+    
+    const response = await axios.post(`${BaseURL}/expired-manual-payment`, formdat);
     return response.data;
 
 });
@@ -293,5 +303,46 @@ export const AdminDeletedTransaction = createAsyncThunk("adminDashboard/adminDel
     return data.results;
 });
 
+export const GetCustomersComplains = createAsyncThunk("adminDashboard/getCustomersComplains", async () => {
+    const {data} = await axios.get(`${BaseURL}/get-customer-enquiry`);
+    return data.results;
+});
 
+export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", async ({formdata, phn,  dropdown, value, value2}) => {
+    
+    const formdatas = {
+        apartment_id: dropdown.apartment,
+        firstname: formdata.firstname,
+        lastname: formdata.lastname,
+        email: formdata.email,
+        phone_no: phn,
+        check_in_date: value,
+        check_out_date: value2,
+        amount: formdata.amount,
+        reference_no: formdata.referenceId,
+        bank_trasaction_id: formdata.transactionId,
+        external_platform: dropdown.plaform
+    }
 
+    const {data} = await axios.post(`${BaseURL}/update_booking_external`, formdatas);
+    return data.results;
+});
+
+//* END OF ADMIN PAYMENT
+
+//* CONTACT CUSTOMER SUPPORT
+export const ContactSupport = createAsyncThunk("support/contactSupport", async ({formdata}) => {
+
+    const formdat = {
+        firstname: formdata.firstname,
+        lastname:  formdata.lastname,
+        email: formdata.email,
+        subject: formdata.subject,
+        message: formdata.message
+    }
+    
+    const response = await axios.post(`${BaseURL}/contact-customer`, formdat);
+
+    return response.data;
+
+});

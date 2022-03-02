@@ -1,28 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { motion } from "framer-motion"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
-import { CompanyLogo, ChefIcon, TaxiIcon, HamburgerIcon, FilterIcon, HomeIcon } from '../../Svg/svg';
-import NavVas from './components/NavVas';
-import MiniSearch from './components/MiniSearch';
-import { saveSearchValue, setOpenDrawer } from '../../redux/actions/componentState';
-import { searchShortlets } from '../../redux/actionCreators/actionCreators';
+import { CompanyLogo, FilterIcon, HomeIcon } from '../../Svg/svg';
+import Button from "../../components/Button/Button"
+import { setOpenDrawer, setShowMobileReserveModal } from '../../redux/actions/componentState';
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AiOutlineMinus } from 'react-icons/ai'
+import {MainNav} from "./Dropdown/MainNav"
+import { motion, AnimatePresence } from "framer-motion"
 
-
-const svgs = [
-    {
-        id: 1,
-        icon: TaxiIcon
-    }, {
-        id: 2,
-        icon: ChefIcon
-    }
-]
 
 const NavBar = styled.nav `
     position: sticky;
@@ -47,13 +35,6 @@ const NavItems =  styled.div `
 
     margin: 7px 0;
 
-    /* .navModal, .mobileHomeIcon {
-        svg {
-            width: max(3.5vw, 3rem);
-            height: max(3.5vw, 3rem);
-        }
-    } */
-
     > div:first-child,
     > div:nth-child(2),
     > div:last-child  {
@@ -69,12 +50,16 @@ const NavItems =  styled.div `
         color: var(--color-primary);
         display: flex;
         align-items: center;
-        margin-bottom: -6px;
     }
 
     span {
         font-size: var(--font-xtra-small);
         color: var(--color-primary);
+        margin-left: -10px !important;
+        margin-bottom: -9px !important;
+        font-weight: 600;
+        word-spacing: -2px;
+
     }
 
     .navModal { 
@@ -111,11 +96,10 @@ const NavItems =  styled.div `
         }
 
         p:first-child { 
-            /* font-weight: 600; */
+        
         }
 
         p:nth-child(2) { 
-            /* margin: 0 .7rem !important; */
         }
 
         div:last-child { 
@@ -159,88 +143,25 @@ const NavItems =  styled.div `
 `
 
 
-const NavDropdown = styled.div `
-    flex: 1;
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    -o-flex: 1;
-    display: flex;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    justify-content: end;
-    -webkit-justify-content: end !important;
-    -moz-justify-content: end !important;
-    -ms-justify-content: end !important;
-    -o-justify-content: end !important;
-
-
-    a {
-        font-size: 2rem;
-    }
-
-
-    @media screen and (min-width: 769px) { 
-        a {
-            font-size: var(--font-medium);
-        }
-    }
-
-
-`
-
-const Modal =  styled.div`
-    position: absolute;
-    background: #fff;
-    border-radius: 3px;
-    top: 61px;
-    right: 85px;
-    height: 100px;
-    width: 200px;
-
-`
-
 const Nav = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {searchValue, useCheckOutDate, useCheckInDate, showMobileReserveButton, checkScroll} = useSelector(state => state.ComponentState)
 
-    const {checkScroll} = useSelector(state =>  state.ComponentState)
-    const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, useCheckOutDate, useCheckInDate} = useSelector(state => state.ComponentState)
-
-    const [isOpen, setIsOpen] = useState(false)
-    const [openNavMini, setOpenNavMini] = useState(false)
-    const myRef = useRef(null)
-
-    const variants = {
-        open: { opacity: 1, x: 0 },
-        closed: { opacity: 0, x: "-100%" },
-    }
 
     const URL = window.location.href;
     const newURL = URL.includes('location', 's')
+    const ApartmentUrl = URL.includes('apartment')
     const Query = useMediaQuery("(min-width: 769px)")
     const checKIn = useCheckInDate?.split(",")[1]
     const checkOut = useCheckOutDate?.split(",")[1]
 
-    const handleOption = (id) => {
-        if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
-            const value = myRef.current.childNodes[id].childNodes[1]?.value
-            dispatch(saveSearchValue(value))
-            setOpenNavMini(false)
-        }
-    }
-
-    const SubmitForm = async(e) => {
-        e.preventDefault();
-        dispatch(searchShortlets({searchValue, checkInDate, checkOutDate, adultcount, childrencount}))
-        navigate(`/s/location=${searchValue}&adults=${adultcount}&children=${childrencount}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
-    }
 
     const handleDrawer = () => {
         dispatch(setOpenDrawer(true))
+    }
+
+    const showReserveModal = () => {
+        dispatch(setShowMobileReserveModal(true))
     }
 
 
@@ -251,7 +172,6 @@ const Nav = () => {
                     <div className='navModal'>
                         <Link to='/'>
                             {CompanyLogo}
-                            {/* <span aria-label='Real Property'>Real Property</span> */}
                         </Link>
                     </div>
                 ) : (
@@ -264,7 +184,6 @@ const Nav = () => {
                             <div className='navModal'>
                                 <Link to='/'>
                                     {CompanyLogo}
-                                    {/* <span aria-label='Real Property'>Real Property</span> */}
                                 </Link>
                             </div>
                         )}
@@ -273,21 +192,12 @@ const Nav = () => {
 
                 {Query ? (
                     <>
-                        {checkScroll && window.location.pathname === '/' ? (
-                            <MiniSearch 
-                                myRef={myRef} 
-                                setOpenNavMini={setOpenNavMini} 
-                                openNavMini={openNavMini} 
-                                handleOption={handleOption} 
-                                SubmitForm={SubmitForm}
-                            />
-                        ) : (
-                            <NavVas  Icons={svgs} />
-                        )}
+                        {checkScroll && window.location.pathname === '/' ? (""
+                        ) : ("")}
                     </>
                 ) : (
                     <>
-                        {newURL && ( 
+                        {newURL ? ( 
                             <div className="mobileMiniSearch">
                                 <div>
                                     <p>{searchValue}</p>
@@ -298,62 +208,50 @@ const Nav = () => {
                                     </div>
                                 </div>
                             </div>
+                        ) : ApartmentUrl && (
+                            <>
+                                <AnimatePresence initial={false}>
+                                    {showMobileReserveButton && (
+                                        <motion.div 
+                                            className="" 
+                                            style={{display: 'flex', flex: '3', marginLeft: '1rem'}}
+                                            initial={{opacity: 0, y: 70, scale: 0.5}}
+                                            animate={{opacity: 1, y: 0, scale: 1 }}
+                                            exit={{opacity: 0, y: 70, scale: 0.5}}
+                                            transition={{ 
+                                                duration: 0.3,
+                                                type: {
+                                                    type: 'spring'
+                                                }
+                                            }}
+                                        >
+                                            <Button 
+                                                title="Reserve"
+                                                disabledBG="var(--linear-primary)" 
+                                                onClicks={showReserveModal} 
+                                                border='none' 
+                                                background='var(--linear-primary)'
+                                                color='var(--color-white)' 
+                                                width='100%' 
+                                                padding='.7rem' 
+                                                fontSize='var(--font-xtra-small-screen)'
+                                            />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </>
                         )}
                     </>
                 )}
                 
-                {Query ? (
-                    <NavDropdown style={{display: '-webkit-box'}}
-                        as={motion.nav}
-                        intial={false}
-                        animate={isOpen ? true : false}
-                        variants={variants}
-                    >
-                        <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
-                            {HamburgerIcon}
-                        </Link>
-                        {/* <AnimatePresence>
-                            {show && (
-                                <Modal
-                                    as={motion.div}
-                                    initial={{y: -5}}
-                                    animate={{ y: [0, 5, 0], opacity: 1}}
-                                    transition={{ ease: "easeOut", duration: 0.7 }}
-                                    exit={{opacity: 0, y: [0, 10, 0]}}
-                                >
-                                    Hello
-                                </Modal>
-                            )}
-                        </AnimatePresence> */}
-                    </NavDropdown>
-                ) : (
-                    <>
-                        {newURL ? (
-                            <Link to='#' className="filterLink" onClick={handleDrawer}>
-                                {FilterIcon}
-                            </Link>
-                        ) : (""
-                            // <NavDropdown style={{display: '-webkit-box'}}>
-                            //     <Link to='#' onClick={() => setIsOpen(prev => !prev)}>
-                            //         {HamburgerIcon}
-                            //     </Link>
-                            //     {/* <AnimatePresence>
-                            //         {show && (
-                            //             <Modal
-                            //                 as={motion.div}
-                            //                 initial={{y: -5}}
-                            //                 animate={{ y: [0, 5, 0], opacity: 1}}
-                            //                 transition={{ ease: "easeOut", duration: 0.7 }}
-                            //                 exit={{opacity: 0, y: [0, 10, 0]}}
-                            //             >
-                            //                 Hello
-                            //             </Modal>
-                            //         )}
-                            //     </AnimatePresence> */}
-                            // </NavDropdown>
-                        )}
-                    </>
-                )}                
+                {Query ? (<MainNav />) 
+                    : newURL ? (
+                        <Link to='#' className="filterLink" onClick={handleDrawer}>
+                            {FilterIcon}
+                        </Link>) 
+                    :  showMobileReserveButton && ApartmentUrl ? ("")
+                    : (<MainNav />)
+                }                
             </NavItems>
         </NavBar>
     )

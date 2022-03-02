@@ -98,7 +98,7 @@ const Home = () => {
                     loaded={loaded}
                 
                 />
-                {loaded && <WhyRealShortlets about={false} />}
+                {loaded && <WhyRealShortlets />}
             </Section>
         </>
     )

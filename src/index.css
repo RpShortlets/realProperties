@@ -12,10 +12,40 @@
          url('./fonts/montserrat-v21-latin-500.svg#Montserrat') format('svg'); /* Legacy iOS */
 }
 
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;  */
 
+/*************** CUSTOM SCROLL BAR ************************/
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+}
+
+/*************** END OF CUSTOM SCROLL BAR ************************/
 
 :root {
     --color-primary: rgba(33, 147, 176, 1);
@@ -203,3 +233,61 @@ a:hover {
 .tawk-min-container{
     display: none !important;
 }
+
+.css-1jsolut {
+    min-height: 230px !important;
+}
+
+/****************MUI TABLE**************************/
+.css-rorn0c-MuiTableContainer-root {
+    padding: 0 1rem;
+}
+
+
+.MuiTableCell-root { 
+    font-size: 12px !important;
+}
+
+.MuiTablePagination-toolbar {
+    align-items: baseline !important;
+}
+
+.css-1ex1afd-MuiTableCell-root { 
+    background-color: var(--color-secondary);
+}
+
+.MuiTableCell-root .MuiTableCell-body .MuiTableCell-sizeMedium .css-1ex1afd-MuiTableCell-root {
+    background-color: transparent !important;
+}
+
+.css-1m13d3u-MuiTableCell-root {
+    line-height: 2 !important;
+    border: 0 !important;
+    font-size: var(--font-xtra-small-screen) !important;
+    text-align: justify !important;
+}
+
+
+/*****************************************/
+
+
+.icon-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex: 40px 0;
+    margin-right: 20px;
+}
+
+.text-placeholder {
+    border-radius: 5px;
+    width: 200px;
+    height: 20px;
+    flex: 1;
+}
+
+
+/* width */
+
+
+

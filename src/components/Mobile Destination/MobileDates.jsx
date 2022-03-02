@@ -45,8 +45,8 @@ const MobileDates = () => {
                 <div>
                     <Para>When will you arrive?</Para>
                     <Dates>
-                        <span>{checKIn}</span>
-                        <span>{checkOut}</span>
+                        <span>{checKIn ? checKIn : 'Select Check In' }</span>
+                        <span>{checkOut ? checkOut: 'Select Check Out'}</span>
                     </Dates>
                 </div>
                 <StaticCalender calendars={3} type/>

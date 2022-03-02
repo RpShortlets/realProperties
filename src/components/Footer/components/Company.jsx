@@ -42,6 +42,7 @@ const GridWrapper = styled.div `
     
     
     @media screen and (min-width: 786px) {
+        gap: 5rem;
         div:last-child {
             h3 {
                 font-size: var(--font-small) !important;

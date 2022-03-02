@@ -8,6 +8,7 @@ import { saveSearchValue } from '../../redux/actions/componentState';
 import { useDispatch, useSelector } from 'react-redux';
 
 
+
 const Container = styled.div `
     background: var(--color-white);
 `
@@ -43,6 +44,7 @@ const Wrapper = styled.div `
     .destinationPlaceItems {
         ${FlexStyle}
         margin: 1rem 0;
+        cursor: pointer;
 
         > div:first-child { 
             width: 1.8rem;
@@ -74,6 +76,12 @@ const Wrapper = styled.div `
         }
     }
 
+    .isActive {
+        background: var(--color-secondary);
+        padding: 8px 8px;
+        border-radius: 10px;
+    }
+
 `
 
 const MobileDesitination = () => {
@@ -86,7 +94,13 @@ const MobileDesitination = () => {
 
 
     const handleOption = (e) => {
-        setValue(e.target.value) 
+        setValue(ikoyiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
+        dispatch(saveSearchValue(e.target.value))
+        
+    }
+
+    const handleOption2 = (e) => {
+        setValue(lekkiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
         dispatch(saveSearchValue(e.target.value))
         
     }
@@ -111,26 +125,40 @@ const MobileDesitination = () => {
                     </div>
                     <div>
                         {/* {Destlocation.map((data, i)  =>  */}
-                            <div className='destinationPlaceItems'>
+                            <motion.label 
+                                className={`${searchValue === "Ikoyi, Nigeria" ? `isActive` : ''} destinationPlaceItems` } 
+                                whileHover={{ scale: 1 }}
+                                whileTap={{ scale: 0.9 }}
+                                ref={ikoyiRef} 
+                                onChange={handleOption}
+                                htmlFor='ikoyi'
+                            >
                                 <div>
-                                    <span>{MapPinIcon}</span>
+                                    <span className={`${searchValue === "Ikoyi, Nigeria" ? `isActive` : ''}`}>{MapPinIcon}</span>
                                 </div>
                                 <div>
-                                    <label htmlFor='ikoyi'>Ikoyi, Nigeria
-                                        <input ref={ikoyiRef} id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
+                                    <label>Ikoyi, Nigeria
+                                        <input id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria'  type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </div>
-                            <div className='destinationPlaceItems'>
+                            </motion.label>
+                            <motion.label 
+                                className={`${searchValue === "Lekki, Nigeria" ? `isActive` : ''} destinationPlaceItems` }
+                                whileHover={{ scale: 1 }}
+                                whileTap={{ scale: 0.9 }}
+                                ref={lekkiRef}
+                                onClick={handleOption2}
+                                htmlFor='lekki'
+                            >
                                 <div>
-                                    <span>{MapPinIcon}</span>
+                                    <span className={`${searchValue === "Lekki, Nigeria" ? `isActive` : ''}` }>{MapPinIcon}</span>
                                 </div>
                                 <div>
-                                    <label htmlFor='lekki'>Lekki, Nigeria
-                                        <input ref={lekkiRef} id='lekki' name='lekki' value='Lekki, Nigeria' onChange={handleOption}  type="checkbox" style={{display: 'none'}} />
+                                    <label>Lekki, Nigeria
+                                        <input id='lekki' name='lekki' value='Lekki, Nigeria' type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </div>
+                            </motion.label>
                         {/* )} */}
                     </div>
                 </div>

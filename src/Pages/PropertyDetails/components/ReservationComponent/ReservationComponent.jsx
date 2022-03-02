@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, useCallback } from "react"
 import { motion } from "framer-motion"
 import {useDispatch, useSelector} from "react-redux"
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"
@@ -7,7 +7,7 @@ import Button from "../../../../components/Button/Button"
 import styled from "styled-components"
 import {Pulse} from "../../../../components/Loader/Spinner"
 import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
-import { incrementAdult, decrementAdult, incrementChildren, decrementChildren } from "../../../../redux/actions/componentState"
+import { incrementAdult, decrementAdult, incrementChildren, decrementChildren,setShowMobileReserve, setShowMobileReserveModal } from "../../../../redux/actions/componentState"
 import styles from "../../../../styles/home.module.css"
 import RentalServices from "./components/RentalServices"
 import SelectDateInput from "./components/SelectDateInput"
@@ -166,20 +166,17 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     openCar, selectedCar, setDriver, driver, carlength,  setRadio, radio, driverlengthValue,
     carlengthValue, handleSubmit, MobileModal, TotalCarAndDriverPrice, TotalAdditionalServices,
     showBenzRef,  resetData, addDriverLength,
-    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef,   showCamryRef, handleBenz, BenZ, Camry, Suv
+    minusDriverLength, handlecheckbox, addDays, minusDays, showSuvRef,   
+    showCamryRef, handleBenz, BenZ, Camry, Suv, checkInD, checkOutD
     }) => {
 
 
-    
-
     const dispatch = useDispatch();
 
-    const {adultcount, childrencount} = useSelector(state => state.ComponentState)
+    const {adultcount, childrencount, showMobileReserveModal} = useSelector(state => state.ComponentState)
     const {proceess} = useSelector(state => state.paymentState)
     const {reserve, reservation: {price, summary_details, max_guest } } = useSelector(state => state.reservationState)
 
-    // const [AddtionalServices, setTotalAdditional]  = useState()  
-    // const [carDriverTotal, setCarDriverTotal]  = useState()  
     const [disableChild, setDisabledChild]  = useState(false)
 
     const GeneralInfo = max_guest && max_guest[0]?.allowed_guest; 
@@ -190,11 +187,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     const countAddChild =  reserve === 'succeeded' && AdultAdds
     const countMinusChild = 1;
 
-
     const reserveRef = useRef();
-
-
-
     const  TotalGuest = useAddGuestTotal({adultcount, childrencount, AdultMinuss});
 
     const scrollHandler = () => {
@@ -202,6 +195,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
             if(reserveRef.current) {
                 reserveRef.current.style.position = 'relative'
                 reserveRef.current.style.bottom = '-50%'
+                console.log(window.scrollY)
             }
             
         }else {
@@ -235,9 +229,6 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         } else if(childrencount < countAddChild) {
             dispatch(incrementChildren())
         }
-        // if(childrencount < countAddChild) {
-        //     dispatch(incrementChildren())
-        // }
     }
 
     const MinusChildren = () => {
@@ -248,15 +239,19 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
         }
     }
 
+    const handleScrollMobile = useCallback(() => {
+        if(reserveRef?.current) {
+            if(window.scrollY > 670) {
+                dispatch(setShowMobileReserve(true))
+            } else {
+                dispatch(setShowMobileReserve(false))
+            }
+        }
+    }, [dispatch]);
 
-
-    // useEffect(() => {
-    //     setTotalAdditional(CleaningFee + PickupFee)
-    // }, [CleaningFee, PickupFee]);
-
-    // useEffect(() => {
-    //     setCarDriverTotal(carPrice + driverPrice)
-    // }, [carPrice, driverPrice]);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScrollMobile)
+    }, [handleScrollMobile])
 
     useEffect(() => {
         if(adultcount === countAdultAdd ) {
@@ -276,8 +271,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     }
 
 
-
-        return (
+    return (
         <>
             {openCar  && <Backdrop onClick={()=> setOpenCar(false)} zIndex="2" /> }
             <Reservations 
@@ -369,25 +363,24 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                         />)}
                         <ReserveButton>
                         {reserve === 'loading' ? (<SkeletonLoader />) :  
-                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query? handleSubmit : () => MobileModal(prev => !prev)} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query? handleSubmit : () => dispatch(setShowMobileReserveModal(!showMobileReserveModal))} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         )}
                         </ReserveButton>
                         <Condition>
                             <p>{reserve === 'loading' ? <SkeletonLoader /> : 'You won’t be charged yet'}</p>
                         </Condition>
                         {reserve === 'succeeded' &&
-                        (
-                            
-                            <Prices 
-                                price={price} 
-                                summary_details={summary_details} 
-                                selectedCar={selectedCar} 
-                                reserve={reserve} 
-                                radio={radio}
-                                TotalAdditionalServices={TotalAdditionalServices}
-                                TotalCarAndDriverPrice={TotalCarAndDriverPrice}
-                            />
-                        )}
+                            checkInD && checkInD ?
+                                (<Prices 
+                                    price={price} 
+                                    summary_details={summary_details} 
+                                    selectedCar={selectedCar} 
+                                    reserve={reserve} 
+                                    radio={radio}
+                                    TotalAdditionalServices={TotalAdditionalServices}
+                                    TotalCarAndDriverPrice={TotalCarAndDriverPrice}
+                                />
+                        ) : ''}
                     </ReservationContent>
                 </ReservationBody>
             </Reservations>

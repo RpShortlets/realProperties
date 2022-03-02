@@ -60,13 +60,13 @@ const CopyRights = () => {
         <CopyRight>
             <CopyRightContent paddingleft='true' paddingRight='true'>
                 <div>
-                    <p>@2022 Real Property Asset and Technologies Ltd.</p>
+                    <p>@2022 Real Property Assets and Technologies Limited.</p>
                 </div>
-                <div >
+                {/* <div >
                     <p>Terms of Use</p>
                     <p>Privacy Policy</p>
-                    <p>Cookie Policy</p>
-                </div>
+                    <p>Cookie Policy</p> 
+                </div> */}
             </CopyRightContent>
         </CopyRight>
     )

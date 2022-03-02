@@ -5,6 +5,8 @@ import  "../../../styles/utilities.css"
 import StaticCalender from "../../../components/Calender/StaticCalender";
 import { motion } from 'framer-motion';
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
+// import Button from "../../../components/Button/Button"
+// import { useDispatch } from 'react-redux';
 
 
 
@@ -29,7 +31,7 @@ const Calenders = styled.div `
 
 
 
-export const PropertyCalender = ({status, lenghtstay, margin}) => { 
+export const PropertyCalender = ({status, lenghtstay, margin, checkOutD, checkInD}) => { 
     const Medium = useMediaQuery("(max-width: 768px)");
 
     return (

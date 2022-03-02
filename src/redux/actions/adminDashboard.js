@@ -1,5 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { AdminPendingTransaction, AdminCompletedTransaction, AdminDeletedTransaction, AdminLogin } from '../actionCreators/actionCreators';
+import { AdminPendingTransaction, AdminCompletedTransaction, 
+    AdminDeletedTransaction, AdminLogin, GetCustomersComplains,
+    UpdateBooking } 
+    from '../actionCreators/actionCreators';
 
 export const AdminDashboard = createSlice({
     name: 'adminDashboard',
@@ -9,6 +12,8 @@ export const AdminDashboard = createSlice({
         cancelledTransaction: {},
         login: {},
         profile: {},
+        complains: {},
+        updateBooks: {}
     },
     reducers: {
         getAdminProfile: (state, action) => {
@@ -60,8 +65,29 @@ export const AdminDashboard = createSlice({
         .addCase(AdminLogin.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
-        }
-        )
+        })
+        .addCase(GetCustomersComplains.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(GetCustomersComplains.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.complains = action.payload
+        })
+        .addCase(GetCustomersComplains.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
+        .addCase(UpdateBooking.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(UpdateBooking.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.updateBooks = action.payload
+        })
+        .addCase(UpdateBooking.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
     }
 });
 

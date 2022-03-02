@@ -72,64 +72,69 @@ function SwipeableEdgeDrawer({SubmitForm}) {
 
     return (
         <Root>
-            <CssBaseline />
-            <Global
-                styles={{
-                    '.MuiDrawer-root > .MuiPaper-root': {
-                    height: activeStep === 0 ? `calc(65% - ${drawerBleeding}px)` : activeStep === 1 ? `calc(100% - ${drawerBleeding}px)` : `calc(85% - ${drawerBleeding}px)`,
-                    overflow: 'visible',
-                    },
-                }}
-            />
-            <SwipeableDrawer
-                anchor="bottom"
-                open={openDrawer}
-                onClose={toggleDrawer(false)}
-                onOpen={toggleDrawer(true)}
-                swipeAreaWidth={drawerBleeding}
-                disableSwipeToOpen={false}
-                ModalProps={{
-                keepMounted: true,
-                }}
-            >
-                <StyledBox
-                    sx={{
-                        position: 'absolute',
-                        top: openDrawer && '-32px',
-                        borderTopLeftRadius: 8,
-                        borderTopRightRadius: 8,
-                        visibility: 'visible',
-                        right: 0,
-                        left: 0,
-                    }}
-                >
-                    <Puller />
-                    <Typography sx={{ p: 2, color: 'text.secondary' }}></Typography>
-                </StyledBox>
-                <StyledBox
-                    sx={{
-                        px: 3,
-                        pb: 2,
-                        height: '100%',
-                        overflow: 'auto',
-                    }}
-                >
-
-                    <TextMobileStepper
-                        handleNext={handleNext}
-                        activeStep={activeStep}
-                        handleBack={handleBack}
-                        handleReset={handleReset}
-                        steps={steps}
-                        SubmitForm={SubmitForm}
+            {openDrawer && (
+                <>
+                    <CssBaseline />
+                    <Global
+                        styles={{
+                            '.MuiDrawer-root > .MuiPaper-root': {
+                            height: activeStep === 0 ? `calc(65% - ${drawerBleeding}px)` : activeStep === 1 ? `calc(100% - ${drawerBleeding}px)` : `calc(85% - ${drawerBleeding}px)`,
+                            overflow: 'visible',
+                            },
+                        }}
+                    />
+                    <SwipeableDrawer
+                        anchor="bottom"
+                        open={openDrawer}
+                        onClose={toggleDrawer(false)}
+                        onOpen={toggleDrawer(true)}
+                        swipeAreaWidth={drawerBleeding}
+                        disableSwipeToOpen={false}
+                        ModalProps={{
+                        keepMounted: true,
+                        }}
                     >
+                        <StyledBox
+                            sx={{
+                                position: 'absolute',
+                                top: openDrawer && '-32px',
+                                borderTopLeftRadius: 8,
+                                borderTopRightRadius: 8,
+                                visibility: openDrawer ? 'visible' : 'hidden',
+                                right: 0,
+                                left: 0,
+                            }}
+                        >
+                            <Puller />
+                            <Typography sx={{ p: 2, color: 'text.secondary' }}></Typography>
+                        </StyledBox>
+                        <StyledBox
+                            sx={{
+                                px: 3,
+                                pb: 2,
+                                height: '100%',
+                                overflow: 'auto',
+                            }}
+                        >
+
+                            <TextMobileStepper
+                                handleNext={handleNext}
+                                activeStep={activeStep}
+                                handleBack={handleBack}
+                                handleReset={handleReset}
+                                steps={steps}
+                                SubmitForm={SubmitForm}
+                            >
+                            
+                                {Display}
+                                
                     
-                        {Display}
-                        
-            
-                    </TextMobileStepper>
-                </StyledBox>
-            </SwipeableDrawer>
+                            </TextMobileStepper>
+                        </StyledBox>
+                    </SwipeableDrawer>
+
+                </>
+            )}
         </Root>
     );
 }

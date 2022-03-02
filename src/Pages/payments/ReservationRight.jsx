@@ -26,18 +26,17 @@ const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'Nat
 
 const SectionRight = styled.div `
     background: #fff;
-
+    width: 100%;
 
     @media screen and (min-width: 769px) {
         width: 40%; 
         height: 100vh;
-        width: 100%; 
         z-index: 11; 
         position: absolute; 
-        /* top: 0;  */
         right: 0px;
         overflow-y: scroll;
     }
+
 
 `
 
@@ -77,7 +76,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
-    const [value, setValue] = useState(new Date());
+    const [value, setValue] = useState(null);
     const [phn, setPhone] = useState("")
     const [validated, setValidated] = useState(false)
     const [emailerror, setEmailError] = useState(false)
@@ -138,7 +137,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber.match(/[0-9]/) ) {
+        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber ) {
             dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
             navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
             // dispatch(RetrieveTransaction({ongoingId}))

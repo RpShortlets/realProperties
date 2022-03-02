@@ -1,77 +1,103 @@
-import React, {useEffect} from 'react';
-import TableData from './TableData';
+import React, {useEffect } from 'react';
 import styled from "styled-components"
+import {AdminContainer, AdminHeader } from "../../../styles/globalStyles"
 import { useSelector } from 'react-redux';
-import { AdminPendingTransaction, ManualConfirmBookings } from '../../../redux/actionCreators/actionCreators';
+import { AdminPendingTransaction } from '../../../redux/actionCreators/actionCreators';
 import { useDispatch } from 'react-redux';
+import Table from "../../../components/Table/Tab"
+import { Clip } from "../../../components/Loader/Spinner";
+import Error from "../../../components/Error/Error"
+import { Error404Icon } from '../../../Svg/svg';
 
 const Wrapper = styled.div `
-    padding: max(3vw, 1.3rem);
-    height: 100%;
-
-    h1 {
-        color: var(--color-primary);
-        font-weight: 600;
-        font-size: var(--font-big);
-    }
-
+    ${AdminContainer}
 `
 
-const Pending = () => {
+const H1 = styled.h1 `
+    ${AdminHeader}
+`
+
+const headcells = [
+    {
+        id: 'Customer name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Customer name',
+    },
+    {
+        id: 'Reference',
+        numeric: true,
+        disablePadding: false,
+        label: 'Reference',
+    },
+    {
+        id: 'Check-in',
+        numeric: true,
+        disablePadding: false,
+        label: 'Check-in',
+    },
+    {
+        id: 'Check-out',
+        numeric: true,
+        disablePadding: false,
+        label: 'Check-out',
+    },
+    {
+        id: 'Amount',
+        numeric: true,
+        disablePadding: false,
+        label: 'Amount',
+    },
+    {
+        id: 'Phone number',
+        numeric: true,
+        disablePadding: false,
+        label: 'Phone number',
+    },
+    {
+        id: 'Email',
+        numeric: true,
+        disablePadding: false,
+        label: 'Email',
+    },
+    {
+        id: 'Status',
+        numeric: true,
+        disablePadding: false,
+        label: 'Status',
+    },
+    
+];
+
+const Pending = ({handleCompletedBooking}) => {
     const dispatch = useDispatch();
-    const {pending, pendingTransaction, profile} = useSelector(state => state.adminDashboard);
-    // const {status} = useSelector(state => state.paymentState);
+    const data = JSON.parse(localStorage.getItem('admin'))
+    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
 
-
-    const  handleCompleted = (id) => {
-        if (window.confirm("You're about to confirm this booking. Press Yes to process or cancel") === true) {
-            dispatch(ManualConfirmBookings({id}));
-            window.location.reload()
-        }
-    }
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())
     }, [dispatch])
 
+    if(pending === 'failed') {
+        return (
+            <>
+                <Error  title="Something went wrong in fetching records." Icon={Error404Icon}/>
+            </>
+        )
+    }
 
     return <Wrapper>
-        <h1>{profile?.firstname && `Welcome ${profile?.firstname}`}</h1>
-        <TableData title="Pending">
-            {pending === 'succeeded' && (
-                <>
-                
-                {pendingTransaction?.map((item) => (
-                    <tr key={item.id} onClick={() => handleCompleted(item?.pending_id)}>
-                        <td>
-                            {item?.guest_name}
-                        </td>
-                        <td>
-                            {item?.email}
-                        </td>
-                        <td>
-                            {item?.phone_no}
-                        </td>
-                        <td>
-                            {item?.check_in}
-                        </td>
-                        <td>
-                            {item?.check_out}
-                        </td>
-                        <td>
-                            {item?.amount}
-                        </td>
-                        <td>
-                            {item?.pymt_reference}
-                        </td>
-                        <td>
-                            {item?.status}
-                        </td>
-                    </tr>
-                ))}
-                </>
-            )}
-        </TableData>
+        {pending === 'loading' ? (
+            <div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
+                <Clip type='TailSpin' />
+            </div>
+        ) :
+            <>
+                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
+            </>
+        }
     </Wrapper>;
 };
 

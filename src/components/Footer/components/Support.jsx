@@ -11,13 +11,13 @@ const Support = () => {
                             Contact Customer Support
                         </NavLink>
                     </div>
-                    <div>
+                    {/* <div>
                         <NavLink to="/">
                             Cancellation options
                         </NavLink>
-                    </div>
+                    </div> */}
                     <div>
-                        <NavLink to="/">
+                        <NavLink to="/policy">
                             Privacy Policy
                         </NavLink>
                     </div>

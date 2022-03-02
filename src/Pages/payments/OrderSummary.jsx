@@ -8,7 +8,9 @@ import {FlexStyle} from "../../styles/globalStyles"
 // import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
 import { ManualPay, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
+import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
+import Tooltip from "../../components/Tooltip"
 import {motion } from "framer-motion"
 import { BankTransferIcon } from '../../Svg/svg';
 
@@ -56,9 +58,6 @@ const Main = styled.div `
 `
 
 const Card = styled.div `
-    /* border: 2px solid #2193B0;
-    border-radius: 10px;
-    padding: max(2vw, 1rem); */
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.3);
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.3);
@@ -67,6 +66,10 @@ const Card = styled.div `
 
     .orderBody {
         margin: 0 max(1.5vw, 1rem);
+    }
+
+    .labelSecond {
+        margin-left: .6rem;
     }
 `
 
@@ -84,6 +87,10 @@ const CardDetails =  styled.div `
 
     span {
         font-size: var(--font-xtra-small-screen);
+    }
+
+    @media screen and (width:320px) {
+        flex-wrap: wrap;
     }
 
 `
@@ -111,7 +118,6 @@ const Label = styled.label `
     ${FlexStyle}
     padding: max(1vw, .5rem);
     justify-content: center;
-    margin-right: max(4vw, 1.5rem);
     cursor: pointer;
     background-color: ${({check}) => check ? '#DCEFF4' : 'transparent'};
     transition: background-color 0.2s ease-in-out;
@@ -131,6 +137,10 @@ const Label = styled.label `
         cursor: not-allowed;
     }
 
+    @media screen and (max-width: 560px) {
+        margin-right: 0;
+    }
+
 `
 
 const OrderSummary = () => {
@@ -140,17 +150,21 @@ const OrderSummary = () => {
 
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     const {payStack} = useSelector(state => state.paymentState)
-    // const guestId =  parseInt(localStorage.getItem('guestId'))
-    // const [addtionService, setAddtionalService] = useState();
-    const [method, setmethod] = useState('transfer');
-
-
-
     
 
+    const [method, setmethod] = useState('transfer');
+    const [showDialog, setShowDialog] = useState(false)
+    const [confirm, setConfirm ] = useState('No')
 
-    // const CleaningFee =  proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.cleaning && Ongoing_id_info[0]?.cleaning : 0;
-    // const PickupFee =    proceess === 'loading' ? 0 : proceess === 'succeeded' ? Ongoing_id_info[0]?.pickup && Ongoing_id_info[0]?.pickup : 0; 
+    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) !== null && Ongoing_id_info?.map((item) => item.cleaning) : 0;
+    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup) !== null && Ongoing_id_info?.map((item) => item.pickup) : 0; 
+    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
+    const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
+    // const newPickup =   proceess === 'succeeded' ? PickupFee[0] === null ? 0 : PickupFee[0] : 0;
+    // const newCleaning =   proceess ===  'succeeded' ? CleaningFee[0] === null ? 0 : CleaningFee[0]: 0;
+    const AddService =  proceess === 'succeeded' &&  parseInt(CleaningFee) + parseInt(PickupFee)
+    const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
+
 
     // useEffect(() => {
     //     if(status === 'succeeded') {
@@ -163,13 +177,16 @@ const OrderSummary = () => {
     }
 
     const processPayment = () => {
+        // setShowDialog(!showDialog)
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
         const guestId = Ongoing_id_info[0]?.guest_id;
 
-
         if(method === 'transfer' && guestId) {
+            // if(showDialog) {
+            //     alert('show')
+            // }
             if (window.confirm("Please note this method require 30mins to make payment.") === true) {
                 dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
                 navigate('/order-summary/payment')
@@ -198,11 +215,7 @@ const OrderSummary = () => {
         dispatch(RetrieveTransaction({Id}))
     }, [dispatch, Id])
 
-    // useEffect(() => {
-        
-    //     setAddtionalService(CleaningFee + PickupFee)
-        
-    // }, [CleaningFee, PickupFee, proceess]);
+
 
     if(proceess === 'failed') {
         return (
@@ -210,8 +223,10 @@ const OrderSummary = () => {
         )
     }
 
+
     return (
         <>
+            <Dialog confirm={confirm} setConfirm={setConfirm} showDialog={showDialog} setShowDialog={setShowDialog} title="Please note this method require 30mins to make payment" />
             <Section>
                 <Main>
                     
@@ -230,24 +245,19 @@ const OrderSummary = () => {
                                                 {proceess === 'loading' ? <SkeletonLoader /> : <span> {data?.total_apartment_price?.toLocaleString()}</span>}
                                             </CardDetails>
                                         )}
-                                        {data?.cleaning && (
+                                        {data?.cleaning || data?.pickup  ? (
                                             <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental || data?.pickup  ? 'Additional Services' : ''}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : parseInt(data?.car_rental) + parseInt(data?.pickup)}</span>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning|| data?.pickup  ? 'Additional Services' : ''}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : AddService?.toLocaleString()}</span>
                                             </CardDetails>
-                                        )}
-                                        {data?.car_rental && (
+                                        ): ""}
+                                        {data?.car_rental || data?.driver ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental && 'Car Rental'} </p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarService?.toLocaleString()}</span>
                                             </CardDetails>
-                                        )} 
-                                        {data?.driver && (
-                                            <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver && 'Driver'}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver?.toLocaleString()}</span>
-                                            </CardDetails>
-                                        )}
+                                        ): ''} 
+        
                                         {data?.security_deposit && (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>
@@ -287,12 +297,14 @@ const OrderSummary = () => {
                                             
                                         />
                                     </div>
-                                    <div>
-                                        <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
-                                            {BankTransferIcon}
-                                            <span>PayStack</span>
-                                        </Label>
-                                        <input i
+                                    <div className="labelSecond">
+                                        <Tooltip title="This payment is currently unavailable">
+                                            <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
+                                                {BankTransferIcon}
+                                                <span>Card Payment</span>
+                                            </Label>
+                                        </Tooltip>
+                                        <input 
                                             id="paystack" 
                                             type="radio" 
                                             name='paystack'
@@ -300,16 +312,16 @@ const OrderSummary = () => {
                                             checked={method === 'paystack'}
                                             onChange={(e) => setmethod(e.target.value)}
                                             style={{display: 'none'}}
-                                            disabled
+                                            disabled={true}
                                         />
                                     </div>
                                 </div>
                                 <div style={{display: 'flex'}}>
                                     <div style={{flex: '1'}}>
-                                        <Button onClicks={handleBackBtn} fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="2px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button onClicks={handleBackBtn}  fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="8px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                     <div style={{flex: '2'}}>
-                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="2px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="8px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                 </div>
                             </Card>

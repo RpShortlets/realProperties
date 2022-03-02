@@ -7,8 +7,8 @@ export const Destlocation = [
         id: 1,
         name: 'Lekki, Nigeria'
     },
-    {
-        id: 2,
-        name: 'Ikeja, Nigeria'
-    }
+    // {
+    //     id: 2,
+    //     name: 'Ikeja, Nigeria'
+    // }
 ]

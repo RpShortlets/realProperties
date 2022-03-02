@@ -5,7 +5,7 @@ import styled from "styled-components"
 
 const Section = styled.div `
     width: 100%;
-    height: 100vh;
+    height: ${({height}) => height ? height : '100vh'};
     margin: ${({margin}) => margin && 'max(4vw, 2rem) 0'};
 
     .container {
@@ -32,9 +32,9 @@ const Section = styled.div `
     }
 `
 
-const Error = ({title, Icon, error}) => {
+const Error = ({title, Icon, error, height}) => {
     return (
-        <Section margin={error}>
+        <Section margin={error} height={height}>
             <div className="container">
                 <div>
                     {Icon}
@@ -42,9 +42,6 @@ const Error = ({title, Icon, error}) => {
                 <div className='paragraph'>
                     <p>{title}</p>
                 </div>
-                {/* <div className='btn-container'>
-                    <Button  title="Go Back"  border="0" width="50%" padding="1rem" background="var(--linear-primary)" color="var(--color-white)"/>
-                </div> */}
             </div>
         </Section>
     )

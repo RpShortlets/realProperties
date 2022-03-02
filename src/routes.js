@@ -1,5 +1,6 @@
 import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, 
-    Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService
+    Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService,
+    TermsandPolicy, Policy, ValueAdded
 } 
     from "./export"
 import {Navigate} from "react-router-dom";
@@ -12,7 +13,9 @@ const routes = (isLoggedIn, Query) =>
             children: [
             { path: 'pending', element: <AdminDashboard /> },
             { path: 'completed', element: <AdminDashboard /> },
-            { path: 'deleted', element: <AdminDashboard /> }
+            { path: 'deleted', element: <AdminDashboard /> },
+            { path: 'complains', element: <AdminDashboard /> },
+            { path: 'update-booking', element: <AdminDashboard /> }
             ],
         },
         {
@@ -90,6 +93,18 @@ const routes = (isLoggedIn, Query) =>
         {
             path: '/customer-support',
             element: <CustomerService />,
+        },
+        {
+            path: '/policy',
+            element: <TermsandPolicy />,
+        },
+        {
+            path: '/terms',
+            element: < Policy/>
+        },
+        {
+            path:"/value-added-services",
+            element: <ValueAdded />
         },
         {
             path: '*',

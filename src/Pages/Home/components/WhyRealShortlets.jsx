@@ -2,8 +2,6 @@ import styled from "styled-components"
 import { RealShortlets } from "../data/data"
 import {motion} from "framer-motion"
 import { PaddingStyle } from "../../../styles/globalStyles"
-import { useParallax } from 'react-scroll-parallax';
-
 
 
 const Container = styled.div `
@@ -79,7 +77,7 @@ const IconDivs = styled.div `
 
 
         svg {
-            font-size: 2.5rem;
+            font-size: 2.5rem !important;
         }
 
     }
@@ -91,16 +89,13 @@ const IconDivs = styled.div `
         }
 
         svg {
-            font-size: var(--font-big);
+            font-size: var(--font-big) !important;
         }
     }
 `
 
 
 const WhyRealShortlets = ({about}) => {
-    const frog = useParallax({
-        rotateY: [0, 360],
-    });
     
     return (
         <Container>
@@ -112,7 +107,7 @@ const WhyRealShortlets = ({about}) => {
                             whileHover={{ scale: 1.06 }}
                             whileTap={{ scale: 0.9 }} 
                         >
-                            <div ref={frog.ref}>
+                            <div>
                                 <div>
                                     {item.image} 
                                     <p>{item.title}</p>

@@ -9,12 +9,15 @@ import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 
 const ModalContent = styled.div `
     /* padding: max(2vw, 2rem); */
+    overflow: scroll;
+    height: 100%;
 
     form {
         margin: max(2vw, 1rem);
     }
 
-    .formSpacing {
+    .formSpacing,
+    .formInput > div:first-child {
         margin: max(1vw, 0.5rem) 0;
     }
 
@@ -24,9 +27,6 @@ const ModalContent = styled.div `
             flex: 1 !important;
         }
 
-        > div:first-child{
-            margin-right: max(1vw, 0.5rem);
-        }
     }
 
     .contactUsHeader {
@@ -64,6 +64,10 @@ const ModalContent = styled.div `
             display: flex;
             align-items: end;
 
+            > div:first-child{
+                margin: 0 max(1vw, 0.5rem) 0 0;
+            }
+
         }
     }
 
@@ -72,12 +76,12 @@ const ContactModal = ({openModal,setOpenModal, SubmitContactForm, validatedName,
     const Query = useMediaQuery("(min-width: 669px)")
     
     return (
-        <Modal show={openModal} top='10vh' transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-secondary)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "60%" : '90%'} >
+        <Modal show={openModal} top='10vh'  height= "100%" transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-secondary)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "60%" : '90%'} >
             <ModalContent>
                 <div className="contactUsHeader">
                     <h3>Contact Us</h3>
                 </div>
-                <div>
+                <div style={{height: "100%"}}>
                     <form onSubmit={SubmitContactForm}>
                         <div className="formInput formSpacing">
                             <Input  type="text" label="First Name" error={!validatedName} placeholder=""  marginTop="0px" name="firstname" value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value.replace(/[^\w\s]/gi, "") })} Focus={Focus}  />

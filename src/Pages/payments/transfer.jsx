@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { CopyIcon } from '../../Svg/svg';
+import { CopyIcon, CheckedIcon } from '../../Svg/svg';
 import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { ManualCancel } from '../../redux/actionCreators/actionCreators';
+import { ManualCancel, ExpiredBooking } from '../../redux/actionCreators/actionCreators';
 import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 
@@ -127,19 +128,47 @@ const Main = styled.div `
 
 const Transfer = () => {
     const dispatch = useDispatch();
-    const {manualTransfer: {payment_details, pending_id, transaction_info }, status, manualTransfer} = useSelector(state => state.paymentState);
-
+    const navigate = useNavigate()
+    const {manualTransfer: {payment_details, pending_id, transaction_info, time }, status, manualTransfer, expiredBookings} = useSelector(state => state.paymentState);
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
+    const expiredTime =  status === 'succeeded' && time[0]?.expired_time;
+    const [copied, setCopied] = useState("")
+    
+    var distance = new Date(expiredTime)?.getTime() - new Date().getTime();
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const [countDown, setCountDown] = useState(minutes)
+
+    React.useEffect(() => {
+        let timerId;
+            if(minutes === 0 ) {
+                dispatch(ExpiredBooking({pendingId}))
+                navigate('/');
+            } else {
+                timerId = setInterval(() => {
+                    setCountDown((countDown) => countDown - 1);
+                }, 1000);
+                return () => clearInterval(timerId)
+            };
+        }, [countDown, minutes, pendingId, dispatch, navigate]);
+
+    
+    // React.useEffect(() => {
+    //     console.log('Hello')
+    //     if(new Date(expiredTime)?.getTime() === new Date().getTime() ) {
+    //        
+    //         console.log('Hello')
+    //     }
+    // }, []);
+
+
 
 
     const handleCancel = () => {
         if(parseInt(pendingId) === Number(pendingId)) {
             if (window.confirm("You're about to cancel your transaction") === true) {
                     dispatch(ManualCancel({pendingId}));
-                    window.location.reload()
-                    // navigate('/');
+                    navigate('/');
                 } else {
-                console.log('No')
             }
         } else {
             OpenNotificationWithIcon({
@@ -187,9 +216,9 @@ const Transfer = () => {
                                                     <span>&#8358;{transaction_info[0]?.amount?.toLocaleString()}</span>
                                                         <CopyToClipboard 
                                                             text={transaction_info[0]?.amount}
-                                                            onCopy={() => alert('Copy')}
+                                                            onCopy={() => setCopied('amount')}
                                                         >
-                                                            <span>{CopyIcon}</span>
+                                                            <span>{copied === 'amount' ? CheckedIcon : CopyIcon}</span>
                                                         </CopyToClipboard>
                                                 </div>
                                             </>)
@@ -203,10 +232,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.bankname}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.bankname}
+                                                        onCopy={() => setCopied('bankname')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'bankname' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -220,10 +249,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.accountname}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.accountname}
+                                                        onCopy={() => setCopied('accountname')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'accountname' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -237,10 +266,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{payment_details[0]?.accountno}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={payment_details[0]?.accountno}
+                                                        onCopy={() => setCopied('accountno')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'accountno' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -254,10 +283,10 @@ const Transfer = () => {
                                                 <div className='transferCopyIcon'>
                                                     <span>{transaction_info[0]?.payment_reference}</span>
                                                     <CopyToClipboard 
-                                                        text={transaction_info[0]?.amount}
-                                                        onCopy={() => alert('Copy')}
+                                                        text={transaction_info[0]?.payment_reference}
+                                                        onCopy={() => setCopied('payment_reference')}
                                                     >
-                                                        <span>{CopyIcon}</span>
+                                                        <span>{copied === 'payment_reference' ? CheckedIcon : CopyIcon}</span>
                                                     </CopyToClipboard>
                                                 </div>
                                             </>
@@ -275,7 +304,7 @@ const Transfer = () => {
                                         <div>
                                             <Countdown />
                                         </div>
-                                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                                        <div style={{display: 'flex', alignItems:'center', justifyContent: 'center', margin: 'max(1.2rem, .9rem) 0'}}>
                                             <p>You have 30 minutes window to make payment, otherwise, the order will be canceled</p>
                                         </div>
                                         <div style={{display: 'contents'}}>

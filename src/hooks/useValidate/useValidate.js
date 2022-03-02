@@ -57,7 +57,7 @@ export function useValidateId({Idnum, focusId}) {
     const validator =  useCallback((value) => {
         if(!focusId) {
             setValidated(true)
-        } else if(focusId && value.length > 11) {
+        } else if(focusId && value.length > 7) {
             setValidated(true)
         }   
         else {
