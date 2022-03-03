@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { AdminPendingTransaction, AdminCompletedTransaction, 
     AdminDeletedTransaction, AdminLogin, GetCustomersComplains,
-    UpdateBooking } 
+    UpdateBooking, GetPropertyInfoAdmin } 
     from '../actionCreators/actionCreators';
 
 export const AdminDashboard = createSlice({
@@ -13,7 +13,8 @@ export const AdminDashboard = createSlice({
         login: {},
         profile: {},
         complains: {},
-        updateBooks: {}
+        updateBooks: {},
+        apartmentInfo: {}
     },
     reducers: {
         getAdminProfile: (state, action) => {
@@ -78,13 +79,24 @@ export const AdminDashboard = createSlice({
             state.error = action.error.message
         })
         .addCase(UpdateBooking.pending, (state, action) => {
-            state.status = 'loading'
+            state.bookings = 'loading'
         })
         .addCase(UpdateBooking.fulfilled, (state, action) => {
-            state.status = 'succeeded'
+            state.bookings = 'succeeded'
             state.updateBooks = action.payload
         })
         .addCase(UpdateBooking.rejected, (state, action) => {
+            state.bookings = 'failed'
+            state.error = action.error.message
+        })
+        .addCase(GetPropertyInfoAdmin.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(GetPropertyInfoAdmin.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.apartmentInfo = action.payload
+        })
+        .addCase(GetPropertyInfoAdmin.rejected, (state, action) => {
             state.status = 'failed'
             state.error = action.error.message
         })

@@ -52,9 +52,9 @@ const InputForm = styled.input `
 `
 
 
-export const Input = ({min, Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
+export const Input = ({className, min, Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
-        <InputContainer Icon={Icon}>
+        <InputContainer Icon={Icon} className={className}>
             {label && <label> {label}{!asterik && Asterik}</label>}
             <InputForm min={min} disabled={disabled} onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
@@ -64,9 +64,9 @@ export const Input = ({min, Blur, asterik, disabled, Focus,type, error, label, p
 
 
 
-export const InputSelect = ({label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
+export const InputSelect = ({ className, label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
-        <div className="input-container">
+        <div className={`input-container ${className}`}>
             <label>{label}{Asterik} 
                 <select disabled={disabled} ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
                     <option defaultChecked >{defaultV}</option>
