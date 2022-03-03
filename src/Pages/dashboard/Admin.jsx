@@ -31,6 +31,7 @@ const Main = styled.div `
 
 const SideBar = styled.div `
     grid-column: 1 / 2;
+    display: none;
     background: var(--color-white);
     height: 100%;
     mix-blend-mode: normal;
@@ -104,12 +105,21 @@ const SideBar = styled.div `
     .adminIconsColor {
         color: '#fff'
     }
+
+    @media screen and (min-width: 769px) {
+        display: block;
+        grid-column:1 / 2;
+    }
 `
 
 const LeftBar = styled.div `
     background: var(--color-secondary);
     height: 100%;
-    grid-column: 2 / 8;
+    grid-column: 1/ 8;
+
+    @media screen and (min-width: 769px) {
+        grid-column: 2 / 8;
+    }
 `
 
 const Admin = () => {

@@ -66,7 +66,6 @@ const InputContainer = styled.div`
 const SelectDateInput = () => {
     const {checkin, checkout} = useParams()
     const {reserve, reservation: {dates}, } = useSelector(state => state.reservationState)
-    // const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
     const Query = useMediaQuery("(min-width: 769px)")
 
     const [show, setShow] = useState(false)

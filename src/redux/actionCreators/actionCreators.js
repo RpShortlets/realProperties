@@ -308,7 +308,7 @@ export const GetCustomersComplains = createAsyncThunk("adminDashboard/getCustome
     return data.results;
 });
 
-export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", async ({formdata, phn,  dropdown, value, value2}) => {
+export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", async ({formdata, phn,  dropdown,checkInDate,  checkOutDate, totalPrice}) => {
     
     const formdatas = {
         apartment_id: dropdown.apartment,
@@ -316,19 +316,31 @@ export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", a
         lastname: formdata.lastname,
         email: formdata.email,
         phone_no: phn,
-        check_in_date: value,
-        check_out_date: value2,
-        amount: formdata.amount,
+        check_in_date: checkInDate,
+        check_out_date: checkOutDate,
+        amount: totalPrice,
         reference_no: formdata.referenceId,
         bank_trasaction_id: formdata.transactionId,
-        external_platform: dropdown.plaform
+        external_platform: dropdown.platform
     }
 
     const {data} = await axios.post(`${BaseURL}/update_booking_external`, formdatas);
-    return data.results;
+    return data.title;
 });
 
-//* END OF ADMIN PAYMENT
+export const GetPropertyInfoAdmin = createAsyncThunk("adminDashboard/getPropertyInfoAdmin", async ({dropdown}) => {
+    
+    const response = await axios.get(`${BaseURL}/apartment-info`, 
+    {
+        params: {
+            apartment_id: dropdown.apartment
+        }
+    });
+
+    return response.data
+})
+
+//* END OF ADMIN 
 
 //* CONTACT CUSTOMER SUPPORT
 export const ContactSupport = createAsyncThunk("support/contactSupport", async ({formdata}) => {
