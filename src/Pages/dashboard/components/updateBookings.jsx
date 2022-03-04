@@ -59,7 +59,7 @@ const UpdateBookings = () => {
     const handleUpdateBookings = (e) => {
         e.preventDefault();
         if( formdata.firstname && formdata.lastname && formdata.email && phn &&formdata.referenceId && formdata.transactionId && dropdown.apartment && dropdown.platform && checkInDate && checkOutDate) {
-            dispatch(UpdateBooking({formdata, dropdown, phn, checkInDate,checkOutDate, totalPrice }))
+            dispatch(UpdateBooking({formdata, dropdown, phn, checkInDate, checkOutDate, totalPrice }))
         } else {
             if(!formdata.firstname) {
                 OpenNotificationWithIcon({
