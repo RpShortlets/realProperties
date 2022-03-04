@@ -8,7 +8,11 @@ import ImageThree from "../../image/small/picThree.jpeg"
 import ImageFour from "../../image/small/picFour.jpeg"
 import ImageFive from "../../image/small/picFive.jpeg"
 import ImageSix from "../../image/small/picSix.jpeg"
-import BK from "../../image/bk.jpeg"
+import Car from "../../image/car.webp"
+import Video from "../../image/video.webp"
+import Apartment from "../../image/apartment.webp"
+import { motion } from "framer-motion"
+import { useNavigate } from 'react-router-dom';
 
 
 const Data = [
@@ -36,6 +40,30 @@ const Data = [
         id: 6,
         image: ImageSix
     }
+]
+
+const Background = [
+    {
+        id: 1,
+        image: Apartment,
+        title: 'Apartments'
+    },
+    {
+        id: 2,
+        image: Video,
+        title: 'Videos'
+    },
+    {
+        id: 3,
+        image: Car,
+        title: 'Cars'
+    },
+    {
+        id: 4,
+        image: Car,
+        title: 'Cars'
+    },
+    
 ]
 
 const GalleryContainer = styled.section `
@@ -76,6 +104,41 @@ const Element =styled.div `
             aspect-ratio: 16 / 12;
         }
     }
+`
+
+const Card = styled.div `
+    background: #fff;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    height: fit-content;
+    width: 300px;
+    ${MediaElement}
+    padding: 0 !important;
+
+    img {
+        inline-size: fit-content;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    p {
+        margin: 0;
+        padding: 0 .6rem 1rem .6rem;
+        font-size: var(--font-small);
+    }
+
+    @media screen and (min-width: 670px) {
+        height: 280px;
+        img {
+            aspect-ratio: 16 / 12;
+        }
+        
+        p {
+            padding: 0 .6rem; 
+        }
+    }
+
 `
 
 const H2 = styled.h2 `
@@ -141,6 +204,13 @@ const Container = styled.div `
 
 
 const Gallery = () => {
+    const navigate = useNavigate();
+
+    const handleLink = (id) => {
+        navigate(`/gallery/${id?.toLowerCase()}`)
+    }
+
+    
     return (
         <GalleryContainer>
             <Main paddingleft="true" paddingRight="true">
@@ -157,27 +227,26 @@ const Gallery = () => {
                     </Scroller> 
                 </Scrollable>
                 <Container>
-                    <div className="galleryGrid">
-                        <div className="galleryGridFirstChild">
-                            <div>
-                                <img src={BK} alt="apartmentA4" />
-                            </div>
-                            <div className='galleryGridTag'>
-                                <p>Apartment</p>
-                                <span>43 pictures</span>
-                            </div>
-                        </div>
-                        <div className="galleryGridSecondChild">
-                            <div>
-                                <img src={BK} alt="apartmentA4" />
-                            </div>
-                            <div className='galleryGridTag'>
-                                <p>Video</p>
-                                <span>3 videos</span>
-                            </div>
-                        </div>
-                        
+                    <div>
+                        <H2>Check out our collection</H2>
                     </div>
+                    <Scroller className=" with-overscroll  snaps--individual">
+                        {Background?.map((item) => (
+                            <Card 
+                                key={item.id}
+                                as={motion.div}
+                                initial={{scale: 1}}
+                                whileHover={{ scale: 1.05, backgroundColor: 'var(--color-secondary)'}}
+                                transition={{duration: 0.2,
+                                    type: { type: 'spring'}
+                                }}
+                                onClick={() => handleLink(item.title)}
+                            >
+                                <img src={item?.image} alt="" />
+                                <p>{item?.title}</p>
+                            </Card>
+                        ))}
+                    </Scroller>
                 </Container>
             </Main>
         </GalleryContainer>

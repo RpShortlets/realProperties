@@ -286,8 +286,7 @@ a:hover {
     flex: 1;
 }
 
-
-/* width */
-
-
+.MuiMasonry-root {
+    margin: 0px !important;
+}
 
