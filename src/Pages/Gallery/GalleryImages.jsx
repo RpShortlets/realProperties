@@ -18,6 +18,7 @@ import Twelve from "../../image/Man/twelve.jpeg"
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery'
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage'
 import { Clip } from '../../components/Loader/Spinner'
+import Error from '../../components/Error/Error'
 
 
 const Data = [
@@ -98,7 +99,7 @@ const GalleryImages = () => {
     if(pathname === '/gallery/videos'){ 
         return (
             <Main paddingleft="true" paddingRight="true" >
-                Videos
+                <Error title="We are updating our gallery. Please check back." />
             </Main>
             )
     }
@@ -106,7 +107,7 @@ const GalleryImages = () => {
     if(pathname === '/gallery/cars' ) { 
         return (
             <Main paddingleft="true" paddingRight="true" >
-                Cars
+                <Error title="We are updating our gallery. Please check back." />
             </Main>
         )
     }

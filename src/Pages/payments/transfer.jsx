@@ -294,7 +294,7 @@ const Transfer = () => {
                                     </div>
                                 </div>
                                 <div className='transferDesc'>
-                                    <p> {status === 'succeeded' &&  transaction_info[0]?.amount && 'Please include your reference code on your transfer description'}</p>
+                                    <p> {status === 'succeeded' &&  transaction_info[0]?.amount && 'Please include your reference number on your transfer description'}</p>
                                 </div>
                             </div>
                         </div>

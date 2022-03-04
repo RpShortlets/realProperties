@@ -144,7 +144,7 @@ const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalSe
                 
                 <div>
                     <div className="priceHeader">
-                        <p>{reserve === 'loading' ? <SkeletonLoader /> : 'Transaction Fee'}</p>
+                        <p>{reserve === 'loading' ? <SkeletonLoader /> : 'Service Fee'}</p>
                         {reserve === 'loading' ? <SkeletonLoader /> : (
                             <Tooltips title='Cost for completing this transaction'>
                                 <span>{QuestionMark}</span>

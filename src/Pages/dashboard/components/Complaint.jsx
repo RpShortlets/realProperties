@@ -38,7 +38,7 @@ const Complaint = () => {
         ) :
             <>
                 <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
-                {status === 'succeeded' && (<TableData data={complains} />)}
+                {status === 'succeeded' && (<TableData data={complains} status={status} />)}
             </>
         }
         </Wrapper>
