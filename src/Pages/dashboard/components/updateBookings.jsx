@@ -50,9 +50,8 @@ const UpdateBookings = () => {
     const [dropdown, setDropdown] = useState({apartment: "", platform:''})
     const [phn, setPhone] = useState('')
     const [listNum, setlistNum] = useState(0)
-    const [totalPrice, setTotalPrice] = useState(0)
-
-    const newPrice = status === 'succeeded' && price[0]?.price;
+    // const [totalPrice, setTotalPrice] = useState(0)
+    const totalPrice = formdata.amountPaid 
     let listDate = []
     
 
@@ -130,9 +129,10 @@ const UpdateBookings = () => {
         }
     }, [dispatch, dropdown])
 
-    useEffect(() => {
-        setTotalPrice(parseInt(newPrice) * parseInt(listNum))
-    }, [newPrice, listNum])
+    // useEffect(() => {
+    //     const newPrice = status === 'succeeded' && price[0]?.price ? price[0]?.price : 0;
+    //     setTotalPrice(parseInt(newPrice) * parseInt(listNum))
+    // }, [listNum, price, status])
 
     useEffect(() => {
         if(bookings === 'succeeded' && updateBooks === 'Booking Successful') {
@@ -143,7 +143,7 @@ const UpdateBookings = () => {
             setFormData({amountPaid: '', firstname: '', lastname: '', email: '', referenceId: '', transactionId:''})
             setDropdown({apartment: "", platform:''})
             setPhone(null)
-            setTotalPrice(0)
+            // setTotalPrice(0)
         } else {
             if(bookings === 'failed') {
                 OpenNotificationWithIcon({
@@ -169,7 +169,7 @@ const UpdateBookings = () => {
                             <AdminCalender setlistNum={setlistNum} calendars={2} listNum={listNum} disablebooked='true' status={status} listDate={listDate} />
                         </div>
                         }
-                        <Input className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={totalPrice && totalPrice} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })}  disabled/>
+                        <Input className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={formdata.amountPaid} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         <Input className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         <Input className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         <InputSelect className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Plaform"  />

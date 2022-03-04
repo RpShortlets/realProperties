@@ -187,7 +187,7 @@ const OrderSummary = () => {
             // if(showDialog) {
             //     alert('show')
             // }
-            if (window.confirm("Please note this method require 30mins to make payment.") === true) {
+            if (window.confirm("Payment should be within 30mins.") === true) {
                 dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
                 navigate('/order-summary/payment')
             }
@@ -262,6 +262,12 @@ const OrderSummary = () => {
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>
                                                 <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        )}
+                                        {data?.overall_total && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.overall_total && 'Service Fee'}</p>
+                                                <span style={{fontWeight: '600'}}>&#8358;{proceess === 'loading' ? <SkeletonLoader  width='100%'/> : `2,000`}</span>
                                             </CardDetails>
                                         )}
                                         {data?.overall_total && (

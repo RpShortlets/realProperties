@@ -60,7 +60,7 @@ function Row(props) {
     }
 
 
-export default function CollapsibleTable({data}) {
+export default function CollapsibleTable({data, status}) {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -72,11 +72,13 @@ export default function CollapsibleTable({data}) {
                     <TableCell padding="none" align="left">Email</TableCell>
                 </TableRow>
             </TableHead>
-            <TableBody>
-                {data?.map((row) => (
-                    <Row key={row.firstname} row={row} />
-                ))}
-            </TableBody>
+            {status === 'succeeded' && (
+                <TableBody>
+                    {data?.map((row) => (
+                        <Row key={row.firstname} row={row} />
+                    ))}
+                </TableBody>
+            )}
             </Table>
         </TableContainer>
     );
