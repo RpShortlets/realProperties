@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-export default function ResponsiveDialog({showDialog, setShowDialog, title, setConfirm, confirm }) {
+export default function ResponsiveDialog({showDialog, setShowDialog, title, handleProceed, handleCancel, disagree, agree, header }) {
     // const [open, setOpen] = React.useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -26,8 +26,8 @@ export default function ResponsiveDialog({showDialog, setShowDialog, title, setC
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
         >
-            <DialogTitle id="responsive-dialog-title">
-            {"Use Google's location service?"}
+            <DialogTitle id={header}>
+                {header}
             </DialogTitle>
             <DialogContent>
             <DialogContentText>
@@ -35,11 +35,11 @@ export default function ResponsiveDialog({showDialog, setShowDialog, title, setC
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-            <Button autoFocus onClick={() => setConfirm('No')}>
-                Disagree
+            <Button autoFocus onClick={handleCancel}>
+                {disagree}
             </Button>
-            <Button onClick={() => setConfirm('Yes')} autoFocus>
-                Agree
+            <Button onClick={handleProceed} autoFocus>
+                {agree}
             </Button>
             </DialogActions>
         </Dialog>

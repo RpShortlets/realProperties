@@ -151,17 +151,14 @@ const OrderSummary = () => {
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
     const {payStack} = useSelector(state => state.paymentState)
     
-
     const [method, setmethod] = useState('transfer');
     const [showDialog, setShowDialog] = useState(false)
-    const [confirm, setConfirm ] = useState('No')
+
 
     const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) !== null && Ongoing_id_info?.map((item) => item.cleaning) : 0;
     const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup) !== null && Ongoing_id_info?.map((item) => item.pickup) : 0; 
     const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
     const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
-    // const newPickup =   proceess === 'succeeded' ? PickupFee[0] === null ? 0 : PickupFee[0] : 0;
-    // const newCleaning =   proceess ===  'succeeded' ? CleaningFee[0] === null ? 0 : CleaningFee[0]: 0;
     const AddService =  proceess === 'succeeded' &&  parseInt(CleaningFee) + parseInt(PickupFee)
     const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
 
@@ -176,21 +173,12 @@ const OrderSummary = () => {
         navigate(-1)
     }
 
+    //* HANDLE BUTTON CLICKED: EITHER TRANSFER OR CARD PAYMENT */
     const processPayment = () => {
-        // setShowDialog(!showDialog)
-        const apartmentId = Ongoing_id_info[0]?.apartment_id;
-        const userId = Ongoing_id_info[0]?.id;
-        const overAll = Ongoing_id_info[0]?.overall_total
         const guestId = Ongoing_id_info[0]?.guest_id;
 
         if(method === 'transfer' && guestId) {
-            // if(showDialog) {
-            //     alert('show')
-            // }
-            if (window.confirm("Payment should be within 30mins.") === true) {
-                dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
-                navigate('/order-summary/payment')
-            }
+            setShowDialog(!showDialog)
         } else {
             if (window.confirm("You're being redirected") === true) {
                 window.open(payStack?.message?.authorization_url, '_blank')
@@ -198,23 +186,34 @@ const OrderSummary = () => {
         }
     }
 
-    // const showConfirm = () => {
-    //     // window.confirm('You\'re being redirected' )
-    //     if (window.confirm("You're being redirected") === true) {
-    //         processPayment()
-    //         } else {
-    //         console.log('No')
-    //     }
-    // }
+    //* END OF HANDLE BUTTON CLICKED: EITHER TRANSFER OR CARD PAYMENT */
 
-    // const handleTransfer =() => {
-        
-    // }
+    //****DIALOG FUNCTIONS*/
+
+    const handleCancel = () => {
+        setShowDialog(false)
+    }
+
+    const handleProceed = () => {
+        const apartmentId = Ongoing_id_info[0]?.apartment_id;
+        const userId = Ongoing_id_info[0]?.id;
+        const overAll = Ongoing_id_info[0]?.overall_total
+        const guestId = Ongoing_id_info[0]?.guest_id;
+
+        dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
+        navigate('/order-summary/payment')
+        setShowDialog(false)
+    }
+
+    //**** END DIALOG FUNCTIONS*/
+
+    //*** RETRIEVE ORDER SUMMARY */
     
     useEffect(() => {
         dispatch(RetrieveTransaction({Id}))
     }, [dispatch, Id])
 
+    //*** END RETRIEVE ORDER SUMMARY */
 
 
     if(proceess === 'failed') {
@@ -226,10 +225,17 @@ const OrderSummary = () => {
 
     return (
         <>
-            <Dialog confirm={confirm} setConfirm={setConfirm} showDialog={showDialog} setShowDialog={setShowDialog} title="Please note this method require 30mins to make payment" />
+            <Dialog 
+                showDialog={showDialog} 
+                setShowDialog={setShowDialog} 
+                title="Please note this method require 30mins to make payment" 
+                disagree="Cancel"
+                agree="Confirm"
+                handleCancel={handleCancel}
+                handleProceed={handleProceed}
+            />
             <Section>
                 <Main>
-                    
                     <div className='orderBody'>
                         {proceess === 'loading' ? <SkeletonLoader width='100%' height="300px" />
                         : proceess === 'succeeded' && (
