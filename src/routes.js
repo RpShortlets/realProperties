@@ -68,7 +68,7 @@ const routes = (isLoggedIn, Query) =>
             ],
         },
         {
-            path: '/paystack/callback',
+            path: '/payment-status',
             element: <Verify />,
             children: [
             { path: 'shortlet', element: <Verify /> },

@@ -15,6 +15,7 @@ import { OpenNotificationWithIcon } from '../../components/Notification/Notifica
 
 //Components
 import { Deleted, Complaint, Completed, Pending, UpdateBooking} from "./components/index"
+import Mobile from '../../components/Drawer/Mobile';
 
 
 const Section = styled.section `
@@ -133,6 +134,20 @@ const Admin = () => {
     const [bookings, setBookings] =  useState(false)
     const [formdata, setFormData] = useState({transactionId: ''})
     const [penId, setPenId] = useState()
+    const [state, setState] = React.useState(false);
+
+    const toggleDrawer = (type) => (event) => { //* Close the drawer when the user clicks outside of it, and toggle the state of the drawer.
+        if (
+        event &&
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+        return;
+        }
+
+        setState((type) => !type);
+    };
+
 
 
     //* Render the pending or completed component
@@ -142,6 +157,7 @@ const Admin = () => {
         setDeleted(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
     }
 
     const handleCompleted = () => {
@@ -150,6 +166,7 @@ const Admin = () => {
         setDeleted(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
     }
 
     const handleDeleted = () => {
@@ -158,6 +175,7 @@ const Admin = () => {
         setPending(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
     }
 
     const handleComplains = () => {
@@ -166,6 +184,7 @@ const Admin = () => {
         setCompleted(false);
         setPending(false);
         setBookings(false)
+        setState(false);
     }
 
     const handleBooking = () => {
@@ -174,6 +193,7 @@ const Admin = () => {
         setDeleted(false);
         setCompleted(false);
         setPending(false);
+        setState(false);
     }
     //* End of Render the pending or completed component
 
@@ -195,6 +215,7 @@ const Admin = () => {
             })
         }
     }
+
 
 
     return (
@@ -236,7 +257,19 @@ const Admin = () => {
                 </div>
             </Modal>
             <Section>
-                <Main height={ pending || deleted || completed || complains ? '100vh' : '100%'}>
+                <div style={{background: 'var(--color-secondary)', paddingLeft: '1rem'}}>
+                    <Mobile  
+                        handlePending={handlePending}
+                        handleCompleted={handleCompleted}
+                        handleDeleted={handleDeleted}
+                        handleComplains={handleComplains}
+                        handleBooking={handleBooking}
+                        state={state}
+                        toggleDrawer={toggleDrawer}
+                        setState={setState}
+                    />
+                </div>
+                <Main height={ pending || deleted || complains ? '100vh' : '100%'}>
                     <SideBar>
                         {/* <div className='adminLogo'>
                             {CompanyLogo}

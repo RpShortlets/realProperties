@@ -11,6 +11,7 @@ import {AdminContainer, AdminHeader } from "../../../styles/globalStyles"
 
 const Wrapper = styled.div `
     ${AdminContainer}
+    height: auto !important;
 `
 
 const H1 = styled.h1 `

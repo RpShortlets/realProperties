@@ -142,8 +142,8 @@ const SearchResult = () => {
 
     const myRef = useRef(null)
     const countAdultMinus = 1;
-    const countAdultAdd = 9;
-    const countAddChild = 5;
+    const countAdultAdd = 4;
+    const countAddChild = 3;
     const countMinusChild = 1;
     const startprice = slidervalue[0]
     const endprice = slidervalue[1]
@@ -291,11 +291,11 @@ const SearchResult = () => {
                                     {status === 'loading' ? <SkeletonLoader/> :
                                         (<div className="otherInputContainer">
                                             <div>
-                                                <input type="text" name="minprice" value={slidervalue[0]} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
+                                                <input disabled type="text" name="minprice" value={slidervalue[0]} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
                                             </div>
                                         
                                             <div>
-                                                <input type="text" name="maxprice" value={slidervalue[1]}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
+                                                <input disabled type="text" name="maxprice" value={slidervalue[1]}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
                                             </div>
                                         </div>)
                                     }

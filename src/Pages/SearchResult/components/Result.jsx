@@ -174,7 +174,7 @@ const Price = styled.div `
 
 
 
-const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id}, status }) => {
+const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id, seaview}, status, data }) => {
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
 
@@ -265,10 +265,10 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                             <span>Apartment</span>
                         </div>
                         <div>
-                            <span>{allowed_guest} Guests</span>
+                            <span>6 Max Guests</span>
                         </div>
                         <div>
-                            <span>Seaview</span>
+                            <span>{seaview}</span>
                         </div>
                     </Apartment>
                     <Price>

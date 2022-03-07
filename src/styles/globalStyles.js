@@ -138,6 +138,11 @@ export const AdminContainer = css`
     height: 100%;
     overflow-y: auto;
     height: 100%;
+    margin-top: 4rem;
+
+    @media screen and (min-width: 769px) { 
+        margin-top: 0;
+    }
 
 `
 
@@ -145,6 +150,7 @@ export const AdminHeader = css`
     color: var(--color-primary);
     font-weight: 600;
     font-size: var(--font-big);
+    margin-bottom: 2rem;
 `
 
 //* HORIZONTAL SCROLL

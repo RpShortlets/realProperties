@@ -7,10 +7,9 @@ import {Pulse} from "../../components/Loader/Spinner"
 import {FlexStyle} from "../../styles/globalStyles"
 // import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
-import { ManualPay, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
+import { ManualPay, PaymentPayStack, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
 import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
-import Tooltip from "../../components/Tooltip"
 import {motion } from "framer-motion"
 import { BankTransferIcon } from '../../Svg/svg';
 
@@ -149,25 +148,22 @@ const OrderSummary = () => {
     const Id  = useParams().id;
 
     const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
-    const {payStack} = useSelector(state => state.paymentState)
+    const {payStack, status} = useSelector(state => state.paymentState)
     
-    const [method, setmethod] = useState('transfer');
+    const [method, setmethod] = useState('');
     const [showDialog, setShowDialog] = useState(false)
+    const [showDialogCard, setShowDialogCard] = useState(false)
+    const [request, setRequest] = useState(false)
 
 
-    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) !== null && Ongoing_id_info?.map((item) => item.cleaning) : 0;
-    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup) !== null && Ongoing_id_info?.map((item) => item.pickup) : 0; 
-    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
-    const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
-    const AddService =  proceess === 'succeeded' &&  parseInt(CleaningFee) + parseInt(PickupFee)
-    const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
+    const CleaningFee =   proceess === 'succeeded' ?  Ongoing_id_info[0].cleaning  !== null && Ongoing_id_info[0].cleaning: 0;
+    const PickupFee =   proceess === 'succeeded' ?  Ongoing_id_info[0].pickup  !== null && Ongoing_id_info[0].pickup: 0;
+    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info[0].car_rental !== null && Ongoing_id_info[0].car_rental : 0; 
+    // const DriverFee =    proceess === 'succeeded' ?  Ongoing_id_info?.map((item) => item.driver) !== null && Ongoing_id_info?.map((item) => item.driver) : 0; 
+    const AddService =  proceess === 'succeeded' &&   parseInt(CleaningFee)  + parseInt(PickupFee);
+    // const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
 
 
-    // useEffect(() => {
-    //     if(status === 'succeeded') {
-    //         window.open(payStack?.message?.authorization_url, '_blank')
-    //     }
-    // }, [payStack?.message?.authorization_url]);
 
     const handleBackBtn = () => {
         navigate(-1)
@@ -180,9 +176,7 @@ const OrderSummary = () => {
         if(method === 'transfer' && guestId) {
             setShowDialog(!showDialog)
         } else {
-            if (window.confirm("You're being redirected") === true) {
-                window.open(payStack?.message?.authorization_url, '_blank')
-            }
+            setShowDialogCard(!showDialogCard)
         }
     }
 
@@ -192,6 +186,10 @@ const OrderSummary = () => {
 
     const handleCancel = () => {
         setShowDialog(false)
+    }
+
+    const handleCancelCard = () => {
+        setShowDialogCard(false)
     }
 
     const handleProceed = () => {
@@ -205,6 +203,16 @@ const OrderSummary = () => {
         setShowDialog(false)
     }
 
+    const handleProceedCard = () => {
+        const apartmentId = Ongoing_id_info[0]?.apartment_id;
+        const userId = Ongoing_id_info[0]?.id;
+        const overAll = Ongoing_id_info[0]?.overall_total
+        const guestId = Ongoing_id_info[0]?.guest_id;
+
+        dispatch(PaymentPayStack({apartmentId,guestId, overAll, userId }))
+        setShowDialogCard(false)
+    }
+
     //**** END DIALOG FUNCTIONS*/
 
     //*** RETRIEVE ORDER SUMMARY */
@@ -214,6 +222,24 @@ const OrderSummary = () => {
     }, [dispatch, Id])
 
     //*** END RETRIEVE ORDER SUMMARY */
+
+
+    useEffect(() => {
+        if(status === 'succeeded' && payStack?.message?.authorization_url ) {
+            setRequest(true)
+    } else {
+        setRequest(false)
+    }
+    }, [status, payStack?.message?.authorization_url]);
+
+    useEffect(() => {
+        if(request) {
+            window.open(payStack?.message?.authorization_url, '_blank')
+            setTimeout(() => {
+                navigate('/')
+            }, 3000)
+        }
+    }, [request, payStack?.message?.authorization_url, navigate])
 
 
     if(proceess === 'failed') {
@@ -233,6 +259,15 @@ const OrderSummary = () => {
                 agree="Confirm"
                 handleCancel={handleCancel}
                 handleProceed={handleProceed}
+            />
+            <Dialog 
+                showDialog={showDialogCard} 
+                setShowDialog={setShowDialogCard} 
+                title="You will be redirected to complete your bookings" 
+                disagree="Cancel"
+                agree="Confirm"
+                handleCancel={handleCancelCard}
+                handleProceed={handleProceedCard}
             />
             <Section>
                 <Main>
@@ -260,7 +295,7 @@ const OrderSummary = () => {
                                         {data?.car_rental || data?.driver ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental && 'Car Rental'} </p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarService?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarFee?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ''} 
         
@@ -310,12 +345,12 @@ const OrderSummary = () => {
                                         />
                                     </div>
                                     <div className="labelSecond">
-                                        <Tooltip title="This payment is currently unavailable">
-                                            <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
+                                        {/* <Tooltip title="This payment is currently unavailable"> */}
+                                            <Label htmlFor='paystack' check={method === 'paystack'}>
                                                 {BankTransferIcon}
                                                 <span>Card Payment</span>
                                             </Label>
-                                        </Tooltip>
+                                        {/* </Tooltip> */}
                                         <input 
                                             id="paystack" 
                                             type="radio" 
@@ -324,7 +359,7 @@ const OrderSummary = () => {
                                             checked={method === 'paystack'}
                                             onChange={(e) => setmethod(e.target.value)}
                                             style={{display: 'none'}}
-                                            disabled={true}
+                                            
                                         />
                                     </div>
                                 </div>

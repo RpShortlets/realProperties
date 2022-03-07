@@ -5,7 +5,6 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi"
 import { FlexStyle } from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
 import styled from "styled-components"
-import {Pulse} from "../../../../components/Loader/Spinner"
 import OpenGuestDropdown from "../../../../components/OpenGuestDropdown"
 import { incrementAdult, decrementAdult, incrementChildren, decrementChildren,setShowMobileReserve, setShowMobileReserveModal } from "../../../../redux/actions/componentState"
 import styles from "../../../../styles/home.module.css"
@@ -363,7 +362,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
                         />)}
                         <ReserveButton>
                         {reserve === 'loading' ? (<SkeletonLoader />) :  
-                            (<Button disabled={proceess === 'loading'} disabledBG="var(--linear-primary)" onClicks={Query? handleSubmit : () => dispatch(setShowMobileReserveModal(!showMobileReserveModal))} title={proceess === 'loading' ? <Pulse color="#fff"  size="10px"  loading={proceess}/> : 'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                            (<Button  disabledBG="var(--linear-primary)" onClicks={Query? handleSubmit : () => dispatch(setShowMobileReserveModal(!showMobileReserveModal))} title={'Reserve'} border='none' background='var(--linear-primary)' color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         )}
                         </ReserveButton>
                         <Condition>

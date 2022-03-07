@@ -107,6 +107,7 @@ const Verify = () => {
 
     const {verify, status} = useSelector(state => state.paymentState)
 
+
     const GoBack = () => {
         navigate('/')
     }
@@ -116,7 +117,6 @@ const Verify = () => {
     }, [dispatch, ref])
 
     
-
     return <Section>
         {/* {verify?.message === "PaymentSuccessful" ? ( */}
             <Main>

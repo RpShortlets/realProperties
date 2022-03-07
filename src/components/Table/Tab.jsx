@@ -58,6 +58,8 @@ function EnhancedTableHead(props) {
         onRequestSort(event, property);
     };
 
+    console.log(props.rows)
+
     return (
         <TableHead>
             <TableRow>
@@ -69,11 +71,11 @@ function EnhancedTableHead(props) {
                     sortDirection={orderBy === headcell.id ? order : false}
                 >
                     <TableSortLabel
-                    active={orderBy === headcell.id}
-                    direction={orderBy === headcell.id ? order : 'asc'}
-                    onClick={createSortHandler(headcell.id)}
+                        active={orderBy === headcell.id}
+                        direction={orderBy === headcell.id ? order : 'asc'}
+                        onClick={createSortHandler(headcell.id)}
                     >
-                    {headcell.label}
+                    {headcell.label && headcell.label}
                     {orderBy === headcell.id ? (
                         <Box component="span" sx={visuallyHidden}>
                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -181,6 +183,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                             onRequestSort={handleRequestSort}
                             rowCount={records.length}
                             headcells={headData}
+                            rows={records}
                         />
                         <TableBody>
                         {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -207,17 +210,17 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                                     >
                                         {row?.guest_name}
                                     </TableCell>
-                                    <TableCell align="left">{row?.pymt_reference}</TableCell>
-                                    <TableCell align="left">{row?.check_in}</TableCell>
-                                    <TableCell align="left">{row?.check_out}</TableCell>
-                                    <TableCell align="left">{row?.amount}</TableCell>
-                                    <TableCell align="left">{row?.phone_no}</TableCell>
+                                    {row?.pymt_reference && <TableCell align="left">{row?.pymt_reference}</TableCell>}
+                                    {row?.check_in && <TableCell align="left">{row?.check_in}</TableCell>}
+                                    {row?.check_out && <TableCell align="left">{row?.check_out}</TableCell>}
+                                    {row?.amount && <TableCell align="left">{row?.amount}</TableCell>}
+                                    {row?.phone_no && <TableCell align="left">{row?.phone_no}</TableCell>}
                                     {row?.payment_method &&  <TableCell align="left">{row?.payment_method}</TableCell> }
                                     {row?.platform &&  <TableCell align="left">{row?.platform}</TableCell> }
                                     {row?.payment_time && <TableCell align="left">{row?.payment_time}</TableCell> }
                                     {row?.bdt_user && <TableCell align="left">{row?.bdt_user}</TableCell> }
                                     {row?.bank_transaction_id && <TableCell align="left">{row?.bank_transaction_id}</TableCell> }
-                                    <TableCell align="left">{row?.email}</TableCell>
+                                    {row?.email && <TableCell align="left">{row?.email}</TableCell>}
                                     {row?.status && <TableCell align="left">{row?.status}</TableCell>}
                                 </TableRow>
                             );
