@@ -15,14 +15,10 @@ const PriceBody =  styled.div `
             justify-content: center;
 
             div {
-                display: flex;
+                ${FlexStyle}
                 justify-content: space-between;
                 position: relative;
                 margin: 0.2rem 0;
-
-                /* p:first-child {
-                    text-decoration: underline;
-                } */
             }
 
             p {

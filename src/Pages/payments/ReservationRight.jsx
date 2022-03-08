@@ -75,7 +75,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
 
 
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
-    const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
+    const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: "", title: ''})
     const [value, setValue] = useState(null);
     const [phn, setPhone] = useState("")
     const [validated, setValidated] = useState(false)
