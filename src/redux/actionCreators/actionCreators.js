@@ -144,10 +144,10 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
 //* END OF SAVE CUSTOMER TRANSACTION INFOMATION
 
 //* GET CUSTOMER RECORDS: KYC
-export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value, ongoingId, apartmentId}) => {
+export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}) => {
     const records = {
-        firstname: formdata.firstname?.toLowerCase(), 
-        lastname: formdata.lastname?.toLowerCase(),
+        firstname: usedFirstname, 
+        lastname: usedLastname,
         email: formdata.email?.toLowerCase(),
         phone_no: phn,
         dob: value?.toLocaleDateString('en-CA'),

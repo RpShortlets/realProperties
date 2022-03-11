@@ -194,7 +194,6 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
             if(reserveRef.current) {
                 reserveRef.current.style.position = 'relative'
                 reserveRef.current.style.bottom = '-50%'
-                console.log(window.scrollY)
             }
             
         }else {

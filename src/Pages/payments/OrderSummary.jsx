@@ -12,6 +12,9 @@ import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
 import {motion } from "framer-motion"
 import { BankTransferIcon } from '../../Svg/svg';
+import Checkbox from '../../utils/FormElement/CheckBox';
+import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
+import { setPaystackRequest } from '../../redux/actions/componentState';
 
 
 const Header =  css`
@@ -147,20 +150,20 @@ const OrderSummary = () => {
     const dispatch = useDispatch();
     const Id  = useParams().id;
 
-    const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
-    const {payStack, status} = useSelector(state => state.paymentState)
+    const {proceess, ordersummary: {Ongoing_id_info}, payStack, status} = useSelector(state => state.paymentState)
+    const {paystackRequest} = useSelector(state => state.ComponentState)
     
-    const [method, setmethod] = useState('');
+    const [method, setmethod] = useState('transfer');
     const [showDialog, setShowDialog] = useState(false)
     const [showDialogCard, setShowDialogCard] = useState(false)
-    const [request, setRequest] = useState(false)
+    const [terms, setTerms] = useState({terms: ''})
 
 
-    const CleaningFee =   proceess === 'succeeded' ?  Ongoing_id_info[0].cleaning  !== null && Ongoing_id_info[0].cleaning: 0;
-    const PickupFee =   proceess === 'succeeded' ?  Ongoing_id_info[0].pickup  !== null && Ongoing_id_info[0].pickup: 0;
-    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info[0].car_rental !== null && Ongoing_id_info[0].car_rental : 0; 
+    // const CleaningFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning !== null ? Ongoing_id_info[0]?.cleaning : 0; 
+    // const PickupFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.pickup  !== null ? Ongoing_id_info[0]?.pickup: 0;
+    // const CarFee =   proceess === 'succeeded' ? Ongoing_id_info[0]?.car_rental !== null && Ongoing_id_info[0]?.car_rental : 0; 
     // const DriverFee =    proceess === 'succeeded' ?  Ongoing_id_info?.map((item) => item.driver) !== null && Ongoing_id_info?.map((item) => item.driver) : 0; 
-    const AddService =  proceess === 'succeeded' &&   parseInt(CleaningFee)  + parseInt(PickupFee);
+    // const AddService =  proceess === 'succeeded' &&   parseInt(CleaningFee)  + parseInt(PickupFee);
     // const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
 
 
@@ -169,14 +172,37 @@ const OrderSummary = () => {
         navigate(-1)
     }
 
+    const handleChange = (e) => {
+        const { value, checked, name } = e.target;
+        setTerms({...terms, [name]: checked ? value : ''})
+    }
+
+
+    console.log(method)
     //* HANDLE BUTTON CLICKED: EITHER TRANSFER OR CARD PAYMENT */
     const processPayment = () => {
         const guestId = Ongoing_id_info[0]?.guest_id;
+        console.log('pressed')
 
-        if(method === 'transfer' && guestId) {
-            setShowDialog(!showDialog)
-        } else {
-            setShowDialogCard(!showDialogCard)
+        if(guestId && method === 'transfer' ) {
+            if(terms.terms) {
+                setShowDialog(!showDialog)
+            } else {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please accept the terms and condition to proceed',
+                })
+            }
+        } 
+        else if (guestId && method === 'card') {
+            if(terms.terms) {
+                setShowDialogCard(!showDialogCard)
+            } else {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please accept the terms and condition to proceed',
+                })
+            }
         }
     }
 
@@ -208,7 +234,6 @@ const OrderSummary = () => {
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
         const guestId = Ongoing_id_info[0]?.guest_id;
-
         dispatch(PaymentPayStack({apartmentId,guestId, overAll, userId }))
         setShowDialogCard(false)
     }
@@ -226,20 +251,20 @@ const OrderSummary = () => {
 
     useEffect(() => {
         if(status === 'succeeded' && payStack?.message?.authorization_url ) {
-            setRequest(true)
+            dispatch(setPaystackRequest(true))
     } else {
-        setRequest(false)
+        dispatch(setPaystackRequest(false))
     }
-    }, [status, payStack?.message?.authorization_url]);
+    }, [status, payStack?.message?.authorization_url, dispatch]);
 
     useEffect(() => {
-        if(request) {
+        if(paystackRequest) {
             window.open(payStack?.message?.authorization_url, '_blank')
             setTimeout(() => {
                 navigate('/')
             }, 3000)
         }
-    }, [request, payStack?.message?.authorization_url, navigate])
+    }, [paystackRequest,payStack?.message?.authorization_url, navigate])
 
 
     if(proceess === 'failed') {
@@ -248,15 +273,17 @@ const OrderSummary = () => {
         )
     }
 
+    console.log(paystackRequest)
+
 
     return (
         <>
             <Dialog 
                 showDialog={showDialog} 
                 setShowDialog={setShowDialog} 
-                title="Please note this method require 30mins to make payment" 
+                title="Please note that if payment is not received within 30mins your booking will be cancelled."
                 disagree="Cancel"
-                agree="Confirm"
+                agree="Continue"
                 handleCancel={handleCancel}
                 handleProceed={handleProceed}
             />
@@ -286,16 +313,28 @@ const OrderSummary = () => {
                                                 {proceess === 'loading' ? <SkeletonLoader /> : <span> {data?.total_apartment_price?.toLocaleString()}</span>}
                                             </CardDetails>
                                         )}
-                                        {data?.cleaning || data?.pickup  ? (
+                                        {data?.pickup  ? (
                                             <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning|| data?.pickup  ? 'Additional Services' : ''}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : AddService?.toLocaleString()}</span>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup  ? 'Pickup Fee' : ''}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ""}
-                                        {data?.car_rental || data?.driver ? (
+                                        {data?.cleaning ? (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning  ? 'Cleaning Fee' : ''}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        ): ""}
+                                        {data?.car_rental ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental && 'Car Rental'} </p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarFee?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        ): ''} 
+                                        {data?.driver ? (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver && 'Driver'} </p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ''} 
         
@@ -362,6 +401,10 @@ const OrderSummary = () => {
                                             
                                         />
                                     </div>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', marginBottom: 'max(2vw, 1.2rem)'}}>
+                                    <p style={{margin: '0 0 0 max(1vw, .6rem)', order: '2', fontSize: 'var(--font-small)'}}>I agree to the <a href="/terms" target="_blank" style={{color: 'var(--color-primary)', textDecoration: 'underline !important'}}>terms and condition</a></p>
+                                    <Checkbox name="terms"  margin="0" checkboxes={terms.terms} handleChange={handleChange} />
                                 </div>
                                 <div style={{display: 'flex'}}>
                                     <div style={{flex: '1'}}>

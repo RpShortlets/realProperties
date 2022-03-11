@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react"
+import {useState, useRef, useEffect, useMemo} from "react"
 import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
@@ -246,10 +246,12 @@ const PropertyDetails = () => {
 
         if(Query) {
             if(checkInD !==  '' && checkOutD !== '') {
+               
                 dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                 setShowModal(true)
                 setshow(false)
-            } else {
+            }
+            else {
                 OpenNotificationWithIcon({
                     message: 'Please select check in and check out date',
                     type: 'warning',
@@ -257,10 +259,13 @@ const PropertyDetails = () => {
             }
         } else {
             if(checkInD !==  '' && checkOutD !== '') {
-                dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-                navigate('/reservation')
-                setshow(false)
-            } else {
+                
+                    dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+                    navigate('/reservation')
+                    setshow(false)
+                }
+                
+            else {
                 OpenNotificationWithIcon({
                     message: 'Please select check in and check out date',
                     type: 'warning',
@@ -295,15 +300,15 @@ const PropertyDetails = () => {
     //!DEPENDING ISSUE
 
     useEffect(() => {
-        dispatch(ShortletDetails({checkInD, checkOutD, Id})) 
-    },  [checkInD,checkOutD, Id, dispatch])
+        dispatch(ShortletDetails({checkInD, checkOutD, Id}))
+    },  [checkInD,checkOutD, Id, dispatch, checkInDate, checkOutDate])
     
     
-    useEffect(() => {
+    useMemo(() => {
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
         navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
 
-    }, [dispatch, checkInDate, navigate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+    }, [dispatch, navigate, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
 
     const date1 = new Date(checkInD);
     const date2 = new Date(checkOutD);

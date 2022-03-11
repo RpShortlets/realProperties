@@ -11,6 +11,7 @@ import ImageSix from "../../image/small/picSix.jpeg"
 import Car from "../../image/car.webp"
 import Video from "../../image/video.webp"
 import Apartment from "../../image/apartment.webp"
+import Exp from "../../image/exp.webp"
 import { motion } from "framer-motion"
 import { useNavigate } from 'react-router-dom';
 
@@ -60,8 +61,8 @@ const Background = [
     },
     {
         id: 4,
-        image: Car,
-        title: 'Cars'
+        image: Exp,
+        title: 'Experience'
     },
     
 ]

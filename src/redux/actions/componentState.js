@@ -17,7 +17,8 @@ export const ComponentState = createSlice({
         openDrawer: false,
         showMobileReserveButton: false,
         showMobileReserveModal: false,
-        listDates: []
+        listDates: true,
+        paystackRequest: false,
     }, 
     reducers: {
         incrementAdult: (state) => {
@@ -77,13 +78,17 @@ export const ComponentState = createSlice({
             state.showMobileReserveModal = action.payload
         },
         setListDates: (state, action) => {
-            state.listDates =  state.listDates.concat(action.payload)
+            state.listDates =  action.payload
+        },
+        setPaystackRequest: (state, action) => {
+            state.paystackRequest = action.payload
         }
+
 
     },
     extraReducers: {}
 })
 
-export const { checkScrollState, setListDates, setOpenDrawer, setShowMobileReserve, setShowMobileReserveModal, newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
+export const { checkScrollState, setListDates, setOpenDrawer, setPaystackRequest, setShowMobileReserve, setShowMobileReserveModal, newUnformattedDates,saveSearchValue,incrementAdult, decrementAdult, incrementChildren, decrementChildren, totalGuest, resetCounts, changeText, DefaultText, checkInDate, checkOutDate, newCheckInDate, newCheckOutDate  } = ComponentState.actions;
 
 export default ComponentState.reducer

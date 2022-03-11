@@ -1,7 +1,7 @@
-export const CustomLeftArrowButton = () => {
-    return (
-        <>
-            <Button title="Previous" icon={<AiOutlineCamera />} />
-        </>
-    )
-}
+// export const CustomLeftArrowButton = () => {
+//     return (
+//         <>
+//             <Button title="Previous" icon={<AiOutlineCamera />} />
+//         </>
+//     )
+// }

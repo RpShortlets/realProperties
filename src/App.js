@@ -2,6 +2,7 @@ import { useEffect, Suspense } from "react"
 import {Footer, Nav} from "./export"
 import { useLocation } from "react-router-dom"
 import {Helmet} from "react-helmet"
+import { useDispatch } from 'react-redux'
 import ReactGa from 'react-ga';
 import { Clip } from "./components/Loader/Spinner";
 import TawkTo from 'tawkto-react'
@@ -11,9 +12,11 @@ import useMediaQuery from "./hooks/useMediaQuery/useMediaQuery";
 import ScrollToTop from "./scrollTop"
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { CheckToken } from './hooks/useCheckToken/useCheckToken';
+import { setPaystackRequest } from "./redux/actions/componentState"
 
 
 const App = () => {
+  const dispatch = useDispatch()
   const user = JSON.parse(localStorage.getItem('admin'))
   const location = useLocation();
   const isLoggedIn = user ? true : false;
@@ -39,13 +42,14 @@ const App = () => {
     const propertyId = '61e52988b84f7301d32b5faf'
     const tawk = new TawkTo(propertyId, tawkId)
 
-    tawk.onStatusChange((status) => 
-    {
-        // console.log(status)
-  
-    })
-
+    tawk.onStatusChange((status) => {})
   }, [])
+
+  useEffect(() => { 
+    if (location.pathname === "/" || '/reservation') {
+      dispatch(setPaystackRequest(false))
+    }
+  }, [location, dispatch])
 
   return (
     <>

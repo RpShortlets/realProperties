@@ -11,7 +11,6 @@ import  "../../styles/utilities.css"
 import MuiDateRangePickerDay from "@mui/lab/DateRangePickerDay";
 import { styled } from "@mui/material/styles";
 import '../../styles/utilities.css'
-import { OpenNotificationWithIcon } from '../Notification/Notification';
 
 
 
@@ -49,8 +48,9 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
 
 
     const {PropertyDetails: {booked_dates, temp_booked_dates}} = useSelector(state => state.propertyDetails)
-    const {useCheckInDate, useCheckOutDate} = useSelector(state => state.ComponentState)
+    const {useCheckInDate, useCheckOutDate, checkInDate: checksIN, checkOutDate: checksOUT} = useSelector(state => state.ComponentState)
     const [value, setValue] = React.useState([null, null]);
+
 
     //*  GET DATES VALUE AND CONVERT TO US AND CANADA DATES
     var options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
@@ -69,10 +69,11 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     
     //* GET DATES BTW THE CHECK IN AND OUT CALANDER
     const listDate = []
-    const startDate = checkins;
-    const endDate = checkouts;
+    const startDate = checkins ? checkins : checksIN ? checksIN : null;
+    const endDate = checkouts ? checkouts : checksOUT ? checksOUT : null;
     const dateMove = new Date(startDate);
     let strDate = startDate;
+
 
     while (strDate < endDate) {
         strDate = dateMove.toISOString().slice(0, 10);
@@ -83,10 +84,15 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
     
     const intersection = listDate?.filter(element => dates?.includes(element));
     
-    React.useEffect(() => {
+    //! MAIN FUNCTION
+    React.useMemo(() => {
+        //* ONLY RUN WHEN DISABLEBOOK IS TRUE
         if(disablebooked) {
+            //* CHECK IF BOOKED IS AMONG THE DATES
             if(!intersection?.length > 0) {
+                //* CHECK IS CHECKIN AND OUT ARE PRESENT
                 if(checkins && checkouts) {
+                    // dispatch(setListDates(false))
                     dispatch(checkInDate(checkins))
                     dispatch(checkOutDate(checkouts))
                     dispatch(newCheckInDate(useCheckinDate))
@@ -94,15 +100,16 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
                 }
             }
             else {
+                // dispatch(setListDates(true))  
                 setValue([null, null])
                 dispatch(checkInDate(null))
                 dispatch(checkOutDate(null))
                 dispatch(newCheckInDate(null))
                 dispatch(newCheckOutDate(null)) 
-                OpenNotificationWithIcon({
-                    message: 'You cannot select a date that has been booked',
-                    type: 'warning'
-                })
+                // OpenNotificationWithIcon({
+                //     message: 'You cannot select a date that has been booked',
+                //     type: 'warning'
+                // })
             }
         } else {
             if(checkins && checkouts) {
@@ -114,7 +121,18 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
         }
 
 
-    }, [value, dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, intersection, disablebooked])
+    }, [dispatch, checkins, checkouts, useCheckinDate, useCheckoutDate, intersection, disablebooked])
+
+    //*  CHECK IF BOOKED DATES IS AMONG THE CHECK IN AND OUT DATES. TO DISABLE THE RESERVE BUTTON 
+    // React.useEffect(() => {
+    //     if(!intersection.length > 0){
+    //         if((checkins && checkouts) || (useCheckinDate && useCheckoutDate)) {
+    //             dispatch(setListDates(false))
+    //         }
+    //     } else {
+    //         dispatch(setListDates(true))   
+    //     }
+    // }, [dispatch, intersection, checkins, checkouts, useCheckinDate, useCheckoutDate])
 
     const renderWeekPickerDay = (date, dateRangePickerDayProps) => {
         return <DateRangePickerDay {...dateRangePickerDayProps} />;

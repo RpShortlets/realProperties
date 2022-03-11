@@ -4,7 +4,7 @@ import {AdminContainer, AdminHeader } from "../../../styles/globalStyles"
 import Button from "../../../components/Button/Button"
 import { UpdateBooking, GetPropertyInfoAdmin } from '../../../redux/actionCreators/actionCreators';
 import { OpenNotificationWithIcon } from '../../../components/Notification/Notification';
-
+import Agent from "../../../Pages/payments/components/Agent"
 
 import { useDispatch, useSelector } from 'react-redux';
 // import { Clip } from "../../../components/Loader/Spinner";
@@ -37,17 +37,18 @@ const H1 = styled.h1 `
 `
 
 const apart = ['1', '2']
-const plat = ['AirBnB', 'Hotelsng']
+const plat = ['AirBnB', 'Hotelsng', 'Bookings', 'Agency', 'Referral', 'Others']
 
 const UpdateBookings = () => {
     const dispatch = useDispatch()
     const data = JSON.parse(localStorage.getItem('admin'))
-    const {status,  apartmentInfo: {price}, updateBooks, bookings} = useSelector(state => state.adminDashboard);
+    const {status,  apartmentInfo: updateBooks, bookings} = useSelector(state => state.adminDashboard);
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
 
 
     const [formdata, setFormData] = useState({amountPaid: '', firstname: '', lastname: '', email: '', referenceId: '', transactionId:''})
     const [dropdown, setDropdown] = useState({apartment: "", platform:''})
+    const [agentPhn, setAgentPhn] = useState("")
     const [phn, setPhone] = useState('')
     const [listNum, setlistNum] = useState(0)
     // const [totalPrice, setTotalPrice] = useState(0)
@@ -140,7 +141,7 @@ const UpdateBookings = () => {
                 message: 'Booking Successful',
                 type: 'success'
             })
-            setFormData({amountPaid: '', firstname: '', lastname: '', email: '', referenceId: '', transactionId:''})
+            setFormData({amountPaid: '', firstname: '', lastname: '', email: '', referenceId: '', transactionId:'', agentName: '', agentContact: ''})
             setDropdown({apartment: "", platform:''})
             setPhone(null)
             // setTotalPrice(0)
@@ -172,7 +173,12 @@ const UpdateBookings = () => {
                         <Input className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={formdata.amountPaid} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         <Input className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         <Input className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <InputSelect className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Plaform"  />
+                        <InputSelect className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Platform"  />
+                        {dropdown.platform === 'Agency' && (
+                            <div>
+                                <Agent  setAgentPhn={setAgentPhn} agentPhn={agentPhn} formdata={formdata} setFormData={setFormData} />
+                            </div>
+                        )}
                         <div>
                             <Button disabled={bookings === 'loading'} background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={bookings === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={bookings==="loading"}/> : 'Confirm booking'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         </div>

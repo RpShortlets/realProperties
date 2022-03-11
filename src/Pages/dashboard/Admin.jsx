@@ -110,6 +110,7 @@ const SideBar = styled.div `
     @media screen and (min-width: 769px) {
         display: block;
         grid-column:1 / 2;
+        position: fixed;
     }
 `
 
@@ -269,7 +270,7 @@ const Admin = () => {
                         setState={setState}
                     />
                 </div>
-                <Main height={ pending || deleted || complains ? '100vh' : '100%'}>
+                <Main height={ pending || complains ? '100vh' : '100%'}>
                     <SideBar>
                         {/* <div className='adminLogo'>
                             {CompanyLogo}

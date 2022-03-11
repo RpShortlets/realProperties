@@ -58,7 +58,7 @@ function EnhancedTableHead(props) {
         onRequestSort(event, property);
     };
 
-    console.log(props.rows)
+
 
     return (
         <TableHead>
