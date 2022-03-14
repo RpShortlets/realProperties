@@ -270,7 +270,7 @@ const Admin = () => {
                         setState={setState}
                     />
                 </div>
-                <Main height={ pending || complains ? '100vh' : '100%'}>
+                <Main height={ complains ? '100vh' : '100%'}>
                     <SideBar>
                         {/* <div className='adminLogo'>
                             {CompanyLogo}

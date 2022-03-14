@@ -22,6 +22,7 @@ import {useValidate, useValidateId, useValidateLast} from "../../hooks/useValida
 import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 import { Capitalize } from "../../hooks/useCapitalize/useCapitalize"
+import { useCalculateAge } from "../../hooks/useCalculateAge/useCalculateAge"
 
 
 const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others'];
@@ -90,6 +91,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const [checkboxes, setCheckboxes] = useState({agent: false})
     const [checkbox, setcheckbox] = useState({individual: false})
 
+    const age = useCalculateAge(value)
 
     const boxed = checkboxes.agent || checkbox.individual ? true : false;
     const name = formdata.firstname 
@@ -97,6 +99,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const Idnum = formdata.idnumber
     const {usedName: usedFirstname} = Capitalize(name)
     const {usedName: usedLastname} = Capitalize(lastname)
+
 
 
     const {validatedName} = useValidate({name, focus})
@@ -160,13 +163,13 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(dropdown.title && validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber && boxed ) {
+        if(dropdown.title && validatedName && validatedLastName && dropdown.gender && validated && phn && age >= 18 && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber && boxed ) {
             if(checkboxes.agent) {
                 if(formdata.agentName && agentPhn) {
-                    dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}))
+                    dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId, agentPhn}))
                     navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
                 } else {
-                    if(!formdata.agentNam) {
+                    if(!formdata.agentName) {
                         OpenNotificationWithIcon({
                             type: 'warning',
                             message: 'Please enter agent name',
@@ -190,25 +193,19 @@ const ReservationRight = ({setShowModal, proceess}) => {
             if(!dropdown.title) {
                 OpenNotificationWithIcon({
                     type: 'warning',
-                    message: 'Please select your title',
+                    message: 'Please select title',
                 })
             }
-            else if(!focus) {
+            else if(!formdata.firstname ) {
                 OpenNotificationWithIcon({
                     type: 'warning',
-                    message: 'Please enter your first name',
+                    message: 'Please enter first name',
                 })
             }
-            else if(!focusLast) {
+            else if(!formdata.lastname) { 
                 OpenNotificationWithIcon({
                     type: 'warning',
-                    message: 'Please enter your last name',
-                })
-            }
-            else if(!validated) {
-                OpenNotificationWithIcon({
-                    type: 'warning',
-                    message: 'Please enter your email',
+                    message: 'Please enter last name',
                 })
             }
             else if(!dropdown.gender) {
@@ -216,18 +213,25 @@ const ReservationRight = ({setShowModal, proceess}) => {
                     type: 'warning',
                     message: 'Please select your gender',
                 })
+                
             }
-            else  if(!phn) {
+            else if(!validated) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter a valid email address',
+                })
+            }
+            else if(!phn) {
                 OpenNotificationWithIcon({
                     type: 'warning',
                     message: 'Please enter a valid phone number',
                 })
             }
-            else if(!value) {
+            else if(!value || age <= 18 ) {
                 OpenNotificationWithIcon({
                     type: 'warning',
-                    message: 'Please enter a valid date of birth',
-                })   
+                    message: 'Age must be 18 or above',
+                })
             }
             else if(!dropdown.nationality) {
                 OpenNotificationWithIcon({
@@ -241,18 +245,12 @@ const ReservationRight = ({setShowModal, proceess}) => {
                     message: 'Please select your identification',
                 })
             }
-            else if(!validatedID || formdata.idnumber.length > 8) {
+            else if(!formdata.idnumber) {
                 OpenNotificationWithIcon({
                     type: 'warning',
-                    message: 'Please enter a valid ID number',
-                })
-            } else {
-                OpenNotificationWithIcon({
-                    type: 'warning',
-                    message: 'Please enter all fields',
+                    message: 'Please enter your id number',
                 })
             }
-            
         }
 
     }

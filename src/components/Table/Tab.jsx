@@ -12,13 +12,20 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import styled from 'styled-components';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
 import { visuallyHidden } from '@mui/utils';
 
+const TableCellss = styled(TableCell)`
+    color: ${({color}) => color } !important;
+`
 
+const TableRows = styled(TableRow)`
+    background-color: ${({background}) => background};
+`
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -166,6 +173,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - records?.length) : 0;
 
+    console.log(records?.customer_payment_confirmation)
     return (
         <Box sx={{ width: '100%' }} style={{ height: '100%'}}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -192,37 +200,111 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                             const labelId = `enhanced-table-checkbox-${index}`;
+                            console.log(row?.customer_payment_confirmation)
 
                             return (
-                                <TableRow
+                                <TableRows
                                     hover
                                     onClick={onClicks ? () => onClicks(row?.pending_id) : console.log('')}
                                     tabIndex={-1}
                                     key={row?.pending_id}
-                                    
+                                    background={row?.customer_payment_confirmation === 'payment confirmed' ? "#8BDB81" : "#fff"}
                                 >
                                 
-                                    <TableCell
+                                    <TableCellss
                                         component="th"
                                         id={labelId}
                                         scope="row"
                                         padding="none"
+                                        color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                     >
                                         {row?.guest_name}
-                                    </TableCell>
-                                    {row?.pymt_reference && <TableCell align="left">{row?.pymt_reference}</TableCell>}
-                                    {row?.check_in && <TableCell align="left">{row?.check_in}</TableCell>}
-                                    {row?.check_out && <TableCell align="left">{row?.check_out}</TableCell>}
-                                    {row?.amount && <TableCell align="left">{row?.amount}</TableCell>}
-                                    {row?.phone_no && <TableCell align="left">{row?.phone_no}</TableCell>}
-                                    {row?.payment_method &&  <TableCell align="left">{row?.payment_method}</TableCell> }
-                                    {row?.platform &&  <TableCell align="left">{row?.platform}</TableCell> }
-                                    {row?.payment_time && <TableCell align="left">{row?.payment_time}</TableCell> }
-                                    {row?.bdt_user && <TableCell align="left">{row?.bdt_user}</TableCell> }
-                                    {row?.bank_transaction_id && <TableCell align="left">{row?.bank_transaction_id}</TableCell> }
-                                    {row?.email && <TableCell align="left">{row?.email}</TableCell>}
-                                    {row?.status && <TableCell align="left">{row?.status}</TableCell>}
-                                </TableRow>
+                                    </TableCellss>
+                                    {row?.pymt_reference && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.pymt_reference}
+                                        </TableCellss>}
+                                    {row?.check_in && 
+                                        <TableCellss 
+                                            align="left" 
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.check_in}
+                                        </TableCellss>}
+                                    {row?.check_out && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.check_out}
+                                        </TableCellss>}
+                                    {row?.amount && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.amount}
+                                        </TableCellss>}
+                                    {row?.phone_no && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.phone_no}
+                                        </TableCellss>}
+                                    {row?.payment_method &&  
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.payment_method}
+                                        </TableCellss> }
+                                    {row?.platform &&  
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.platform}
+                                        </TableCellss> }
+                                    {row?.payment_time && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.payment_time}
+                                        </TableCellss> }
+                                    {row?.bdt_user && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.bdt_user}
+                                        </TableCellss> }
+                                    {row?.bank_transaction_id && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.bank_transaction_id}
+                                        </TableCellss> }
+                                    {row?.email && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.email}
+                                        </TableCellss>}
+                                    {row?.status && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.status}
+                                        </TableCellss>}
+                                </TableRows>
                             );
                             })}
                             {emptyRows > 0 && (

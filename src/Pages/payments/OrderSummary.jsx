@@ -178,13 +178,10 @@ const OrderSummary = () => {
     }
 
 
-    console.log(method)
     //* HANDLE BUTTON CLICKED: EITHER TRANSFER OR CARD PAYMENT */
     const processPayment = () => {
-        const guestId = Ongoing_id_info[0]?.guest_id;
-        console.log('pressed')
 
-        if(guestId && method === 'transfer' ) {
+        if(method === 'transfer' ) {
             if(terms.terms) {
                 setShowDialog(!showDialog)
             } else {
@@ -194,9 +191,11 @@ const OrderSummary = () => {
                 })
             }
         } 
-        else if (guestId && method === 'card') {
+        else {
+            console.log('Paystack2', terms)
             if(terms.terms) {
-                setShowDialogCard(!showDialogCard)
+                console.log('Paystack', terms)
+                setShowDialogCard(true)
             } else {
                 OpenNotificationWithIcon({
                     type: 'warning',
@@ -259,10 +258,11 @@ const OrderSummary = () => {
 
     useEffect(() => {
         if(paystackRequest) {
-            window.open(payStack?.message?.authorization_url, '_blank')
-            setTimeout(() => {
-                navigate('/')
-            }, 3000)
+            window.location.href = payStack?.message?.authorization_url
+            // (payStack?.message?.authorization_url)
+            // setTimeout(() => {
+            //     navigate('/')
+            // }, 3000)
         }
     }, [paystackRequest,payStack?.message?.authorization_url, navigate])
 
@@ -273,7 +273,7 @@ const OrderSummary = () => {
         )
     }
 
-    console.log(paystackRequest)
+
 
 
     return (
@@ -411,7 +411,7 @@ const OrderSummary = () => {
                                         <Button onClicks={handleBackBtn}  fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="8px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                     <div style={{flex: '2'}}>
-                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="8px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button fontWeight='600' disabled={!terms.terms || proceess === 'loading'} width="100%" onClicks={processPayment} borderRadius="8px" disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                 </div>
                             </Card>

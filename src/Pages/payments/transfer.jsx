@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
@@ -8,7 +8,7 @@ import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { ManualCancel, ExpiredBooking } from '../../redux/actionCreators/actionCreators';
+import { ManualCancel, ExpiredBooking, ManualReceive } from '../../redux/actionCreators/actionCreators';
 import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import Dialog from "../../components/Dialog/Dialog"
@@ -142,19 +142,23 @@ const Transfer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const Query = useMediaQuery("(min-width: 669px)")
-    const {manualTransfer: {payment_details, pending_id, transaction_info, time }, status, manualTransfer} = useSelector(state => state.paymentState);
+    const {manualTransfer: {payment_details, pending_id, transaction_info, time, maxId }, status, manualTransfer} = useSelector(state => state.paymentState);
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
     const expiredTime =  status === 'succeeded' && time[0]?.expired_time;
 
     const [copied, setCopied] = useState("")
     const [showDialog, setShowDialog] = useState(false)
     const [openModal, setOpenModal] = useState(false)
+    const [statusDialog, setStatusDialog] = useState(false)
+    const [ReceiveTime, setReceiveTime] = useState(false)
     const [checkboxes, setCheckboxes] = useState({alertReceived: false})
     const [checkbox, setcheckbox] = useState({noAlert: false})
     
     var distance = new Date(expiredTime)?.getTime() - new Date().getTime();
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const [countDown, setCountDown] = useState(minutes)
+
+    const customerRes = checkboxes?.alertReceived ? 'payment confirmed' : 'payment not confirmed';
 
 
     const handleChange = (e) => {
@@ -210,6 +214,33 @@ const Transfer = () => {
         
     }
 
+    const handleStatus = () => {
+        setStatusDialog(true)
+    }
+
+    const handleImadeReceive = () => {
+        dispatch(ManualReceive({maxId, customerRes}))
+        setStatusDialog(false)
+        setOpenModal(false)
+        setReceiveTime(true)
+        // navigate('/');
+    }
+
+    const handleINotReceive = () => {
+        dispatch(ManualReceive({maxId, customerRes}))
+        setStatusDialog(false)
+        setOpenModal(false)
+        setReceiveTime(true)
+        // navigate('/');
+    }
+
+    useEffect(() =>{
+        if(ReceiveTime) {
+            setTimeout(() => {
+                navigate('/');
+            }, 3000)
+        } 
+    }, [ReceiveTime, navigate])
 
     if(status === 'failed') {
         return (
@@ -220,11 +251,20 @@ const Transfer = () => {
     
     return (
         <>
+            <Dialog 
+                showDialog={statusDialog} 
+                setShowDialog={setStatusDialog} 
+                title="Your request will be process and we will notify you when your booking is confirmed"
+                disagree="Cancel"
+                agree="Continue"
+                handleCancel={handleINotReceive}
+                handleProceed={handleImadeReceive}
+            />
             <Modal show={openModal} top='40vh' height= "fit-content" transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-white)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "50%" : '90%'} >
                 <ModalContent>
                     <div>
-                        <Checkbox marginLabel="0 0 0 max(1.2vw, .9rem)" name="alertReceived" order="2" justify="flex-start" checkboxes={checkboxes.alertReceived} handleChange={handleChange} label="I already received alert for my payment" />
-                        <Checkbox marginLabel="0 0 0 max(1.2vw, .9rem)" name="noAlert" order="2" justify="flex-start" checkboxes={checkbox.noAlert} handleChange={handleBox} label="I am yet to receive alert" />
+                        <Checkbox marginLabel="0 0 0 max(1.2vw, .5rem)" name="alertReceived" order="2" justify="flex-start" checkboxes={checkboxes.alertReceived} handleChange={handleChange} label="I already received alert for my payment" />
+                        <Checkbox marginLabel="0 0 0 max(1.2vw, .5rem)" name="noAlert" order="2" justify="flex-start" checkboxes={checkbox.noAlert} handleChange={handleBox} label="I am yet to receive alert" />
                         <div style={{display: 'flex', justifyContent:'center', marginTop: '2rem'}}>
                             <Button  
                                 title="Send" 
@@ -236,6 +276,7 @@ const Transfer = () => {
                                 display="flex" 
                                 justify="center" 
                                 alignT="center" 
+                                onClicks={handleStatus}
                             />
                         </div>
                     </div>

@@ -14,7 +14,7 @@ const Box =styled.div `
 const Label = styled.label `
     font-size: var(--font-small-screen);
     order: ${({order}) => order };
-     
+    margin: ${({margin}) => margin};
 
     @media (min-width: 768px) { 
         order: ${({order}) => order };

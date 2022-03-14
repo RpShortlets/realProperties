@@ -252,10 +252,6 @@ a:hover {
     align-items: baseline !important;
 }
 
-.css-1ex1afd-MuiTableCell-root { 
-    background-color: var(--color-secondary);
-}
-
 .MuiTableCell-root .MuiTableCell-body .MuiTableCell-sizeMedium .css-1ex1afd-MuiTableCell-root {
     background-color: transparent !important;
 }

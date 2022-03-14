@@ -87,6 +87,8 @@ const Pending = ({handleCompletedBooking}) => {
         )
     }
 
+
+
     return <Wrapper>
         {pending === 'loading' ? (
             <div style={{height: '100vh', position: 'relative', margin: '1rem'}}>

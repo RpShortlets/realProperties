@@ -130,7 +130,7 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         car_rental: carPrice,
         driver: driver,
         security_deposit: security,
-        overall_total: totalPrice,
+        overall_total: 10,
         check_in_date: checkInDate,
         check_out_date: checkOutDate
     }
@@ -144,7 +144,7 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
 //* END OF SAVE CUSTOMER TRANSACTION INFOMATION
 
 //* GET CUSTOMER RECORDS: KYC
-export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}) => {
+export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId, agentPhn}) => {
     const records = {
         firstname: usedFirstname, 
         lastname: usedLastname,
@@ -155,7 +155,10 @@ export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustom
         mode_of_identification: dropdown.identification,
         identification_no: formdata.idnumber,
         apartment_id: apartmentId,
-        ongoing_id: ongoingId
+        ongoing_id: ongoingId,
+        title: dropdown.title,
+        agent_name: formdata.agentName,
+        agent_phone_no: agentPhn,
     }
     
     const response = await axios.post(`${BaseURL}/customer`, records);
@@ -166,11 +169,11 @@ export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustom
 
 //* RETRIEVE CUSTOMER TRANSACTION 
 export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async ({Id}) => {
-    const formdat = {
-        ongoing_id: parseInt(Id),
-    }
-    
-    const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);
+    const response = await axios.get(`${BaseURL}/retreive-transaction`, {
+        params: {
+            ongoing_id: parseInt(Id),
+        }
+    });
     return response.data;
 });
 //* END OF RETRIEVE CUSTOMER TRANSACTION
@@ -191,6 +194,17 @@ export const ManualPay = createAsyncThunk("payment/manualPay", async ({apartment
 
 });
 
+
+
+export const ManualReceive = createAsyncThunk("payment/manualreceive", async ({maxId, customerRes }) => {
+    const formdat = {
+        max_id: maxId,
+        cust_confirmation: customerRes
+    }
+    
+    const response = await axios.post(`${BaseURL}/set-customer-pymt-confirmation`, formdat);
+    return response.data;
+});
 
 export const ManualCancel = createAsyncThunk("payment/manualCancel", async ({pendingId }) => {
     const formdat = {
