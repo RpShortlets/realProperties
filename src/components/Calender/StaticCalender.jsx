@@ -103,7 +103,7 @@ const StaticCalender = ({status, calendars, disablebooked, type}) => {
                     dispatch(checkInDate(checkins))
                     dispatch(checkOutDate(newCheckout))
                     dispatch(newCheckInDate(useCheckinDate))
-                    dispatch(newCheckOutDate(useCheckoutDate))
+                    dispatch(newCheckOutDate(newCheckout))
                 } else {
                     if(checkins && checkouts) {
                         dispatch(checkInDate(checkins))
