@@ -127,7 +127,7 @@ const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenG
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Adults</h3>
-                                <span>Ages 18 and above</span>
+                                <span>Ages 12 and above</span>
                             </div>
                             <div>
                                 <div className="adultButton">
@@ -157,7 +157,7 @@ const OpenGuestDropdown = ({DisabledChild, AllowAdult, width,left, top, setOpenG
                         <AdultDiv>
                             <div style={{color: 'var(--color-primary)'}}>
                                 <h3>Children</h3>
-                                <span>Age 0 - 1</span>
+                                <span>Age 0 - 12</span>
                             </div>
                             <div>
                                 <div className="adultButton">

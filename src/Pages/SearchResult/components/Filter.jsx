@@ -143,8 +143,6 @@ const GuestClick = styled.div `
 const FilterComponent = ({showCalender, setShowCalender, openModal, setOpenModal, value, myRef, handleOption, handleGuest, guest, setguest, TotalGuest,MinusAdult, MinusChildren, AddAdult, AddChildren, handlesubmit, countAddChild, countMinusChild, countAdultMinus, countAdultAdd, styles }) => {
     const {adultcount, childrencount, useCheckInDate, useCheckOutDate, searchValue} = useSelector(state => state.ComponentState)
 
-    
-
     const searchDayIn = useCheckInDate?.split(',')[0];
     const seacrhMonthIn = useCheckInDate?.split(',')[1]?.slice(0, 4);
     const searchYearIn = useCheckInDate?.split(',')[2]

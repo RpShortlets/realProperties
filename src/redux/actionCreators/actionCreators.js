@@ -60,14 +60,14 @@ export const filter = createAsyncThunk("shortlet/filter", async ({startprice,end
 //* END OF SEARCH BOOKINGS
 
 //* GET APARTMENT DETAILS
-export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInD,checkOutD, apartment_id, Id}) => {
+export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInDate,checkOutDate, apartment_id, Id}) => {
     
     const response = await axios.get(`${BaseURL}/shortlet-details`,
     {
         params: {
-            property_id: Id || apartment_id,
-            check_in: checkInD,
-            check_out: checkOutD,
+            property_id: Id,
+            check_in: checkInDate,
+            check_out: checkOutDate,
         }
     });
     return response.data;

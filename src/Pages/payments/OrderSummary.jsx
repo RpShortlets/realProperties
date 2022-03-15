@@ -258,7 +258,7 @@ const OrderSummary = () => {
 
     useEffect(() => {
         if(paystackRequest) {
-            window.location.href = payStack?.message?.authorization_url
+            window.open(payStack?.message?.authorization_url, '_self')
             // (payStack?.message?.authorization_url)
             // setTimeout(() => {
             //     navigate('/')

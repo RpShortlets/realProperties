@@ -120,6 +120,7 @@ const SearchResult = () => {
     const navigate = useNavigate()
     const {location, adults, children, checkIn, checkOut,} = useParams();
 
+
     //! NEED TO FIX THE REPLICA OF THIS CODE IN THE NAV BAR
     const searchV = location?.slice(9)
     const adult = adults?.slice(7) === 'null' ? '' : adults?.slice(7)
