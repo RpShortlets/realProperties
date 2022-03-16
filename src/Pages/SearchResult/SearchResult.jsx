@@ -317,7 +317,7 @@ const SearchResult = () => {
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Error height='60vh' title="Oops! We can’t find any property that matches your search but we provided recommendation" Icon={SearchNotFoundIcon} />
+                                                        <Error height='60vh' title={`No property available between ${checkI} and ${checkO} for your search. Please check other dates.`} Icon={SearchNotFoundIcon} />
                                                         {/* <Scrollable title="Recommendations of nearby shortlets" data={RecommendationData}/> */}
                                                     </>
                                                 )}

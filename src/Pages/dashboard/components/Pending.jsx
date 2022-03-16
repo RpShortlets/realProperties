@@ -11,6 +11,7 @@ import { Error404Icon } from '../../../Svg/svg';
 
 const Wrapper = styled.div `
     ${AdminContainer}
+    height: auto !important;
 `
 
 const H1 = styled.h1 `
@@ -34,13 +35,13 @@ const headcells = [
         id: 'Check-in',
         numeric: true,
         disablePadding: false,
-        label: 'Check-in',
+        label: 'In',
     },
     {
         id: 'Check-out',
         numeric: true,
         disablePadding: false,
-        label: 'Check-out',
+        label: 'Out',
     },
     {
         id: 'Amount',
@@ -52,7 +53,7 @@ const headcells = [
         id: 'Phone number',
         numeric: true,
         disablePadding: false,
-        label: 'Phone number',
+        label: 'Phone No',
     },
     {
         id: 'Email',
