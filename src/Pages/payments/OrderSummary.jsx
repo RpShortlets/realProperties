@@ -150,7 +150,7 @@ const OrderSummary = () => {
     const dispatch = useDispatch();
     const Id  = useParams().id;
 
-    const {proceess, ordersummary: {Ongoing_id_info}, payStack, status} = useSelector(state => state.paymentState)
+    const {proceess, ordersummary: {Ongoing_id_info, apartmentName}, payStack, status} = useSelector(state => state.paymentState)
     const {paystackRequest} = useSelector(state => state.ComponentState)
     
     const [method, setmethod] = useState('transfer');
@@ -158,6 +158,8 @@ const OrderSummary = () => {
     const [showDialogCard, setShowDialogCard] = useState(false)
     const [terms, setTerms] = useState({terms: ''})
 
+
+    console.log(apartmentName)
 
     // const CleaningFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning !== null ? Ongoing_id_info[0]?.cleaning : 0; 
     // const PickupFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.pickup  !== null ? Ongoing_id_info[0]?.pickup: 0;
@@ -307,6 +309,12 @@ const OrderSummary = () => {
                                 </div>
                                 {Ongoing_id_info?.map((data,i) => (
                                     <div key={i} className='orderBody'>
+                                        {apartmentName &&  (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> :'Apartment'} </p>
+                                                {proceess === 'loading' ? <SkeletonLoader /> : <span> {apartmentName[0]?.apartment_name}</span>}
+                                            </CardDetails>
+                                        )}
                                         {data?.apartment_price &&  (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> : data?.apartment_price } {proceess === 'succeeded' && `x${data?.stay_length}`}{proceess === 'succeeded' ? data?.stay_length > 1 ? 'nights' : 'night' : ''} </p>
@@ -342,6 +350,18 @@ const OrderSummary = () => {
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>
                                                 <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        )}
+                                        {data?.check_in_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date && 'Check-In Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date}</span>
+                                            </CardDetails>
+                                        )}
+                                        {data?.check_out_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date && 'Check-Out Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date}</span>
                                             </CardDetails>
                                         )}
                                         {data?.overall_total && (

@@ -20,8 +20,8 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 
 
-const TableTable = styled(Table)`
-
+const TableCont = styled(TableContainer)`
+    padding: 0 2rem !important;
 `
 const TableCellss = styled(TableCell)`
     color: ${({color}) => color } !important;
@@ -182,8 +182,8 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
         <Box sx={{ width: '100%' }} style={{ height: '100%'}}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar title={title} />
-                <TableContainer>
-                    <TableTable
+                <TableCont>
+                    <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
                         size={dense ? 'small' : 'medium'}
@@ -321,8 +321,8 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                                 </TableRow>
                             )}
                         </TableBody>
-                    </TableTable>
-                </TableContainer>
+                    </Table>
+                </TableCont>
                 <TablePagination
                     rowsPerPageOptions={[10, 20, 35]}
                     component="div"
