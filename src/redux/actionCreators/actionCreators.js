@@ -256,7 +256,8 @@ export const PaymentPayStack = createAsyncThunk("payment/paymentStack", async ({
     }
     
     const response = await axios.post(`${BaseURL}/card-payment`, formdat);
-    localStorage.setItem('ref', JSON.stringify(response.data))
+    const pay =  await response.data
+    localStorage.setItem('ref', JSON.stringify( CryptoJS.AES.encrypt(pay?.toString(), key).toString()));
     return response.data;
 
 });

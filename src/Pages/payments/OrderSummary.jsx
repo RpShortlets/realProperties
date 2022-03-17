@@ -11,7 +11,7 @@ import { ManualPay, PaymentPayStack, RetrieveTransaction } from '../../redux/act
 import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
 import {motion } from "framer-motion"
-import { BankTransferIcon } from '../../Svg/svg';
+import { BankTransferIcon, BankIcon } from '../../Svg/svg';
 import Checkbox from '../../utils/FormElement/CheckBox';
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
 import { setPaystackRequest } from '../../redux/actions/componentState';
@@ -392,7 +392,7 @@ const OrderSummary = () => {
                                 <div style={{display: 'flex', margin: '2rem 0'}}>
                                     <div>
                                         <Label as={motion.label} htmlFor='transfer' check={method === 'transfer'}>
-                                            {BankTransferIcon}
+                                            {BankIcon}
                                             <span>Bank Transfer</span>
                                         </Label>
                                         <input 
