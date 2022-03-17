@@ -67,7 +67,7 @@ export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({
     const response = await axios.get(`${BaseURL}/shortlet-details`,
     {
         params: {
-            property_id: parseInt(decrypted),
+            property_id: Id,
             check_in: checkInDate,
             check_out: checkOutDate,
         }
@@ -96,12 +96,12 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
     
 });
 
-export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue, checkboxes, decrypted}) => {
+export const getReservationUpdate = createAsyncThunk("reservation/getReservationUpdate", async ({checkOutDate,checkInDate, selectedCar,carlengthValue, radio, driverlengthValue, checkboxes, Id}) => {
 
     const response = await axios.get(`${BaseURL}/payment-summary-update`,
     {
         params: {
-            property_id: parseInt(decrypted),
+            property_id: Id,
             check_in: checkInDate,
             check_out: checkOutDate,
             cleaning: checkboxes?.cleaning,

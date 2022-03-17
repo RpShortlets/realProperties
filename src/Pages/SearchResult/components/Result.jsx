@@ -186,7 +186,7 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
         localStorage.setItem('apidid', encrypted)      
         // dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id}))
         //checkIn=${checkInDate}&checkOut=${checkOutDate 
-        navigate(`/apartment/${encrypted.replace('/', '')}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
+        navigate(`/apartment/${apartment_id}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
     }
 
 

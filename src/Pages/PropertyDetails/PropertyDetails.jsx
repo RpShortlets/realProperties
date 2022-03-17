@@ -22,7 +22,6 @@ import { AnimatePresence } from "framer-motion"
 import Error from "../../components/Error/Error"
 import { SearchNotFoundIcon } from "../../Svg/svg"
 import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
-import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
 
 
 
@@ -94,21 +93,13 @@ const BodyContent = styled.div `
 `
 
 const initiateState = {cleaning: "", pickup: "" }
-const key = "@@TechnoRealProperty" 
 
 const PropertyDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const appId = localStorage.getItem("apidid")
-    console.log(appId)
 
     const Query = useMediaQuery("(min-width: 769px)")
     const {Id} = useParams()
-
-    const {decrypted} = useDecrypt(appId, key)
-
-    const queryString = window.location.search;
-    console.log(queryString)
 
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
@@ -306,14 +297,14 @@ const PropertyDetails = () => {
 
     //!DEPENDING ISSUE
     useEffect(() => {
-        dispatch(ShortletDetails({decrypted}))
-    },  [decrypted, dispatch, checkInDate, checkOutDate])
+        dispatch(ShortletDetails({Id}))
+    },  [Id, dispatch, checkInDate, checkOutDate])
     
     
     useEffect(() => {
-        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,decrypted}))
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id}))
         // navigate(`/apartment/${decrypted}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
-    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, decrypted])
+    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
 
     const date1 = new Date(checkInDate);
     const date2 = new Date(checkOutDate);
