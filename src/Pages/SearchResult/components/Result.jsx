@@ -4,10 +4,12 @@ import styled from "styled-components"
 import {FlexStyle} from "../../../styles/globalStyles"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
+import {useEncrypt } from "../../../hooks/useEncryption/useEncryption"
 // import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
 
 
+const key = "@@TechnoRealProperty" 
 
 const Card = styled.div `
     width: 100%;
@@ -177,12 +179,14 @@ const Price = styled.div `
 const Result = ({data: {property_brief_description, address, apartment_name, bath, bed, picture, room, price, washer, allowed_guest, apartment_id, seaview}, status, data }) => {
     const navigate = useNavigate()
     const {checkInDate, checkOutDate, } = useSelector(state => state.ComponentState)
+    const {encrypted} = useEncrypt(apartment_id?.toString(), key)
+    
 
-
-    const handleGetDetails = async(Id) => {        
+    const handleGetDetails = async(Id) => {  
+        localStorage.setItem('apidid', encrypted)      
         // dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id}))
         //checkIn=${checkInDate}&checkOut=${checkOutDate 
-        navigate(`/apartment/${apartment_id}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
+        navigate(`/apartment/${encrypted.replace('/', '')}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
     }
 
 

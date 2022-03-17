@@ -15,6 +15,7 @@ import { BankTransferIcon } from '../../Svg/svg';
 import Checkbox from '../../utils/FormElement/CheckBox';
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
 import { setPaystackRequest } from '../../redux/actions/componentState';
+import {useDecrypt} from "../../hooks/useEncryption/useEncryption"
 
 
 const Header =  css`
@@ -146,10 +147,15 @@ const Label = styled.label `
 `
 
 const OrderSummary = () => {
-    const navigate = useNavigate();
+    const key = "@@TechnoRealProperty" 
+    const guestIds = JSON.parse(localStorage.getItem('dddrd'))
+    // const {encrypted} = useEncrypt('this is mine', 'secret key 123')
+    const {decrypted} = useDecrypt(guestIds, key)
+
+    const navigate = useNavigate(); 
     const dispatch = useDispatch();
     const Id  = useParams().id;
-
+    const {decrypted: decrypt } = useDecrypt(Id, key)
     const {proceess, ordersummary: {Ongoing_id_info, apartmentName}, payStack, status} = useSelector(state => state.paymentState)
     const {paystackRequest} = useSelector(state => state.ComponentState)
     
@@ -157,9 +163,6 @@ const OrderSummary = () => {
     const [showDialog, setShowDialog] = useState(false)
     const [showDialogCard, setShowDialogCard] = useState(false)
     const [terms, setTerms] = useState({terms: ''})
-
-
-    console.log(apartmentName)
 
     // const CleaningFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning !== null ? Ongoing_id_info[0]?.cleaning : 0; 
     // const PickupFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.pickup  !== null ? Ongoing_id_info[0]?.pickup: 0;
@@ -223,7 +226,7 @@ const OrderSummary = () => {
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
-        const guestId = Ongoing_id_info[0]?.guest_id;
+        const guestId = decrypted;
 
         dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
         navigate('/order-summary/payment')
@@ -234,7 +237,7 @@ const OrderSummary = () => {
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
-        const guestId = Ongoing_id_info[0]?.guest_id;
+        const guestId = decrypted;
         dispatch(PaymentPayStack({apartmentId,guestId, overAll, userId }))
         setShowDialogCard(false)
     }
@@ -244,7 +247,7 @@ const OrderSummary = () => {
     //*** RETRIEVE ORDER SUMMARY */
     
     useEffect(() => {
-        dispatch(RetrieveTransaction({Id}))
+        dispatch(RetrieveTransaction(Id))
     }, [dispatch, Id])
 
     //*** END RETRIEVE ORDER SUMMARY */

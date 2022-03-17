@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react"
+import {useState, useRef, useEffect,} from "react"
 import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
@@ -22,6 +22,7 @@ import { AnimatePresence } from "framer-motion"
 import Error from "../../components/Error/Error"
 import { SearchNotFoundIcon } from "../../Svg/svg"
 import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
+import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
 
 
 
@@ -93,14 +94,21 @@ const BodyContent = styled.div `
 `
 
 const initiateState = {cleaning: "", pickup: "" }
+const key = "@@TechnoRealProperty" 
 
 const PropertyDetails = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const appId = localStorage.getItem("apidid")
+    console.log(appId)
 
     const Query = useMediaQuery("(min-width: 769px)")
     const {Id} = useParams()
 
+    const {decrypted} = useDecrypt(appId, key)
+
+    const queryString = window.location.search;
+    console.log(queryString)
 
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
@@ -245,8 +253,7 @@ const PropertyDetails = () => {
         const driver = summary_details[0]?.total_driver_price;
 
         if(Query) {
-            if(checkInDate !==  '' && checkOutDate !== '') {
-               
+            if(checkInDate && checkOutDate) {
                 dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                 setShowModal(true)
                 setshow(false)
@@ -258,7 +265,7 @@ const PropertyDetails = () => {
                 })
             }
         } else {
-            if(checkInDate !==  '' && checkOutDate!== '') {
+            if(checkInDate  && checkOutDate ) {
                 
                     dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                     navigate('/reservation')
@@ -298,16 +305,15 @@ const PropertyDetails = () => {
 
 
     //!DEPENDING ISSUE
-
     useEffect(() => {
-        dispatch(ShortletDetails({Id}))
-    },  [Id, dispatch, checkInDate, checkOutDate])
+        dispatch(ShortletDetails({decrypted}))
+    },  [decrypted, dispatch, checkInDate, checkOutDate])
     
     
     useEffect(() => {
-        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
-        navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
-    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,decrypted}))
+        // navigate(`/apartment/${decrypted}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
+    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, decrypted])
 
     const date1 = new Date(checkInDate);
     const date2 = new Date(checkOutDate);

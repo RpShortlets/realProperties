@@ -15,6 +15,7 @@ import Agent from "./components/Agent"
 //import ReCaptchaV2 from 'react-google-recaptcha'
 import validator from 'validator'
 import {saveCustomerInformation} from "../../redux/actionCreators/actionCreators"
+import {useEncrypt} from "../../hooks/useEncryption/useEncryption"
 import { motion } from "framer-motion"
 import { CancelIcon } from "../../Svg/svg"
 import { Pulse } from "../../components/Loader/Spinner"
@@ -72,11 +73,14 @@ const MainRight = styled.div `
 const ReservationRight = ({setShowModal, proceess}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
+    const key = "@@TechnoRealProperty" 
     const {status} = useSelector(state => state.customerRecord)
-    const {ongoingTransactions: {Ongoing_id, apartment_id}} = useSelector(state => state.paymentState)
+    const {ongoingTransactions: {Ongoing_id, apartment_id}, proceess:loading} = useSelector(state => state.paymentState)
     const Query = useMediaQuery("(min-width: 769px)")
 
+    const ongoing = loading === 'succeeded' && Ongoing_id[0]?.ongoing_id 
+
+    const {encrypted} = useEncrypt(ongoing.toString(), key)
 
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: "", agentName: '', agentContact: ''})
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: "", title: ''})
@@ -167,7 +171,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
             if(checkboxes.agent) {
                 if(formdata.agentName && agentPhn) {
                     dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId, agentPhn}))
-                    navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
+                    navigate(`/order-summary/ref/${ongoing}`)
                 } else {
                     if(!formdata.agentName) {
                         OpenNotificationWithIcon({
@@ -186,7 +190,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
             }
             else {
                 dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}))
-                navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
+                navigate(`/order-summary/ref/${ongoing}`)
             }
         }
         else {
