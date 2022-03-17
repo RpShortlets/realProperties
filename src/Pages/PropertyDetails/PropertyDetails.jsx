@@ -301,13 +301,13 @@ const PropertyDetails = () => {
 
     useEffect(() => {
         dispatch(ShortletDetails({Id}))
-    },  [Id, dispatch, checkInDate, checkOutDate, navigate])
+    },  [Id, dispatch, checkInDate, checkOutDate])
     
     
     useEffect(() => {
         dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
         navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
-    }, [dispatch, navigate, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
+    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
 
     const date1 = new Date(checkInDate);
     const date2 = new Date(checkOutDate);

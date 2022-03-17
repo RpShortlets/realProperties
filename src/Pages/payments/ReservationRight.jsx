@@ -25,7 +25,7 @@ import { Capitalize } from "../../hooks/useCapitalize/useCapitalize"
 import { useCalculateAge } from "../../hooks/useCalculateAge/useCalculateAge"
 
 
-const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others'];
+const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID',];
 
 
 const SectionRight = styled.div `

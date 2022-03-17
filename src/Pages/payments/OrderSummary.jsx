@@ -315,6 +315,18 @@ const OrderSummary = () => {
                                                 {proceess === 'loading' ? <SkeletonLoader /> : <span> {apartmentName[0]?.apartment_name}</span>}
                                             </CardDetails>
                                         )}
+                                        {data?.check_in_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date && 'Check-In Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date}</span>
+                                            </CardDetails>
+                                        )}
+                                        {data?.check_out_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date && 'Check-Out Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date}</span>
+                                            </CardDetails>
+                                        )}
                                         {data?.apartment_price &&  (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> : data?.apartment_price } {proceess === 'succeeded' && `x${data?.stay_length}`}{proceess === 'succeeded' ? data?.stay_length > 1 ? 'nights' : 'night' : ''} </p>
@@ -350,18 +362,6 @@ const OrderSummary = () => {
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit && 'Security Deposit'}</p>
                                                 <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.security_deposit?.toLocaleString()}</span>
-                                            </CardDetails>
-                                        )}
-                                        {data?.check_in_date && (
-                                            <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date && 'Check-In Date'}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date}</span>
-                                            </CardDetails>
-                                        )}
-                                        {data?.check_out_date && (
-                                            <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date && 'Check-Out Date'}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date}</span>
                                             </CardDetails>
                                         )}
                                         {data?.overall_total && (
