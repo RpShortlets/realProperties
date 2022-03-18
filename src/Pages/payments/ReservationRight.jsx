@@ -83,7 +83,6 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const {encrypted} = useEncrypt(ongoing.toString(), key)
     const newEncrypted = encrypted.replace(/[^a-zA-Z ]/g, "")
 
-    console.log(newEncrypted)
 
     const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: "", agentName: '', agentContact: ''})
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: "", title: ''})

@@ -243,7 +243,7 @@ const PropertyDetails = () => {
         const driver = summary_details[0]?.total_driver_price;
 
         if(Query) {
-            if(checkInDate && checkOutDate) {
+            if(checkInDate && checkOutDate && summary_details[0]?.total_apt_price > 0) {
                 dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                 setShowModal(true)
                 setshow(false)
@@ -255,13 +255,11 @@ const PropertyDetails = () => {
                 })
             }
         } else {
-            if(checkInDate  && checkOutDate ) {
-                
-                    dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
-                    navigate('/reservation')
-                    setshow(false)
-                }
-                
+            if(checkInDate  && checkOutDate  && summary_details[0]?.total_apt_price > 0) {
+                dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
+                navigate('/reservation')
+                setshow(false)
+            }
             else {
                 OpenNotificationWithIcon({
                     message: 'Please select check in and check out date',
