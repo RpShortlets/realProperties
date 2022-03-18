@@ -137,8 +137,9 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         check_out_date: checkOutDate
     }
     
-    const response = await axios.post(`${BaseURL}/transaction`, formdat);
-    // localStorage.setItem("definded",JSON.stringify(response?.data?.Ongoing_id[0]?.ongoing_id))
+    const response = await axios.post(`${BaseURL}/transaction`, formdat); 
+    const ddd =  await response?.data?.Ongoing_id[0]?.ongoing_id
+    localStorage.setItem('defined', JSON.stringify( CryptoJS.AES.encrypt(ddd?.toString(), key).toString()));
     return response.data;
 
 });
