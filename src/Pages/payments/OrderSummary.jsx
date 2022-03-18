@@ -149,13 +149,14 @@ const Label = styled.label `
 const OrderSummary = () => {
     const key = "@@TechnoRealProperty" 
     const guestIds = JSON.parse(localStorage.getItem('dddrd'))
+    const refId = JSON.parse(localStorage.getItem("defined"))
     // const {encrypted} = useEncrypt('this is mine', 'secret key 123')
     const {decrypted} = useDecrypt(guestIds, key)
 
     const navigate = useNavigate(); 
     const dispatch = useDispatch();
     const Id  = useParams().id;
-    const {decrypted: decrypt } = useDecrypt(Id, key)
+    const {decrypted: decrypt } = useDecrypt(refId, key)
     const {proceess, ordersummary: {Ongoing_id_info, apartmentName}, payStack, status} = useSelector(state => state.paymentState)
     const {paystackRequest} = useSelector(state => state.ComponentState)
     
@@ -247,8 +248,8 @@ const OrderSummary = () => {
     //*** RETRIEVE ORDER SUMMARY */
     
     useEffect(() => {
-        dispatch(RetrieveTransaction(Id))
-    }, [dispatch, Id])
+        dispatch(RetrieveTransaction(decrypt))
+    }, [dispatch, decrypt])
 
     //*** END RETRIEVE ORDER SUMMARY */
 
