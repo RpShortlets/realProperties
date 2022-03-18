@@ -10,7 +10,7 @@
     color: var(--color-dark);
 }
 
-.input-container label svg {
+.input-container label > svg:first-of-type {
     margin-left: 5px;
 }
 
@@ -54,15 +54,6 @@ select {
 
 }
 
-.input-container span {
-    position: absolute;
-    z-index: 1;
-    left: 15px;
-    top: 50%;
-    transform: translateY(5%);
-    /* font-size: var(--font-small); */
-    color: var(--color-primary);
-}
 
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {

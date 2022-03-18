@@ -96,7 +96,7 @@ export const InputStyle = css`
     font-size: var(--font-small);
     outline: 0;
     padding: 10px;
-    padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
+    padding-left: ${props => props.Icon ? "max(3vw, 2rem)" : ""};
     border-radius: 4px;
     width: 100%;
     height: 45px;
