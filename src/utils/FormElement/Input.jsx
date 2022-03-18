@@ -29,19 +29,25 @@ const InputContainer = styled.div`
     span {
         position: relative;
         z-index: 1;
-        left: 15px;
+        left: 10px;
         top: -37px;
         transform: translateY(5%);
         color: var(--color-primary);
 
         svg {
-            font-size: var(--font-small);
+            font-size: var( --font-big);
         }
     }
 
     @media screen and (min-width: 768px) {
         label {
             font-size: var(--font-small-screen);
+        }
+
+        span {
+            svg {
+                font-size: var( --font-small);
+            }
         }
     }
 
