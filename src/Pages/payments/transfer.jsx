@@ -236,6 +236,10 @@ const Transfer = () => {
 
     useEffect(() =>{
         if(ReceiveTime) {
+            OpenNotificationWithIcon({
+                description: 'You are being redirect back to the home page',
+                type: 'success',
+            })
             setTimeout(() => {
                 navigate('/');
             }, 3000)
