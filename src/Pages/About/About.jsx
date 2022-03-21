@@ -1,9 +1,10 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import styled, {css} from "styled-components/macro"
 import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useAnimation } from "framer-motion"
 import {Link} from "react-router-dom"
 import WhyRealShortlets from '../Home/components/WhyRealShortlets';
+import { useInView } from 'react-intersection-observer';
 // import { Parallax } from 'react-scroll-parallax';
 
 
@@ -92,11 +93,48 @@ const Main = styled.main`
 `
 
 const About = () => {
+    const control = useAnimation()
+    const {ref, inView} = useInView({
+        
+    });
+
+    console.log(inView);
+
+    useEffect(() => {
+        console.log('render');
+        if (inView) {
+            control.start({
+                x: 0, 
+                transition: {
+                    duration: 0.6,
+                    type: 'tween',
+                    bounceStiffness: 100,
+                    bounceDamping: 10,
+                    ease: 'easeInOut',
+                    bounce: 0.2
+
+                    
+                }
+            })
+        }
+        if(!inView) {
+            control.start({
+                x: '-100vw',
+                transition: {
+                    duration: 0.6,
+                    type: 'tween',
+                    
+                }
+            })
+        }
+
+    }, [inView]);
+
     const [isOpen, setIsOpen] = useState(false)
     return (
         <Section>
-            <Main paddingRight="true" paddingleft="true">
-                <div className="AboutReal"> 
+            <Main ref={ref}  paddingRight="true" paddingleft="true" >
+                <motion.div  className="AboutReal"> 
                     {/* <Parallax speed={-5}> */}
                         <h1>About Real property</h1>
                     {/* </Parallax> */}
@@ -134,29 +172,18 @@ const About = () => {
                             )}
                         </AnimatePresence>
                     </div>
-                </div>
-                <div className="ourMission">
+                </motion.div>
+                <motion.div  initial={{x: '100vw'}} animate={{x: 0}} transition={{type: 'tween', duration: 0.6, bounce: 0.5}} className="ourMission">
                     <h2>Our Mission</h2>
                     <div className='ourMissionContent'>
                         <p>
                             To provide travellers a platform to choose the perfect home away from home, by redefining Nigeria’s online real estate space.                        
                         </p>
                     </div>
-                </div>
-                {/* <div className="ourMission">
-                    <h2>Our Vision</h2>
-                    <div className='ourMissionContent'>
-                        <p>
-                            We’re dedicated to helping guests find the perfect upscale short let from the comfort of their homes by providing a virtual tour of our first-rate rentals in real-time so anyone can take a look around to verify for themselves that every feature is as advertised. 
-                        </p>
-                        <p>
-                            We’re dedicated to helping guests find the perfect upscale short let from the comfort of their homes by providing a virtual tour of our first-rate rentals in real-time so anyone can take a look around to verify for themselves that every feature is as advertised. 
-                        </p>
-                    </div>
-                </div> */}
-                <div>
+                </motion.div>
+                <motion.div animate={control}>
                     <WhyRealShortlets about="true" />
-                </div>
+                </motion.div>
             </Main>
         </Section>
     )

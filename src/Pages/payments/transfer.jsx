@@ -157,9 +157,12 @@ const Transfer = () => {
     var distance = new Date(expiredTime)?.getTime() - new Date().getTime();
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const [countDown, setCountDown] = useState(minutes)
+    const [timer, setTimer] = useState(10)
 
     const customerRes = checkboxes?.alertReceived ? 'payment confirmed' : 'payment not confirmed';
 
+
+    console.log(timer)
 
     const handleChange = (e) => {
         const { value, checked, name } = e.target;
@@ -234,17 +237,32 @@ const Transfer = () => {
         // navigate('/');
     }
 
+    useEffect(() => {
+        let timerId;
+        if(ReceiveTime) {
+            if(timer === 0) { 
+                console.log('called')  
+                return () => clearInterval(timerId)           
+            } else {
+                timerId = setTimeout(() => {
+                    setTimer((countDown) => countDown -1);
+                    
+                }, 1000);
+            }
+        }
+            
+    }, [timer, ReceiveTime])
+
     useEffect(() =>{
         if(ReceiveTime) {
             OpenNotificationWithIcon({
                 description: 'You are being redirect back to the home page',
                 type: 'success',
             })
-            setTimeout(() => {
-                navigate('/');
-            }, 3000)
-        } 
-    }, [ReceiveTime, navigate])
+        }
+        
+    }, [ReceiveTime])
+
 
     if(status === 'failed') {
         return (

@@ -104,6 +104,7 @@ const Completed = () => {
     const dispatch = useDispatch();
     const data = JSON.parse(localStorage.getItem('admin'))
     const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
+    console.log(completedTransaction)
     
     useEffect(() => {
         dispatch(AdminCompletedTransaction())

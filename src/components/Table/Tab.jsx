@@ -141,7 +141,7 @@ const EnhancedTableToolbar = (props) => {
 };
 
 
-export default function EnhancedTable({headData, records, title, onClicks}) {
+export default function EnhancedTable({headData, records, title, onClicks, showColor}) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
 
@@ -212,7 +212,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                                     onClick={onClicks ? () => onClicks(row?.pending_id) : console.log('')}
                                     tabIndex={-1}
                                     key={row?.pending_id}
-                                    background={row?.customer_payment_confirmation === 'payment confirmed' ? "#8BDB81" : "#fff"}
+                                    background={ showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#8BDB81" : showColor&&row?.customer_payment_confirmation === "payment not confirmed" ? "#F2FA5A" : "#fff"} 
                                 >
                                 
                                     <TableCellss
@@ -220,91 +220,91 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                                         id={labelId}
                                         scope="row"
                                         padding="none"
-                                        color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                     >
                                         {row?.guest_name}
                                     </TableCellss>
                                     {row?.pymt_reference && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.pymt_reference}
                                         </TableCellss>}
                                     {row?.check_in && 
                                         <TableCellss 
                                             align="left" 
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={ showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.check_in}
                                         </TableCellss>}
                                     {row?.check_out && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.check_out}
                                         </TableCellss>}
                                     {row?.amount && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.amount}
                                         </TableCellss>}
                                     {row?.phone_no && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.phone_no}
                                         </TableCellss>}
                                     {row?.payment_method &&  
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.payment_method}
                                         </TableCellss> }
                                     {row?.platform &&  
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.platform}
                                         </TableCellss> }
                                     {row?.payment_time && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.payment_time}
                                         </TableCellss> }
                                     {row?.bdt_user && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.bdt_user}
                                         </TableCellss> }
                                     {row?.bank_transaction_id && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.bank_transaction_id}
                                         </TableCellss> }
                                     {row?.email && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.email}
                                         </TableCellss>}
                                     {row?.status && 
                                         <TableCellss 
                                             align="left"
-                                            color={row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                         >
                                             {row?.status}
                                         </TableCellss>}

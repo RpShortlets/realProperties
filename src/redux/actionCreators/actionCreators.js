@@ -29,12 +29,6 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 
 //* SEARCH BOOKINGS
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
-    // let headers = {
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        
-    // };
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
             location: searchV, 
@@ -257,15 +251,12 @@ export const PaymentPayStack = createAsyncThunk("payment/paymentStack", async ({
     }
     
     const response = await axios.post(`${BaseURL}/card-payment`, formdat);
-    const pay =  await response.data
-    localStorage.setItem('ref', JSON.stringify( CryptoJS.AES.encrypt(pay?.toString(), key).toString()));
     return response.data;
 
 });
 
 
-export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async ({ref}) => {
-    
+export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (ref) => {
     const response = await axios.get(`${BaseURL}/paystack/callback/shortlet`, {
         params: {
             ref: ref

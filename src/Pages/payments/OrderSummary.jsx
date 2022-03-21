@@ -15,7 +15,7 @@ import { BankTransferIcon, BankIcon } from '../../Svg/svg';
 import Checkbox from '../../utils/FormElement/CheckBox';
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
 import { setPaystackRequest } from '../../redux/actions/componentState';
-import {useDecrypt} from "../../hooks/useEncryption/useEncryption"
+import {useDecrypt, useEncrypt} from "../../hooks/useEncryption/useEncryption"
 
 
 const Header =  css`
@@ -149,29 +149,19 @@ const Label = styled.label `
 const OrderSummary = () => {
     const key = "@@TechnoRealProperty" 
     const guestIds = JSON.parse(localStorage.getItem('dddrd'))
-    // const refId = JSON.parse(localStorage.getItem("defined"))
-    // const {encrypted} = useEncrypt('this is mine', 'secret key 123')
     const {decrypted} = useDecrypt(guestIds, key)
 
     const navigate = useNavigate(); 
     const dispatch = useDispatch();
     const Id  = useParams().id;
-    // const {decrypted: decrypt } = useDecrypt(refId, key)
     const {proceess, ordersummary: {Ongoing_id_info, apartmentName}, payStack, status} = useSelector(state => state.paymentState)
     const {paystackRequest} = useSelector(state => state.ComponentState)
+    const {encrypted} = useEncrypt(payStack?.message?.reference, key)
     
     const [method, setmethod] = useState('transfer');
     const [showDialog, setShowDialog] = useState(false)
     const [showDialogCard, setShowDialogCard] = useState(false)
     const [terms, setTerms] = useState({terms: ''})
-
-    // const CleaningFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.cleaning !== null ? Ongoing_id_info[0]?.cleaning : 0; 
-    // const PickupFee =   proceess === 'loading' ? 0 : proceess === 'succeeded' && Ongoing_id_info[0]?.pickup  !== null ? Ongoing_id_info[0]?.pickup: 0;
-    // const CarFee =   proceess === 'succeeded' ? Ongoing_id_info[0]?.car_rental !== null && Ongoing_id_info[0]?.car_rental : 0; 
-    // const DriverFee =    proceess === 'succeeded' ?  Ongoing_id_info?.map((item) => item.driver) !== null && Ongoing_id_info?.map((item) => item.driver) : 0; 
-    // const AddService =  proceess === 'succeeded' &&   parseInt(CleaningFee)  + parseInt(PickupFee);
-    // const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
-
 
 
     const handleBackBtn = () => {
@@ -198,9 +188,7 @@ const OrderSummary = () => {
             }
         } 
         else {
-            console.log('Paystack2', terms)
             if(terms.terms) {
-                console.log('Paystack', terms)
                 setShowDialogCard(true)
             } else {
                 OpenNotificationWithIcon({
@@ -256,19 +244,16 @@ const OrderSummary = () => {
 
     useEffect(() => {
         if(status === 'succeeded' && payStack?.message?.authorization_url ) {
+            localStorage.setItem('payref', encrypted);
             dispatch(setPaystackRequest(true))
-    } else {
-        dispatch(setPaystackRequest(false))
-    }
-    }, [status, payStack?.message?.authorization_url, dispatch]);
+        } else {
+            dispatch(setPaystackRequest(false))
+        }
+    }, [status, payStack?.message?.authorization_url, dispatch, encrypted]);
 
     useEffect(() => {
         if(paystackRequest) {
-            window.open(payStack?.message?.authorization_url, '_self')
-            // (payStack?.message?.authorization_url)
-            // setTimeout(() => {
-            //     navigate('/')
-            // }, 3000)
+            window.open(payStack?.message?.authorization_url, '_self').focus()
         }
     }, [paystackRequest,payStack?.message?.authorization_url, navigate])
 
@@ -394,7 +379,7 @@ const OrderSummary = () => {
                                     <div>
                                         <Label as={motion.label} htmlFor='transfer' check={method === 'transfer'}>
                                             {BankIcon}
-                                            <span>Bank Transfer</span>
+                                            <span>Hold Booking</span>
                                         </Label>
                                         <input 
                                             id="transfer" 

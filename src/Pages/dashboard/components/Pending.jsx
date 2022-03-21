@@ -74,7 +74,7 @@ const Pending = ({handleCompletedBooking}) => {
     const dispatch = useDispatch();
     const data = JSON.parse(localStorage.getItem('admin'))
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
-
+    console.log(pendingTransaction)
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())
@@ -98,7 +98,7 @@ const Pending = ({handleCompletedBooking}) => {
         ) :
             <>
                 <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
-                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
+                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
             </>
         }
     </Wrapper>;

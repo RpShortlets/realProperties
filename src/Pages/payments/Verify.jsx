@@ -8,6 +8,7 @@ import { BsFillCheckCircleFill,  } from "react-icons/bs"
 // import { MdCancel } from 'react-icons/md'
 import Button from "../../components/Button/Button"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
+import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
 
 const Section = styled.section `
     width: 100%;
@@ -99,11 +100,14 @@ const Card = styled.div `
 `
 
 const Verify = () => {
+    const key = "@@TechnoRealProperty" 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const ref = JSON.parse(localStorage.getItem('ref'))?.message?.reference
+    const ref = localStorage.getItem('payref')
     
+    const {decrypted} = useDecrypt(ref, key)
 
+    console.log(decrypted)
 
     const {verify, status} = useSelector(state => state.paymentState)
 
@@ -113,8 +117,8 @@ const Verify = () => {
     }
 
     useEffect(() => {
-        dispatch(VerifyPayStack({ref}))
-    }, [dispatch, ref])
+        dispatch(VerifyPayStack(decrypted))
+    }, [dispatch, decrypted])
 
     
     return <Section>
