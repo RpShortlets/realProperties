@@ -256,10 +256,11 @@ export const PaymentPayStack = createAsyncThunk("payment/paymentStack", async ({
 });
 
 
-export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (ref) => {
+export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (Id) => {
+
     const response = await axios.get(`${BaseURL}/paystack/callback/shortlet`, {
         params: {
-            ref: ref
+            ref: Id
         }
     });
     return response.data;
