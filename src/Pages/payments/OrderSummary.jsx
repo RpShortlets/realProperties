@@ -165,7 +165,7 @@ const OrderSummary = () => {
 
 
     const handleBackBtn = () => {
-        navigate(-1)
+        navigate(-2)
     }
 
     const handleChange = (e) => {
@@ -244,7 +244,7 @@ const OrderSummary = () => {
 
     useEffect(() => {
         if(status === 'succeeded' && payStack?.message?.authorization_url ) {
-            localStorage.setItem('payref', encrypted);
+            localStorage.setItem('payref', JSON.stringify(encrypted));
             dispatch(setPaystackRequest(true))
         } else {
             dispatch(setPaystackRequest(false))

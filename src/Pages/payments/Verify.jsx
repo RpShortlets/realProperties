@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import  "../../styles/card.css"
 import { VerifyPayStack } from "../../redux/actionCreators/actionCreators"
 import {useDispatch, useSelector} from "react-redux"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import styled from "styled-components"
 import { BsFillCheckCircleFill,  } from "react-icons/bs"
 // import { MdCancel } from 'react-icons/md'
@@ -100,14 +100,16 @@ const Card = styled.div `
 `
 
 const Verify = () => {
+    const Id = new URLSearchParams(window.location.search).get("reference")
     const key = "@@TechnoRealProperty" 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const ref = localStorage.getItem('payref')
+    // const ref = localStorage.getItem('payref')
+    //const ref = JSON.parse(localStorage.getItem('payref'))
     
-    const {decrypted} = useDecrypt(ref, key)
+    //const {decrypted} = useDecrypt(ref, key)
 
-    console.log(decrypted)
+
 
     const {verify, status} = useSelector(state => state.paymentState)
 
@@ -117,8 +119,8 @@ const Verify = () => {
     }
 
     useEffect(() => {
-        dispatch(VerifyPayStack(decrypted))
-    }, [dispatch, decrypted])
+        dispatch(VerifyPayStack(Id))
+    }, [dispatch, Id])
 
     
     return <Section>
