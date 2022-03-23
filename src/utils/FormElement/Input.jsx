@@ -17,7 +17,7 @@ const InputContainer = styled.div`
         align-items: center;
         font-size: var( --font-small) !important;
         color: #fff;
-        color: var(--color-dark);
+        color: ${({theme}) => theme === "dark" ? "var(--color-white)" : "var(--color-dark);"}
     }
 
 
@@ -58,9 +58,9 @@ const InputForm = styled.input `
 `
 
 
-export const Input = ({className, min, Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
+export const Input = ({ theme, className, min, Blur, asterik, disabled, Focus,type, error, label, placeholder, name, Icon, value, formdata, handleChange, marginTop, ref, readOnly}) => {
     return (
-        <InputContainer Icon={Icon} className={className}>
+        <InputContainer Icon={Icon} className={className} theme={theme}>
             {label && <label> {label}{!asterik && Asterik}</label>}
             <InputForm min={min} disabled={disabled} onFocus={Focus} onBlur={Blur} error={error} readOnly={readOnly} type={type} placeholder={placeholder} name={name} value={value} onChange={handleChange} marginTop={marginTop} Icon={Icon} ref={ref} />
             <span>{Icon}</span>
@@ -70,10 +70,10 @@ export const Input = ({className, min, Blur, asterik, disabled, Focus,type, erro
 
 
 
-export const InputSelect = ({ className, label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
+export const InputSelect = ({ theme, className, label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
-        <div className={`input-container ${className}`}>
-            <label>{label}{Asterik} 
+        <div className={`input-container ${className}`} >
+            <label style={{color: theme === "dark" && 'var(--color-white)'}}>{label}{Asterik} 
                 <select disabled={disabled} ref={ref} name={name} value={value} onChange={(e) => setDropdown({...dropdown, [name]: e.target.value})} style={style}>
                     <option defaultChecked >{defaultV}</option>
                     {options.map((option, i) => {
@@ -89,10 +89,10 @@ export const InputSelect = ({ className, label, disabled, style, ref, setDropdow
 }
 
 
-export const PhoneType = ({phn, setPhone, label, handlePhone}) => {
+export const PhoneType = ({phn, setPhone, label, theme}) => {
     return (
         <div className="input-container">
-            <label>{label} {Asterik}
+            <label style={{color: theme === "dark" && 'var(--color-white)'}}>{label} {Asterik}
                 <PhoneInput
                     country={'ng'}
                     value={phn}

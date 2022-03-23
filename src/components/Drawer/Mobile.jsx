@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const DrawerButton = styled.button`
     outline: none;
     border: none;
-    background: var(--color-secondary);
+    background: ${({theme}) => theme === 'dark' ? 'transparent' : 'var(--color-secondary);'};
     color: var(--color-primary);
     font-size: 2rem;
     cursor: pointer;
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
     }
 `
 
-export default function Mobile({handleCompleted,handlePending,handleDeleted, handleComplains, handleBooking, toggleDrawer, state, setState  }) {
+export default function Mobile({theme,handleCompleted,handlePending,handleDeleted, handleComplains, handleBooking, toggleDrawer, state, setState  }) {
     const matched = useMediaQuery('(min-width:769px)'); //* true | false based on media query
 
 
@@ -53,7 +53,7 @@ export default function Mobile({handleCompleted,handlePending,handleDeleted, han
             <React.Fragment>
                 {/* //* Drawer Icon */}
                 {!matched && (
-                    <DrawerButton onClick={toggleDrawer(true)}>
+                    <DrawerButton onClick={toggleDrawer(true)} theme={theme}>
                         {MenuIcon}
                     </DrawerButton>
                 )}

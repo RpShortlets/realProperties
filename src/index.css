@@ -72,6 +72,13 @@
     
 }
 
+[data-theme='dark'] {
+    --background: black;
+    --text-primary: white;
+    --text-secondary: grey;
+    --accent: darkred;
+}
+
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

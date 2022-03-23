@@ -12,6 +12,7 @@ import { Error404Icon } from '../../../Svg/svg';
 const Wrapper = styled.div `
     ${AdminContainer}
     height: auto !important;
+    margin: 0 !important;
 `
 
 const H1 = styled.h1 `

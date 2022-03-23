@@ -12,11 +12,13 @@ import { ManualConfirmBookings } from '../../redux/actionCreators/actionCreators
 import { Input } from "../../utils/FormElement/Input"
 import Button from "../../components/Button/Button"
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
+import useLocalStorage from 'use-local-storage'
 
 //Components
 import { Deleted, Complaint, Completed, Pending, UpdateBooking, AgencyHome, AgentSignUp} from "./components/index"
 import Mobile from '../../components/Drawer/Mobile';
 import { useGetHour } from '../../hooks/useGetHour/useGetHour';
+
 
 
 const Section = styled.section `
@@ -34,7 +36,7 @@ const Main = styled.div `
 const SideBar = styled.div `
     grid-column: 1 / 2;
     display: none;
-    background: var(--color-white);
+    background: ${({theme}) => theme === 'dark' ? '#1f1f1f' : '#fff'};
     height: 100%;
     mix-blend-mode: normal;
 
@@ -116,7 +118,7 @@ const SideBar = styled.div `
 `
 
 const LeftBar = styled.div `
-    background: var(--color-secondary);
+    background: ${({theme}) => theme === 'dark' ? '#1f1f1f' : 'var(--color-secondary);'};
     height: 100%;
     grid-column: 1/ 8;
 
@@ -141,6 +143,13 @@ const Admin = () => {
     const [formdata, setFormData] = useState({transactionId: ''})
     const [penId, setPenId] = useState()
     const [state, setState] = React.useState(false);
+    const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
+    const SwitchTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    };
+
 
 
     const toggleDrawer = (type) => (event) => { //* Close the drawer when the user clicks outside of it, and toggle the state of the drawer.
@@ -257,6 +266,8 @@ const Admin = () => {
         }
     }
 
+    
+
 
 
     return (
@@ -298,7 +309,7 @@ const Admin = () => {
                 </div>
             </Modal>
             <Section>
-                <div style={{background: 'var(--color-secondary)', paddingLeft: '1rem'}}>
+                <div style={{background: theme === 'dark' ? "#1f1f1f" : 'var(--color-secondary)', paddingLeft: '1rem'}}>
                     <Mobile  
                         handlePending={handlePending}
                         handleCompleted={handleCompleted}
@@ -308,13 +319,11 @@ const Admin = () => {
                         state={state}
                         toggleDrawer={toggleDrawer}
                         setState={setState}
+                        theme={theme}
                     />
                 </div>
                 <Main height={ complains ? '100vh' : '100%'}>
-                    <SideBar>
-                        {/* <div className='adminLogo'>
-                            {CompanyLogo}
-                        </div> */}
+                    <SideBar theme={theme}>
                         <div className='sideBarContainer'>
                             <div className='sideBarLink'>
                                 <Tooltip title="Home">
@@ -386,12 +395,14 @@ const Admin = () => {
                             </div>
                         </div>
                     </SideBar>
-                    <LeftBar>
+                    <LeftBar theme={theme}>
                         {   
                             agentHome ? (
                                 <AgencyHome 
                                     timeOfDay={timeOfDay}
                                     data={user} 
+                                    SwitchTheme={SwitchTheme}
+                                    theme={theme}
                                 />
                             ) :
                             user?.role === "admin1" && pending ? 
@@ -421,6 +432,7 @@ const Admin = () => {
                                     <UpdateBooking 
                                         timeOfDay={timeOfDay}
                                         data={user} 
+                                        theme={theme}
                                     />
                                 ) 
                             : complains ?
@@ -434,7 +446,10 @@ const Admin = () => {
                                         data={user} 
                                     /> 
                                 )
-                            : (<AgencyHome />)
+                            : (<AgencyHome 
+                                timeOfDay={timeOfDay}
+                                data={user}
+                            />)
                         }
                     </LeftBar>
                 </Main>

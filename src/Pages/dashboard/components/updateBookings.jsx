@@ -39,7 +39,7 @@ const H1 = styled.h1 `
 const apart = ['1', '2']
 const plat = ['AirBnB', 'Hotelsng', 'Bookings', 'Agency', 'Referral', 'Others']
 
-const UpdateBookings = ({data, timeOfDay}) => {
+const UpdateBookings = ({data, timeOfDay, theme}) => {
     const dispatch = useDispatch()
     const {status,  apartmentInfo: updateBooks, bookings} = useSelector(state => state.adminDashboard);
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
@@ -50,7 +50,7 @@ const UpdateBookings = ({data, timeOfDay}) => {
     const [agentPhn, setAgentPhn] = useState("")
     const [phn, setPhone] = useState('')
     const [listNum, setlistNum] = useState(0)
-    // const [totalPrice, setTotalPrice] = useState(0)
+
     const totalPrice = formdata.amountPaid 
     let listDate = []
     
@@ -156,19 +156,19 @@ const UpdateBookings = ({data, timeOfDay}) => {
                 <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
                 <form autoSave='On' onSubmit={handleUpdateBookings}>
                     <div>
-                        <Input  className="marginInput" type="text" label="First Name" placeholder='First Name' name="customerName"  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <Input  className="marginInput" type="text" label="Last Name" placeholder='Last Name' name="customerName"  value={formdata.lastmname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <Input className="marginInput" type="email" label="Email" placeholder='customer@email.com' name="email"  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value})} />
-                        <PhoneType phn={phn} setPhone={setPhone} label="Phone Number"/>
-                        <InputSelect  className="marginInput" name="apartment"  style={{paddingLeft: '10px'}} value={dropdown.apartment} dropdown={dropdown} setDropdown={setDropdown} options={apart} label="Apartment" defaultV="Apartment A4" />
+                        <Input  theme={theme} className="marginInput" type="text" label="First Name" placeholder='First Name' name="customerName"  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <Input  theme={theme} className="marginInput" type="text" label="Last Name" placeholder='Last Name' name="customerName"  value={formdata.lastmname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <Input  theme={theme} className="marginInput" type="email" label="Email" placeholder='customer@email.com' name="email"  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value})} />
+                        <PhoneType theme={theme} phn={phn} setPhone={setPhone} label="Phone Number"/>
+                        <InputSelect theme={theme} className="marginInput" name="apartment"  style={{paddingLeft: '10px'}} value={dropdown.apartment} dropdown={dropdown} setDropdown={setDropdown} options={apart} label="Apartment" defaultV="Apartment A4" />
                         {dropdown.apartment && <div style={{margin: 'max(3vw, 1.2rem) 0'}}>
                             <AdminCalender setlistNum={setlistNum} calendars={2} listNum={listNum} disablebooked='true' status={status} listDate={listDate} />
                         </div>
                         }
-                        <Input className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={formdata.amountPaid} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <Input className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <Input className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <InputSelect className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Platform"  />
+                        <Input theme={theme} className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={formdata.amountPaid} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <Input theme={theme} className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <Input theme={theme} className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <InputSelect theme={theme} className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Platform"  />
                         {dropdown.platform === 'Agency' && (
                             <div>
                                 <Agent  setAgentPhn={setAgentPhn} agentPhn={agentPhn} formdata={formdata} setFormData={setFormData} />
