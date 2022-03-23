@@ -299,6 +299,21 @@ export const HandleSignIn = async(formData) => {
 
 }
 
+export const HandleAgentSiginIn = async(formData) => {
+    const Fdata = {
+        email: formData.email,
+        password: formData.password
+    }
+
+    try{
+        const {data} = await axios.post(`${BaseURL}/agent-login`, Fdata)
+        return data
+    }catch(error){
+        return error.message
+    }
+
+}
+
 
 export const AdminPendingTransaction = createAsyncThunk("adminDashboard/adminPendingTransaction", async () => {
     const {data} = await axios.get(`${BaseURL}/admin/pending-payments`);

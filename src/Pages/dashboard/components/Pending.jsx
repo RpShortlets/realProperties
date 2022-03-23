@@ -70,11 +70,10 @@ const headcells = [
     
 ];
 
-const Pending = ({handleCompletedBooking}) => {
+const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
     const dispatch = useDispatch();
-    const data = JSON.parse(localStorage.getItem('admin'))
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
-    console.log(pendingTransaction)
+
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())
@@ -97,8 +96,8 @@ const Pending = ({handleCompletedBooking}) => {
             </div>
         ) :
             <>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
-                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
+                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                {pending === 'succeeded' && (<Table  onClicks={data?.role === 'admin1' ? handleCompletedBooking : () => alert('You\'re not autorise to carry out this action')} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
             </>
         }
     </Wrapper>;

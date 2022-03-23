@@ -18,9 +18,8 @@ const H1 = styled.h1 `
 `
 
 
-const Complaint = () => {
+const Complaint = ({data, timeOfDay}) => {
     const dispatch = useDispatch();
-    const data = JSON.parse(localStorage.getItem('admin'))
     const {status, complains} = useSelector(state => state.adminDashboard);
     
 
@@ -37,7 +36,7 @@ const Complaint = () => {
             </div>
         ) :
             <>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
                 {status === 'succeeded' && (<TableData data={complains} status={status} />)}
             </>
         }

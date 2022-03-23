@@ -177,7 +177,6 @@ export default function EnhancedTable({headData, records, title, onClicks, showC
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - records?.length) : 0;
 
-    console.log(records?.customer_payment_confirmation)
     return (
         <Box sx={{ width: '100%' }} style={{ height: '100%'}}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -204,7 +203,7 @@ export default function EnhancedTable({headData, records, title, onClicks, showC
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                             const labelId = `enhanced-table-checkbox-${index}`;
-                            console.log(row?.customer_payment_confirmation)
+
 
                             return (
                                 <TableRows

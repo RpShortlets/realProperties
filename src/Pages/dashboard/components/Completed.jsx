@@ -100,9 +100,8 @@ const headcells = [
 ];
 
 
-const Completed = () => {
+const Completed = ({data, timeOfDay}) => {
     const dispatch = useDispatch();
-    const data = JSON.parse(localStorage.getItem('admin'))
     const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
     console.log(completedTransaction)
     
@@ -125,7 +124,7 @@ const Completed = () => {
             </div>
         ) :
             <>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
                 {completed === 'succeeded' && (<Table  title="Bookings" headData={headcells} records={completedTransaction}/>)}
             </>
         }

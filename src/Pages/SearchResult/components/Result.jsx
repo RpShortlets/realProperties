@@ -5,6 +5,7 @@ import {FlexStyle} from "../../../styles/globalStyles"
 import { IoBed } from "react-icons/io5"
 import { Washer, Rooms, Baths } from "../../../Svg/svg"
 import {useEncrypt } from "../../../hooks/useEncryption/useEncryption"
+import Button from "../../../components/Button/Button"
 // import { ShortletDetails } from "../../../redux/actionCreators/actionCreators"
 // import Tooltips from "../../../components/Tooltip"
 
@@ -166,6 +167,8 @@ const Apartment = styled.div `
 `
 
 const Price = styled.div `
+    ${FlexStyle}
+
     h3 {
         font-size: var(--font-small);
         color: var(--color-primary-dark);
@@ -277,6 +280,9 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                     </Apartment>
                     <Price>
                         <h3>&#8358; {price.toLocaleString()}</h3>
+                        <div style={{marginLeft:'max(2vw, 1.5rem)'}}>
+                            <Button color={"var(--color-primary)"} padding=".4rem" border="1px solid" title="Make reservation" background="transparent" />
+                        </div>
                     </Price>
                 </ContentContainer>
             </CardContainer>

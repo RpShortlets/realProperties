@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from "../../components/Modal/Modal"
-import {PendingIcon, CompletedIcon, DeletedIcon, UpdateIcon, ComplaintIcon } from '../../Svg/svg';
+import {PendingIcon, CompletedIcon, DeletedIcon, UpdateIcon, ComplaintIcon, HomeIcon, Person } from '../../Svg/svg';
 import Tooltip from "../../components/Tooltip"
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,8 +14,9 @@ import Button from "../../components/Button/Button"
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
 
 //Components
-import { Deleted, Complaint, Completed, Pending, UpdateBooking} from "./components/index"
+import { Deleted, Complaint, Completed, Pending, UpdateBooking, AgencyHome, AgentSignUp} from "./components/index"
 import Mobile from '../../components/Drawer/Mobile';
+import { useGetHour } from '../../hooks/useGetHour/useGetHour';
 
 
 const Section = styled.section `
@@ -125,17 +126,22 @@ const LeftBar = styled.div `
 `
 
 const Admin = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
     const Query = useMediaQuery("(min-width: 669px)")
+    const timeOfDay = useGetHour()
     const dispatch = useDispatch();
+    const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)
-    const [pending, setPending] = useState(true);
+    const [pending, setPending] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [complains, setComplains] = useState(false);
     const [bookings, setBookings] =  useState(false)
+    const [registerAgent, setRegisterAgent] = useState(false)
     const [formdata, setFormData] = useState({transactionId: ''})
     const [penId, setPenId] = useState()
     const [state, setState] = React.useState(false);
+
 
     const toggleDrawer = (type) => (event) => { //* Close the drawer when the user clicks outside of it, and toggle the state of the drawer.
         if (
@@ -159,6 +165,8 @@ const Admin = () => {
         setComplains(false)
         setBookings(false)
         setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleCompleted = () => {
@@ -168,6 +176,8 @@ const Admin = () => {
         setComplains(false)
         setBookings(false)
         setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleDeleted = () => {
@@ -177,6 +187,8 @@ const Admin = () => {
         setComplains(false)
         setBookings(false)
         setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleComplains = () => {
@@ -186,10 +198,38 @@ const Admin = () => {
         setPending(false);
         setBookings(false)
         setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
+
     }
 
     const handleBooking = () => {
         setBookings(true)
+        setComplains(false)
+        setDeleted(false);
+        setCompleted(false);
+        setPending(false);
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
+
+    }
+
+    const handleHome = () => {
+        setAgentHome(true)
+        setBookings(false)
+        setComplains(false)
+        setDeleted(false);
+        setCompleted(false);
+        setPending(false);
+        setState(false);
+        setRegisterAgent(false)
+    }
+
+    const handleRegisterUser = () => {
+        setRegisterAgent(true)
+        setAgentHome(false)
+        setBookings(false)
         setComplains(false)
         setDeleted(false);
         setCompleted(false);
@@ -277,38 +317,61 @@ const Admin = () => {
                         </div> */}
                         <div className='sideBarContainer'>
                             <div className='sideBarLink'>
-                                <Tooltip title="Pending Booking">
-                                    <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                                <Tooltip title="Home">
+                                    <Link to='pending' onClick={handleHome} className={agentHome ? 'sideBarBorder' : undefined} >
                                         <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: pending && '#fff' }}>{PendingIcon}</span>
+                                            <span style={{color: agentHome && '#fff' }}>{HomeIcon}</span>
                                         </div>
                                     </Link>
                                 </Tooltip>
-                                <Tooltip title="Completed Booking">
-                                    <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: completed && '#fff' }}>{CompletedIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Deleted Booking">
-                                    <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: deleted && '#fff !important' }}>{DeletedIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Update booking dates">
-                                    <Link to='update-booking' onClick={handleBooking} className={bookings ? 'sideBarBorder' : undefined}>
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{background: bookings && 'red !important' }}>{UpdateIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Pending Booking">
+                                        <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: pending && '#fff' }}>{PendingIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Completed Booking">
+                                        <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: completed && '#fff' }}>{CompletedIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin2' ? (
+                                    <Tooltip title="Deleted Booking">
+                                        <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: deleted && '#fff !important' }}>{DeletedIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Update booking dates">
+                                        <Link to='update-booking' onClick={handleBooking} className={bookings ? 'sideBarBorder' : undefined}>
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{background: bookings && 'red !important' }}>{UpdateIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                
                                 <Tooltip title="Read Complains">
                                     <Link to='complains' onClick={handleComplains} className={complains ? 'sideBarBorder' : undefined} >
                                         <div style={{display: 'flex' , alignItems: 'center'}}>
                                             <span style={{color: deleted && '#fff !important' }}>{ComplaintIcon}</span>
+                                        </div>
+                                    </Link>
+                                </Tooltip>
+                                <Tooltip title="Register user">
+                                    <Link to='register-user' onClick={handleRegisterUser} className={registerAgent ? 'sideBarBorder' : undefined} >
+                                        <div style={{display: 'flex' , alignItems: 'center'}}>
+                                            <span style={{color: registerAgent && '#fff !important' }}>{Person}</span>
                                         </div>
                                     </Link>
                                 </Tooltip>
@@ -324,14 +387,54 @@ const Admin = () => {
                         </div>
                     </SideBar>
                     <LeftBar>
-                        {pending ? (<Pending handleCompletedBooking={handleCompletedBooking} />) : completed ?
-                            (<Completed />) 
-                            : deleted ? 
-                            (<Deleted />)
-                            : bookings ? 
-                            (<UpdateBooking />) 
-                            : complains &&
-                            (<Complaint />)
+                        {   
+                            agentHome ? (
+                                <AgencyHome 
+                                    timeOfDay={timeOfDay}
+                                    data={user} 
+                                />
+                            ) :
+                            user?.role === "admin1" && pending ? 
+                            (
+                                <Pending 
+                                    handleCompletedBooking={handleCompletedBooking} 
+                                    timeOfDay={timeOfDay}
+                                    data={user}
+                                />
+                            ) : 
+                            
+
+                            user?.role === "admin1" && completed ?
+                                (<Completed  
+                                    timeOfDay={timeOfDay}
+                                    data={user}  
+                                />) 
+                            : user?.role === 'admin2' && deleted ? 
+                                (
+                                    <Deleted 
+                                        timeOfDay={timeOfDay}
+                                        data={user} 
+                                    />
+                                )
+                            :  user?.role === 'admin1' && bookings ? 
+                                (
+                                    <UpdateBooking 
+                                        timeOfDay={timeOfDay}
+                                        data={user} 
+                                    />
+                                ) 
+                            : complains ?
+                                (<Complaint 
+                                    timeOfDay={timeOfDay}
+                                    data={user} 
+                                />)
+                            : registerAgent ? ( 
+                                    <AgentSignUp 
+                                        timeOfDay={timeOfDay}
+                                        data={user} 
+                                    /> 
+                                )
+                            : (<AgencyHome />)
                         }
                     </LeftBar>
                 </Main>

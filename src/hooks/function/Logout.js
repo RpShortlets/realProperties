@@ -1,3 +1,3 @@
 export const Logout = () => {
-    localStorage.removeItem('admin');
+    localStorage.removeItem('user');
 }

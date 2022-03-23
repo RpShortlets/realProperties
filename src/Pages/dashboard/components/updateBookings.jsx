@@ -39,9 +39,8 @@ const H1 = styled.h1 `
 const apart = ['1', '2']
 const plat = ['AirBnB', 'Hotelsng', 'Bookings', 'Agency', 'Referral', 'Others']
 
-const UpdateBookings = () => {
+const UpdateBookings = ({data, timeOfDay}) => {
     const dispatch = useDispatch()
-    const data = JSON.parse(localStorage.getItem('admin'))
     const {status,  apartmentInfo: updateBooks, bookings} = useSelector(state => state.adminDashboard);
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
 
@@ -130,10 +129,6 @@ const UpdateBookings = () => {
         }
     }, [dispatch, dropdown])
 
-    // useEffect(() => {
-    //     const newPrice = status === 'succeeded' && price[0]?.price ? price[0]?.price : 0;
-    //     setTotalPrice(parseInt(newPrice) * parseInt(listNum))
-    // }, [listNum, price, status])
 
     useEffect(() => {
         if(bookings === 'succeeded' && updateBooks === 'Booking Successful') {
@@ -158,7 +153,7 @@ const UpdateBookings = () => {
     return (
         <>
             <Wrapper>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
                 <form autoSave='On' onSubmit={handleUpdateBookings}>
                     <div>
                         <Input  className="marginInput" type="text" label="First Name" placeholder='First Name' name="customerName"  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value.replace(/[^\w\s]/gi, "") })} />

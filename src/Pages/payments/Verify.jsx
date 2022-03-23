@@ -2,13 +2,13 @@ import { useEffect } from "react"
 import  "../../styles/card.css"
 import { VerifyPayStack } from "../../redux/actionCreators/actionCreators"
 import {useDispatch, useSelector} from "react-redux"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 import styled from "styled-components"
 import { BsFillCheckCircleFill,  } from "react-icons/bs"
 // import { MdCancel } from 'react-icons/md'
 import Button from "../../components/Button/Button"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
-import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
+// import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
 
 const Section = styled.section `
     width: 100%;
@@ -100,8 +100,8 @@ const Card = styled.div `
 `
 
 const Verify = () => {
-    const Id = new URLSearchParams(window.location.search).get("reference")
-    const key = "@@TechnoRealProperty" 
+    const Id = new URLSearchParams(window.location.search)?.get("reference")
+    // const key = "@@TechnoRealProperty" 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const ref = localStorage.getItem('payref')

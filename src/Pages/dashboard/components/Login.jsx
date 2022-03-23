@@ -42,13 +42,22 @@ const Login = () => {
         e.preventDefault();
         setloading(true)
         HandleSignIn(formdata).then((res) => {
+            console.log(res)
             if(res?.msg) {
-                localStorage.setItem('admin', JSON.stringify(res));
+                
+                localStorage.setItem('user', JSON.stringify(res));
                 dispatch(getAdminProfile(res))
                 setloading(false);
-                navigate('/admin/live/pending')
+                navigate('/admin/live/home')
 
-            }else{
+            } else if(res === 'Email or Password is wrong'){
+                setloading(false);
+                OpenNotificationWithIcon({
+                    type: 'error',
+                    message: 'Invalid email/password'
+                })
+            }
+            else{
                 OpenNotificationWithIcon({
                     type: 'error',
                     message: 'Something went wrong. Please try again'
@@ -68,7 +77,7 @@ const Login = () => {
                         <form onSubmit={handleLogin}>
                             <Input  type="email" label="Email"  placeholder="Email" name="email" Icon={Person}  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value })}   />
                             <Input  type="password" label="Password" placeholder="Password" name="password" Icon={Person}  value={formdata.password} formdata={formdata} handleChange={(e) => setFormData({...formdata, password: e.target.value })} />
-                            <Button   background='var(--linear-primary)' title={loading  ?  <Pulse color="#fff"  size="10px"  loading={loading}/>  : 'Login'} disabledBG="var(--linear-primary)" border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                            <Button background='var(--linear-primary)' title={loading  ?  <Pulse color="#fff"  size="10px"  loading={loading}/>  : 'Login'} disabledBG="var(--linear-primary)" border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                         </form>
                     </div>
                 </div>
