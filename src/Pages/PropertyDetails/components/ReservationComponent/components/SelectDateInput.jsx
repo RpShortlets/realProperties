@@ -3,7 +3,6 @@ import { SkeletonLoader } from "../../../../../components/Loader/Skeleton"
 import styled from "styled-components"
 import CalenderModal from "../../../../../components/Calender/CalenderModal"
 import { useState } from "react"
-import { useParams } from "react-router-dom"
 import useMediaQuery from "../../../../../hooks/useMediaQuery/useMediaQuery"
 
 
@@ -65,7 +64,7 @@ const InputContainer = styled.div`
 
 const SelectDateInput = () => {
     // const {checkin, checkout} = useParams()
-    const {reserve, reservation: {dates}, } = useSelector(state => state.reservationState)
+    const {reserve, } = useSelector(state => state.reservationState)
     const {checkInDate, checkOutDate} = useSelector(state => state.ComponentState)
 
     const Query = useMediaQuery("(min-width: 769px)")

@@ -207,7 +207,7 @@ export default function EnhancedTable({headData, records, title, onClicks, showC
 
                             return (
                                 <TableRows
-                                    hover
+                                    // hover
                                     onClick={onClicks ? () => onClicks(row?.pending_id) : console.log('')}
                                     tabIndex={-1}
                                     key={row?.pending_id}

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from "../../components/Modal/Modal"
 import {PendingIcon, CompletedIcon, DeletedIcon, UpdateIcon, ComplaintIcon, HomeIcon, Person } from '../../Svg/svg';
 import Tooltip from "../../components/Tooltip"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexStyle } from '../../styles/globalStyles';
 import { Logout } from '../../hooks/function/Logout';
@@ -18,6 +18,7 @@ import useLocalStorage from 'use-local-storage'
 import { Deleted, Complaint, Completed, Pending, UpdateBooking, AgencyHome, AgentSignUp} from "./components/index"
 import Mobile from '../../components/Drawer/Mobile';
 import { useGetHour } from '../../hooks/useGetHour/useGetHour';
+import { resetPaymentState } from '../../redux/actions/payment';
 
 
 
@@ -28,7 +29,7 @@ const Section = styled.section `
 `
 const Main = styled.div `
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     height: ${({height}) => height};
     width: 100%;
 `
@@ -120,10 +121,10 @@ const SideBar = styled.div `
 const LeftBar = styled.div `
     background: ${({theme}) => theme === 'dark' ? '#1f1f1f' : 'var(--color-secondary);'};
     height: 100%;
-    grid-column: 1/ 8;
+    grid-column: 1/ 9;
 
     @media screen and (min-width: 769px) {
-        grid-column: 2 / 8;
+        grid-column: 2 / 9;
     }
 `
 
@@ -132,6 +133,9 @@ const Admin = () => {
     const Query = useMediaQuery("(min-width: 669px)")
     const timeOfDay = useGetHour()
     const dispatch = useDispatch();
+    const {status} = useSelector(state => state.paymentState)
+
+
     const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)
     const [pending, setPending] = useState(false);
@@ -257,7 +261,6 @@ const Admin = () => {
         if(formdata.transactionId) {
             dispatch(ManualConfirmBookings({penId, formdata, time}));
             setOpenModal(false)
-            window.location.reload()
         } else {
             OpenNotificationWithIcon({
                 type: 'warning',
@@ -266,8 +269,33 @@ const Admin = () => {
         }
     }
 
-    
+    useEffect(() => {
+        if(status === "succeeded") {
+            console.log('Yes')
+            OpenNotificationWithIcon({
+                type: 'success',
+                message: 'Booking confirmed successfully. Page will refresh in 2 seconds'
+            }) 
 
+            setTimeout(() => {
+                window.location.reload()
+            }
+            , 2000)
+        } else if (status === "failed") {
+            OpenNotificationWithIcon({
+                type: 'error',
+                message: 'fail to confirm booking. Please try again'
+            })
+            dispatch(resetPaymentState())
+        } else {
+            console.log('No')
+        }
+
+        return () => {
+            dispatch(resetPaymentState())
+        }
+
+    }, [status, dispatch])
 
 
     return (
@@ -311,6 +339,8 @@ const Admin = () => {
             <Section>
                 <div style={{background: theme === 'dark' ? "#1f1f1f" : 'var(--color-secondary)', paddingLeft: '1rem'}}>
                     <Mobile  
+                        handleHome={handleHome}
+                        handleRegisterUser={handleRegisterUser}
                         handlePending={handlePending}
                         handleCompleted={handleCompleted}
                         handleDeleted={handleDeleted}
@@ -320,6 +350,8 @@ const Admin = () => {
                         toggleDrawer={toggleDrawer}
                         setState={setState}
                         theme={theme}
+                        user={user}
+                        Logout={Logout}
                     />
                 </div>
                 <Main height={ complains ? '100vh' : '100%'}>
@@ -396,6 +428,7 @@ const Admin = () => {
                         </div>
                     </SideBar>
                     <LeftBar theme={theme}>
+                        {status === "loading" && <div>Please wait why we fetch your request</div>}
                         {   
                             agentHome ? (
                                 <AgencyHome 

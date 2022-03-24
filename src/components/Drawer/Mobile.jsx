@@ -36,7 +36,7 @@ const Wrapper = styled.div`
     }
 `
 
-export default function Mobile({theme,handleCompleted,handlePending,handleDeleted, handleComplains, handleBooking, toggleDrawer, state, setState  }) {
+export default function Mobile({theme, user,handleRegisterUser, Logout,  handleHome, handleCompleted,handlePending,handleDeleted, handleComplains, handleBooking, toggleDrawer, state, setState  }) {
     const matched = useMediaQuery('(min-width:769px)'); //* true | false based on media query
 
 
@@ -68,24 +68,47 @@ export default function Mobile({theme,handleCompleted,handlePending,handleDelete
                     {/* //* MAIN CONTENT OF THE DRAWER */}
                     <Wrapper>
                         <ul>
-                            <li onClick={handlePending}>
-                                <Link to="#">Pending</Link>
+                            <li onClick={handleHome}>
+                                <Link to="#">Home</Link>
                             </li>
-                            <li onClick={handleCompleted}>
-                                <Link to="#">Bookings</Link>
+                            { user?.role === "admin1" && (
+                                <React.Fragment>
+                                    <li onClick={handlePending}>
+                                        <Link to="#">Pending</Link>
+                                    </li>
+                                </React.Fragment>
+                            )}
+                            { user?.role === "admin1" && (
+                                <React.Fragment>
+                                    <li onClick={handleCompleted}>
+                                        <Link to="#">Completed</Link>
+                                    </li>
+                                </React.Fragment>
+                            )}
+                            {user?.role === 'admin2' && (
+                                <React.Fragment>
+                                    <li onClick={handleDeleted}>
+                                        <Link to="#">Deleted</Link>
+                                    </li>
+                                </React.Fragment>
+                            )}
+                            {user?.role === 'admin1' && (
+                                <React.Fragment>
+                                    <li onClick={handleBooking}> 
+                                        <Link to="#">New Booking</Link>
+                                    </li>
+                                </React.Fragment>
+                            )}
+                            <li onClick={handleRegisterUser}>
+                                <Link to="#">Register User</Link>    
                             </li>
-                            <li onClick={handleDeleted}>
-                                <Link to="#">Deleted Bookings</Link>    
-                            </li>
-                            <li onClick={handleBooking}> 
-                                <Link to="#">New Booking</Link>
-                            </li>
+                            
                             <li onClick={handleComplains}>
                                 <Link to="#">Complains</Link>    
                             </li>
                         </ul>
-                        <div>
-                            <p>Logout</p>
+                        <div onClick={Logout}>
+                            <Link to="#">Logout</Link>   
                         </div>
                     </Wrapper>
                 </SwipeableDrawer>

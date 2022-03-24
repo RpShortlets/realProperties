@@ -168,6 +168,7 @@ const Apartment = styled.div `
 
 const Price = styled.div `
     ${FlexStyle}
+    justify-content: space-between;
 
     h3 {
         font-size: var(--font-small);
@@ -281,7 +282,7 @@ const Result = ({data: {property_brief_description, address, apartment_name, bat
                     <Price>
                         <h3>&#8358; {price.toLocaleString()}</h3>
                         <div style={{marginLeft:'max(2vw, 1.5rem)'}}>
-                            <Button color={"var(--color-primary)"} padding=".4rem" border="1px solid" title="Make reservation" background="transparent" />
+                            <Button color={"var(--color-primary)"} padding=".4rem" border="1px solid" title="Make reservation" background="transparent" fontSize="var(--font-xtra-small-screen)" />
                         </div>
                     </Price>
                 </ContentContainer>

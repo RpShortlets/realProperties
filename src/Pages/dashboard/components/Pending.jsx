@@ -98,7 +98,7 @@ const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
         ) :
             <>
                 <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
-                {pending === 'succeeded' && (<Table  onClicks={data?.role === 'admin1' ? handleCompletedBooking : () => alert('You\'re not autorise to carry out this action')} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
+                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
             </>
         }
     </Wrapper>;

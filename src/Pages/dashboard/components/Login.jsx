@@ -42,9 +42,7 @@ const Login = () => {
         e.preventDefault();
         setloading(true)
         HandleSignIn(formdata).then((res) => {
-            console.log(res)
             if(res?.msg) {
-                
                 localStorage.setItem('user', JSON.stringify(res));
                 dispatch(getAdminProfile(res))
                 setloading(false);

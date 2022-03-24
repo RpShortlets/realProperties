@@ -257,7 +257,7 @@ const Transfer = () => {
             OpenNotificationWithIcon({
                 description: `You are being redirect back to the home page in ${timer} seconds`,
                 type: 'success',
-                duration: 10,
+                duration: 7,
             })
         }
         

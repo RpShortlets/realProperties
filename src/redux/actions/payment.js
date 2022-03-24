@@ -16,8 +16,15 @@ export const PaymentsReducer = createSlice({
         cancelTransfer: {},
         confirmTransfer: {},
         expiredBookings: {},
-        manualReceivePayment: {}
+        manualReceivePayment: {},
+        
     },
+    reducers: {
+        resetPaymentState: (state) => {
+            state.confirmTransfer = {};
+        }
+    },
+
     extraReducers:(builder) => {
         builder
         .addCase(ongoingTransaction.pending, (state, action) => {
@@ -123,6 +130,6 @@ export const PaymentsReducer = createSlice({
 
 })
 
-
+export const { resetPaymentState } = PaymentsReducer.actions
 
 export default PaymentsReducer.reducer

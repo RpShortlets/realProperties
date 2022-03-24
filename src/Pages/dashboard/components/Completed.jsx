@@ -104,7 +104,7 @@ const headcells = [
 const Completed = ({data, timeOfDay}) => {
     const dispatch = useDispatch();
     const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
-    console.log(completedTransaction)
+
     
     useEffect(() => {
         dispatch(AdminCompletedTransaction())

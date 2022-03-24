@@ -10,8 +10,8 @@ import Names from "./components/Names"
 import Email from "./components/Email"
 import Nationality from "./components/Nationality"
 import Identification from "./components/Identification"
-import Checkbox from "../../utils/FormElement/CheckBox"
-import Agent from "./components/Agent"
+// import Checkbox from "../../utils/FormElement/CheckBox"
+// import Agent from "./components/Agent"
 //import ReCaptchaV2 from 'react-google-recaptcha'
 import validator from 'validator'
 import {saveCustomerInformation} from "../../redux/actionCreators/actionCreators"
@@ -88,18 +88,18 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: "", title: ''})
     const [value, setValue] = useState(null);
     const [phn, setPhone] = useState("")
-    const [agentPhn, setAgentPhn] = useState("")
+    // const [agentPhn, setAgentPhn] = useState("")
     const [validated, setValidated] = useState(false)
     const [emailerror, setEmailError] = useState(false)
     const [focus, setFocus] = useState(false)
     const [focusLast, setFocusLast] = useState(false)
     const [focusId, setFocusId] = useState(false)
-    const [checkboxes, setCheckboxes] = useState({agent: false})
-    const [checkbox, setcheckbox] = useState({individual: false})
+    // const [checkboxes, setCheckboxes] = useState({agent: false})
+    // const [checkbox, setcheckbox] = useState({individual: false})
 
     const age = useCalculateAge(value)
 
-    const boxed = checkboxes.agent || checkbox.individual ? true : false;
+    // const boxed = checkboxes.agent || checkbox.individual ? true : false;
     const name = formdata.firstname 
     const lastname = formdata.lastname;
     const Idnum = formdata.idnumber
@@ -131,18 +131,18 @@ const ReservationRight = ({setShowModal, proceess}) => {
         }
     }
 
-    const handleChange = (e) => {
-        const { value, checked, name } = e.target;
-        setCheckboxes({...checkboxes, [name]: checked ? value : ''})
-        setcheckbox({checkbox: {}})
-    }
+    // const handleChange = (e) => {
+    //     const { value, checked, name } = e.target;
+    //     setCheckboxes({...checkboxes, [name]: checked ? value : ''})
+    //     setcheckbox({checkbox: {}})
+    // }
 
 
-    const handleBox = (e) => {
-        const { value, checked, name } = e.target;
-        setcheckbox({...checkbox, [name]: checked ? value : ''})
-        setCheckboxes({checkboxes: {}}) 
-    }
+    // const handleBox = (e) => {
+    //     const { value, checked, name } = e.target;
+    //     setcheckbox({...checkbox, [name]: checked ? value : ''})
+    //     setCheckboxes({checkboxes: {}}) 
+    // }
 
 
     // const [captcha, setCaptcha] = useState(false)
@@ -169,32 +169,10 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(dropdown.title && validatedName && validatedLastName && dropdown.gender && validated && phn && age >= 18 && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber && boxed ) {
-            if(checkboxes.agent) {
-                if(formdata.agentName && agentPhn) {
-                    dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId, agentPhn}))
-                    navigate(`/order-summary/ref/${ongoing}`)
-                } else {
-                    if(!formdata.agentName) {
-                        OpenNotificationWithIcon({
-                            type: 'warning',
-                            message: 'Please enter agent name',
-                        })
-                    }
-
-                    else if(!agentPhn) {
-                        OpenNotificationWithIcon({
-                            type: 'warning',
-                            message: 'Please enter agent phone number',
-                        })
-                    }
-                }
-            }
-            else {
-                dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}))
-                navigate(`/order-summary/ref/${ongoing}`)
-            }
-        }
+        if(dropdown.title && validatedName && validatedLastName && dropdown.gender && validated && phn && age >= 18 && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber  ) {
+            dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}))
+            navigate(`/order-summary/ref/${ongoing}`)
+        } 
         else {
             if(!dropdown.title) {
                 OpenNotificationWithIcon({
@@ -306,19 +284,19 @@ const ReservationRight = ({setShowModal, proceess}) => {
                     </div>
                     <div className="FormHeader">
                         <form onSubmit={submitFormReservation} className="noselect"  style={{marginBottom: '3rem'}}>
-                            <div>
+                            {/* <div>
                                 <Checkbox name="agent" checkboxes={checkboxes.agent} handleChange={handleChange} label="Booking done by Agent" />
                                 <Checkbox name="individual" checkboxes={checkbox.individual} handleChange={handleBox} label="Booking done by individual" />
-                            </div>
+                            </div> */}
                             <Names proceess={proceess} formdata={formdata} Focus={Focus} dropdown={dropdown} setDropdown={setDropdown} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
                             <Email proceess={proceess}  checkEmail={checkEmail} error={emailerror} phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  /> 
                             <Nationality proceess={proceess}  dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} formdata={formdata} setFormData={setFormData} value={value} setValue={setValue}  />
                             <Identification  proceess={proceess}  dropdown={dropdown} error={validatedID} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData} FocusID={FocusID}/> 
-                            {checkboxes.agent && (
+                            {/* {checkboxes.agent && (
                                 <div>
                                     <Agent setAgentPhn={setAgentPhn} agentPhn={agentPhn} proceess={proceess} formdata={formdata} Focus={Focus} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
                                 </div>
-                            )}
+                            )} */}
                             <div>
                                 <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={status}/>  : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                             </div>
