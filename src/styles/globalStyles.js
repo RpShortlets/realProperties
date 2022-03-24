@@ -138,10 +138,10 @@ export const AdminContainer = css`
     height: 100%;
     overflow-y: auto;
     height: 100%;
-    margin-top: 4rem;
+    margin-top: 0;
 
     @media screen and (min-width: 769px) { 
-        margin-top: 0;
+        margin-top: 2rem;
     }
 
 `

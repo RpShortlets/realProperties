@@ -8,6 +8,7 @@ import Table from "../../../components/Table/Tab"
 import { Clip } from "../../../components/Loader/Spinner";
 import Error from "../../../components/Error/Error"
 import { Error404Icon } from '../../../Svg/svg';
+import { useNavigate } from 'react-router';
 
 const Wrapper = styled.div `
     ${AdminContainer}
@@ -73,8 +74,16 @@ const headcells = [
 
 const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    console.log(data)
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
 
+    useEffect(() => {
+        if(!data?.token) {
+            navigate('/admin/live')
+        }
+    }, [navigate, data])
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())

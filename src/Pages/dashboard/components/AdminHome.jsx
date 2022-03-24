@@ -23,7 +23,7 @@ const Container = styled.div `
 `
 
 const AdminHome = ({timeOfDay, data, SwitchTheme, theme}) => {
-
+    
 
     return (
         <Wrapper>

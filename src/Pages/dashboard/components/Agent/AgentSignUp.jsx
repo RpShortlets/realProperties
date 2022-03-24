@@ -1,34 +1,22 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import Button from '../../../../components/Button/Button'
 import { Input, PhoneType, InputSelect } from '../../../../utils/FormElement/Input'
 import { Person } from '../../../../Svg/svg';
-import { HandleAgentSiginIn } from '../../../../redux/actionCreators/actionCreators'
+import { AdminUserRegistration } from '../../../../redux/actionCreators/actionCreators'
 import { OpenNotificationWithIcon } from '../../../../components/Notification/Notification'
 import { AdminContainer, AdminHeader } from '../../../../styles/globalStyles'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearRegistration } from '../../../../redux/actions/adminDashboard';
 
 
 const Section = styled.section`
-    /* height: 100vh; */
     ${AdminContainer}
-    /* background: var(--color-white);
-    margin: 6rem 0; */
 `
 
 const Main = styled.div `
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-    /* height: auto; */
-
     p {
         margin: max(1vw, 1rem) 0 !important;
-    }
-
-    @media screen and (min-width: 700px) {
-        /* height: 100%; */
     }
 `
 
@@ -44,128 +32,97 @@ const H1 = styled.h1 `
     ${AdminHeader}
 `
 
-const userType = ['Agent', 'Super Admin', 'Admin', 'User']
 
-const AgentSignUp = ({data, timeOfDay}) => {
-    // const [signup, setSignup] = useState(false)
-    const [formdata, setFormData] = useState({email: '', password: '', confirmpassword: '', bname: '', firstname: '', lastname: '',})
+const roles = [
+    {
+        value: 'agent',
+        label: 'Agent',
+    },
+    {
+        value: 'admin',
+        label: 'Admin',
+    },
+    {
+        value: 'manager',
+        label: 'Super Admin',
+    },
+    {
+        value: 'user',
+        label: 'User',
+    },
+]
+
+const AgentSignUp = ({data, timeOfDay, theme}) => {
+    const dispatch = useDispatch()
+    const { status, userRegistration} = useSelector(state => state.adminDashboard)
+    const [formdata, setFormData] = useState({email: '', firstname: '', lastname: '',})
     const [phn, setPhone] = useState('')
     const [dropdown, setDropdown] = useState({user: ''})
 
 
     const handleFormSubmit = (e) => { 
         e.preventDefault()
-        if(formdata.firstname && formdata.lastname && formdata.email && phn && formdata.password === formdata.confirmpassword) {     
-            console.log(formdata, phn)
-        } 
+        if(formdata.firstname && formdata.lastname && formdata.email && phn && dropdown.user) {     
+            dispatch(AdminUserRegistration({formdata, phn, dropdown}))
+        }  else {
+            OpenNotificationWithIcon({
+                type: 'warning',
+                message: 'Please fill all the fields',
+            })
+        }
     }
-    // const handleFormSubmit = (e) => {
-    //     e.preventDefault()
-    //         if(formdata.firstname && formdata.lastname && formdata.email && phn && formdata.password === formdata.confirmpassword) { 
-                
-    //             console.log(formdata, phn)
-    //         } else {
-    //             if(!formdata.firstname) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'First name is required'
-    //                 })
-    //             }
-    //             else if(!formdata.lastname) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Last name is required'
-    //                 })
-    //             }
-    //             else if(!formdata.email) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Email is required'
-    //                 })
-    //             } 
-    //             else if(!phn) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Phone number is required'
-    //                 })
-    //             }
-    //             else if(!formdata.password) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Password is required'
-    //                 })
-    //             } 
-    //             else if(!formdata.confirmpassword) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Confirm password is required'
-    //                 })
-    //             } else if(formdata.password !== formdata.confirmpassword) {
-    //                 OpenNotificationWithIcon({
-    //                     type: 'error',
-    //                     message: 'Password does not match'
-    //                 })
-    //             }
-    //         }
-    //     } 
-    //     // else {
-    //     //     if(formdata.email && formdata.password ) {
-    //     //         HandleAgentSiginIn(formdata).then((res) => {
-    //     //             if(res?.msg) {
-    //     //                 localStorage.setItem('user', JSON.stringify(res));
-    //     //                 setSignup(true)
-    //     //             } else {
-    //     //                 OpenNotificationWithIcon({
-    //     //                     type: 'error',
-    //     //                     message: 'Invalid email/password'
-    //     //                 })
-    //     //             }
-    //     //         })
-    //     //     }
-    //     // }
 
-    // }
+    useEffect(() => {
+        if(userRegistration === 'Record Created') {
+            setFormData({email: '', firstname: '', lastname: '',})
+            setPhone('')
+            setDropdown({user: ''})
+            OpenNotificationWithIcon({
+                type: 'success',
+                message: 'User Registration Successful',
+            })
+            dispatch(clearRegistration())
+        } else if (userRegistration === 'Record with this Email already exists') {
+            OpenNotificationWithIcon({
+                type: 'error',
+                message: 'User already exists',
+            })
+            dispatch(clearRegistration())
+        } 
+    }, [userRegistration, dispatch])
+
+
+    //! TODO
+    // useEffect(() => {
+    //     if(status === 'failed') {
+    //         OpenNotificationWithIcon({
+    //             type: 'error',
+    //             message: 'Something went wrong',
+    //         })
+    //         dispatch(clearRegistration())
+    //     }
+    // }, [status, dispatch])
 
 
     return (
         <Section>
-            {/* {signup ?  */}
-                <Main>
-                    <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
-                    <Container>
-                        <form onSubmit={handleFormSubmit}>
-                            <Input type="text" label="First Name"  placeholder="First Name" name="firstname" Icon={Person}  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value })}/>
-                            <Input type="text" label="Last Name"  placeholder="Last Name" name="lastname" Icon={Person}  value={formdata.lastname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value })}/>
-                            <Input type="email" label="Email"  placeholder="Email" name="email" Icon={Person}  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value })}/>
-                            <PhoneType phn={phn} setPhone={setPhone} label="Phone Number"/>
-                            <div style={{margin: 'max(2vw, 1.5rem) 0'}}>
-                                <InputSelect   name="user"  style={{paddingLeft: '10px'}} value={dropdown.user} dropdown={dropdown} setDropdown={setDropdown} options={userType} label="Uuser Type" defaultV="Select user" />
-                            </div>
-                            <Input  type="password" label="Password" placeholder="Password" name="password" value={formdata.password} formdata={formdata} handleChange={(e) => setFormData({...formdata, password: e.target.value })}/>
-                            {/* <div style={{margin: 'max(2vw, 1.5rem) 0'}}>
-                                <Input type="password" label="Confirm Password" placeholder="Confirm Password" name="confirmpassword" value={formdata.confirmpassword} formdata={formdata} handleChange={(e) => setFormData({...formdata, confirmpassword: e.target.value })}/>
-                            </div> */}
-                            <div style={{marginTop: 'max(1vw, .6rem)'}}>
-                                <Button type={"submit"} border={"0"} height="55px" width={"100%"} padding={".9rem"} color="var(--color-white)" background='var(--linear-primary)' title={"Sign Up"}/>
-                            </div>
-                        </form>
-                    </Container>
-                    {/* <p>Already have an account? <Link to="#" onClick={() => setSignup((prev) => !prev)}>Sign In</Link></p> */}
-                </Main> :
-                {/* <Main>
-                    <h1>Sign In</h1>
-                    <Container>
-                        <form onSubmit={handleFormSubmit}>
-                            <Input type="email" label="Email"  placeholder="Email" name="email" Icon={Person}  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value })}/>
-                            <Input type="password" label="Password" placeholder="Password" name="password" Icon={Person}  value={formdata.password} formdata={formdata} handleChange={(e) => setFormData({...formdata, password: e.target.value })}/>
-                            <div style={{marginTop: 'max(1vw, .6rem)'}}>
-                                <Button border={"0"} height="55px" width={"100%"} padding={".9rem"} color="var(--color-white)" background='var(--linear-primary)' title={"Sign In"}/>
-                            </div>
-                        </form>
-                    </Container>
-                    <p>No account yet? <Link to="#" onClick={() => setSignup((prev) => !prev)}>Sign Up</Link></p>
-                </Main>
-            } */}
+            <Main>
+                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <Container>
+                    <form onSubmit={handleFormSubmit}>
+                        <Input theme={theme} type="text" label="First Name"  placeholder="First Name" name="firstname" Icon={Person}  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value })}/>
+                        <Input theme={theme} type="text" label="Last Name"  placeholder="Last Name" name="lastname" Icon={Person}  value={formdata.lastname} formdata={formdata} handleChange={(e) => setFormData({...formdata, lastname: e.target.value })}/>
+                        <Input theme={theme} type="email" label="Email"  placeholder="Email" name="email" Icon={Person}  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value })}/>
+                        <PhoneType theme={theme} phn={phn} setPhone={setPhone} label="Phone Number"/>
+                        <div style={{margin: 'max(2vw, 1.5rem) 0'}}>
+                            <InputSelect theme={theme}  name="user"  style={{paddingLeft: '10px'}} value={dropdown.user} dropdown={dropdown} setDropdown={setDropdown} options={roles} label="User Type" defaultV="Select user" />
+                        </div>
+                        <div style={{marginTop: 'max(1vw, .6rem)'}}>
+                            <Button disabled={status === "loading"} type={"submit"} border={"0"} height="55px" width={"100%"} padding={".9rem"} color="var(--color-white)" background='var(--linear-primary)' title={status === "loading" ? "Sending Request, Please wait." :  "Register a user"}/>
+                        </div>
+                    </form>
+                </Container>
+            </Main> 
         </Section>
     )
 }

@@ -133,8 +133,7 @@ const Admin = () => {
     const Query = useMediaQuery("(min-width: 669px)")
     const timeOfDay = useGetHour()
     const dispatch = useDispatch();
-    const {status} = useSelector(state => state.paymentState)
-
+    const {status, confirmTransfer} = useSelector(state => state.paymentState)
 
     const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)
@@ -276,11 +275,12 @@ const Admin = () => {
                 type: 'success',
                 message: 'Booking confirmed successfully. Page will refresh in 2 seconds'
             }) 
-
+            dispatch(resetPaymentState())
             setTimeout(() => {
                 window.location.reload()
             }
             , 2000)
+
         } else if (status === "failed") {
             OpenNotificationWithIcon({
                 type: 'error',
@@ -291,11 +291,8 @@ const Admin = () => {
             console.log('No')
         }
 
-        return () => {
-            dispatch(resetPaymentState())
-        }
-
     }, [status, dispatch])
+
 
 
     return (
@@ -392,7 +389,7 @@ const Admin = () => {
                                         </Link>
                                     </Tooltip>
                                 ): ''}
-                                {user?.role === 'admin1' ? (
+                                {user?.role === 'admin1' || user?.role === "agent" ? (
                                     <Tooltip title="Update booking dates">
                                         <Link to='update-booking' onClick={handleBooking} className={bookings ? 'sideBarBorder' : undefined}>
                                             <div style={{display: 'flex' , alignItems: 'center'}}>
@@ -401,21 +398,26 @@ const Admin = () => {
                                         </Link>
                                     </Tooltip>
                                 ): ''}
+                                {user?.role !== 'agent' && (
+                                    <Tooltip title="Read Complains">
+                                        <Link to='complains' onClick={handleComplains} className={complains ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: deleted && '#fff !important' }}>{ComplaintIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>   
+                                )}
                                 
-                                <Tooltip title="Read Complains">
-                                    <Link to='complains' onClick={handleComplains} className={complains ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: deleted && '#fff !important' }}>{ComplaintIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Register user">
-                                    <Link to='register-user' onClick={handleRegisterUser} className={registerAgent ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: registerAgent && '#fff !important' }}>{Person}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Register user">
+                                        <Link to='register-user' onClick={handleRegisterUser} className={registerAgent ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: registerAgent && '#fff !important' }}>{Person}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ) : ("")}
+                                
 
                             </div>
                             <div className="adminLogout">
@@ -460,7 +462,7 @@ const Admin = () => {
                                         data={user} 
                                     />
                                 )
-                            :  user?.role === 'admin1' && bookings ? 
+                            :  (user?.role === 'admin1' || user?.role === "agent") && bookings ? 
                                 (
                                     <UpdateBooking 
                                         timeOfDay={timeOfDay}
@@ -468,15 +470,16 @@ const Admin = () => {
                                         theme={theme}
                                     />
                                 ) 
-                            : complains ?
+                            :  user?.role !== 'agent' && complains ?
                                 (<Complaint 
                                     timeOfDay={timeOfDay}
                                     data={user} 
                                 />)
-                            : registerAgent ? ( 
+                            : user?.role === 'admin1' && registerAgent ? ( 
                                     <AgentSignUp 
                                         timeOfDay={timeOfDay}
-                                        data={user} 
+                                        data={user}
+                                        theme={theme} 
                                     /> 
                                 )
                             : (<AgencyHome 

@@ -206,15 +206,15 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                             <div className="carousel-item active" style={{height: '100%', }}>
                                 <img src={BG} className="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
                             </div>
-                            <div className="carousel-item" style={{height: '100%', }}>
+                            {/* <div className="carousel-item" style={{height: '100%', }}>
                                 <img src={BG2} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div>
+                            </div> */}
                             <div className="carousel-item" style={{height: '100%', }}>
                                 <img src={BG3} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div>
+                            </div> 
                             <div className="carousel-item" style={{height: '100%', }}>
                                 <img src={BG4} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <FilterWrapper className="justify-center">

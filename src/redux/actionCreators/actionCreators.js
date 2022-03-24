@@ -84,9 +84,7 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
         }
     });
 
-    
-    // localStorage.setItem("getReservation",JSON.stringify(response.data))
-    return response.data;
+        return response.data;
     
 });
 
@@ -106,7 +104,6 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
             driver_length: carlengthValue,
         }
     });
-    // localStorage.setItem("getReservation",JSON.stringify(response.data))
     return response.data;
 
 });
@@ -314,6 +311,21 @@ export const HandleAgentSiginIn = async(formData) => {
 
 }
 
+export const AdminUserRegistration = createAsyncThunk("adminDashboard/adminUserRegistration", async ({formdata,phn, dropdown}) => {
+    const fdata = {
+        firstname: formdata.firstname,
+        lastname: formdata.lastname,
+        email: formdata.email,
+        phone_no: phn,
+        usertype: dropdown.user,
+    }
+
+
+    const response = await axios.post(`${BaseURL}/admin/register-user`, fdata);
+    console.log(response)
+    return response.data;
+
+});
 
 export const AdminPendingTransaction = createAsyncThunk("adminDashboard/adminPendingTransaction", async () => {
     const {data} = await axios.get(`${BaseURL}/admin/pending-payments`);

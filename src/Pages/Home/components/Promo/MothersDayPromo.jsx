@@ -32,7 +32,7 @@ const MothersDayPromo = ({showPromo, setShowPromo, Onclicks}) => {
     const Query = useMediaQuery("(max-width: 600px)")
 
     return (
-        <Modal transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -20}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: 0}}  padding="0" show={showPromo} setShow={setShowPromo} width={Query ? "90%" : "70%"} theme="rgba(0,0,0,0.5)" left={Query ? "5%" : "15%"} top="50%" btn>
+        <Modal transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: -50}}  padding="0" show={showPromo} setShow={setShowPromo} width={Query ? "90%" : "70%"} theme="rgba(0,0,0,0.5)" left={Query ? "5%" : "15%"} top="50%" btn>
             <Cancel onClick={() => setShowPromo(false)}>{ CancelIcon}</Cancel>
             <Image src={Banner} alt="MothersDayPromo" onClick={Onclicks} />
         </Modal>

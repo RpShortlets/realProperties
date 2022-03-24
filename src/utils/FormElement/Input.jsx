@@ -70,7 +70,7 @@ export const Input = ({ theme, className, min, Blur, asterik, disabled, Focus,ty
 
 
 
-export const InputSelect = ({ theme, className, label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
+export const InputSelect = ({roles, theme, className, label, disabled, style, ref, setDropdown, value, options, dropdown, name, Icon, defaultV}) => {
     return (
         <div className={`input-container ${className}`} >
             <label style={{color: theme === "dark" && 'var(--color-white)'}}>{label}{Asterik} 
@@ -78,7 +78,7 @@ export const InputSelect = ({ theme, className, label, disabled, style, ref, set
                     <option defaultChecked >{defaultV}</option>
                     {options.map((option, i) => {
                         return (
-                            <option key={i} value={option}>{option}</option>
+                            <option key={i} value={option?.value ? option.value : option}>{option?.label ? option?.label : option}</option>
                         )
                     })}
                 </select>

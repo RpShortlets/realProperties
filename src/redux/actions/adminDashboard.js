@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { AdminPendingTransaction, AdminCompletedTransaction, 
     AdminDeletedTransaction, AdminLogin, GetCustomersComplains,
-    UpdateBooking, GetPropertyInfoAdmin } 
+    UpdateBooking, GetPropertyInfoAdmin, AdminUserRegistration } 
     from '../actionCreators/actionCreators';
 
 export const AdminDashboard = createSlice({
@@ -14,12 +14,17 @@ export const AdminDashboard = createSlice({
         profile: {},
         complains: {},
         updateBooks: {},
-        apartmentInfo: {}
+        apartmentInfo: {},
+        userRegistration: {}
     },
     reducers: {
         getAdminProfile: (state, action) => {
             state.profile = action.payload
-        }
+        },
+        clearRegistration: (state, action) => {
+            state.userRegistration = {}
+            
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -100,9 +105,20 @@ export const AdminDashboard = createSlice({
             state.status = 'failed'
             state.error = action.error.message
         })
+        .addCase(AdminUserRegistration.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(AdminUserRegistration.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+            state.userRegistration = action.payload
+        })
+        .addCase(AdminUserRegistration.rejected, (state, action) => {
+            state.status = 'failed'
+            state.error = action.error.message
+        })
     }
 });
 
-export const { getAdminProfile } = AdminDashboard.actions;
+export const { getAdminProfile, clearRegistration } = AdminDashboard.actions;
 
 export default AdminDashboard.reducer;

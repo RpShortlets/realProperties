@@ -4,7 +4,7 @@ import { Logout } from "../function/Logout";
 
 
 export const CheckToken = () => {
-    const user = JSON.parse(localStorage.getItem('admin'))
+    const user = JSON.parse(localStorage.getItem('user'))
     const [expired, setExpired] = useState(false);
 
     const token = user?.token;

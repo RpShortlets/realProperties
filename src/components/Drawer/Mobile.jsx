@@ -92,20 +92,23 @@ export default function Mobile({theme, user,handleRegisterUser, Logout,  handleH
                                     </li>
                                 </React.Fragment>
                             )}
-                            {user?.role === 'admin1' && (
+                            {(user?.role === 'admin1'  || user?.role === "agent")&& (
                                 <React.Fragment>
                                     <li onClick={handleBooking}> 
                                         <Link to="#">New Booking</Link>
                                     </li>
                                 </React.Fragment>
                             )}
-                            <li onClick={handleRegisterUser}>
-                                <Link to="#">Register User</Link>    
-                            </li>
-                            
-                            <li onClick={handleComplains}>
-                                <Link to="#">Complains</Link>    
-                            </li>
+                            {user?.role === "admin1" && (
+                                <li onClick={handleRegisterUser}>
+                                    <Link to="#">Register User</Link>    
+                                </li>
+                            )}
+                            {user?.role !== "agent" && (
+                                <li onClick={handleComplains}>
+                                    <Link to="#">Complains</Link>    
+                                </li>
+                            )}
                         </ul>
                         <div onClick={Logout}>
                             <Link to="#">Logout</Link>   
