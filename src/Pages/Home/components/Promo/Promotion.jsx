@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Modal from "../../../../components/Modal/Modal"
-import Banner from "../../../../image/Promos/MotherDayPromo.webp"
+import Banner from "../../../../image/Promos/MotherBig.webp"
 import useMediaQuery from "../../../../hooks/useMediaQuery/useMediaQuery"
 
 
