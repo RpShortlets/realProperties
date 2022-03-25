@@ -169,7 +169,7 @@ export const TermsData = [
     },
     {
         id: 8,
-        title: "",
+        title: "Modification to Our services",
         content: "We reserve the right to modify, suspend the service or any services to which it connects, with or without your notice and without liability to you."
     },
     {
