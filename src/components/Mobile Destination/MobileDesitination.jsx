@@ -86,18 +86,18 @@ const Wrapper = styled.div `
 
 const MobileDesitination = () => {
     const dispatch = useDispatch();
-    const ikoyiRef = useRef(null)
+    // const ikoyiRef = useRef(null)
     const lekkiRef = useRef(null)
     const [value, setValue] = useState('')
     const {searchValue} = useSelector(state => state.ComponentState)
 
 
 
-    const handleOption = (e) => {
-        setValue(ikoyiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
-        dispatch(saveSearchValue(e.target.value))
+    // const handleOption = (e) => {
+    //     setValue(ikoyiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
+    //     dispatch(saveSearchValue(e.target.value))
         
-    }
+    // }
 
     const handleOption2 = (e) => {
         setValue(lekkiRef?.current?.childNodes[1]?.childNodes[0]?.childNodes[1]?.defaultValue) 
@@ -125,7 +125,7 @@ const MobileDesitination = () => {
                     </div>
                     <div>
                         {/* {Destlocation.map((data, i)  =>  */}
-                            <motion.label 
+                            {/* <motion.label 
                                 className={`${searchValue === "Ikoyi, Nigeria" ? `isActive` : ''} destinationPlaceItems` } 
                                 whileHover={{ scale: 1 }}
                                 whileTap={{ scale: 0.9 }}
@@ -141,7 +141,7 @@ const MobileDesitination = () => {
                                         <input id='ikoyi' name='ikoyi' value='Ikoyi, Nigeria'  type="checkbox" style={{display: 'none'}} />
                                     </label>
                                 </div>
-                            </motion.label>
+                            </motion.label> */}
                             <motion.label 
                                 className={`${searchValue === "Lekki, Nigeria" ? `isActive` : ''} destinationPlaceItems` }
                                 whileHover={{ scale: 1 }}

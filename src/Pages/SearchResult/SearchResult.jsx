@@ -120,6 +120,7 @@ const SearchResult = () => {
     const navigate = useNavigate()
     const {location, adults, children, checkIn, checkOut,} = useParams();
 
+
     //! NEED TO FIX THE REPLICA OF THIS CODE IN THE NAV BAR
     const searchV = location?.slice(9)
     const adult = adults?.slice(7) === 'null' ? '' : adults?.slice(7)
@@ -142,8 +143,8 @@ const SearchResult = () => {
 
     const myRef = useRef(null)
     const countAdultMinus = 1;
-    const countAdultAdd = 9;
-    const countAddChild = 5;
+    const countAdultAdd = 4;
+    const countAddChild = 3;
     const countMinusChild = 1;
     const startprice = slidervalue[0]
     const endprice = slidervalue[1]
@@ -291,11 +292,11 @@ const SearchResult = () => {
                                     {status === 'loading' ? <SkeletonLoader/> :
                                         (<div className="otherInputContainer">
                                             <div>
-                                                <input type="text" name="minprice" value={slidervalue[0]} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
+                                                <input disabled type="text" name="minprice" value={slidervalue[0]} placeholder="Min Price" style={{width: '100%'}} onChange={onSliderChange} />
                                             </div>
                                         
                                             <div>
-                                                <input type="text" name="maxprice" value={slidervalue[1]}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
+                                                <input disabled type="text" name="maxprice" value={slidervalue[1]}  placeholder="Max Price" style={{width: '100%'}} onChange={onSliderChange}  />
                                             </div>
                                         </div>)
                                     }
@@ -316,7 +317,7 @@ const SearchResult = () => {
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <Error height='60vh' title="Oops! We can’t find any property that matches your search but we provided recommendation" Icon={SearchNotFoundIcon} />
+                                                        <Error height='60vh' title={` Sorry no property available between ${checkI} and ${checkO} for your search. Please check other dates or location.`} Icon={SearchNotFoundIcon} />
                                                         {/* <Scrollable title="Recommendations of nearby shortlets" data={RecommendationData}/> */}
                                                     </>
                                                 )}

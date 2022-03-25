@@ -10,18 +10,23 @@ import Names from "./components/Names"
 import Email from "./components/Email"
 import Nationality from "./components/Nationality"
 import Identification from "./components/Identification"
+// import Checkbox from "../../utils/FormElement/CheckBox"
+// import Agent from "./components/Agent"
 //import ReCaptchaV2 from 'react-google-recaptcha'
 import validator from 'validator'
 import {saveCustomerInformation} from "../../redux/actionCreators/actionCreators"
+// import {useEncrypt} from "../../hooks/useEncryption/useEncryption"
 import { motion } from "framer-motion"
 import { CancelIcon } from "../../Svg/svg"
 import { Pulse } from "../../components/Loader/Spinner"
 import {useValidate, useValidateId, useValidateLast} from "../../hooks/useValidate/useValidate"
 import { OpenNotificationWithIcon } from "../../components/Notification/Notification"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
+import { Capitalize } from "../../hooks/useCapitalize/useCapitalize"
+import { useCalculateAge } from "../../hooks/useCalculateAge/useCalculateAge"
 
 
-const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID', 'Others'];
+const id = ['International Passport', 'Driver\'s License', 'Voter\'s Card', 'National ID',];
 
 
 const SectionRight = styled.div `
@@ -68,25 +73,41 @@ const MainRight = styled.div `
 const ReservationRight = ({setShowModal, proceess}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
+    // const key = "@@TechnoRealProperty" 
     const {status} = useSelector(state => state.customerRecord)
-    const {ongoingTransactions: {Ongoing_id, apartment_id}} = useSelector(state => state.paymentState)
+    const {ongoingTransactions: {Ongoing_id, apartment_id}, proceess:loading} = useSelector(state => state.paymentState)
     const Query = useMediaQuery("(min-width: 769px)")
 
+    const ongoing = loading === 'succeeded' && Ongoing_id[0]?.ongoing_id 
 
-    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: ""})
-    const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: ""})
+    // const {encrypted} = useEncrypt(ongoing.toString(), key)
+    // const newEncrypted = encrypted.replace(/[^a-zA-Z ]/g, "")
+
+
+    const [formdata, setFormData] = useState({firstname: "", lastname: "", email: "", idnumber: "", agentName: '', agentContact: ''})
+    const [dropdown, setDropdown] = useState({identification: "", nationality: "", gender: "", title: ''})
     const [value, setValue] = useState(null);
     const [phn, setPhone] = useState("")
+    // const [agentPhn, setAgentPhn] = useState("")
     const [validated, setValidated] = useState(false)
     const [emailerror, setEmailError] = useState(false)
     const [focus, setFocus] = useState(false)
     const [focusLast, setFocusLast] = useState(false)
     const [focusId, setFocusId] = useState(false)
+    // const [checkboxes, setCheckboxes] = useState({agent: false})
+    // const [checkbox, setcheckbox] = useState({individual: false})
 
+    const age = useCalculateAge(value)
+
+    // const boxed = checkboxes.agent || checkbox.individual ? true : false;
     const name = formdata.firstname 
     const lastname = formdata.lastname;
     const Idnum = formdata.idnumber
+    const {usedName: usedFirstname} = Capitalize(name)
+    const {usedName: usedLastname} = Capitalize(lastname)
+
+
+    console.log(usedFirstname, usedLastname)
 
     const {validatedName} = useValidate({name, focus})
     const {validatedLastName} =  useValidateLast({lastname, focusLast})
@@ -111,6 +132,18 @@ const ReservationRight = ({setShowModal, proceess}) => {
         }
     }
 
+    // const handleChange = (e) => {
+    //     const { value, checked, name } = e.target;
+    //     setCheckboxes({...checkboxes, [name]: checked ? value : ''})
+    //     setcheckbox({checkbox: {}})
+    // }
+
+
+    // const handleBox = (e) => {
+    //     const { value, checked, name } = e.target;
+    //     setcheckbox({...checkbox, [name]: checked ? value : ''})
+    //     setCheckboxes({checkboxes: {}}) 
+    // }
 
 
     // const [captcha, setCaptcha] = useState(false)
@@ -137,16 +170,72 @@ const ReservationRight = ({setShowModal, proceess}) => {
         const ongoingId = Ongoing_id[0]?.ongoing_id;
         const apartmentId = apartment_id[0]?.apartment_id 
 
-        if(validatedName && validatedLastName && dropdown.gender && validated && phn && value && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber ) {
-            dispatch(saveCustomerInformation({formdata, dropdown, phn, value, ongoingId, apartmentId}))
-            navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
-            // dispatch(RetrieveTransaction({ongoingId}))
-        }
+        if(dropdown.title && validatedName && validatedLastName && dropdown.gender && validated && phn && age >= 18 && dropdown.nationality && dropdown.identification && validatedID && formdata.idnumber  ) {
+            dispatch(saveCustomerInformation({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId}))
+            navigate(`/order-summary/ref/${ongoing}`)
+        } 
         else {
-            OpenNotificationWithIcon({
-                type: 'warning',
-                message: 'Please fill all credentials'
-            })
+            if(!dropdown.title) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please select title',
+                })
+            }
+            else if(!formdata.firstname ) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter first name',
+                })
+            }
+            else if(!formdata.lastname) { 
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter last name',
+                })
+            }
+            else if(!dropdown.gender) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please select your gender',
+                })
+                
+            }
+            else if(!validated) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter a valid email address',
+                })
+            }
+            else if(!phn) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter a valid phone number',
+                })
+            }
+            else if(!value || age <= 18 ) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Age must be 18 or above',
+                })
+            }
+            else if(!dropdown.nationality) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please select your nationality',
+                })
+            }
+            else if(!dropdown.identification) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please select your identification',
+                })
+            }
+            else if(!formdata.idnumber) {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please enter your id number',
+                })
+            }
         }
 
     }
@@ -196,10 +285,19 @@ const ReservationRight = ({setShowModal, proceess}) => {
                     </div>
                     <div className="FormHeader">
                         <form onSubmit={submitFormReservation} className="noselect"  style={{marginBottom: '3rem'}}>
+                            {/* <div>
+                                <Checkbox name="agent" checkboxes={checkboxes.agent} handleChange={handleChange} label="Booking done by Agent" />
+                                <Checkbox name="individual" checkboxes={checkbox.individual} handleChange={handleBox} label="Booking done by individual" />
+                            </div> */}
                             <Names proceess={proceess} formdata={formdata} Focus={Focus} dropdown={dropdown} setDropdown={setDropdown} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
                             <Email proceess={proceess}  checkEmail={checkEmail} error={emailerror} phn={phn} setPhone={setPhone} formdata={formdata} setFormData={setFormData}  /> 
                             <Nationality proceess={proceess}  dropdown={dropdown} setDropdown={setDropdown} countryList={countryList} formdata={formdata} setFormData={setFormData} value={value} setValue={setValue}  />
                             <Identification  proceess={proceess}  dropdown={dropdown} error={validatedID} setDropdown={setDropdown} id={id} formdata={formdata} setFormData={setFormData} FocusID={FocusID}/> 
+                            {/* {checkboxes.agent && (
+                                <div>
+                                    <Agent setAgentPhn={setAgentPhn} agentPhn={agentPhn} proceess={proceess} formdata={formdata} Focus={Focus} setFormData={setFormData} error={validatedName} validatedLastName={validatedLastName} FocusLastName={FocusLastName}  />
+                                </div>
+                            )} */}
                             <div>
                                 <Button  disabled={status === 'loading'}  background='var(--linear-primary)'  disabledBG="var(--linear-primary)" title={status === 'loading' ?  <Pulse color="#fff"  size="10px"  loading={status}/>  : 'Proceed to payment'} border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                             </div>

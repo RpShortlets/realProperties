@@ -76,7 +76,7 @@ const ContactModal = ({openModal,setOpenModal, SubmitContactForm, validatedName,
     const Query = useMediaQuery("(min-width: 669px)")
     
     return (
-        <Modal show={openModal} top='10vh'  height= "100%" transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-secondary)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "60%" : '90%'} >
+        <Modal show={openModal} top='10vh'  height= "fit-content" transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-secondary)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "60%" : '90%'} >
             <ModalContent>
                 <div className="contactUsHeader">
                     <h3>Contact Us</h3>

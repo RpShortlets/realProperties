@@ -1,7 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BaseURL } from "../../api/index"
+import  CryptoJS  from "crypto-js"
 
+const key = "@@TechnoRealProperty" 
 
 export const getUserProfile = createAsyncThunk(
     "userProfile/getUserProfile",
@@ -27,12 +29,6 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 
 //* SEARCH BOOKINGS
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
-    // let headers = {
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        
-    // };
     const response = await axios.get(`${BaseURL}/search-shortlets`, {
         params: {
             location: searchV, 
@@ -60,14 +56,14 @@ export const filter = createAsyncThunk("shortlet/filter", async ({startprice,end
 //* END OF SEARCH BOOKINGS
 
 //* GET APARTMENT DETAILS
-export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInD,checkOutD, apartment_id, Id}) => {
-    
+export const ShortletDetails = createAsyncThunk("Shortlet/getShortlet", async ({checkInDate,checkOutDate, apartment_id, Id, decrypted}) => {
+
     const response = await axios.get(`${BaseURL}/shortlet-details`,
     {
         params: {
-            property_id: Id || apartment_id,
-            check_in: checkInD,
-            check_out: checkOutD,
+            property_id: Id,
+            check_in: checkInDate,
+            check_out: checkOutDate,
         }
     });
     return response.data;
@@ -88,9 +84,7 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
         }
     });
 
-    
-    // localStorage.setItem("getReservation",JSON.stringify(response.data))
-    return response.data;
+        return response.data;
     
 });
 
@@ -110,7 +104,6 @@ export const getReservationUpdate = createAsyncThunk("reservation/getReservation
             driver_length: carlengthValue,
         }
     });
-    // localStorage.setItem("getReservation",JSON.stringify(response.data))
     return response.data;
 
 });
@@ -130,13 +123,14 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         car_rental: carPrice,
         driver: driver,
         security_deposit: security,
-        overall_total: totalPrice,
+        overall_total: 10,
         check_in_date: checkInDate,
         check_out_date: checkOutDate
     }
     
-    const response = await axios.post(`${BaseURL}/transaction`, formdat);
-    localStorage.setItem("definded",JSON.stringify(response?.data?.Ongoing_id[0]?.ongoing_id))
+    const response = await axios.post(`${BaseURL}/transaction`, formdat); 
+    const ddd =  await response?.data?.Ongoing_id[0]?.ongoing_id
+    localStorage.setItem('defined', JSON.stringify( CryptoJS.AES.encrypt(ddd?.toString(), key).toString()));
     return response.data;
 
 });
@@ -144,10 +138,10 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
 //* END OF SAVE CUSTOMER TRANSACTION INFOMATION
 
 //* GET CUSTOMER RECORDS: KYC
-export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, dropdown, phn, value, ongoingId, apartmentId}) => {
+export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustomerInformation", async ({formdata, usedFirstname, usedLastname, dropdown, phn, value, ongoingId, apartmentId, agentPhn}) => {
     const records = {
-        firstname: formdata.firstname?.toLowerCase(), 
-        lastname: formdata.lastname?.toLowerCase(),
+        firstname: usedFirstname, 
+        lastname: usedLastname,
         email: formdata.email?.toLowerCase(),
         phone_no: phn,
         dob: value?.toLocaleDateString('en-CA'),
@@ -155,22 +149,27 @@ export const saveCustomerInformation = createAsyncThunk("saveCustomer/saveCustom
         mode_of_identification: dropdown.identification,
         identification_no: formdata.idnumber,
         apartment_id: apartmentId,
-        ongoing_id: ongoingId
+        ongoing_id: ongoingId,
+        title: dropdown.title,
+        agent_name: formdata.agentName,
+        agent_phone_no: agentPhn,
     }
     
     const response = await axios.post(`${BaseURL}/customer`, records);
+    const ddd =  await response?.data?.guest_id[0]?.guest_id
+    localStorage.setItem('dddrd', JSON.stringify( CryptoJS.AES.encrypt(ddd?.toString(), key).toString()));
     return response.data;
 
 });
 //* END OF GET CUSTOMER RECORDS: KYC
 
 //* RETRIEVE CUSTOMER TRANSACTION 
-export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async ({Id}) => {
-    const formdat = {
-        ongoing_id: parseInt(Id),
-    }
-    
-    const response = await axios.post(`${BaseURL}/retreive-transaction`, formdat);
+export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction", async (Id) => {
+    const response = await axios.get(`${BaseURL}/retreive-transaction`, {
+        params: {
+            ongoing_id: parseInt(Id),
+        }
+    });
     return response.data;
 });
 //* END OF RETRIEVE CUSTOMER TRANSACTION
@@ -181,7 +180,7 @@ export const RetrieveTransaction = createAsyncThunk("payment/RetrieveTransaction
 export const ManualPay = createAsyncThunk("payment/manualPay", async ({apartmentId, userId, overAll, guestId }) => {
     const formdat = {
         apartment_id: apartmentId,
-        user_id:  guestId,
+        user_id: parseInt(guestId),
         // amount: overAll,
         ongoing_id: userId
     }
@@ -191,6 +190,17 @@ export const ManualPay = createAsyncThunk("payment/manualPay", async ({apartment
 
 });
 
+
+
+export const ManualReceive = createAsyncThunk("payment/manualreceive", async ({maxId, customerRes }) => {
+    const formdat = {
+        max_id: maxId,
+        cust_confirmation: customerRes
+    }
+    
+    const response = await axios.post(`${BaseURL}/set-customer-pymt-confirmation`, formdat);
+    return response.data;
+});
 
 export const ManualCancel = createAsyncThunk("payment/manualCancel", async ({pendingId }) => {
     const formdat = {
@@ -232,23 +242,22 @@ export const ExpiredBooking =  createAsyncThunk("payment/expiredBooking", async 
 export const PaymentPayStack = createAsyncThunk("payment/paymentStack", async ({apartmentId, userId, overAll, guestId }) => {
     const formdat = {
         apartment_id: apartmentId,
-        user_id:  guestId,
+        user_id: parseInt(guestId),
         amount: overAll,
         ongoing_id: userId
     }
     
-    const response = await axios.post(`${BaseURL}/payment-paystack`, formdat);
-    localStorage.setItem('ref', JSON.stringify(response.data))
+    const response = await axios.post(`${BaseURL}/card-payment`, formdat);
     return response.data;
 
 });
 
 
-export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async ({ref}) => {
-    
+export const VerifyPayStack = createAsyncThunk("payment/verifyPayStack", async (Id) => {
+
     const response = await axios.get(`${BaseURL}/paystack/callback/shortlet`, {
         params: {
-            ref: ref
+            ref: Id
         }
     });
     return response.data;
@@ -287,6 +296,45 @@ export const HandleSignIn = async(formData) => {
 
 }
 
+export const HandleLogOut = async() => {
+    try{
+        const {data} = await axios.get(`${BaseURL}/log-out`)
+        return data
+    }catch(error){
+        return error.message
+    }
+}
+
+export const HandleAgentSiginIn = async(formData) => {
+    const Fdata = {
+        email: formData.email,
+        password: formData.password
+    }
+
+    try{
+        const {data} = await axios.post(`${BaseURL}/agent-login`, Fdata)
+        return data
+    }catch(error){
+        return error.message
+    }
+
+}
+
+export const AdminUserRegistration = createAsyncThunk("adminDashboard/adminUserRegistration", async ({formdata,phn, dropdown}) => {
+    const fdata = {
+        firstname: formdata.firstname,
+        lastname: formdata.lastname,
+        email: formdata.email,
+        phone_no: phn,
+        usertype: dropdown.user,
+    }
+
+
+    const response = await axios.post(`${BaseURL}/admin/register-user`, fdata);
+    console.log(response)
+    return response.data;
+
+});
 
 export const AdminPendingTransaction = createAsyncThunk("adminDashboard/adminPendingTransaction", async () => {
     const {data} = await axios.get(`${BaseURL}/admin/pending-payments`);

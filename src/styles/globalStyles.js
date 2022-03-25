@@ -96,7 +96,7 @@ export const InputStyle = css`
     font-size: var(--font-small);
     outline: 0;
     padding: 10px;
-    padding-left: ${props => props.Icon ? "max(4vw, 2rem)" : ""};
+    padding-left: ${props => props.Icon ? "max(3vw, 2rem)" : ""};
     border-radius: 4px;
     width: 100%;
     height: 45px;
@@ -138,6 +138,11 @@ export const AdminContainer = css`
     height: 100%;
     overflow-y: auto;
     height: 100%;
+    margin-top: 0;
+
+    @media screen and (min-width: 769px) { 
+        margin-top: 2rem;
+    }
 
 `
 
@@ -145,6 +150,7 @@ export const AdminHeader = css`
     color: var(--color-primary);
     font-weight: 600;
     font-size: var(--font-big);
+    margin-bottom: 2rem;
 `
 
 //* HORIZONTAL SCROLL

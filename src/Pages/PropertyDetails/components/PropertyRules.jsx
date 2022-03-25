@@ -56,7 +56,7 @@ const PropertyRules = ({status}) => {
                     </RuleContent>
                     <RuleContent>
                     {status === 'loading' ? <SkeletonLoader /> : <span>{WatchIcon}</span>}
-                    {status === 'loading' ? <SkeletonLoader /> : <span>Check-out : 11:00 PM</span>}
+                    {status === 'loading' ? <SkeletonLoader /> : <span>Check-out : 11:00 AM</span>}
                     </RuleContent>
                     <RuleContent>
                         {status === 'loading' ? <SkeletonLoader /> : <span>{NoSmokingIcon}</span>}

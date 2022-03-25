@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect} from "react"
+import {useState, useRef, useEffect,} from "react"
 import { useParams, useNavigate} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import styled  from "styled-components/macro"
@@ -6,7 +6,6 @@ import { FlexStyle, PaddingStyle } from "../../styles/globalStyles"
 import useMediaQuery from "../../hooks/useMediaQuery/useMediaQuery"
 import MobileModal from "./components/Modal"
 import ReservationComponent from "./components/ReservationComponent/ReservationComponent" 
-import "../../styles/propertyDetails.css"
 import PropertyName from "./components/PropertyName"
 import PropertyImage from "./components/PropertyImage"
 import PropertyHeader from "./components/PropertyHeader"
@@ -99,8 +98,7 @@ const PropertyDetails = () => {
     const navigate = useNavigate()
 
     const Query = useMediaQuery("(min-width: 769px)")
-    const {Id, checkin, checkout} = useParams()
-
+    const {Id} = useParams()
 
     const {status} = useSelector(state => state.propertyDetails)
     const {proceess} = useSelector(state => state.paymentState)
@@ -137,8 +135,8 @@ const PropertyDetails = () => {
     const PickupFee =  reserve === 'succeeded' && summary_details[0]?.total_pickup_dropoff_price ? parseInt(summary_details[0]?.total_pickup_dropoff_price): 0;
     const carPrice =reserve === 'succeeded'&&  summary_details[0]?.total_car_price ? parseInt( summary_details[0]?.total_car_price) : 0;
     const driverPrice = reserve === 'succeeded'&& summary_details[0]?.total_driver_price ?  parseInt(summary_details[0]?.total_driver_price) : 0;
-    const checkInD = checkin.slice(8);
-    const checkOutD = checkout.slice(9);
+    // const checkInD = checkin.slice(8);
+    // const checkOutD = checkout.slice(9);
 
 
     //* HANDLE CHECKBOX CHANGE
@@ -245,22 +243,24 @@ const PropertyDetails = () => {
         const driver = summary_details[0]?.total_driver_price;
 
         if(Query) {
-            if(checkInD !==  '' && checkOutD !== '') {
+            if(checkInDate && checkOutDate && summary_details[0]?.total_apt_price > 0) {
                 dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                 setShowModal(true)
                 setshow(false)
-            } else {
+            }
+            else {
                 OpenNotificationWithIcon({
                     message: 'Please select check in and check out date',
                     type: 'warning',
                 })
             }
         } else {
-            if(checkInD !==  '' && checkOutD !== '') {
+            if(checkInDate  && checkOutDate  && summary_details[0]?.total_apt_price > 0) {
                 dispatch(ongoingTransaction({Id, stayLenght, totalPrice, security, apartmentPrice, totalApartmentPrice, cleaning, pickup, carPrice, driver, checkInDate, checkOutDate}))
                 navigate('/reservation')
                 setshow(false)
-            } else {
+            }
+            else {
                 OpenNotificationWithIcon({
                     message: 'Please select check in and check out date',
                     type: 'warning',
@@ -293,20 +293,18 @@ const PropertyDetails = () => {
 
 
     //!DEPENDING ISSUE
-
     useEffect(() => {
-        dispatch(ShortletDetails({checkInD, checkOutD, Id})) 
-    },  [checkInD,checkOutD, Id, dispatch])
+        dispatch(ShortletDetails({Id}))
+    },  [Id, dispatch, checkInDate, checkOutDate])
     
     
     useEffect(() => {
-        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes,Id}))
+        dispatch(getReservationUpdate({checkOutDate, checkInDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id}))
         navigate(`/apartment/${Id}&checkIn=${checkInDate  !== null ? checkInDate : ''}&checkOut=${checkOutDate  !== null ? checkOutDate : ''}`)
+    }, [dispatch, checkInDate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
 
-    }, [dispatch, checkInDate, navigate, checkOutDate, selectedCar, carlengthValue, radio, driverlengthValue, checkboxes, Id])
-
-    const date1 = new Date(checkInD);
-    const date2 = new Date(checkOutD);
+    const date1 = new Date(checkInDate);
+    const date2 = new Date(checkOutDate);
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
@@ -479,8 +477,8 @@ const PropertyDetails = () => {
                                         Suv={Suv}
                                         addDays={addDays} 
                                         minusDays={minusDays}
-                                        checkInD={checkInD}
-                                        checkOutD={checkOutD}
+                                        checkInD={checkInDate}
+                                        checkOutD={checkOutDate}
                                         
                                     />
                                 )}            

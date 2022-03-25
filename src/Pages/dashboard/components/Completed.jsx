@@ -11,6 +11,8 @@ import {AdminContainer, AdminHeader } from "../../../styles/globalStyles"
 
 const Wrapper = styled.div `
     ${AdminContainer}
+    height: auto !important;
+    margin: 0 !important;
 `
 
 const H1 = styled.h1 `
@@ -46,6 +48,12 @@ const headcells = [
         numeric: true,
         disablePadding: false,
         label: 'Amount',
+    },
+    {
+        id: 'ApartmentName',
+        numeric: true,
+        disablePadding: false,
+        label: 'Property',
     },
     {
         id: 'Number',
@@ -99,10 +107,10 @@ const headcells = [
 ];
 
 
-const Completed = () => {
+const Completed = ({data, timeOfDay}) => {
     const dispatch = useDispatch();
-    const data = JSON.parse(localStorage.getItem('admin'))
     const {completed, completedTransaction} = useSelector(state => state.adminDashboard);
+
     
     useEffect(() => {
         dispatch(AdminCompletedTransaction())
@@ -123,7 +131,7 @@ const Completed = () => {
             </div>
         ) :
             <>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
+                <H1>Completed Bookings</H1>
                 {completed === 'succeeded' && (<Table  title="Bookings" headData={headcells} records={completedTransaction}/>)}
             </>
         }

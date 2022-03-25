@@ -8,9 +8,12 @@ import Table from "../../../components/Table/Tab"
 import { Clip } from "../../../components/Loader/Spinner";
 import Error from "../../../components/Error/Error"
 import { Error404Icon } from '../../../Svg/svg';
+import { useNavigate } from 'react-router';
 
 const Wrapper = styled.div `
     ${AdminContainer}
+    height: auto !important;
+    margin: 0 !important;
 `
 
 const H1 = styled.h1 `
@@ -34,13 +37,13 @@ const headcells = [
         id: 'Check-in',
         numeric: true,
         disablePadding: false,
-        label: 'Check-in',
+        label: 'In',
     },
     {
         id: 'Check-out',
         numeric: true,
         disablePadding: false,
-        label: 'Check-out',
+        label: 'Out',
     },
     {
         id: 'Amount',
@@ -49,10 +52,16 @@ const headcells = [
         label: 'Amount',
     },
     {
+        id: 'ApartmentName',
+        numeric: true,
+        disablePadding: false,
+        label: 'Property',
+    },
+    {
         id: 'Phone number',
         numeric: true,
         disablePadding: false,
-        label: 'Phone number',
+        label: 'Phone No',
     },
     {
         id: 'Email',
@@ -69,11 +78,18 @@ const headcells = [
     
 ];
 
-const Pending = ({handleCompletedBooking}) => {
+const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
     const dispatch = useDispatch();
-    const data = JSON.parse(localStorage.getItem('admin'))
-    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
+    const navigate = useNavigate()
 
+    const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
+    
+    console.log(pendingTransaction)
+    useEffect(() => {
+        if(!data?.token) {
+            navigate('/admin/live')
+        }
+    }, [navigate, data])
 
     useEffect(() => {
         dispatch(AdminPendingTransaction())
@@ -87,6 +103,8 @@ const Pending = ({handleCompletedBooking}) => {
         )
     }
 
+
+
     return <Wrapper>
         {pending === 'loading' ? (
             <div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
@@ -94,8 +112,8 @@ const Pending = ({handleCompletedBooking}) => {
             </div>
         ) :
             <>
-                <H1>{data?.firstname && `Welcome ${data?.firstname}`}</H1>
-                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
+                <H1>Pending Bookings</H1>
+                {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
             </>
         }
     </Wrapper>;

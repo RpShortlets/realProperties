@@ -8,6 +8,7 @@ import { BsFillCheckCircleFill,  } from "react-icons/bs"
 // import { MdCancel } from 'react-icons/md'
 import Button from "../../components/Button/Button"
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
+// import { useDecrypt } from "../../hooks/useEncryption/useEncryption"
 
 const Section = styled.section `
     width: 100%;
@@ -99,24 +100,29 @@ const Card = styled.div `
 `
 
 const Verify = () => {
+    const Id = new URLSearchParams(window.location.search)?.get("reference")
+    // const key = "@@TechnoRealProperty" 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const ref = JSON.parse(localStorage.getItem('ref'))?.message?.reference
+    // const ref = localStorage.getItem('payref')
+    //const ref = JSON.parse(localStorage.getItem('payref'))
     
+    //const {decrypted} = useDecrypt(ref, key)
+
 
 
     const {verify, status} = useSelector(state => state.paymentState)
+
 
     const GoBack = () => {
         navigate('/')
     }
 
     useEffect(() => {
-        dispatch(VerifyPayStack({ref}))
-    }, [dispatch, ref])
+        dispatch(VerifyPayStack(Id))
+    }, [dispatch, Id])
 
     
-
     return <Section>
         {/* {verify?.message === "PaymentSuccessful" ? ( */}
             <Main>

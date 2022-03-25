@@ -7,12 +7,15 @@ import {Pulse} from "../../components/Loader/Spinner"
 import {FlexStyle} from "../../styles/globalStyles"
 // import { PaymentPayStack } from '../../redux/actionCreators/actionCreators';
 import { SkeletonLoader } from "../../components/Loader/Skeleton"
-import { ManualPay, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
+import { ManualPay, PaymentPayStack, RetrieveTransaction } from '../../redux/actionCreators/actionCreators';
 import Dialog from "../../components/Dialog/Dialog"
 import Error from '../../components/Error/Error';
-import Tooltip from "../../components/Tooltip"
 import {motion } from "framer-motion"
-import { BankTransferIcon } from '../../Svg/svg';
+import { BankTransferIcon, BankIcon } from '../../Svg/svg';
+import Checkbox from '../../utils/FormElement/CheckBox';
+import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
+import { setPaystackRequest } from '../../redux/actions/componentState';
+import {useDecrypt, useEncrypt} from "../../hooks/useEncryption/useEncryption"
 
 
 const Header =  css`
@@ -144,44 +147,54 @@ const Label = styled.label `
 `
 
 const OrderSummary = () => {
-    const navigate = useNavigate();
+    const key = "@@TechnoRealProperty" 
+    const guestIds = JSON.parse(localStorage.getItem('dddrd'))
+    const {decrypted} = useDecrypt(guestIds, key)
+
+    const navigate = useNavigate(); 
     const dispatch = useDispatch();
     const Id  = useParams().id;
-
-    const {proceess, ordersummary: {Ongoing_id_info}} = useSelector(state => state.paymentState)
-    const {payStack} = useSelector(state => state.paymentState)
+    const {proceess, ordersummary: {Ongoing_id_info, apartmentName}, payStack, status} = useSelector(state => state.paymentState)
+    const {paystackRequest} = useSelector(state => state.ComponentState)
+    const {encrypted} = useEncrypt(payStack?.message?.reference, key)
     
     const [method, setmethod] = useState('transfer');
     const [showDialog, setShowDialog] = useState(false)
+    const [showDialogCard, setShowDialogCard] = useState(false)
+    const [terms, setTerms] = useState({terms: ''})
 
-
-    const CleaningFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.cleaning) !== null && Ongoing_id_info?.map((item) => item.cleaning) : 0;
-    const PickupFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.pickup) !== null && Ongoing_id_info?.map((item) => item.pickup) : 0; 
-    const CarFee =   proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.car_rental) : 0;
-    const DriverFee =    proceess === 'succeeded' ? Ongoing_id_info?.map((item) => item.driver)  : 0; 
-    const AddService =  proceess === 'succeeded' &&  parseInt(CleaningFee) + parseInt(PickupFee)
-    const CarService =  proceess === 'succeeded' && parseInt(CarFee) + parseInt(DriverFee)
-
-
-    // useEffect(() => {
-    //     if(status === 'succeeded') {
-    //         window.open(payStack?.message?.authorization_url, '_blank')
-    //     }
-    // }, [payStack?.message?.authorization_url]);
 
     const handleBackBtn = () => {
-        navigate(-1)
+        navigate(-2)
     }
+
+    const handleChange = (e) => {
+        const { value, checked, name } = e.target;
+        setTerms({...terms, [name]: checked ? value : ''})
+    }
+
 
     //* HANDLE BUTTON CLICKED: EITHER TRANSFER OR CARD PAYMENT */
     const processPayment = () => {
-        const guestId = Ongoing_id_info[0]?.guest_id;
 
-        if(method === 'transfer' && guestId) {
-            setShowDialog(!showDialog)
-        } else {
-            if (window.confirm("You're being redirected") === true) {
-                window.open(payStack?.message?.authorization_url, '_blank')
+        if(method === 'transfer' ) {
+            if(terms.terms) {
+                setShowDialog(!showDialog)
+            } else {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please accept the terms and condition to proceed',
+                })
+            }
+        } 
+        else {
+            if(terms.terms) {
+                setShowDialogCard(true)
+            } else {
+                OpenNotificationWithIcon({
+                    type: 'warning',
+                    message: 'Please accept the terms and condition to proceed',
+                })
             }
         }
     }
@@ -194,15 +207,28 @@ const OrderSummary = () => {
         setShowDialog(false)
     }
 
+    const handleCancelCard = () => {
+        setShowDialogCard(false)
+    }
+
     const handleProceed = () => {
         const apartmentId = Ongoing_id_info[0]?.apartment_id;
         const userId = Ongoing_id_info[0]?.id;
         const overAll = Ongoing_id_info[0]?.overall_total
-        const guestId = Ongoing_id_info[0]?.guest_id;
+        const guestId = decrypted;
 
         dispatch(ManualPay({apartmentId, userId, overAll, guestId}))
         navigate('/order-summary/payment')
         setShowDialog(false)
+    }
+
+    const handleProceedCard = () => {
+        const apartmentId = Ongoing_id_info[0]?.apartment_id;
+        const userId = Ongoing_id_info[0]?.id;
+        const overAll = Ongoing_id_info[0]?.overall_total
+        const guestId = decrypted;
+        dispatch(PaymentPayStack({apartmentId,guestId, overAll, userId }))
+        setShowDialogCard(false)
     }
 
     //**** END DIALOG FUNCTIONS*/
@@ -210,10 +236,26 @@ const OrderSummary = () => {
     //*** RETRIEVE ORDER SUMMARY */
     
     useEffect(() => {
-        dispatch(RetrieveTransaction({Id}))
+        dispatch(RetrieveTransaction(Id))
     }, [dispatch, Id])
 
     //*** END RETRIEVE ORDER SUMMARY */
+
+
+    useEffect(() => {
+        if(status === 'succeeded' && payStack?.message?.authorization_url ) {
+            localStorage.setItem('payref', JSON.stringify(encrypted));
+            dispatch(setPaystackRequest(true))
+        } else {
+            dispatch(setPaystackRequest(false))
+        }
+    }, [status, payStack?.message?.authorization_url, dispatch, encrypted]);
+
+    useEffect(() => {
+        if(paystackRequest) {
+            window.open(payStack?.message?.authorization_url, '_self').focus()
+        }
+    }, [paystackRequest,payStack?.message?.authorization_url, navigate])
 
 
     if(proceess === 'failed') {
@@ -223,16 +265,27 @@ const OrderSummary = () => {
     }
 
 
+
+
     return (
         <>
             <Dialog 
                 showDialog={showDialog} 
                 setShowDialog={setShowDialog} 
-                title="Please note this method require 30mins to make payment" 
+                title="Please note that if payment is not received within 30mins your booking will be cancelled."
                 disagree="Cancel"
-                agree="Confirm"
+                agree="Continue"
                 handleCancel={handleCancel}
                 handleProceed={handleProceed}
+            />
+            <Dialog 
+                showDialog={showDialogCard} 
+                setShowDialog={setShowDialogCard} 
+                title="You will be redirected to complete your bookings" 
+                disagree="Cancel"
+                agree="Confirm"
+                handleCancel={handleCancelCard}
+                handleProceed={handleProceedCard}
             />
             <Section>
                 <Main>
@@ -245,22 +298,52 @@ const OrderSummary = () => {
                                 </div>
                                 {Ongoing_id_info?.map((data,i) => (
                                     <div key={i} className='orderBody'>
+                                        {apartmentName &&  (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> :'Apartment'} </p>
+                                                {proceess === 'loading' ? <SkeletonLoader /> : <span> {apartmentName[0]?.apartment_name}</span>}
+                                            </CardDetails>
+                                        )}
+                                        {data?.check_in_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date && 'Check-In Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_in_date}</span>
+                                            </CardDetails>
+                                        )}
+                                        {data?.check_out_date && (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date && 'Check-Out Date'}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.check_out_date}</span>
+                                            </CardDetails>
+                                        )}
                                         {data?.apartment_price &&  (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader width='100%' /> : data?.apartment_price } {proceess === 'succeeded' && `x${data?.stay_length}`}{proceess === 'succeeded' ? data?.stay_length > 1 ? 'nights' : 'night' : ''} </p>
                                                 {proceess === 'loading' ? <SkeletonLoader /> : <span> {data?.total_apartment_price?.toLocaleString()}</span>}
                                             </CardDetails>
                                         )}
-                                        {data?.cleaning || data?.pickup  ? (
+                                        {data?.pickup  ? (
                                             <CardDetails>
-                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning|| data?.pickup  ? 'Additional Services' : ''}</p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : AddService?.toLocaleString()}</span>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup  ? 'Pickup Fee' : ''}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.pickup?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ""}
-                                        {data?.car_rental || data?.driver ? (
+                                        {data?.cleaning ? (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning  ? 'Cleaning Fee' : ''}</p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.cleaning?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        ): ""}
+                                        {data?.car_rental ? (
                                             <CardDetails>
                                                 <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental && 'Car Rental'} </p>
-                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : CarService?.toLocaleString()}</span>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.car_rental?.toLocaleString()}</span>
+                                            </CardDetails>
+                                        ): ''} 
+                                        {data?.driver ? (
+                                            <CardDetails>
+                                                <p>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver && 'Driver'} </p>
+                                                <span>{proceess === 'loading' ? <SkeletonLoader /> : data?.driver?.toLocaleString()}</span>
                                             </CardDetails>
                                         ): ''} 
         
@@ -295,8 +378,8 @@ const OrderSummary = () => {
                                 <div style={{display: 'flex', margin: '2rem 0'}}>
                                     <div>
                                         <Label as={motion.label} htmlFor='transfer' check={method === 'transfer'}>
-                                            {BankTransferIcon}
-                                            <span>Bank Transfer</span>
+                                            {BankIcon}
+                                            <span>Hold Booking</span>
                                         </Label>
                                         <input 
                                             id="transfer" 
@@ -310,12 +393,12 @@ const OrderSummary = () => {
                                         />
                                     </div>
                                     <div className="labelSecond">
-                                        <Tooltip title="This payment is currently unavailable">
-                                            <Label htmlFor='paystack' check={method === 'paystack'} disabled="true">
+                                        {/* <Tooltip title="This payment is currently unavailable"> */}
+                                            <Label htmlFor='paystack' check={method === 'paystack'}>
                                                 {BankTransferIcon}
                                                 <span>Card Payment</span>
                                             </Label>
-                                        </Tooltip>
+                                        {/* </Tooltip> */}
                                         <input 
                                             id="paystack" 
                                             type="radio" 
@@ -324,16 +407,20 @@ const OrderSummary = () => {
                                             checked={method === 'paystack'}
                                             onChange={(e) => setmethod(e.target.value)}
                                             style={{display: 'none'}}
-                                            disabled={true}
+                                            
                                         />
                                     </div>
+                                </div>
+                                <div style={{display: 'flex', alignItems: 'center', marginBottom: 'max(2vw, 1.2rem)'}}>
+                                    <p style={{margin: '0 0 0 max(1vw, .6rem)', order: '2', fontSize: 'var(--font-small)'}}>I agree to the <a href="/terms" target="_blank" style={{color: 'var(--color-primary)', textDecoration: 'underline !important'}}>terms and condition</a></p>
+                                    <Checkbox name="terms"  margin="0" checkboxes={terms.terms} handleChange={handleChange} />
                                 </div>
                                 <div style={{display: 'flex'}}>
                                     <div style={{flex: '1'}}>
                                         <Button onClicks={handleBackBtn}  fontWeight='600' width="70%" title='Back' background='var(--color-white)' borderRadius="8px"  border="2px solid #2193B0;" color='var(--color-primary)' w padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                     <div style={{flex: '2'}}>
-                                        <Button fontWeight='600'  width="100%" onClicks={processPayment} borderRadius="8px" disabled={proceess === 'loading'}  disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
+                                        <Button fontWeight='600' disabled={!terms.terms || proceess === 'loading'} width="100%" onClicks={processPayment} borderRadius="8px" disabledBG="var(--linear-primary)" title={proceess === 'loading' ? <Pulse color="#fff"  size="10px" /> : 'Proceed'} border="2px solid var(--color-primary);"  background='var(--linear-primary)' color='var(--color-white)' padding='.9rem' fontSize='var(--font-xtra-small-screen)'  />
                                     </div>
                                 </div>
                             </Card>

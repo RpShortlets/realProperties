@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Modal from "../../components/Modal/Modal"
-import {PendingIcon, CompletedIcon, DeletedIcon, UpdateIcon, ComplaintIcon } from '../../Svg/svg';
+import {PendingIcon, CompletedIcon, DeletedIcon, UpdateIcon, ComplaintIcon, HomeIcon, Person } from '../../Svg/svg';
 import Tooltip from "../../components/Tooltip"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexStyle } from '../../styles/globalStyles';
 import { Logout } from '../../hooks/function/Logout';
@@ -12,9 +12,14 @@ import { ManualConfirmBookings } from '../../redux/actionCreators/actionCreators
 import { Input } from "../../utils/FormElement/Input"
 import Button from "../../components/Button/Button"
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification';
+import useLocalStorage from 'use-local-storage'
 
 //Components
-import { Deleted, Complaint, Completed, Pending, UpdateBooking} from "./components/index"
+import { Deleted, Complaint, Completed, Pending, UpdateBooking, AgencyHome, AgentSignUp} from "./components/index"
+import Mobile from '../../components/Drawer/Mobile';
+import { useGetHour } from '../../hooks/useGetHour/useGetHour';
+import { resetPaymentState } from '../../redux/actions/payment';
+
 
 
 const Section = styled.section `
@@ -24,7 +29,7 @@ const Section = styled.section `
 `
 const Main = styled.div `
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     height: ${({height}) => height};
     width: 100%;
 `
@@ -32,7 +37,7 @@ const Main = styled.div `
 const SideBar = styled.div `
     grid-column: 1 / 2;
     display: none;
-    background: var(--color-white);
+    background: ${({theme}) => theme === 'dark' ? '#1f1f1f' : '#fff'};
     height: 100%;
     mix-blend-mode: normal;
 
@@ -109,30 +114,61 @@ const SideBar = styled.div `
     @media screen and (min-width: 769px) {
         display: block;
         grid-column:1 / 2;
+        position: fixed;
     }
 `
 
 const LeftBar = styled.div `
-    background: var(--color-secondary);
+    background: ${({theme}) => theme === 'dark' ? '#1f1f1f' : 'var(--color-secondary);'};
     height: 100%;
-    grid-column: 1/ 8;
+    grid-column: 1/ 9;
 
     @media screen and (min-width: 769px) {
-        grid-column: 2 / 8;
+        grid-column: 2 / 9;
     }
 `
 
 const Admin = () => {
+    const user = JSON.parse(localStorage.getItem('user'))
     const Query = useMediaQuery("(min-width: 669px)")
+    const timeOfDay = useGetHour()
     const dispatch = useDispatch();
+    const {status} = useSelector(state => state.paymentState)
+
+
+
+    const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)
-    const [pending, setPending] = useState(true);
+    const [pending, setPending] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [deleted, setDeleted] = useState(false);
     const [complains, setComplains] = useState(false);
     const [bookings, setBookings] =  useState(false)
+    const [registerAgent, setRegisterAgent] = useState(false)
     const [formdata, setFormData] = useState({transactionId: ''})
     const [penId, setPenId] = useState()
+    const [state, setState] = React.useState(false);
+    const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
+    const SwitchTheme = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    };
+
+
+
+    const toggleDrawer = (type) => (event) => { //* Close the drawer when the user clicks outside of it, and toggle the state of the drawer.
+        if (
+        event &&
+        event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+        return;
+        }
+
+        setState((type) => !type);
+    };
+
 
 
     //* Render the pending or completed component
@@ -142,6 +178,9 @@ const Admin = () => {
         setDeleted(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleCompleted = () => {
@@ -150,6 +189,9 @@ const Admin = () => {
         setDeleted(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleDeleted = () => {
@@ -158,6 +200,9 @@ const Admin = () => {
         setPending(false);
         setComplains(false)
         setBookings(false)
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
     }
 
     const handleComplains = () => {
@@ -166,6 +211,10 @@ const Admin = () => {
         setCompleted(false);
         setPending(false);
         setBookings(false)
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
+
     }
 
     const handleBooking = () => {
@@ -174,6 +223,32 @@ const Admin = () => {
         setDeleted(false);
         setCompleted(false);
         setPending(false);
+        setState(false);
+        setAgentHome(false)
+        setRegisterAgent(false)
+
+    }
+
+    const handleHome = () => {
+        setAgentHome(true)
+        setBookings(false)
+        setComplains(false)
+        setDeleted(false);
+        setCompleted(false);
+        setPending(false);
+        setState(false);
+        setRegisterAgent(false)
+    }
+
+    const handleRegisterUser = () => {
+        setRegisterAgent(true)
+        setAgentHome(false)
+        setBookings(false)
+        setComplains(false)
+        setDeleted(false);
+        setCompleted(false);
+        setPending(false);
+        setState(false);
     }
     //* End of Render the pending or completed component
 
@@ -187,7 +262,6 @@ const Admin = () => {
         if(formdata.transactionId) {
             dispatch(ManualConfirmBookings({penId, formdata, time}));
             setOpenModal(false)
-            window.location.reload()
         } else {
             OpenNotificationWithIcon({
                 type: 'warning',
@@ -195,6 +269,32 @@ const Admin = () => {
             })
         }
     }
+
+    useEffect(() => {
+        if(status === "succeeded") {
+            console.log('Yes')
+            OpenNotificationWithIcon({
+                type: 'success',
+                message: 'Booking confirmed successfully. Page will refresh in 2 seconds'
+            }) 
+            dispatch(resetPaymentState())
+            setTimeout(() => {
+                window.location.reload()
+            }
+            , 2000)
+
+        } else if (status === "failed") {
+            OpenNotificationWithIcon({
+                type: 'error',
+                message: 'fail to confirm booking. Please try again'
+            })
+            dispatch(resetPaymentState())
+        } else {
+            console.log('No')
+        }
+
+    }, [status, dispatch])
+
 
 
     return (
@@ -236,48 +336,90 @@ const Admin = () => {
                 </div>
             </Modal>
             <Section>
-                <Main height={ pending || deleted || completed || complains ? '100vh' : '100%'}>
-                    <SideBar>
-                        {/* <div className='adminLogo'>
-                            {CompanyLogo}
-                        </div> */}
+                <div style={{background: theme === 'dark' ? "#1f1f1f" : 'var(--color-secondary)', paddingLeft: '1rem'}}>
+                    <Mobile  
+                        handleHome={handleHome}
+                        handleRegisterUser={handleRegisterUser}
+                        handlePending={handlePending}
+                        handleCompleted={handleCompleted}
+                        handleDeleted={handleDeleted}
+                        handleComplains={handleComplains}
+                        handleBooking={handleBooking}
+                        state={state}
+                        toggleDrawer={toggleDrawer}
+                        setState={setState}
+                        theme={theme}
+                        user={user}
+                        Logout={Logout}
+                    />
+                </div>
+                <Main height={ complains ? '100vh' : '100%'}>
+                    <SideBar theme={theme}>
                         <div className='sideBarContainer'>
                             <div className='sideBarLink'>
-                                <Tooltip title="Pending Booking">
-                                    <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                                <Tooltip title="Home">
+                                    <Link to='pending' onClick={handleHome} className={agentHome ? 'sideBarBorder' : undefined} >
                                         <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: pending && '#fff' }}>{PendingIcon}</span>
+                                            <span style={{color: agentHome && '#fff' }}>{HomeIcon}</span>
                                         </div>
                                     </Link>
                                 </Tooltip>
-                                <Tooltip title="Completed Booking">
-                                    <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: completed && '#fff' }}>{CompletedIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Deleted Booking">
-                                    <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: deleted && '#fff !important' }}>{DeletedIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Update booking dates">
-                                    <Link to='update-booking' onClick={handleBooking} className={bookings ? 'sideBarBorder' : undefined}>
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{background: bookings && 'red !important' }}>{UpdateIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
-                                <Tooltip title="Read Complains">
-                                    <Link to='complains' onClick={handleComplains} className={complains ? 'sideBarBorder' : undefined} >
-                                        <div style={{display: 'flex' , alignItems: 'center'}}>
-                                            <span style={{color: deleted && '#fff !important' }}>{ComplaintIcon}</span>
-                                        </div>
-                                    </Link>
-                                </Tooltip>
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Pending Booking">
+                                        <Link to='pending' onClick={handlePending} className={pending ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: pending && '#fff' }}>{PendingIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Completed Booking">
+                                        <Link to='completed' onClick={handleCompleted} className={completed ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: completed && '#fff' }}>{CompletedIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin2' ? (
+                                    <Tooltip title="Deleted Booking">
+                                        <Link to='deleted' onClick={handleDeleted} className={deleted ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: deleted && '#fff !important' }}>{DeletedIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role === 'admin1' || user?.role === "agent" ? (
+                                    <Tooltip title="Update booking dates">
+                                        <Link to='update-booking' onClick={handleBooking} className={bookings ? 'sideBarBorder' : undefined}>
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{background: bookings && 'red !important' }}>{UpdateIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ): ''}
+                                {user?.role !== 'agent' && (
+                                    <Tooltip title="Read Complains">
+                                        <Link to='complains' onClick={handleComplains} className={complains ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: deleted && '#fff !important' }}>{ComplaintIcon}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>   
+                                )}
+                                
+                                {user?.role === 'admin1' ? (
+                                    <Tooltip title="Register user">
+                                        <Link to='register-user' onClick={handleRegisterUser} className={registerAgent ? 'sideBarBorder' : undefined} >
+                                            <div style={{display: 'flex' , alignItems: 'center'}}>
+                                                <span style={{color: registerAgent && '#fff !important' }}>{Person}</span>
+                                            </div>
+                                        </Link>
+                                    </Tooltip>
+                                ) : ("")}
+                                
 
                             </div>
                             <div className="adminLogout">
@@ -289,15 +431,63 @@ const Admin = () => {
                             </div>
                         </div>
                     </SideBar>
-                    <LeftBar>
-                        {pending ? (<Pending handleCompletedBooking={handleCompletedBooking} />) : completed ?
-                            (<Completed />) 
-                            : deleted ? 
-                            (<Deleted />)
-                            : bookings ? 
-                            (<UpdateBooking />) 
-                            : complains &&
-                            (<Complaint />)
+                    <LeftBar theme={theme}>
+                        {status === "loading" && <div>Please wait why we fetch your request</div>}
+                        {   
+                            agentHome ? (
+                                <AgencyHome 
+                                    timeOfDay={timeOfDay}
+                                    data={user} 
+                                    SwitchTheme={SwitchTheme}
+                                    theme={theme}
+                                />
+                            ) :
+                            user?.role === "admin1" && pending ? 
+                            (
+                                <Pending 
+                                    handleCompletedBooking={handleCompletedBooking} 
+                                    timeOfDay={timeOfDay}
+                                    data={user}
+                                />
+                            ) : 
+                            
+
+                            user?.role === "admin1" && completed ?
+                                (<Completed  
+                                    timeOfDay={timeOfDay}
+                                    data={user}  
+                                />) 
+                            : user?.role === 'admin2' && deleted ? 
+                                (
+                                    <Deleted 
+                                        timeOfDay={timeOfDay}
+                                        data={user} 
+                                    />
+                                )
+                            :  (user?.role === 'admin1' || user?.role === "agent") && bookings ? 
+                                (
+                                    <UpdateBooking 
+                                        timeOfDay={timeOfDay}
+                                        data={user} 
+                                        theme={theme}
+                                    />
+                                ) 
+                            :  user?.role !== 'agent' && complains ?
+                                (<Complaint 
+                                    timeOfDay={timeOfDay}
+                                    data={user} 
+                                />)
+                            : user?.role === 'admin1' && registerAgent ? ( 
+                                    <AgentSignUp 
+                                        timeOfDay={timeOfDay}
+                                        data={user}
+                                        theme={theme} 
+                                    /> 
+                                )
+                            : (<AgencyHome 
+                                timeOfDay={timeOfDay}
+                                data={user}
+                            />)
                         }
                     </LeftBar>
                 </Main>

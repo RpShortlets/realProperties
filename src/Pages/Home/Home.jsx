@@ -13,13 +13,15 @@ import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AnimatePresence } from "framer-motion"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
 import BG from "../../image/background.webp"
-
-
-
+import MothersDayPromo from './components/Promo/MothersDayPromo';
+import { useEffect } from 'react';
+import Promotion from './components/Promo/Promotion';
+import PromotionDiv from './components/Promo/PromoHome';
 
 
 const Section = styled.section `
     ${SectionStyle}
+    position: relative;
 `
 
 
@@ -31,6 +33,9 @@ const Home = () => {
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
+    const [showPromo, setShowPromo] = useState(false)
+    const [promoCounter, setPromoCounter] = useState(3)
+    const [promoBig, setPromoBig] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
 
 
@@ -53,6 +58,10 @@ const Home = () => {
         dispatch(resetCounts())
     }
 
+    const handleShowBigPromo = () => {
+        setPromoBig(true)
+        setShowPromo(false)
+    }
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -68,6 +77,22 @@ const Home = () => {
         navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
+
+    useEffect(() => {
+        let timerId;
+        if(promoCounter === 0) {  
+            setShowPromo(true) 
+        } else {
+            timerId = setTimeout(() => {
+                setPromoCounter((countDown) => countDown -1);
+                
+            }, 1000);
+        }
+
+        return () => clearInterval(timerId)
+
+    }, [promoCounter]);
+
     return (
         <> 
 
@@ -76,6 +101,20 @@ const Home = () => {
                     <Drawer openDrawer={openDrawer}  SubmitForm={SubmitForm}/>
                 </AnimatePresence>
             }
+
+            {showPromo && (
+                <MothersDayPromo  
+                    showPromo={showPromo}
+                    setShowPromo={setShowPromo}
+                    Onclicks={handleShowBigPromo}
+                />
+            )}
+            {promoBig && (
+                <Promotion  
+                    promoBig={promoBig}
+                    setPromoBig={setPromoBig}
+                />
+            )}
             <Section>
                 <SearchFilter 
                     openModal={openModal} 
@@ -99,6 +138,9 @@ const Home = () => {
                 
                 />
                 {loaded && <WhyRealShortlets />}
+                {loaded && (
+                    <PromotionDiv handleShowBigPromo={handleShowBigPromo} />
+                )}
             </Section>
         </>
     )

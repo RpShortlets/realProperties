@@ -3,14 +3,28 @@ import React from "react"
 import './checkbox.css'
 import styled from "styled-components"
 
+
+const Box =styled.div `
+    display: ${({display}) => display ? 'block' : 'flex'}; 
+    justify-content:  ${({justify}) => justify ? justify : 'space-between'}; 
+    align-items: center; 
+    margin-bottom: ${({margin}) => margin ? '0' : ' max(1.2vw, .6rem)'}; 
+`
+
 const Label = styled.label `
     font-size: var(--font-small-screen);
+    order: ${({order}) => order };
+    margin: ${({margin}) => margin};
 
     @media (min-width: 768px) { 
+        order: ${({order}) => order };
         font-size: var(--font-xtra-small-screen);
+        margin: ${({margin}) => margin};
     }
 
 `
+
+
 
 const InputCheck = styled.input `
     border: 2px solid var(--color-primary);
@@ -22,12 +36,16 @@ const InputCheck = styled.input `
 `
 
 
-const Checkbox = ({ checkboxes, handleChange, name, label}) => {
-
+const Checkbox = ({ checkboxes, handleChange, name, label, display, margin, justify, order, marginLabel}) => {
+    
     return (
         <>
-            <div style={{display:'flex', justifyContent: 'space-between', alignItems:'center', marginBottom: 'max(1.2vw, .6rem)'}}>
-                <Label htmlFor={name} >{label}</Label>
+            <Box 
+                margin={margin}
+                display={display}
+                justify={justify}
+            >
+                <Label htmlFor={name} order={order} margin={marginLabel} >{label}</Label>
                 <InputCheck
                     as={motion.input}  
                     id={name}
@@ -39,7 +57,7 @@ const Checkbox = ({ checkboxes, handleChange, name, label}) => {
                     checked={checkboxes === name} 
                     onChange={handleChange}
                 />
-            </div> 
+            </Box> 
         </>
     
     )

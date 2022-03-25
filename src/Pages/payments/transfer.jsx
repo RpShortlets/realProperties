@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FlexStyle, PaddingStyle } from '../../styles/globalStyles';
@@ -8,10 +8,13 @@ import Error from "../../components/Error/Error";
 import Button from '../../components/Button/Button';
 import Countdown from '../../components/Countdown/Countdown';
 import { useSelector, useDispatch } from 'react-redux';
-import { ManualCancel, ExpiredBooking } from '../../redux/actionCreators/actionCreators';
+import { ManualCancel, ExpiredBooking, ManualReceive } from '../../redux/actionCreators/actionCreators';
 import {OpenNotificationWithIcon} from "../../components/Notification/Notification";
 import {SkeletonLoader} from "../../components/Loader/Skeleton"
 import Dialog from "../../components/Dialog/Dialog"
+import Modal from '../../components/Modal/Modal';
+import Checkbox from "../../utils/FormElement/CheckBox"
+import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 
 
 const Section = styled.section ` 
@@ -128,19 +131,50 @@ const Main = styled.div `
     
 `
 
+const ModalContent = styled.div `
+    background: #fff;
+    ${FlexStyle}
+    justify-content: center;
+    margin: max(4vw, 1.5rem);
+`
+
 const Transfer = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const {manualTransfer: {payment_details, pending_id, transaction_info, time }, status, manualTransfer, expiredBookings} = useSelector(state => state.paymentState);
+    const Query = useMediaQuery("(min-width: 669px)")
+    const {manualTransfer: {payment_details, pending_id, transaction_info, time, maxId }, status, manualTransfer} = useSelector(state => state.paymentState);
     const pendingId = status === 'succeeded' && pending_id[0]?.max_id;
     const expiredTime =  status === 'succeeded' && time[0]?.expired_time;
 
     const [copied, setCopied] = useState("")
     const [showDialog, setShowDialog] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const [statusDialog, setStatusDialog] = useState(false)
+    const [ReceiveTime, setReceiveTime] = useState(false)
+    const [checkboxes, setCheckboxes] = useState({alertReceived: false})
+    const [checkbox, setcheckbox] = useState({noAlert: false})
     
     var distance = new Date(expiredTime)?.getTime() - new Date().getTime();
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const [countDown, setCountDown] = useState(minutes)
+    const [timer, setTimer] = useState(5)
+
+    const customerRes = checkboxes?.alertReceived ? 'payment confirmed' : 'payment not confirmed';
+
+
+
+    const handleChange = (e) => {
+        const { value, checked, name } = e.target;
+        setCheckboxes({...checkboxes, [name]: checked ? value : ''})
+        setcheckbox({checkbox: {}})
+    }
+
+
+    const handleBox = (e) => {
+        const { value, checked, name } = e.target;
+        setcheckbox({...checkbox, [name]: checked ? value : ''})
+        setCheckboxes({checkboxes: {}}) 
+    }
 
     React.useEffect(() => {
         let timerId;
@@ -182,6 +216,53 @@ const Transfer = () => {
         
     }
 
+    const handleStatus = () => {
+        setStatusDialog(true)
+    }
+
+    const handleImadeReceive = () => {
+        dispatch(ManualReceive({maxId, customerRes}))
+        setStatusDialog(false)
+        setOpenModal(false)
+        setReceiveTime(true)
+        // navigate('/');
+    }
+
+    const handleINotReceive = () => {
+        dispatch(ManualReceive({maxId, customerRes}))
+        setStatusDialog(false)
+        setOpenModal(false)
+        setReceiveTime(true)
+        // navigate('/');
+    }
+
+    useEffect(() => {
+        let timerId;
+        if(ReceiveTime) {
+            if(timer === 0) { 
+                navigate('/'); 
+                return () => clearInterval(timerId)           
+            } else {
+                timerId = setTimeout(() => {
+                    setTimer((countDown) => countDown -1);
+                    
+                }, 1000);
+            }
+        }
+            
+    }, [timer, ReceiveTime, navigate])
+
+    useEffect(() =>{
+        if(ReceiveTime) {
+            OpenNotificationWithIcon({
+                description: `You are being redirect back to the home page in ${timer} seconds`,
+                type: 'success',
+                duration: 7,
+            })
+        }
+        
+    }, [ReceiveTime])
+
 
     if(status === 'failed') {
         return (
@@ -192,6 +273,37 @@ const Transfer = () => {
     
     return (
         <>
+            <Dialog 
+                showDialog={statusDialog} 
+                setShowDialog={setStatusDialog} 
+                title="Your request will be process and we will notify you when your booking is confirmed"
+                disagree="Cancel"
+                agree="Continue"
+                handleCancel={handleINotReceive}
+                handleProceed={handleImadeReceive}
+            />
+            <Modal show={openModal} top='40vh' height= "fit-content" transition={{duration: 0.5, type:{type:'spring'}}} background="var(--color-white)" initial={{scale: 0.5, opacity: 0}} exit={{scale: 0.5, opacity: 0}} animate={{scale: 1, opacity: 1}} btn setShow={setOpenModal} theme="rgba(0,0,0,.4)" right={Query ? "20%": "5%"} width={Query ? "50%" : '90%'} >
+                <ModalContent>
+                    <div>
+                        <Checkbox marginLabel="0 0 0 max(1.2vw, .5rem)" name="alertReceived" order="2" justify="flex-start" checkboxes={checkboxes.alertReceived} handleChange={handleChange} label="I already received alert for my payment" />
+                        <Checkbox marginLabel="0 0 0 max(1.2vw, .5rem)" name="noAlert" order="2" justify="flex-start" checkboxes={checkbox.noAlert} handleChange={handleBox} label="I am yet to receive alert" />
+                        <div style={{display: 'flex', justifyContent:'center', marginTop: '2rem'}}>
+                            <Button  
+                                title="Send" 
+                                color="var(--color-white)" 
+                                padding=".9rem" 
+                                background='var(--linear-primary)' 
+                                border="none" width="60%" 
+                                height="45px" 
+                                display="flex" 
+                                justify="center" 
+                                alignT="center" 
+                                onClicks={handleStatus}
+                            />
+                        </div>
+                    </div>
+                </ModalContent>
+            </Modal>
             <Dialog 
                 showDialog={showDialog} 
                 setShowDialog={setShowDialog} 
@@ -311,8 +423,37 @@ const Transfer = () => {
                                             <div style={{display: 'flex', alignItems:'center', justifyContent: 'center', margin: 'max(1.2rem, .9rem) 0'}}>
                                                 <p>You have 30 minutes window to make payment, otherwise, the order will be canceled</p>
                                             </div>
-                                            <div style={{display: 'contents'}}>
-                                                <Button onClicks={handleCancel} title="Cancel transaction"  color="var(--color-primary)" padding=".9rem" background='transparent' border="3px solid #2193B0"/>
+                                            <div style={{display: 'flex'}}>
+                                                <div>
+                                                    <Button 
+                                                        onClicks={handleCancel} 
+                                                        title="Cancel transaction"  
+                                                        color="var(--color-primary)" 
+                                                        padding=".9rem" 
+                                                        background='transparent' 
+                                                        border="3px solid #2193B0"
+                                                        height="65px" 
+                                                        display="flex" 
+                                                        justify="center" 
+                                                        alignT="center" 
+                                                        fontSize="var(--font-xtra-small-screen)"
+                                                    />
+                                                </div>
+                                                <div style={{marginLeft: 'max(2vw, 1rem)'}}>
+                                                    <Button 
+                                                        onClicks={() => setOpenModal((prev) => !prev)} 
+                                                        title="Payment made"  
+                                                        color="var(--color-white)" 
+                                                        padding=".9rem" 
+                                                        background='var(--linear-primary)'
+                                                        border="3px solid #2193B0"
+                                                        height="65px" 
+                                                        display="flex" 
+                                                        justify="center" 
+                                                        alignT="center" 
+                                                        fontSize="var(--font-xtra-small-screen)"
+                                                    />
+                                                </div>
                                             </div>
                                             </div>
                                     )

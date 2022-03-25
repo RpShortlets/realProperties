@@ -19,6 +19,7 @@
 /*************** CUSTOM SCROLL BAR ************************/
 ::-webkit-scrollbar {
     width: 20px;
+    padding: 0;
 }
 
 ::-webkit-scrollbar-track {
@@ -56,6 +57,7 @@
     --color-light-gray: rgba(245, 245, 245, 1);
     --color-dark-gray: rgba(128, 128, 128, 1);
     --color-darker-gray: rgba(89, 80, 80, 1);
+    --color-promotion: rgba(194, 1, 23, 1);
     --linear-primary: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
     --font-Xtrabig: clamp(1.5rem, calc(0.68rem + 2.9vw), 3rem);
     --font-big: clamp(1.20rem, calc(0.66rem + 2.71vw), 2.59rem);
@@ -70,6 +72,13 @@
     --border-radius-xtra: 32px;
     --line-height: 2;
     
+}
+
+[data-theme='dark'] {
+    --background: black;
+    --text-primary: white;
+    --text-secondary: grey;
+    --accent: darkred;
 }
 
 .noselect {
@@ -239,10 +248,6 @@ a:hover {
 }
 
 /****************MUI TABLE**************************/
-.css-rorn0c-MuiTableContainer-root {
-    padding: 0 2rem;
-}
-
 
 .MuiTableCell-root { 
     font-size: 12px !important;
@@ -250,10 +255,6 @@ a:hover {
 
 .MuiTablePagination-toolbar {
     align-items: baseline !important;
-}
-
-.css-1ex1afd-MuiTableCell-root { 
-    background-color: var(--color-secondary);
 }
 
 .MuiTableCell-root .MuiTableCell-body .MuiTableCell-sizeMedium .css-1ex1afd-MuiTableCell-root {

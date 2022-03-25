@@ -117,6 +117,7 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
     const countMinusChild = 1;
     const  TotalGuest = useAddGuestTotal({adultcount, childrencount, AdultMinuss});
 
+
     const AddAdult = () => {
         if(adultcount < countAdultAdd) {
             dispatch(incrementAdult())
@@ -235,15 +236,17 @@ const MobileModal = ({show, selectedCar, setshow, openGuest, setOpenGuest, modal
                     <Condition>
                             <p>{reserve === 'loading' ? <SkeletonLoader /> : 'You won’t be charged yet'}</p>
                     </Condition>
-                    <Prices 
-                        price={price} 
-                        show={show}
-                        summary_details={summary_details} 
-                        selectedCar={selectedCar}
-                        reserve={reserve}
-                        TotalAdditionalServices={TotalAdditionalServices}
-                        TotalCarAndDriverPrice={TotalCarAndDriverPrice}
-                    />
+                    {summary_details[0]?.total_apt_price > 0 && (
+                        <Prices 
+                            price={price} 
+                            show={show}
+                            summary_details={summary_details} 
+                            selectedCar={selectedCar}
+                            reserve={reserve}
+                            TotalAdditionalServices={TotalAdditionalServices}
+                            TotalCarAndDriverPrice={TotalCarAndDriverPrice}
+                        />
+                    )}
                 </Container>
             </Wrapper>
         </Modal>

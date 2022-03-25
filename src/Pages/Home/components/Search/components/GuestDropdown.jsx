@@ -11,8 +11,8 @@ const GuestDropdowns = ({openGuest, handleGuest, myRef, setOpenGuest }) => {
         const dispatch = useDispatch();
         const {adultcount, childrencount} = useSelector(state => state.ComponentState)
         const countAdultMinus = 1;
-        const countAdultAdd = 9;
-        const countAddChild = 5;
+        const countAdultAdd = 4;
+        const countAddChild = 3;
         const countMinusChild = 1;
 
         const AddAdult = () => {

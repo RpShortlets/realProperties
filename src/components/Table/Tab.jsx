@@ -12,6 +12,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import styled from 'styled-components';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -19,6 +20,16 @@ import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
 
 
+const TableCont = styled(TableContainer)`
+    padding: 0 2rem !important;
+`
+const TableCellss = styled(TableCell)`
+    color: ${({color}) => color } !important;
+`
+
+const TableRows = styled(TableRow)`
+    background-color: ${({background}) => background};
+`
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -58,6 +69,8 @@ function EnhancedTableHead(props) {
         onRequestSort(event, property);
     };
 
+
+
     return (
         <TableHead>
             <TableRow>
@@ -69,11 +82,11 @@ function EnhancedTableHead(props) {
                     sortDirection={orderBy === headcell.id ? order : false}
                 >
                     <TableSortLabel
-                    active={orderBy === headcell.id}
-                    direction={orderBy === headcell.id ? order : 'asc'}
-                    onClick={createSortHandler(headcell.id)}
+                        active={orderBy === headcell.id}
+                        direction={orderBy === headcell.id ? order : 'asc'}
+                        onClick={createSortHandler(headcell.id)}
                     >
-                    {headcell.label}
+                    {headcell.label && headcell.label}
                     {orderBy === headcell.id ? (
                         <Box component="span" sx={visuallyHidden}>
                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -128,7 +141,7 @@ const EnhancedTableToolbar = (props) => {
 };
 
 
-export default function EnhancedTable({headData, records, title, onClicks}) {
+export default function EnhancedTable({headData, records, title, onClicks, showColor}) {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
 
@@ -168,7 +181,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
         <Box sx={{ width: '100%' }} style={{ height: '100%'}}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar title={title} />
-                <TableContainer>
+                <TableCont>
                     <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
@@ -181,6 +194,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                             onRequestSort={handleRequestSort}
                             rowCount={records.length}
                             headcells={headData}
+                            rows={records}
                         />
                         <TableBody>
                         {/* if you don't need to support IE11, you can replace the `stableSort` call with:
@@ -190,36 +204,117 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                             .map((row, index) => {
                             const labelId = `enhanced-table-checkbox-${index}`;
 
+
                             return (
-                                <TableRow
-                                    hover
+                                <TableRows
+                                    // hover
                                     onClick={onClicks ? () => onClicks(row?.pending_id) : console.log('')}
                                     tabIndex={-1}
                                     key={row?.pending_id}
-                                    
+                                    background={ showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#8BDB81" : showColor&&row?.customer_payment_confirmation === "payment not confirmed" ? "#F2FA5A" : "#fff"} 
                                 >
                                 
-                                    <TableCell
+                                    <TableCellss
                                         component="th"
                                         id={labelId}
                                         scope="row"
                                         padding="none"
+                                        color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
                                     >
                                         {row?.guest_name}
-                                    </TableCell>
-                                    <TableCell align="left">{row?.pymt_reference}</TableCell>
-                                    <TableCell align="left">{row?.check_in}</TableCell>
-                                    <TableCell align="left">{row?.check_out}</TableCell>
-                                    <TableCell align="left">{row?.amount}</TableCell>
-                                    <TableCell align="left">{row?.phone_no}</TableCell>
-                                    {row?.payment_method &&  <TableCell align="left">{row?.payment_method}</TableCell> }
-                                    {row?.platform &&  <TableCell align="left">{row?.platform}</TableCell> }
-                                    {row?.payment_time && <TableCell align="left">{row?.payment_time}</TableCell> }
-                                    {row?.bdt_user && <TableCell align="left">{row?.bdt_user}</TableCell> }
-                                    {row?.bank_transaction_id && <TableCell align="left">{row?.bank_transaction_id}</TableCell> }
-                                    <TableCell align="left">{row?.email}</TableCell>
-                                    {row?.status && <TableCell align="left">{row?.status}</TableCell>}
-                                </TableRow>
+                                    </TableCellss>
+                                    {row?.pymt_reference && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.pymt_reference}
+                                        </TableCellss>}
+                                    {row?.check_in && 
+                                        <TableCellss 
+                                            align="left" 
+                                            color={ showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.check_in}
+                                        </TableCellss>}
+                                    {row?.check_out && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.check_out}
+                                        </TableCellss>}
+                                    {row?.amount && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.amount}
+                                        </TableCellss>}
+                                        {row?.shortname && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.shortname}
+                                        </TableCellss>}
+                                    {row?.phone_no && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.phone_no}
+                                        </TableCellss>}
+                                    {row?.payment_method &&  
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.payment_method}
+                                        </TableCellss> }
+                                    {row?.platform &&  
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.platform}
+                                        </TableCellss> }
+                                    {row?.payment_time && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.payment_time}
+                                        </TableCellss> }
+                                    {row?.bdt_user && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.bdt_user}
+                                        </TableCellss> }
+                                    {row?.bank_transaction_id && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.bank_transaction_id}
+                                        </TableCellss> }
+                                    {row?.email && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.email}
+                                        </TableCellss>}
+                                    {row?.status && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor&&row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.status}
+                                        </TableCellss>}
+                                </TableRows>
                             );
                             })}
                             {emptyRows > 0 && (
@@ -233,7 +328,7 @@ export default function EnhancedTable({headData, records, title, onClicks}) {
                             )}
                         </TableBody>
                     </Table>
-                </TableContainer>
+                </TableCont>
                 <TablePagination
                     rowsPerPageOptions={[10, 20, 35]}
                     component="div"

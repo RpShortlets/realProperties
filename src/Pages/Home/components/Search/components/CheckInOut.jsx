@@ -54,6 +54,7 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
             dispatch(checkOutDate(checkout))
             dispatch(newCheckInDate(useCheckinDate))
             dispatch(newCheckOutDate(useCheckoutDate))
+            setIsOpenCalender(false)
             
         } else {
             dispatch(checkInDate(null))
@@ -62,14 +63,14 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
             dispatch(newCheckOutDate(null))
         }
     
-    }, [homeDateValue, dispatch,  ])
+    }, [homeDateValue, dispatch, setIsOpenCalender])
 
-
+    console.log(isOpenCalender)
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker
                 isOpen={isOpenCalender}
-                onAccept={() => setIsOpenCalender(!isOpenCalender)}
+                onAccept={() => setIsOpenCalender(false)}
                 className="date-range-picker"
                 label="Advanced keyboard"
                 disablePast
@@ -79,12 +80,12 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
                 <React.Fragment>
 
                     <div className="inputCalenderContainer" onClick={() => setIsOpenCalender(true)}>
-                        <Input ref={startProps.inputRef} {...startProps.inputProps} placeholder="Check in" />
-                        <span>Add Dates</span>
+                        <Input id="checkIn" ref={startProps.inputRef} {...startProps.inputProps} placeholder="Check in" />
+                        <label  htmlFor="checkIn" onClick={() => setIsOpenCalender((prev) => !prev)} style={{cursor: 'pointer'}}>Add Dates</label>
                     </div>
                     <div className="inputCalenderContainer"  onClick={() => setIsOpenCalender(true)}>
-                        <Input ref={endProps.inputRef} {...endProps.inputProps} placeholder="Check out" />
-                        <span>Add Dates</span>
+                        <Input id="checkOut" ref={endProps.inputRef} {...endProps.inputProps} placeholder="Check out" />
+                        <label  htmlFor="checkOut" onClick={() => setIsOpenCalender((prev) => !prev)} style={{cursor: 'pointer'}}>Add Dates</label>
                     </div>
                 
                 </React.Fragment>

@@ -347,7 +347,7 @@ const CustomerSupport = () => {
                                         </div>
                                         <div>
                                             <h5>Email</h5>
-                                            <p>info@realpropertyasset.com</p>
+                                            <p>info@rpshortlets.com</p>
                                         </div>
                                     </div>
                                 </div>

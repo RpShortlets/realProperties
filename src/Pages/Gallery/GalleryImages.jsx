@@ -112,6 +112,15 @@ const GalleryImages = () => {
         )
     }
 
+    if(pathname === '/gallery/experience') {
+        return ( 
+            <Main paddingleft="true" paddingRight="true" >
+                <Error title="We are updating our gallery. Please check back." />
+            </Main>
+        )
+    }
+
+
     if(pathname === '/gallery/apartments' || 'gallery/apartments') {
         return ( 
             <Main paddingleft="true" paddingRight="true" >

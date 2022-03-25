@@ -1,21 +1,23 @@
 import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, 
     Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService,
-    TermsandPolicy, Policy, ValueAdded, GalleryImages
+    TermsandPolicy, Policy, ValueAdded, GalleryImages, Agency, AdminHome
 } 
     from "./export"
 import {Navigate} from "react-router-dom";
 
-const routes = (isLoggedIn, Query) => 
+const routes = (isLoggedIn, Query,user) => 
     [
         {
             path: '/admin/live',
             element: isLoggedIn ? <AdminDashboard /> : <AdminLogin/>,
             children: [
-            { path: 'pending', element: <AdminDashboard /> },
-            { path: 'completed', element: <AdminDashboard /> },
-            { path: 'deleted', element: <AdminDashboard /> },
+            { path: 'home', element:  <AdminHome />},
+            { path: 'pending', element:  <AdminDashboard /> },
+            { path: 'completed', element:   <AdminDashboard /> },
+            { path: 'deleted', element: <AdminDashboard />  },
             { path: 'complains', element: <AdminDashboard /> },
-            { path: 'update-booking', element: <AdminDashboard /> }
+            { path: 'update-booking', element: <AdminDashboard /> },
+            { path: 'register-user', element: <AdminDashboard /> },
             ],
         },
         {
@@ -68,7 +70,7 @@ const routes = (isLoggedIn, Query) =>
             ],
         },
         {
-            path: '/paystack/callback',
+            path: '/payment-status',
             element: <Verify />,
             children: [
             { path: 'shortlet', element: <Verify /> },
@@ -117,6 +119,10 @@ const routes = (isLoggedIn, Query) =>
             { path: '*', element: <NotFound /> },
             ],
         },
+        {
+            path: '/agency',
+            element: <Agency />,
+        }
     ];
 
 export default routes;

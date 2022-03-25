@@ -15,14 +15,10 @@ const PriceBody =  styled.div `
             justify-content: center;
 
             div {
-                display: flex;
+                ${FlexStyle}
                 justify-content: space-between;
                 position: relative;
                 margin: 0.2rem 0;
-
-                /* p:first-child {
-                    text-decoration: underline;
-                } */
             }
 
             p {
@@ -146,7 +142,7 @@ const Prices = ({price, summary_details, selectedCar, reserve, TotalAdditionalSe
                     <div className="priceHeader">
                         <p>{reserve === 'loading' ? <SkeletonLoader /> : 'Service Fee'}</p>
                         {reserve === 'loading' ? <SkeletonLoader /> : (
-                            <Tooltips title='Cost for completing this transaction'>
+                            <Tooltips title='Applicable bank charges and online transaction fee'>
                                 <span>{QuestionMark}</span>
                             </Tooltips>
                         )}

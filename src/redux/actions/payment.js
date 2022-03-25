@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ongoingTransaction, RetrieveTransaction, PaymentPayStack, 
     VerifyPayStack, ManualPay, ManualCancel, ManualConfirmBookings, 
-    ExpiredBooking 
+    ExpiredBooking, ManualReceive 
 } from "../actionCreators/actionCreators";
 
 
@@ -15,8 +15,16 @@ export const PaymentsReducer = createSlice({
         manualTransfer: {},
         cancelTransfer: {},
         confirmTransfer: {},
-        expiredBookings: {}
+        expiredBookings: {},
+        manualReceivePayment: {},
+        
     },
+    reducers: {
+        resetPaymentState: (state) => {
+            state.confirmTransfer = {};
+        }
+    },
+
     extraReducers:(builder) => {
         builder
         .addCase(ongoingTransaction.pending, (state, action) => {
@@ -107,10 +115,21 @@ export const PaymentsReducer = createSlice({
             state.expired = 'failed'
             state.error = action.error.message
         })
+        .addCase(ManualReceive.pending, (state, action) => {
+            state.receivedpayment = 'loading'
+        })
+        .addCase(ManualReceive.fulfilled, (state, action) => {
+            state.receivedpayment = 'succeeded'
+            state.manualReceivePayment = action.payload
+        })
+        .addCase(ManualReceive.rejected, (state, action) => {
+            state.receivedpayment = 'failed'
+            state.error = action.error.message
+        })
     }
 
 })
 
-
+export const { resetPaymentState } = PaymentsReducer.actions
 
 export default PaymentsReducer.reducer
