@@ -296,6 +296,15 @@ export const HandleSignIn = async(formData) => {
 
 }
 
+export const HandleLogOut = async() => {
+    try{
+        const {data} = await axios.get(`${BaseURL}/log-out`)
+        return data
+    }catch(error){
+        return error.message
+    }
+}
+
 export const HandleAgentSiginIn = async(formData) => {
     const Fdata = {
         email: formData.email,
