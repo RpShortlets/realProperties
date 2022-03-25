@@ -36,7 +36,7 @@ const Complaint = ({data, timeOfDay}) => {
             </div>
         ) :
             <>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>Complains</H1>
                 {status === 'succeeded' && (<TableData data={complains} status={status} />)}
             </>
         }

@@ -19,7 +19,7 @@ export const CustomerService = lazy(() => import('./Pages/Customer Support/Custo
 export const Policy = lazy(() => import('./Pages/Term and Policy/Policy'))
 export const TermsandPolicy = lazy(() => import('./Pages/Term and Policy/TermandPolicy.jsx'))
 export const ValueAdded = lazy(() => import('./Pages/Vas/ValueAdded'))
-export const Agency = lazy(() => import('./Pages/dashboard/components/Login'))
+export const Agency = lazy(() => import('./Pages/Agency/Agency'))
 export const AdminHome = lazy(() => import('./Pages/dashboard/components/AdminHome'))
 
 export { default as Footer } from "./components/Footer/Footer"

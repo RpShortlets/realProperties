@@ -52,6 +52,12 @@ const headcells = [
         label: 'Amount',
     },
     {
+        id: 'ApartmentName',
+        numeric: true,
+        disablePadding: false,
+        label: 'Property',
+    },
+    {
         id: 'Phone number',
         numeric: true,
         disablePadding: false,
@@ -76,9 +82,9 @@ const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    console.log(data)
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
-
+    
+    console.log(pendingTransaction)
     useEffect(() => {
         if(!data?.token) {
             navigate('/admin/live')
@@ -106,7 +112,7 @@ const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
             </div>
         ) :
             <>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>Pending Bookings</H1>
                 {pending === 'succeeded' && (<Table  onClicks={handleCompletedBooking} showColor title="Pending Bookings" headData={headcells} records={pendingTransaction}/>)}
             </>
         }

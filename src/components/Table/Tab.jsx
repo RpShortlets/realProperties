@@ -251,6 +251,13 @@ export default function EnhancedTable({headData, records, title, onClicks, showC
                                         >
                                             {row?.amount}
                                         </TableCellss>}
+                                        {row?.shortname && 
+                                        <TableCellss 
+                                            align="left"
+                                            color={showColor && row?.customer_payment_confirmation === 'payment confirmed' ? "#fff" : "#333"}
+                                        >
+                                            {row?.shortname}
+                                        </TableCellss>}
                                     {row?.phone_no && 
                                         <TableCellss 
                                             align="left"

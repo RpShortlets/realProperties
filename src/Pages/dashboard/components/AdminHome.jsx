@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Button from "../../../components/Button/Button"
 import {AdminContainer, AdminHeader, FlexStyle } from "../../../styles/globalStyles"
 import { DarkIcon, SunIcon } from "../../../Svg/svg"
+import { useSelector } from "react-redux";
 
 
 
@@ -22,8 +23,15 @@ const Container = styled.div `
     ${FlexStyle} 
 `
 
+
+
+
 const AdminHome = ({timeOfDay, data, SwitchTheme, theme}) => {
-    
+    const {profile} = useSelector(state => state.adminDashboard)
+    console.log(profile)
+    // const {encrypted} = useEncrypt(profile, key)
+
+    // console.log(encrypted)
 
     return (
         <Wrapper>

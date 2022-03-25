@@ -107,6 +107,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
     const {usedName: usedLastname} = Capitalize(lastname)
 
 
+    console.log(usedFirstname, usedLastname)
 
     const {validatedName} = useValidate({name, focus})
     const {validatedLastName} =  useValidateLast({lastname, focusLast})

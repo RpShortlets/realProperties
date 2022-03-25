@@ -50,6 +50,12 @@ const headcells = [
         label: 'Amount',
     },
     {
+        id: 'ApartmentName',
+        numeric: true,
+        disablePadding: false,
+        label: 'Property',
+    },
+    {
         id: 'Number',
         numeric: true,
         disablePadding: false,
@@ -93,7 +99,7 @@ const Deleted = ({data, timeOfDay}) => {
             </div>
         ) :
             <>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>Deleted Bookings</H1>
                 {cancelled === 'succeeded' && (<Table  title="Deleted Bookings" headData={headcells} records={cancelledTransaction}/>)}
             </>
         }

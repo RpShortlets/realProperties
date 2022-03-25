@@ -136,7 +136,7 @@ const About = () => {
             <Main ref={ref}  paddingRight="true" paddingleft="true" >
                 <motion.div  className="AboutReal"> 
                     {/* <Parallax speed={-5}> */}
-                        <h1>About Real property</h1>
+                        <h1>About Real Property</h1>
                     {/* </Parallax> */}
                     
                     <div className="AboutRealContent">

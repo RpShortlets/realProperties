@@ -107,7 +107,7 @@ const AgentSignUp = ({data, timeOfDay, theme}) => {
     return (
         <Section>
             <Main>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>Register User</H1>
                 <Container>
                     <form onSubmit={handleFormSubmit}>
                         <Input theme={theme} type="text" label="First Name"  placeholder="First Name" name="firstname" Icon={Person}  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value })}/>

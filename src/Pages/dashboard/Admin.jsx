@@ -133,7 +133,9 @@ const Admin = () => {
     const Query = useMediaQuery("(min-width: 669px)")
     const timeOfDay = useGetHour()
     const dispatch = useDispatch();
-    const {status, confirmTransfer} = useSelector(state => state.paymentState)
+    const {status} = useSelector(state => state.paymentState)
+
+
 
     const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)

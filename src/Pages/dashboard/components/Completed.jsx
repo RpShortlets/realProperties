@@ -50,6 +50,12 @@ const headcells = [
         label: 'Amount',
     },
     {
+        id: 'ApartmentName',
+        numeric: true,
+        disablePadding: false,
+        label: 'Property',
+    },
+    {
         id: 'Number',
         numeric: true,
         disablePadding: false,
@@ -125,7 +131,7 @@ const Completed = ({data, timeOfDay}) => {
             </div>
         ) :
             <>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>Completed Bookings</H1>
                 {completed === 'succeeded' && (<Table  title="Bookings" headData={headcells} records={completedTransaction}/>)}
             </>
         }

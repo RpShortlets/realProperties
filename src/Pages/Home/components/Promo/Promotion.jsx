@@ -57,7 +57,7 @@ const Promotion = ({promoBig, setPromoBig, children}) => {
     const Query = useMediaQuery("(max-width: 600px)")
 
     return (
-        <Modal transition={{duration: 0.5, type:{type:'spring'}}} initial={{scale: 0.5, opacity: 0}} exit={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}}  borderRadius="0" overFlow="scroll" height="-webkit-fill-available" padding="max(4vw, 2rem) max(7vw, 2rem)" show={promoBig} setShow={setPromoBig} width={Query? '90%' : "80%"} theme="rgba(0,0,0,0.5)" left={Query ? "5%" : "10%"} top={Query ? "9%" : "15%"} btn >
+        <Modal transition={{duration: 0.5, type:{type:'spring'}}} initial={{scale: 0.5, opacity: 0}} exit={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}}  borderRadius="0" overFlow="scroll" height="75%" padding="max(4vw, 2rem) max(7vw, 2rem)" show={promoBig} setShow={setPromoBig} width={Query? '90%' : "80%"} theme="rgba(0,0,0,0.5)" left={Query ? "5%" : "10%"} top={Query ? "20%" : "15%"} btn >
             <Container>
                 <Image src={Banner} alt="MothersDayPromo" />
                 <div>
@@ -65,15 +65,14 @@ const Promotion = ({promoBig, setPromoBig, children}) => {
                     <p>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</p>
                 </div>
                 <div className="steps">
-                    <h3>Steps on how to participate</h3>
+                    <h3>HOW TO PARTICIPATE IN 3 EASY STEPS</h3>
                     <ul>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
-                        <li>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</li>
+                        <li>Participant must follow us on Instagram @rpshortlets.</li>
+                        <li>Write a short story in the comment section telling us why your mom is a super mom.</li>
+                        <li>Participant must tag their friends to follow @rpshortlets @ceriesnoireng @perriscafe.ng and like their short story in the comment section.</li>
                     </ul>
+                    <p style={{textAlign: 'start'}}>Entries closes on;</p>
+                    <p  style={{textAlign: 'start'}}>Monday, 28<sup>th</sup> March.</p>
                 </div>
             </Container>
 

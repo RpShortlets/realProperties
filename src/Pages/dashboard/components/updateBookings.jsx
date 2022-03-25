@@ -153,7 +153,7 @@ const UpdateBookings = ({data, timeOfDay, theme}) => {
     return (
         <>
             <Wrapper>
-                <H1>{"Good " + timeOfDay +", " + data?.firstname}</H1>
+                <H1>New Booking</H1>
                 <form autoSave='On' onSubmit={handleUpdateBookings}>
                     <div>
                         <Input  theme={theme} className="marginInput" type="text" label="First Name" placeholder='First Name' name="customerName"  value={formdata.firstname} formdata={formdata} handleChange={(e) => setFormData({...formdata, firstname: e.target.value.replace(/[^\w\s]/gi, "") })} />

@@ -29,19 +29,6 @@ export  function useDecrypt(text, password) {
     const [decrypted, setDecrypted] = useState("")
 
     useEffect(() => {
-        // const key = CryptoJS.enc.Utf8.parse(password)
-        // const iv = CryptoJS.enc.Utf8.parse(password)
-        // setKey(key)
-        // setIv(iv)
-        // const decrypt = (text) => {
-        //     const decrypted = CryptoJS.AES.decrypt(text, key, {
-        //         iv: iv,
-        //         mode: CryptoJS.mode.CBC,
-        //         padding: CryptoJS.pad.Pkcs7
-        //     })
-        //     setDecrypted(decrypted)
-        //     return decrypted
-        // }
         const decrypt = (text) => {
             const decrypted = CryptoJS.AES.decrypt(text, password)
             const originalText = decrypted.toString(CryptoJS.enc.Utf8);
