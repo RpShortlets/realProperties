@@ -123,7 +123,7 @@ export const ongoingTransaction = createAsyncThunk("payment/ongoingTransaction",
         car_rental: carPrice,
         driver: driver,
         security_deposit: security,
-        overall_total: 10,
+        overall_total: totalPrice,
         check_in_date: checkInDate,
         check_out_date: checkOutDate
     }
