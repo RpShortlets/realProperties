@@ -62,7 +62,6 @@ const Promotion = ({promoBig, setPromoBig, children}) => {
                 <Image src={Banner} alt="MothersDayPromo" />
                 <div>
                     <h1>Mother’s Day Special Promo Giveaway</h1>
-                    <p>Ultrices non fringilla quis aenean tellus eleifend in sed. Tincidunt sed neque in non. Aliquet orci nisl, hendrerit sem nulla.</p>
                 </div>
                 <div className="steps">
                     <h3>HOW TO PARTICIPATE IN 3 EASY STEPS</h3>
