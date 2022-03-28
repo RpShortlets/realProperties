@@ -3,13 +3,27 @@ import axios from "axios";
 const user = JSON.parse(localStorage.getItem('user'))
 
 export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
-axios.interceptors.request.use((req) => {
-    if (user && user.token)  {
-        req.headers.Authorization = `Bearer ${user?.token}`;
-    }
+// axios.interceptors.request.use((req) => {
+//     if (user && user.token)  {
+//         req.headers.Authorization = `Bearer ${user?.token}`;
+//     }
 
-    return req;
-});
+//     return req;
+// });
+axios.interceptors.request.use(
+    config => {
+        const { origin } = new URL(config.url);
+        const allowedOrigins = [BaseURL];
+        const token = JSON.parse(localStorage.getItem('user'))?.token;
+        if (allowedOrigins.includes(origin)) {
+        config.headers.authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 export const Reservation = async(formdata, dropdown, phn, dateofbirth, arrivalDeparture) => {
     let formData = {
         firstname: formdata.firstname,

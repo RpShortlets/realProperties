@@ -239,7 +239,7 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                 <div className="RentalContainer">
                     <RentalType>
                         <div className="RentalHeader">
-                            <h3>Car Rental</h3>
+                            <h3>Car Rental (<span style={{textDecoration: 'none', fontSize: '11px'}}>Driver Inclusive</span>)</h3>
                             <Tooltips title='reset all data'>
                                 <span onClick={resetData}>Clear data</span>
                             </Tooltips>
