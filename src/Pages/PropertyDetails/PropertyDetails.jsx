@@ -208,7 +208,6 @@ const PropertyDetails = () => {
         }
     }
 
-
     const minusDays = () => {
         if(carlengthValue > 0) {
             setCarlengthValue((prev) => prev - 1)

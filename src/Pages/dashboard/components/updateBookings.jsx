@@ -99,57 +99,11 @@ const UpdateBookings = ({data, timeOfDay, theme}) => {
             dispatch(UpdateBooking({formdata, dropdown, phn, checkInDate, checkOutDate, totalPrice, agentConcat }))
         } 
         else {
-            if(!dropdown.title) {
-                OpenNotificationWithIcon('error', 'Please select a title')
-            }
-            else if(!formdata.firstname) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer first name',
-                    type: 'warning'
-                })
-            }
-            else if(!formdata.lastname) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer last name',
-                    type: 'warning'
-                })
-            }
-            else if(!formdata.email) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer email',
-                    type: 'warning'
-                })
-            }
-            else if(!phn) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer phone number',
-                    type: 'warning'
-                })
-            }
-            else if(!dropdown.apartment) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer apartment',
-                    type: 'warning'
-                })
-            }
-            else if(!formdata.referenceId) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer reference Id',
-                    type: 'warning'
-                })
-            }
-            else if(!checkInDate) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer check-in date',
-                    type: 'warning'
-                })
-            }
-            else if(!checkOutDate) {
-                OpenNotificationWithIcon({
-                    message: 'Enter customer check-out date',
-                    type: 'warning'
-                })
-            }
+            OpenNotificationWithIcon({
+                type: 'error',
+                message: "Please fill all the fields",
+            })
+
         }
     }
 
