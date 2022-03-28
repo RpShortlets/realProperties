@@ -170,6 +170,7 @@ const ReservationComponent = ({setOpenGuest, openGuest, modalRef, openService,
     }) => {
 
 
+    console.log(minusDays)
     const dispatch = useDispatch();
 
     const {adultcount, childrencount, showMobileReserveModal} = useSelector(state => state.ComponentState)

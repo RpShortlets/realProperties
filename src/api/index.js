@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const user = JSON.parse(localStorage.getItem('user'))
 
-export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
+
+export const BaseURL = 'http://localhost:5050';
 // axios.interceptors.request.use((req) => {
 //     if (user && user.token)  {
 //         req.headers.Authorization = `Bearer ${user?.token}`;

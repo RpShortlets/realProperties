@@ -297,7 +297,7 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                                         <div className="carLenghtBtnsDiv">
                                             <Tooltips title='Cannot decrease below 1'>
                                                 <Button 
-                                                    onClick={minusDays}
+                                                    onClicks={minusDays}
                                                     icon={<FiMinus color='var(--color-primary-dark)' />} 
                                                     display="flex" 
                                                     padding={Query ? "5px" : '10px'}  
