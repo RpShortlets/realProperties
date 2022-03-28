@@ -2,6 +2,8 @@ import styled from "styled-components"
 import Modal from "../../../../components/Modal/Modal"
 import Banner from "../../../../image/Promos/MotherBig.webp"
 import useMediaQuery from "../../../../hooks/useMediaQuery/useMediaQuery"
+import { FlexStyle } from "../../../../styles/globalStyles"
+import { CancelIcon } from "../../../../Svg/svg"
 
 
 const Container = styled.div`
@@ -53,11 +55,30 @@ const Image = styled.img`
     height: 100%;
     object-fit: cover;
 `
+
+const Cancel = styled.span `
+    position: absolute;
+    top: 10px;
+    font-size: 11px;
+    right: 19px;
+    cursor: pointer;
+    border: 1px solid #333;
+    border-radius: 23px;
+    /* padding: 2px; */
+    height: 20px;
+    width: 20px;
+    display: flex;
+    ${FlexStyle}
+    justify-content: center;
+`
+
+
 const Promotion = ({promoBig, setPromoBig, children}) => {
     const Query = useMediaQuery("(max-width: 600px)")
 
     return (
         <Modal transition={{duration: 0.5, type:{type:'spring'}}} initial={{scale: 0.5, opacity: 0}} exit={{scale: 0, opacity: 0}} animate={{scale: 1, opacity: 1}}  borderRadius="0" overFlow="scroll" height="75%" padding="max(4vw, 2rem) max(7vw, 2rem)" show={promoBig} setShow={setPromoBig} width={Query? '90%' : "80%"} theme="rgba(0,0,0,0.5)" left={Query ? "5%" : "10%"} top={Query ? "20%" : "15%"} btn >
+            <Cancel onClick={() => setPromoBig(false)}>{ CancelIcon}</Cancel>
             <Container>
                 <Image src={Banner} alt="MothersDayPromo" />
                 <div>

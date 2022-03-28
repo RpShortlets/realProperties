@@ -84,7 +84,6 @@ const Pending = ({handleCompletedBooking, data, timeOfDay}) => {
 
     const {pending, pendingTransaction} = useSelector(state => state.adminDashboard);
     
-    console.log(pendingTransaction)
     useEffect(() => {
         if(!data?.token) {
             navigate('/admin/live')

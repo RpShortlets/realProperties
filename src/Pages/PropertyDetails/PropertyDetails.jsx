@@ -348,7 +348,7 @@ const PropertyDetails = () => {
                     handleChange={handleChange} 
                     handleSubmit={handleSubmit} 
                     TotalAdditionalServices={AddtionalServices}
-                    TotalCarAndDriverPrice={carDriverTotal}
+                    TotalCarAndDriverPrice={carPrice}
                     selectedCar={selectedCar}
                     resetData={resetData} 
                     radio={radio} 
@@ -466,7 +466,7 @@ const PropertyDetails = () => {
                                         handleChange={handleChange}
                                         handleSubmit={handleSubmit}
                                         TotalAdditionalServices={AddtionalServices}
-                                        TotalCarAndDriverPrice={carDriverTotal}
+                                        TotalCarAndDriverPrice={carPrice}
                                         resetData={resetData} 
                                         showBenzRef={showBenzRef} 
                                         BenZ={BenZ} 

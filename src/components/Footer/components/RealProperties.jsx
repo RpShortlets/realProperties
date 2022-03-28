@@ -71,7 +71,7 @@ const RealProperties = () => {
                     <h2>Real Property</h2>
                 </div>
                 <p>
-                    Real Property Assets and Technologies Limited is a boutique real estate and facilities management company
+                    RP Shortlets is a subsidiary of Real Property Assets and Technologies Limited, a boutique real estate and facilities management company
                     founded in 2012. With our unique contemporary style and passion for connecting people
                     with property, we aspire to provide the ultimate real estate experience for today’s modern
                     consumer.
