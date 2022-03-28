@@ -219,7 +219,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
                     </div>
                     <FilterWrapper className="justify-center">
                         <Header>
-                            <h1>Reserve Your Luxury Short Let</h1>
+                            <h1>Reserve Your Luxury Shortlet</h1>
                             <p>Easy, Secure and Quick</p>
                         </Header>
                         <FilterSearchWrapper 

@@ -273,7 +273,8 @@ const SearchResult = () => {
                         <Count>
                             {status === 'loading' ? <SkeletonLoader/> : 
                                 status === 'succeeded' &&
-                                <p>Search result <span>{searchV} Shortlets</span> <span>{count[0]?.count} {count[0]?.count > 1 ? 'properties' : 'property'} found</span></p>
+                                <p>Search Result; <span>{count[0]?.count} {count[0]?.count > 1 ? 'properties' : 'property'} found</span> </p>
+                                // <p>Search Result; <span>{searchV} Shortlets</span> <span>{count[0]?.count} {count[0]?.count > 1 ? 'properties' : 'property'} found</span></p>
                             }
                         </Count>
                     <Main error={searchResult?.length > 0 ? false : true}>

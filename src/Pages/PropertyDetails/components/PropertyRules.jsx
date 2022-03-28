@@ -79,7 +79,7 @@ const PropertyRules = ({status}) => {
                     </RuleContent>
                     <RuleContent>
                         {status === 'loading' ? <SkeletonLoader /> : <span>{SocialDistance}</span>}
-                        {status === 'loading' ? <SkeletonLoader /> : <span>Social distancing and other related COVID-19</span>}
+                        {status === 'loading' ? <SkeletonLoader /> : <span>Social distancing and COVID-19 protocol</span>}
                     </RuleContent> 
                     <RuleContent>
                         {status === 'loading' ? <SkeletonLoader /> : <span>{FirstAidDark}</span>}
