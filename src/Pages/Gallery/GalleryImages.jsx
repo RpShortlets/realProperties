@@ -15,6 +15,16 @@ import Nine from "../../image/Man/nine.jpeg"
 import Ten from "../../image/Man/ten.jpeg"
 import Eleven from "../../image/Man/eleven.jpeg"
 import Twelve from "../../image/Man/twelve.jpeg"
+import Thirteen from "../../image/Man/thirtness.jpeg"
+import Fourteen from "../../image/Man/fourteen.jpeg"
+import Fifteen from "../../image/Man/fifteen.jpeg"
+import Sixteen from "../../image/Man/sixteen.jpeg"
+import Seventeen from "../../image/Man/seventeen.jpeg"
+import Eighteen from "../../image/Man/eighteen.jpeg"
+import Nineteen from "../../image/Man/ninteen.jpeg"
+import Twenty from "../../image/Man/Twenty.jpeg"
+import TwentyOne from "../../image/Man/TwentyOne.jpeg"
+import TwentyTwo from "../../image/Man/TwentyTwo.jpeg"
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery'
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage'
 import { Clip } from '../../components/Loader/Spinner'
@@ -70,6 +80,46 @@ const Data = [
         id: 12,
         image: Twelve
     },
+    {
+        id: 13,
+        image: Thirteen
+    }, 
+    {
+        id: 14,
+        image: Fourteen
+    },
+    {
+        id:15,
+        image: Fifteen
+    },
+    {
+        id: 16,
+        image: Sixteen
+    },
+    {
+        id: 17,
+        image: Seventeen
+    },
+    {
+        id: 18,
+        image: Eighteen
+    },
+    {
+        id: 19,
+        image: Nineteen
+    },
+    {
+        id: 20,
+        image: Twenty
+    },
+    {
+        id: 21,
+        image: TwentyOne
+    },
+    {
+        id: 22,
+        image: TwentyTwo
+    }
 ]
 
 const Section  = styled.section`
@@ -94,6 +144,8 @@ const GalleryImages = () => {
     const tenPic = useProgressiveImage(Ten)
     const elevenPic = useProgressiveImage(Eleven)
     const twelvePic = useProgressiveImage(Twelve)
+    const EighteenPic = useProgressiveImage(Eighteen)
+
 
 
     if(pathname === '/gallery/videos'){ 

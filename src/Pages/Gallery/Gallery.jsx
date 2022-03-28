@@ -49,21 +49,21 @@ const Background = [
         image: Apartment,
         title: 'Apartments'
     },
-    {
-        id: 2,
-        image: Video,
-        title: 'Videos'
-    },
-    {
-        id: 3,
-        image: Car,
-        title: 'Cars'
-    },
-    {
-        id: 4,
-        image: Exp,
-        title: 'Experience'
-    },
+    // {
+    //     id: 2,
+    //     image: Video,
+    //     title: 'Videos'
+    // },
+    // {
+    //     id: 3,
+    //     image: Car,
+    //     title: 'Cars'
+    // },
+    // {
+    //     id: 4,
+    //     image: Exp,
+    //     title: 'Experience'
+    // },
     
 ]
 
@@ -215,7 +215,8 @@ const Gallery = () => {
     return (
         <GalleryContainer>
             <Main paddingleft="true" paddingRight="true">
-                <Scrollable>
+                {/* //! NOT NEEDED */}
+                {/* <Scrollable>
                     <div>
                         <H2>Take a look around some of our properties</H2>
                     </div>
@@ -226,7 +227,7 @@ const Gallery = () => {
                             </Element>
                         ))}
                     </Scroller> 
-                </Scrollable>
+                </Scrollable> */}
                 <Container>
                     <div>
                         <H2>Check out our collection</H2>

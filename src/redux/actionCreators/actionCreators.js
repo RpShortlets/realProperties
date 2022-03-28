@@ -356,7 +356,7 @@ export const GetCustomersComplains = createAsyncThunk("adminDashboard/getCustome
     return data.results;
 });
 
-export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", async ({formdata, phn,  dropdown,checkInDate,  checkOutDate, totalPrice}) => {
+export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", async ({formdata, phn,  dropdown,checkInDate,  checkOutDate, totalPrice, agentConcat}) => {
     
     const formdatas = {
         apartment_id: dropdown.apartment,
@@ -368,12 +368,13 @@ export const UpdateBooking = createAsyncThunk("adminDashboard/UpdateBookings", a
         check_out_date: checkOutDate,
         amount: totalPrice,
         reference_no: formdata.referenceId,
-        bank_trasaction_id: formdata.transactionId,
-        external_platform: dropdown.platform
+        external_platform: "Agency",
+        title: dropdown.title,
+        agent_name: agentConcat
     }
 
     const {data} = await axios.post(`${BaseURL}/update_booking_external`, formdatas);
-    return data.title;
+    return data;
 });
 
 export const GetPropertyInfoAdmin = createAsyncThunk("adminDashboard/getPropertyInfoAdmin", async ({dropdown}) => {

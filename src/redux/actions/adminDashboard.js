@@ -22,8 +22,10 @@ export const AdminDashboard = createSlice({
             state.profile = action.payload
         },
         clearRegistration: (state, action) => {
-            state.userRegistration = {}
-            
+            state.userRegistration = {} 
+        },
+        ClearUpdateBooking: (state, action) => {
+            state.updateBooks = {} 
         },
     },
     extraReducers: (builder) => {
@@ -88,6 +90,7 @@ export const AdminDashboard = createSlice({
         })
         .addCase(UpdateBooking.fulfilled, (state, action) => {
             state.bookings = 'succeeded'
+            console.log(action.payload)
             state.updateBooks = action.payload
         })
         .addCase(UpdateBooking.rejected, (state, action) => {
@@ -119,6 +122,6 @@ export const AdminDashboard = createSlice({
     }
 });
 
-export const { getAdminProfile, clearRegistration } = AdminDashboard.actions;
+export const { getAdminProfile, clearRegistration, ClearUpdateBooking } = AdminDashboard.actions;
 
 export default AdminDashboard.reducer;

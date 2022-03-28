@@ -54,10 +54,10 @@ const IconDivs = styled.div `
     transition: 2s;
     color: var(--color-primary);
 
-    :hover {
+    /* :hover {
         background: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
         color: #fff; 
-    }
+    } */
 
     p {
         margin: .5rem 0 0 0;
@@ -100,12 +100,12 @@ const WhyRealShortlets = ({about}) => {
     return (
         <Container>
             <Wrapper  about={about} paddingleft='true' paddingRight='true'>
-                <h2>Why Real Shortlets</h2>
+                <h2>Why RP Shortlets</h2>
                 <Content  >
                     {RealShortlets.map((item) => (
                         <IconDivs key={item.id} as={motion.div}
-                            whileHover={{ scale: 1.06 }}
-                            whileTap={{ scale: 0.9 }} 
+                            // whileHover={{ scale: 1.06 }}
+                            // whileTap={{ scale: 0.9 }} 
                         >
                             <div>
                                 <div>

@@ -259,21 +259,21 @@ const RentalServices = ({resetData, radio, addDays, minusDays,
                                     <div className="carModalInputContainer" onClick={showBenzRef}>
                                         <span htmlFor="benz">Mercedes Benz E350</span>
                                         <div className="carModalInputDiv" ref={BenZ} >
-                                            <span>&#8358;50,000</span>
+                                            <span>&#8358;70,000</span>
                                             <input id="benz" type="checkbox" name="MercedezBenzE350" value="50,000"  onChange={() => handleBenz} style={{display: 'none'}}  />
                                         </div>
                                     </div>
                                     <div className="carModalInputContainer" onClick={showCamryRef}>
                                         <span>Toyota Camry</span>
                                         <div className="carModalInputDiv" ref={Camry} >
-                                            <span>&#8358;40,000</span>
+                                            <span>&#8358;60,000</span>
                                             <input type="checkbox" name="ToyotaCamry" value="40,000"  onChange={() => handleBenz} style={{display: 'none'}} />
                                         </div>
                                     </div>
                                     <div className="carModalInputContainer" onClick={showSuvRef}>
                                         <span>Chevy Tahoe SUV</span>
                                         <div className="carModalInputDiv" ref={Suv} >
-                                            <span>&#8358;60,000</span>
+                                            <span>&#8358;80,000</span>
                                             <input type="checkbox" name="ChevyTahoeSUV" value="60,000"  onChange={() => handleBenz} style={{display: 'none'}} />
                                         </div>
                                     </div>
