@@ -95,7 +95,7 @@ const UpdateBookings = ({data, timeOfDay, theme}) => {
 
     const handleUpdateBookings = (e) => {
         e.preventDefault();
-        if(dropdown.title && formdata.firstname && formdata.lastname && formdata.email && phn &&formdata.referenceId && dropdown.apartment && checkInDate && checkOutDate ) {
+        if(dropdown.title && formdata.firstname && formdata.lastname && formdata.email && phn  && dropdown.apartment && checkInDate && checkOutDate ) {
             dispatch(UpdateBooking({formdata, dropdown, phn, checkInDate, checkOutDate, totalPrice, agentConcat }))
         } 
         else {
@@ -151,10 +151,10 @@ const UpdateBookings = ({data, timeOfDay, theme}) => {
                         </div>
                         }
                         <Input theme={theme} className="marginInput" type="number" label="Amount Paid" placeholder='' name="amountPaid"  value={formdata.amountPaid} formdata={formdata} handleChange={(e) => setFormData({...formdata, amountPaid: e.target.value.replace(/[^\w\s]/gi, "") })} />
-                        <Input theme={theme} className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                        <Input  asterik theme={theme} className="marginInput" type="text" label="Reference ID" placeholder='' name="referenceId"  value={formdata.referenceId} formdata={formdata} handleChange={(e) => setFormData({...formdata, referenceId: e.target.value.replace(/[^\w\s]/gi, "") })} />
                         {data?.role !== 'agent' && (
                             <>
-                                <Input theme={theme} className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
+                                <Input asterik theme={theme} className="marginInput" type="text" label="Transaction ID" placeholder='' name="transactionId"  value={formdata.transactionId} formdata={formdata} handleChange={(e) => setFormData({...formdata, transactionId: e.target.value.replace(/[^\w\s]/gi, "") })} />
                                 <InputSelect theme={theme} className="marginInput" name="platform"  style={{paddingLeft: '10px'}} value={dropdown.platform} dropdown={dropdown} setDropdown={setDropdown} options={plat} label="Platform"  />
                             </>
                         )}

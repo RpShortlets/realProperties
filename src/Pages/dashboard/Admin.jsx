@@ -135,10 +135,6 @@ const Admin = () => {
     const dispatch = useDispatch();
     const {status} = useSelector(state => state.paymentState)
 
-    let cok = document.cookie
-
-    console.log(cok)
-
     const [agentHome, setAgentHome] = useState(true)
     const [openModal, setOpenModal] = useState(false)
     const [pending, setPending] = useState(false);
