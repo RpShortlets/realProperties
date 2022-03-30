@@ -13,10 +13,10 @@ import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AnimatePresence } from "framer-motion"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
 import BG from "../../image/background.webp"
-import MothersDayPromo from './components/Promo/MothersDayPromo';
-import { useEffect } from 'react';
-import Promotion from './components/Promo/Promotion';
-import PromotionDiv from './components/Promo/PromoHome';
+// import MothersDayPromo from './components/Promo/MothersDayPromo';
+//import { useEffect } from 'react';
+// import Promotion from './components/Promo/Promotion';
+// import PromotionDiv from './components/Promo/PromoHome';
 
 
 const Section = styled.section `
@@ -33,9 +33,9 @@ const Home = () => {
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
-    const [showPromo, setShowPromo] = useState(false)
-    const [promoCounter, setPromoCounter] = useState(3)
-    const [promoBig, setPromoBig] = useState(false)
+    // const [showPromo, setShowPromo] = useState(false)
+    //const [promoCounter, setPromoCounter] = useState(3)
+    // const [promoBig, setPromoBig] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
 
 
@@ -58,10 +58,10 @@ const Home = () => {
         dispatch(resetCounts())
     }
 
-    const handleShowBigPromo = () => {
-        setPromoBig(true)
-        setShowPromo(false)
-    }
+    // const handleShowBigPromo = () => {
+    //     setPromoBig(true)
+    //     setShowPromo(false)
+    // }
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -78,20 +78,20 @@ const Home = () => {
     }
 
 
-    useEffect(() => {
-        let timerId;
-        if(promoCounter === 0) {  
-            setShowPromo(true) 
-        } else {
-            timerId = setTimeout(() => {
-                setPromoCounter((countDown) => countDown -1);
+    // useEffect(() => {
+    //     let timerId;
+    //     if(promoCounter === 0) {  
+    //         setShowPromo(true) 
+    //     } else {
+    //         timerId = setTimeout(() => {
+    //             setPromoCounter((countDown) => countDown -1);
                 
-            }, 1000);
-        }
+    //         }, 1000);
+    //     }
 
-        return () => clearInterval(timerId)
+    //     return () => clearInterval(timerId)
 
-    }, [promoCounter]);
+    // }, [promoCounter]);
 
     return (
         <> 
@@ -102,7 +102,7 @@ const Home = () => {
                 </AnimatePresence>
             }
 
-            {showPromo && (
+            {/* {showPromo && (
                 <MothersDayPromo  
                     showPromo={showPromo}
                     setShowPromo={setShowPromo}
@@ -114,7 +114,7 @@ const Home = () => {
                     promoBig={promoBig}
                     setPromoBig={setPromoBig}
                 />
-            )}
+            )} */}
             <Section>
                 <SearchFilter 
                     openModal={openModal} 
@@ -138,9 +138,9 @@ const Home = () => {
                 
                 />
                 {loaded && <WhyRealShortlets />}
-                {loaded && (
+                {/* {loaded && (
                     <PromotionDiv handleShowBigPromo={handleShowBigPromo} />
-                )}
+                )} */}
             </Section>
         </>
     )
