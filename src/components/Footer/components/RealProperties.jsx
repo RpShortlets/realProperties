@@ -68,7 +68,7 @@ const RealProperties = () => {
         <Container>
             <div>
                 <div>
-                    <h2>Real Property</h2>
+                    <h2>RP Shortlets</h2>
                 </div>
                 <p>
                     RP Shortlets is a subsidiary of Real Property Assets and Technologies Limited, a boutique real estate and facilities management company
