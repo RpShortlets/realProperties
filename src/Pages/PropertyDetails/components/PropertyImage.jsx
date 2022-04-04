@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react"
 import styled  from "styled-components/macro"
 import { useSelector } from "react-redux"
-import Lightbox from 'react-spring-lightbox';
-import {AiOutlineCamera, AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
+import {AiOutlineCamera} from "react-icons/ai"
 import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 import Backdrop from "../../../components/Backdrop"
-import Button from "../../../components/Button/Button"
-// import ReactPlayer from 'react-player'
-// import Video from "../../../video/a4.mp4"
-
 
 import Pic14 from "../../../image/small/picSix.jpeg"
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 import useProgressiveImage from "../../../hooks/useProgressiveImage/useProgressiveImage";
+import ImageModal from "../../../components/Image Modal/ImageModal";
 
 
 
@@ -87,61 +83,6 @@ const ImageContainer = styled.div `
 
 
 
-const CustomLeftArrowButton = (props) => { 
-    return (
-        <>
-            {props?.currentImageIndex > 0 && 
-                <Button 
-                    alignT="center" 
-                    display="flex" 
-                    width={props.Query ? "40px" : ""} 
-                    height={props.Query ? "40px" : ""} 
-                    boxShadow="var(--shadow)" 
-                    zIndex='15' 
-                    left={props.Query ? '12%' :  '1%'}
-                    position='absolute' 
-                    onClicks={props.onClicks}  
-                    icon={<AiOutlineLeft />} 
-                    color="var(--color-primary)"  
-                    fontSize={props.Query ? "var(--font-small)" : "var(--font-small)" } 
-                    border="0" 
-                    outline="0" 
-                    background="#fff" 
-                    borderRadius="20px"
-                    padding={props.Query ? "6px 10px" : '15px'} 
-                />
-            }
-        </>
-    )
-}
-
-export const CustomRightArrowButton = (props) => {
-    return (
-        <>
-            {props?.images?.length > props?.currentImageIndex + 1  && 
-                <Button 
-                    alignT="center" 
-                    display= "flex" 
-                    width={props.Query ? "40px" : ""} 
-                    height={props.Query ? "40px" : ""}  
-                    boxShadow="var(--shadow)" 
-                    zIndex='15' 
-                    right={props.Query ? '12%' : '1%'} 
-                    position='absolute' 
-                    onClicks={props.onClicks}  
-                    icon={<AiOutlineRight />} 
-                    color="var(--color-primary)"  
-                    fontSize={props.Query ? "var(--font-small)" : "var(--font-small)" } 
-                    border="0" 
-                    outline="0" 
-                    background="#fff" 
-                    borderRadius="20px" 
-                    padding={props.Query ? "6px 10px" : '15px'}  
-                />
-            }
-        </>
-    )
-}
 
 
 const PropertyImage = ({status}) => {
@@ -160,85 +101,95 @@ const PropertyImage = ({status}) => {
         setCurrentIndex(id)
     }
 
+    let newImages = status === "succeeded" && pictures?.slice(7)
+    
 
-    const images = [
-        {
-            src: status === "succeeded" && pictures[10]?.src && pictures[10]?.src,
-            loading: 'lazy',
-            alt: '',
-        },
-        {
-            src: status === "succeeded" && pictures[11]?.src,
-            loading: 'lazy',
-            alt: '',
-        },
-        {
-            src: status === "succeeded" &&  pictures[9]?.src,
-            loading: 'lazy',
-            alt: '',
-        },
-        {
-            src: status === "succeeded" && pictures[7]?.src && pictures[7]?.src ,
-            loading: 'lazy',
-            alt: '',
-        },
-        {
-            src: status === "succeeded" && pictures[8]?.src && pictures[8]?.src,
-            loading: 'lazy',
-            alt: '',
-        },
-        {
-            src: status === "succeeded" && pictures[12]?.src && pictures[12]?.src,
-            loading: 'lazy',
-            alt: ''
-        },
-        {
-            src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
-            loading: 'lazy',
-            alt: ''
-        },
-        // {
-        //     src: status === "succeeded" && pictures[14]?.src && pictures[14]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[15]?.src && pictures[15]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[16]?.src && pictures[16]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[17]?.src && pictures[17]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[18]?.src && pictures[18]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[19]?.src && pictures[19]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // },
-        // {
-        //     src: status === "succeeded" && pictures[20]?.src && pictures[20]?.src,
-        //     loading: 'lazy',
-        //     alt: ''
-        // }
+    let images = []
 
-    ];
+    for (var i = 0; i < newImages?.length; i++) {
+        images = newImages
+    }
+
+    console.log(images)
+
+    // const images = [
+    //     {
+    //         src: status === "succeeded" && pictures[10]?.src && pictures[10]?.src,
+    //         loading: 'lazy',
+    //         alt: '',
+    //     },
+    //     {
+    //         src: status === "succeeded" && pictures[11]?.src,
+    //         loading: 'lazy',
+    //         alt: '',
+    //     },
+    //     {
+    //         src: status === "succeeded" &&  pictures[9]?.src,
+    //         loading: 'lazy',
+    //         alt: '',
+    //     },
+    //     {
+    //         src: status === "succeeded" && pictures[7]?.src && pictures[7]?.src ,
+    //         loading: 'lazy',
+    //         alt: '',
+    //     },
+    //     {
+    //         src: status === "succeeded" && pictures[8]?.src && pictures[8]?.src,
+    //         loading: 'lazy',
+    //         alt: '',
+    //     },
+    //     {
+    //         src: status === "succeeded" && pictures[12]?.src && pictures[12]?.src,
+    //         loading: 'lazy',
+    //         alt: ''
+    //     },
+    //     {
+    //         src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
+    //         loading: 'lazy',
+    //         alt: ''
+    //     },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[14]?.src && pictures[14]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[15]?.src && pictures[15]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[16]?.src && pictures[16]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[17]?.src && pictures[17]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[18]?.src && pictures[18]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[19]?.src && pictures[19]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // },
+    //     // {
+    //     //     src: status === "succeeded" && pictures[20]?.src && pictures[20]?.src,
+    //     //     loading: 'lazy',
+    //     //     alt: ''
+    //     // }
+
+    // ];
 
     
 
@@ -264,7 +215,7 @@ const PropertyImage = ({status}) => {
     return (
         <>
             {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
-            <Lightbox
+            {/* <Lightbox
                 isOpen={isOpen}
                 onPrev={gotoPrevious}
                 onNext={gotoNext}
@@ -273,6 +224,15 @@ const PropertyImage = ({status}) => {
                 onClose={() => setIsOpen(false)} 
                 renderPrevButton={() => (<CustomLeftArrowButton Query={Query} onClicks={gotoPrevious}  currentImageIndex={currentImageIndex}/>)}
                 renderNextButton={() => (<CustomRightArrowButton Query={Query} onClicks={gotoNext} currentImageIndex={currentImageIndex} images={images} />)}
+            /> */}
+            <ImageModal 
+                isOpen={isOpen} 
+                gotoPrevious={gotoPrevious} 
+                gotoNext={gotoNext} 
+                images={images} 
+                currentImageIndex={currentImageIndex} 
+                setIsOpen={setIsOpen} 
+                Query={Query} 
             />
             <ImageContainer>
                 <ImageWrapper>

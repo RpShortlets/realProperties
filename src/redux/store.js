@@ -8,6 +8,7 @@ import PaymentsReducer from "./actions/payment"
 import CustomerRecords from "./actions/saveCustomerRecord"
 import AdminDashboard from "./actions/adminDashboard"
 import CustomerSupport from "./actions/customerSupport"
+import GallarySlice from "./actions/gallery"
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
         paymentState: PaymentsReducer,
         customerRecord : CustomerRecords,
         adminDashboard: AdminDashboard,
-        customerSupport: CustomerSupport
+        customerSupport: CustomerSupport,
+        gallary: GallarySlice
 
     },
     middleware: (getDefaultMiddleware) =>
