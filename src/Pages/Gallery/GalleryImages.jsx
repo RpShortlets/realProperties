@@ -1,151 +1,169 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { PaddingStyle } from '../../styles/globalStyles'
+import { FlexStyle, PaddingStyle } from '../../styles/globalStyles'
 import styled from 'styled-components'
-import MansonryLayout from '../../components/Mansory/Mansory'
-import One from "../../image/Man/one.jpeg"
-import Two from "../../image/Man/two.jpeg"
-import Three from "../../image/Man/three.jpeg"
-import Four from "../../image/Man/four.jpeg"
-import Five from "../../image/Man/five.jpeg"
-import Six from "../../image/Man/six.jpeg"
-import Seven from "../../image/Man/seven.jpeg"
-import Eight from "../../image/Man/eight.jpeg"
-import Nine from "../../image/Man/nine.jpeg"
-import Ten from "../../image/Man/ten.jpeg"
-import Eleven from "../../image/Man/eleven.jpeg"
-import Twelve from "../../image/Man/twelve.jpeg"
-import Thirteen from "../../image/Man/thirtness.jpeg"
-import Fourteen from "../../image/Man/fourteen.jpeg"
-import Fifteen from "../../image/Man/fifteen.jpeg"
-import Sixteen from "../../image/Man/sixteen.jpeg"
-import Seventeen from "../../image/Man/seventeen.jpeg"
-import Eighteen from "../../image/Man/eighteen.jpeg"
-import Nineteen from "../../image/Man/ninteen.jpeg"
-import Twenty from "../../image/Man/Twenty.jpeg"
-import TwentyOne from "../../image/Man/TwentyOne.jpeg"
-import TwentyTwo from "../../image/Man/TwentyTwo.jpeg"
-import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery'
-import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage'
-import { Clip } from '../../components/Loader/Spinner'
+import { useSelector, useDispatch } from "react-redux"
+import  {fetchGallarySuccess} from '../../redux/actions/gallery'
+
 import Error from '../../components/Error/Error'
 
 
-const Data = [
-    {
-        id: 1,
-        image: One
-    },
-    {
-        id: 2,
-        image: Two
-    },
-    {
-        id: 3,
-        image: Three
-    },
-    {
-        id: 4,
-        image: Four
-    },
-    {
-        id: 5,
-        image: Five
-    },
-    {
-        id: 6,
-        image: Six
-    },
-    {
-        id: 7,
-        image: Seven
-    },
-    {
-        id: 8,
-        image: Eight
-    },
-    {
-        id: 9,
-        image: Nine
-    },
-    {
-        id: 10,
-        image: Ten
-    },
-    {
-        id: 11,
-        image: Eleven
-    },
-    {
-        id: 12,
-        image: Twelve
-    },
-    {
-        id: 13,
-        image: Thirteen
-    }, 
-    {
-        id: 14,
-        image: Fourteen
-    },
-    {
-        id:15,
-        image: Fifteen
-    },
-    {
-        id: 16,
-        image: Sixteen
-    },
-    {
-        id: 17,
-        image: Seventeen
-    },
-    {
-        id: 18,
-        image: Eighteen
-    },
-    {
-        id: 19,
-        image: Nineteen
-    },
-    {
-        id: 20,
-        image: Twenty
-    },
-    {
-        id: 21,
-        image: TwentyOne
-    },
-    {
-        id: 22,
-        image: TwentyTwo
-    }
-]
+
+import Backdrop from "../../components/Backdrop"
+import ImageModal from '../../components/Image Modal/ImageModal'
+
+
 
 const Section  = styled.section`
+    background-color: var(--color-secondary);
+    width: 100%;
+    height: 100%;
+    padding: max(4vw, 2rem) 0;
 `
 const Main = styled.main`
     ${PaddingStyle}
-    margin: 2rem 0;
+    height: 100%;
 `
 
-const GalleryImages = () => {
-    const Query = useMediaQuery("(min-width: 600px)")
-    const { pathname } = useLocation()
-    const onePic = useProgressiveImage(One)
-    const twoPic = useProgressiveImage(Two)
-    const threePic = useProgressiveImage(Three)
-    const fourPic = useProgressiveImage(Four)
-    const fivePic = useProgressiveImage(Five)
-    const sixPic = useProgressiveImage(Six)
-    const sevenPic = useProgressiveImage(Seven)
-    const eightPic = useProgressiveImage(Eight)
-    const ninePic = useProgressiveImage(Nine)
-    const tenPic = useProgressiveImage(Ten)
-    const elevenPic = useProgressiveImage(Eleven)
-    const twelvePic = useProgressiveImage(Twelve)
-    const EighteenPic = useProgressiveImage(Eighteen)
+const Header = styled.div `
+    ${FlexStyle}
+    flex-direction: column;
+    justify-content: center;
 
+    div:first-child {
+        display: flex;
+        margin-bottom: 1rem;
+
+        h3 {
+            font-size: var(--font-small);
+        }
+    }
+
+    div:last-child {
+        display: flex;
+    }
+
+    span {
+        /* background: #17677B; */
+    }
+`
+
+const Span = styled.span`
+    background: ${({background}) => background  ? "#17677B" : "var(--color-white)"};
+    cursor: pointer;
+    color:  ${({background}) => background  ? "#fff" : "#17677B"}; ;
+    border-radius: 54px;
+    width: 10vw;
+    height: fit-content;
+    padding: 0.5rem;
+    flex-direction: column;
+    ${FlexStyle}
+    justify-content: center;
+    font-size: 1rem;
+    margin: 0 10px;
+
+    &:hover {
+        background: #17677B;
+        color: #fff;
+    }
+`
+
+const ImageContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    margin: max(3vw,2rem) 0 0;
+
+    
+
+    div {
+        grid-column: span 1;
+        cursor: pointer;
+        
+
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 10px 10px 5px #ccc;
+            -moz-box-shadow: 10px 10px 5px #ccc;
+            -webkit-box-shadow: 10px 10px 5px #ccc;
+            -khtml-box-shadow: 10px 10px 5px #ccc;
+            cursor: pointer;
+        }
+    }
+
+    @media screen and (min-width: 700px) and (max-width: 989px) {
+        grid-template-columns: repeat(2, 1fr);
+        
+        div {
+            height: auto
+        }
+    }
+
+    @media screen and (min-width: 990px) {
+        grid-template-columns: repeat(3, 1fr); 
+        div {
+            height: 280px;
+        }
+    }
+    
+`
+
+
+const GalleryImages = () => {
+    const dispatch = useDispatch()
+    //const Query = useMediaQuery("(min-width: 600px)")
+    const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
+    const { pathname } = useLocation()
+    const [apartmentName, setApartmentName] = useState("")
+    const [currentImageIndex, setCurrentIndex] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const showPictures = (id) => {
+        setIsOpen(true)
+        setCurrentIndex(id)
+    }
+
+    let images = []
+
+    for (var i = 0; i < gallary.length; i++) {
+        if(apartmentName === "A4") {
+            images = largeA4Image
+        }   else {
+            images = largeC4Image
+        }
+        
+    }
+
+
+    const gotoPrevious = () =>
+        currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
+
+    const gotoNext = () =>
+        currentImageIndex + 1 < images.length &&
+        setCurrentIndex(currentImageIndex + 1);
+    
+    
+    
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        }
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isOpen])
+    
+    
+
+    const GetImages = (id) => {
+        dispatch(fetchGallarySuccess(id))
+        setApartmentName(id)
+    }
 
 
     if(pathname === '/gallery/videos'){ 
@@ -173,38 +191,48 @@ const GalleryImages = () => {
     }
 
 
-    if(pathname === '/gallery/apartments' || 'gallery/apartments') {
-        return ( 
-            <Main paddingleft="true" paddingRight="true" >
-                    {onePic && twoPic && threePic && fourPic && fivePic 
-                        && sixPic && sevenPic && eightPic && ninePic && tenPic && elevenPic && twelvePic ?
-                        (<MansonryLayout  data={Data} column={Query ? 3 : 2}/> )
-                        : (<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
-                                <Clip type='TailSpin' />
-                            </div>
-                        )
-                    }
-            </Main>
-        )
-    }
-
-    
 
     return (
-        <Section>
-            {pathname === '/gallery/apartments' && (
-                <Main paddingleft="true" paddingRight="true" >
-                    {onePic && twoPic && threePic && fourPic && fivePic 
-                        && sixPic && sevenPic && eightPic && ninePic && tenPic && elevenPic && twelvePic ?
-                        (<MansonryLayout  data={Data} column={Query ? 3 : 2}/> )
-                        : (<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
-                                <Clip type='TailSpin' />
+        <>
+            {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
+            <ImageModal 
+                isOpen={isOpen} 
+                gotoPrevious={gotoPrevious} 
+                gotoNext={gotoNext} 
+                images={images} 
+                currentImageIndex={currentImageIndex} 
+                setIsOpen={setIsOpen} 
+            />
+            <Section>
+                {pathname === '/gallery/apartments' && (
+                    <Main  paddingleft="true" paddingRight="true">
+                        <Header>
+                            <div>
+                                <h3>{apartmentName === "" ? "" : `Apartment pictures of ${apartmentName?.toLocaleUpperCase()}`} </h3>
                             </div>
-                        )
-                    }
-                </Main>
-            )}
-        </Section>
+                            <div>
+                                {['A4', 'C4', 'U3'].map((item, index) => (
+                                    <Span background={apartmentName === item} onClick={() => GetImages(item)}>{item}</Span>
+                                ))}
+                            </div>
+                        </Header>
+                        {gallary && gallary.length > 0 ? (
+                            <ImageContainer>
+                                {gallary?.map((item, index) => (
+                                    <div onClick={() => showPictures(index)}>
+                                        <img src={item?.src} alt={item.title} key={index} />
+                                    </div>
+                                ))}
+                            </ImageContainer>
+                        ): apartmentName === "U3" &&  gallary.length < 1 ? (
+                            <Error title="No pictures for this apartment"  height="50vh" />
+                        ) : (
+                            <Error title="Click to check-out apartment pictures of your choice." height="50vh" />
+                        )}
+                    </Main>
+                )}
+            </Section>
+        </>
     )
 }
 

@@ -50,7 +50,7 @@ const IconDivs = styled.div `
     border-radius: 9.68824px;
     width:  100%;
     height: 190px;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: 2s;
     color: var(--color-primary);
 
