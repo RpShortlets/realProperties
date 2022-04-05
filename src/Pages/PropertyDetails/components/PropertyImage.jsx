@@ -110,88 +110,7 @@ const PropertyImage = ({status}) => {
         images = newImages
     }
 
-    console.log(images)
 
-    // const images = [
-    //     {
-    //         src: status === "succeeded" && pictures[10]?.src && pictures[10]?.src,
-    //         loading: 'lazy',
-    //         alt: '',
-    //     },
-    //     {
-    //         src: status === "succeeded" && pictures[11]?.src,
-    //         loading: 'lazy',
-    //         alt: '',
-    //     },
-    //     {
-    //         src: status === "succeeded" &&  pictures[9]?.src,
-    //         loading: 'lazy',
-    //         alt: '',
-    //     },
-    //     {
-    //         src: status === "succeeded" && pictures[7]?.src && pictures[7]?.src ,
-    //         loading: 'lazy',
-    //         alt: '',
-    //     },
-    //     {
-    //         src: status === "succeeded" && pictures[8]?.src && pictures[8]?.src,
-    //         loading: 'lazy',
-    //         alt: '',
-    //     },
-    //     {
-    //         src: status === "succeeded" && pictures[12]?.src && pictures[12]?.src,
-    //         loading: 'lazy',
-    //         alt: ''
-    //     },
-    //     {
-    //         src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
-    //         loading: 'lazy',
-    //         alt: ''
-    //     },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[14]?.src && pictures[14]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[15]?.src && pictures[15]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[13]?.src && pictures[13]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[16]?.src && pictures[16]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[17]?.src && pictures[17]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[18]?.src && pictures[18]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[19]?.src && pictures[19]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // },
-    //     // {
-    //     //     src: status === "succeeded" && pictures[20]?.src && pictures[20]?.src,
-    //     //     loading: 'lazy',
-    //     //     alt: ''
-    //     // }
-
-    // ];
-
-    
 
 
     const gotoPrevious = () =>
@@ -215,16 +134,6 @@ const PropertyImage = ({status}) => {
     return (
         <>
             {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
-            {/* <Lightbox
-                isOpen={isOpen}
-                onPrev={gotoPrevious}
-                onNext={gotoNext}
-                images={images}
-                currentIndex={currentImageIndex}
-                onClose={() => setIsOpen(false)} 
-                renderPrevButton={() => (<CustomLeftArrowButton Query={Query} onClicks={gotoPrevious}  currentImageIndex={currentImageIndex}/>)}
-                renderNextButton={() => (<CustomRightArrowButton Query={Query} onClicks={gotoNext} currentImageIndex={currentImageIndex} images={images} />)}
-            /> */}
             <ImageModal 
                 isOpen={isOpen} 
                 gotoPrevious={gotoPrevious} 
@@ -287,13 +196,6 @@ const PropertyImage = ({status}) => {
                         )}
                     </SmallImage>
                 </ImageWrapper>
-                {/* <ReactPlayer
-                    className='react-player'
-                    url={Video}
-                    width='100%'
-                    height='100%'
-                    controls={true}
-                /> */}
             </ImageContainer>
         </>
     )

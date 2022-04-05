@@ -32,6 +32,11 @@ const Header = styled.div `
 
     div:first-child {
         display: flex;
+        margin-bottom: 1rem;
+
+        h3 {
+            font-size: var(--font-small);
+        }
     }
 
     div:last-child {
@@ -48,7 +53,7 @@ const Span = styled.span`
     cursor: pointer;
     color:  ${({background}) => background  ? "#fff" : "#17677B"}; ;
     border-radius: 54px;
-    width: 100px;
+    width: 10vw;
     height: fit-content;
     padding: 0.5rem;
     flex-direction: column;
@@ -111,7 +116,7 @@ const ImageContainer = styled.div`
 const GalleryImages = () => {
     const dispatch = useDispatch()
     //const Query = useMediaQuery("(min-width: 600px)")
-    const { gallary, largeA4Image } = useSelector(state => state.gallary)
+    const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("")
     const [currentImageIndex, setCurrentIndex] = useState(0);
@@ -125,7 +130,12 @@ const GalleryImages = () => {
     let images = []
 
     for (var i = 0; i < gallary.length; i++) {
-        images = largeA4Image
+        if(apartmentName === "A4") {
+            images = largeA4Image
+        }   else {
+            images = largeC4Image
+        }
+        
     }
 
 
@@ -151,7 +161,7 @@ const GalleryImages = () => {
     
 
     const GetImages = (id) => {
-        dispatch(fetchGallarySuccess())
+        dispatch(fetchGallarySuccess(id))
         setApartmentName(id)
     }
 
@@ -198,7 +208,7 @@ const GalleryImages = () => {
                     <Main  paddingleft="true" paddingRight="true">
                         <Header>
                             <div>
-                                <h3>Pictures of A4</h3>
+                                <h3>{apartmentName === "" ? "" : `Apartment pictures of ${apartmentName?.toLocaleUpperCase()}`} </h3>
                             </div>
                             <div>
                                 {['A4', 'C4', 'U3'].map((item, index) => (
@@ -206,13 +216,19 @@ const GalleryImages = () => {
                                 ))}
                             </div>
                         </Header>
-                        <ImageContainer>
-                            {gallary?.map((item, index) => (
-                                <div onClick={() => showPictures(index)}>
-                                    <img src={item?.src} alt={item.title} key={index} />
-                                </div>
-                            ))}
-                        </ImageContainer>
+                        {gallary && gallary.length > 0 ? (
+                            <ImageContainer>
+                                {gallary?.map((item, index) => (
+                                    <div onClick={() => showPictures(index)}>
+                                        <img src={item?.src} alt={item.title} key={index} />
+                                    </div>
+                                ))}
+                            </ImageContainer>
+                        ): apartmentName === "U3" &&  gallary.length < 1 ? (
+                            <Error title="No pictures for this apartment"  height="50vh" />
+                        ) : (
+                            <Error title="Click to check-out apartment pictures of your choice." height="50vh" />
+                        )}
                     </Main>
                 )}
             </Section>
