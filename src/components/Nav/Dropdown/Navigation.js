@@ -6,7 +6,7 @@ import styled from "styled-components"
 const Ul = styled(motion.ul) `
     padding: 25px;
     position: absolute;
-    top: 50px;
+    top: ${({top}) => top};
     width: 100%;
     display: ${({isOpen}) => isOpen ? 'block' : 'none'};
 `
@@ -20,33 +20,12 @@ const variants = {
     }
 };
 
-export const Navigation = ({toggleOpen, isOpen}) => (
-    <Ul variants={variants} isOpen={isOpen}>
-        {itemIds.map(item => (
-            <MenuItem i={item.id} key={item.id} data={item}  toggleOpen={toggleOpen} isOpen={isOpen}/>
+export const Navigation = ({toggleOpen, isOpen, itemIds, top}) => (
+    <Ul variants={variants} isOpen={isOpen} top={top}>
+        {itemIds?.map(item => (
+            <MenuItem i={item?.id} key={item?.id} data={item}  toggleOpen={toggleOpen} isOpen={isOpen}/>
         ))}
     </Ul>
 );
 
-const itemIds = [ 
-    {
-        id: 0,
-        title: 'About Us',
-        path: '/about'
-    },
-    {
-        id: 1,
-        title: 'Gallery',
-        path: '/gallery'
-    },
-    {
-        id: 2,
-        title: 'Terms and Condition',
-        path: '/terms'
-    },
-    {
-        id: 3,
-        title: 'Customer Support',
-        path: '/customer-support'
-    }
-];
+

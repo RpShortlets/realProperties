@@ -106,11 +106,14 @@ const PropertyImage = ({status}) => {
 
     let images = []
 
+    //* TRANSFORM IMAGES TO ARRAY OF OBJECTS
     for (var i = 0; i < newImages?.length; i++) {
-        images = newImages
+        // images = newImages
+        images = newImages.map(image => ({
+            src: image.src,
+            loading: 'lazy',
+        }))
     }
-
-
 
 
     const gotoPrevious = () =>

@@ -8,13 +8,22 @@ import styled from "styled-components";
 import useMediaQuery from "../../../hooks/useMediaQuery/useMediaQuery";
 
 const NavStyle = styled(motion.nav)`
-    height: ${({height}) => height ? '40vh' : ''};
+    height: ${({height}) => height ? '72vw' : ''};
     overflow: hidden;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     width: ${({width}) => width ? width : '230px'};
+
+
+    @media screen and (min-width: 700px) and (max-width: 920px) {
+      height: ${({height}) => height ? '35vw' : ''};
+    }
+
+    @media screen and (min-width: 921px) {
+      height: ${({height}) => height ? '40vh' : ''};
+    }
 
 `
 
@@ -52,7 +61,7 @@ const sidebar = {
   }
 };
 
-export const MainNav = () => {
+export const MainNav = ({ItemIds, top}) => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -69,7 +78,7 @@ export const MainNav = () => {
             width={Query && !isOpen ? '230px' :  Query && isOpen ? '230px' : !Query && isOpen ? '230px': '60px'}
         >
           <Back variants={sidebar} background={isOpen}/>
-          <Navigation isOpen={isOpen} toggleOpen={toggleOpen}  />
+          <Navigation isOpen={isOpen} toggleOpen={toggleOpen} itemIds={ItemIds} top={top}  />
           <MenuToggle toggle={() => toggleOpen()} />
         </NavStyle>
     );
