@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { FlexStyle, PaddingStyle, CardGallery } from '../../styles/globalStyles'
+import { FlexStyle, PaddingStyle, CardGallery, MediaScroller, MediaElement } from '../../styles/globalStyles'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from "react-redux"
 import  {fetchGallarySuccess} from '../../redux/actions/gallery'
@@ -28,7 +28,7 @@ const Section  = styled.section`
     background-color: var(--color-secondary);
     width: 100%;
     height: 100%;
-    padding: max(4vw, 2rem) 0;
+    padding: max(4vw, 6rem) 0;
 `
 const Main = styled.main`
     ${PaddingStyle}
@@ -49,8 +49,17 @@ const Header = styled.div `
         }
     }
 
-    div:last-child {
-        display: flex;
+
+    
+
+`
+
+const Scroller = styled.div`
+    display: flex;
+    ${MediaScroller}
+
+    @media screen and (max-width: 700px) {
+        width: 100%;
     }
 
 `
@@ -61,17 +70,27 @@ const Span = styled.span`
     color:  ${({background}) => background  ? "#fff" : "#17677B"}; ;
     border-radius: 54px;
     width: 10vw;
-    height: fit-content;
-    padding: 0.5rem;
-    flex-direction: column;
     ${FlexStyle}
     justify-content: center;
-    font-size: 1rem;
-    margin: 0 10px;
+    flex-direction: column;
+    font-size: var(--font-xtraLarge-small);
+    text-align: center;
+    /* height: fit-content;
+    padding: 0.5rem;
+    
+    
+    
+    margin: 0 10px; */
+    ${MediaElement}
 
     &:hover {
         background: #17677B;
         color: #fff;
+    }
+
+    @media screen and (max-width: 700px) {
+        width: 100%;
+        /* font-size: .6rem; */
     }
 `
 
@@ -194,7 +213,7 @@ const GalleryImages = () => {
     const Query = useMediaQuery("(min-width: 600px)")
     const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
-    const [apartmentName, setApartmentName] = useState("")
+    const [apartmentName, setApartmentName] = useState("A4")
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenVideo, setIsOpenVideo] = useState(false);
@@ -355,6 +374,7 @@ const GalleryImages = () => {
     
 
     useEffect(() => {
+        dispatch(fetchGallarySuccess(apartmentName))
         if (isOpen || isOpenVideo) {
             document.body.style.overflow = 'hidden';
         }
@@ -493,11 +513,11 @@ const GalleryImages = () => {
                             <div>
                                 <h3>{apartmentName === "" ? "" : `Apartment pictures of ${apartmentName?.toLocaleUpperCase()}`} </h3>
                             </div>
-                            <div>
+                            <Scroller>
                                 {['A4', 'C4', 'U3'].map((item, index) => (
-                                    <Span background={apartmentName === item} onClick={() => GetImages(item)}>{item}</Span>
+                                    <Span background={apartmentName === item} onClick={() => GetImages(item)}>Apartment {item}</Span>
                                 ))}
-                            </div>
+                            </Scroller>
                         </Header>
                         {gallary && gallary.length > 0 ? (
                             <AnimatePresence initial="false">
@@ -516,7 +536,7 @@ const GalleryImages = () => {
                             </AnimatePresence>
                             
                         ): apartmentName === "U3" &&  gallary.length < 1 ? (
-                            <Error title="No pictures for this apartment"  height="50vh" />
+                            <Error title="Pictures coming soon"  height="50vh" />
                         ) : (
                             <Error title="Click to check-out apartment pictures of your choice." height="50vh" />
                         )}
