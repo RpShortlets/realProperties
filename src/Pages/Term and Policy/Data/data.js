@@ -209,8 +209,12 @@ export const TermsData = [
             },
             {
                 id: 2,
-                content: 'Via this Link: http://realpropertiesassets.com'
+                content: 'Via this Link https://www.rpshortlets.com'
             }
+            // {
+            //     id: 2,
+            //     content: 'Via this Link: http://realpropertiesassets.com'
+            // }
         ]
     }
     // {
