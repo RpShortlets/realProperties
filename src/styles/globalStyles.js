@@ -188,3 +188,17 @@ export const SnapsInline = css`
 // .snaps-inline > * {
 //     scroll-snap-align: start;
 // }
+
+//* GALLERY CARD
+export const CardGallery = css`
+    background: #fff;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    height: fit-content;
+    width: 100%;
+    ${MediaElement}
+    padding: 0 !important;
+    border-radius: 12.6733px;
+
+
+`

@@ -11,6 +11,28 @@ import { AiOutlineMinus } from 'react-icons/ai'
 import {MainNav} from "./Dropdown/MainNav"
 import { motion, AnimatePresence } from "framer-motion"
 
+const ItemIds = [ 
+    {
+        id: 0,
+        title: 'About Us',
+        path: '/about'
+    },
+    {
+        id: 1,
+        title: 'Gallery',
+        path: '/gallery'
+    },
+    {
+        id: 2,
+        title: 'Terms and Condition',
+        path: '/terms'
+    },
+    {
+        id: 3,
+        title: 'Customer Support',
+        path: '/customer-support'
+    }
+];
 
 const NavBar = styled.nav `
     position: sticky;
@@ -244,13 +266,13 @@ const Nav = () => {
                     </>
                 )}
                 
-                {Query ? (<MainNav />) 
+                {Query ? (<MainNav ItemIds={ItemIds} top={'50px'} />) 
                     : newURL ? (
                         <Link to='#' className="filterLink" onClick={handleDrawer}>
                             {FilterIcon}
                         </Link>) 
                     :  showMobileReserveButton && ApartmentUrl ? ("")
-                    : (<MainNav />)
+                    : (<MainNav ItemIds={ItemIds} top="50px" />)
                 }                
             </NavItems>
         </NavBar>

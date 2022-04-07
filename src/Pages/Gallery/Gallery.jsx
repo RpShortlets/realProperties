@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PaddingStyle, MediaElement,  FlexStyle } from '../../styles/globalStyles';
+import { PaddingStyle, FlexStyle, CardGallery } from '../../styles/globalStyles';
 import Car from "../../image/car.webp"
 import Video from "../../image/video.webp"
 import Apartment from "../../image/apartment.webp"
@@ -47,21 +47,18 @@ const Main = styled.main `
 
 const Scroller = styled.div `
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
+
+    @media screen and (min-width: 669px) { 
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 `
 
 
 const Card = styled.div `
-    background: #fff;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    height: fit-content;
-    width: 300px;
-    ${MediaElement}
-    padding: 0 !important;
-    border-radius: 12.6733px;
+    ${CardGallery}
 
     img {
         inline-size: fit-content;
@@ -73,13 +70,15 @@ const Card = styled.div `
 
     p {
         margin: 0;
-        padding: 0 .6rem 1rem .6rem;
+        padding: .6rem;
         font-size: var(--font-small);
         ${FlexStyle}
     }
 
     @media screen and (min-width: 670px) {
         height: 280px;
+        width:300px;
+
         img {
             aspect-ratio: 16 / 12;
         }
@@ -175,6 +174,7 @@ const Gallery = () => {
         <GalleryContainer>
             <Main paddingleft="true" paddingRight="true">
                 {/* //! NOT NEEDED */}
+                
                 
                 <Container>
                     <Header>
