@@ -225,7 +225,6 @@ const GalleryImages = () => {
     const dispatch = useDispatch()
     const Query = useMediaQuery("(min-width: 600px)")
     const A4loaded = useProgressiveImage(A4Image)
-    const C4loaded = useProgressiveImage(C4Image)
     const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("A4")

@@ -128,7 +128,7 @@ const Home = () => {
                 </AnimatePresence>
             }
 
-            <Modal background="var(--color-light-gray)" ButtonBG="transparent" show={whyShortlet} transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -100}} exit={{opacity: 0, y: -100}} animate={{opacity: 1, y: 0}}  setShow={setWhyShortLet} theme="rgba(0, 0, 0, .8)" left="20%" top="30%" width={Query ? "60%" : "90%"}>
+            <Modal background="var(--color-light-gray)" ButtonBG="transparent" show={whyShortlet} transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -100}} exit={{opacity: 0, y: -100}} animate={{opacity: 1, y: 0}}  setShow={setWhyShortLet} theme="rgba(0, 0, 0, .8)" left={Query ? "20%": "5%"} top="30%" width={Query ? "60%" : "90%"}>
                 <ModalContent>
                     <p>{WhyRealShortletsData[whyRealShortletId]?.content}</p>
                     <p>{WhyRealShortletsData[whyRealShortletId]?.content2}</p>
