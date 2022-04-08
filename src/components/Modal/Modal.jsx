@@ -42,7 +42,10 @@ const MainModal = styled.div`
 
 const ButtonContainer = styled.div `
     display: flex; 
-    justify-content: ${({ justifyButton }) => justifyButton ? justifyButton : 'flex-end'};)}; 
+    display: -webkit-flex;
+    justify-content: ${({ justifyButton }) => justifyButton ? justifyButton : 'flex-end'}; 
+    -webkit-box-align:  ${({ justifyButton }) => justifyButton ? justifyButton : 'end'};
+    -webkit-box-pack: ${({ justifyButton }) => justifyButton ? justifyButton : 'end'};
     marginBottom: max(0.5vw, 1rem);
 
 `
