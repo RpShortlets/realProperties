@@ -9,7 +9,6 @@ import Destination from "./components/Destination";
 import CheckInOut from "./components/CheckInOut";
 import AddGuest from "./components/AddGuest";
 import BG from "../../../../image/background.webp"
-import BG2 from "../../../../image/back.webp"
 import BG3 from "../../../../image/back2.webp"
 import BG4 from "../../../../image/back3.webp"
 import { Pulse } from "../../../../components/Loader/Spinner";

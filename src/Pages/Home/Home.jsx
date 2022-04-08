@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux';
 import { resetCounts, setOpenDrawer } from '../../redux/actions/componentState';
@@ -13,6 +13,9 @@ import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AnimatePresence } from "framer-motion"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
 import BG from "../../image/background.webp"
+import Modal from "../../components/Modal/Modal";
+
+import { WhyRealShortletsData } from './data/data';
 // import MothersDayPromo from './components/Promo/MothersDayPromo';
 //import { useEffect } from 'react';
 // import Promotion from './components/Promo/Promotion';
@@ -24,6 +27,13 @@ const Section = styled.section `
     position: relative;
 `
 
+const ModalContent = styled.span `
+    p {
+        line-height: 2;
+        color: var(--color-primary);
+        font-size: var(--font-small-screen);
+    }
+`
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -33,6 +43,8 @@ const Home = () => {
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
+    const [whyShortlet, setWhyShortLet] = useState(false)
+    const [whyRealShortletId, setWhyRealShortletId] = useState(null)
     // const [showPromo, setShowPromo] = useState(false)
     //const [promoCounter, setPromoCounter] = useState(3)
     // const [promoBig, setPromoBig] = useState(false)
@@ -62,6 +74,11 @@ const Home = () => {
     //     setPromoBig(true)
     //     setShowPromo(false)
     // }
+
+    const handleWhyRealShortlets = (id) => {
+        setWhyShortLet(!whyShortlet)
+        setWhyRealShortletId(id)
+    }
 
     const handleOption = (id) => {
         if(myRef.current && myRef.current.childNodes[id].childNodes[1].checked) {
@@ -93,6 +110,15 @@ const Home = () => {
 
     // }, [promoCounter]);
 
+    useEffect(() => {
+        if(whyShortlet) {
+            document.body.style.overflow = 'hidden'
+        } 
+        return () => {
+            document.body.style.overflow = 'auto'
+        }
+    }, [whyShortlet])
+
     return (
         <> 
 
@@ -101,6 +127,14 @@ const Home = () => {
                     <Drawer openDrawer={openDrawer}  SubmitForm={SubmitForm}/>
                 </AnimatePresence>
             }
+
+            <Modal background="var(--color-light-gray)" ButtonBG="transparent" show={whyShortlet} transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -100}} exit={{opacity: 0, y: -100}} animate={{opacity: 1, y: 0}}  setShow={setWhyShortLet} theme="rgba(0, 0, 0, .8)" left="20%" top="30%" width={Query ? "60%" : "90%"}>
+                <ModalContent>
+                    <p>{WhyRealShortletsData[whyRealShortletId]?.content}</p>
+                    <p>{WhyRealShortletsData[whyRealShortletId]?.content2}</p>
+                    <p>{WhyRealShortletsData[whyRealShortletId]?.content3}</p>
+                </ModalContent>
+            </Modal>
 
             {/* {showPromo && (
                 <MothersDayPromo  
@@ -137,7 +171,14 @@ const Home = () => {
                     loaded={loaded}
                 
                 />
-                {loaded && <WhyRealShortlets />}
+                {loaded && 
+                    <WhyRealShortlets 
+                        whyShortlet={whyShortlet}
+                        setWhyShortLet={setWhyShortLet}
+                        handleWhyRealShortlets={handleWhyRealShortlets}
+
+                    />
+                }
                 {/* {loaded && (
                     <PromotionDiv handleShowBigPromo={handleShowBigPromo} />
                 )} */}

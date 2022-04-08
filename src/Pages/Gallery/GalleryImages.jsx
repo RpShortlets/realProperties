@@ -20,9 +20,21 @@ import { VideoPlayer } from '../../Svg/svg'
 import Button from '../../components/Button/Button'
 import VideoModal from './components/VideoModal'
 import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery'
+import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage'
 
 
-
+const VideoImages = [
+    {
+        id: 1,
+        image: A4Image,
+        name: 'A4',
+    },
+    {
+        id: 2,
+        image: C4Image,
+        name: 'C4',
+    }
+]
 
 const Section  = styled.section`
     background-color: var(--color-secondary);
@@ -145,7 +157,7 @@ const ImageWrap = styled.div`
 const Cards = styled.div `
     ${CardGallery}
     position: relative;
-    height: auto;
+    height: ${({imageLoaded}) => !imageLoaded ? "250px" : "auto"};
 
     img {
         width: 100%;
@@ -165,7 +177,8 @@ const Cards = styled.div `
             left: 0; right: 0;
             top: 0; bottom: 0;
             width: 100%;
-            height: 100%;
+            height: ${({imageLoaded}) => !imageLoaded ? "250px" : "100%"};
+            /* height: 100%; */
             background: rgba(0,0,0,.5);
             border-radius: 9px;
     
@@ -203,14 +216,16 @@ const itemA = {
     show: { scale: 1, top: 30 },
 }
 
-// const itemB = {
-//     hidden: { scale: 0, top: 200 },
-//     show: { scale: 1, top: 80 },
-// }
+const itemB = {
+    hidden: { scale: 0, top: 200 },
+    show: { scale: 1, top: -20 },
+}
 
 const GalleryImages = () => {
     const dispatch = useDispatch()
     const Query = useMediaQuery("(min-width: 600px)")
+    const A4loaded = useProgressiveImage(A4Image)
+    const C4loaded = useProgressiveImage(C4Image)
     const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("A4")
@@ -381,7 +396,7 @@ const GalleryImages = () => {
         return () => {
             document.body.style.overflow = 'auto';
         };
-    }, [isOpen, isOpenVideo])
+    }, [isOpen, isOpenVideo, apartmentName, dispatch]);
 
 
     //! TODO ANIMATE IMAGE ON EVERY CLICKS
@@ -416,29 +431,41 @@ const GalleryImages = () => {
                 <Section>
                     <Main paddingleft="true" paddingRight="true" >
                         <div>
-                            <MainNav ItemIds={ItemIds} top="20px" />
+                            <MainNav ItemIds={ItemIds} top="20px" zIndex="1" />
                         </div>
-                        <ImageContainer>
-                            <Cards>
-                                <div>
-                                    <img src={A4Image} alt="A4" />
-                                </div>
-                                <span>
-                                    <Button 
-                                        icon={VideoPlayer} 
-                                        border="1px solid var(--color-primary)" 
-                                        background="transparent" 
-                                        display={"flex"}
-                                        alignT="center"
-                                        justify={"center"}
-                                        padding= {Query ? "1rem" : ".8rem"}
-                                        borderRadius="40px"
-                                        fontSize= "var(--font-medium)"
-                                        onClicks={playVideo}
-                                    />
-                                </span>
-                            </Cards>
-                            <Cards>
+                        <ImageContainer
+                            as={motion.div} 
+                            variants={container}
+                            initial="hidden"
+                            animate="show"
+
+                        >
+                            {VideoImages?.map((image, index) => (
+                                <Cards 
+                                    imageLoaded={A4loaded}
+                                    as={motion.div} key={index} variants={itemB} 
+                                    onClick={playVideo}   
+                                >
+                                    <div>
+                                        <img src={image.image} alt={image.name} />
+                                    </div>
+                                    <span>
+                                        <Button 
+                                            icon={VideoPlayer} 
+                                            border="1px solid var(--color-primary)" 
+                                            background="transparent" 
+                                            display={"flex"}
+                                            alignT="center"
+                                            justify={"center"}
+                                            padding= {Query ? "1rem" : ".8rem"}
+                                            borderRadius="40px"
+                                            fontSize= "var(--font-medium)"
+                                        />
+                                    </span>
+                                </Cards>
+                            ))}
+{/*                             
+                            <Cards imageLoaded={C4loaded}>
                                 <div>
                                     <img src={C4Image} alt="C4" />
                                 </div>
@@ -456,7 +483,7 @@ const GalleryImages = () => {
                                         onClicks={playVideo}
                                     />
                                 </span>
-                            </Cards>
+                            </Cards> */}
                         </ImageContainer>
                     </Main>
                 </Section>

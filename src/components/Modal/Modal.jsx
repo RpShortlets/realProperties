@@ -40,10 +40,16 @@ const MainModal = styled.div`
 
 `
 
+const ButtonContainer = styled.div `
+    display: flex; 
+    justify-content: ${({ justifyButton }) => justifyButton ? justifyButton : 'flex-end'};)}; 
+    marginBottom: max(0.5vw, 1rem);
+
+`
 
 
 
-const ModalOverLay = ({boxShadow, borderRadius, padding,top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show, setShowMobileReserveModal, reserveModal, dispatch}) => {
+const ModalOverLay = ({justifyButton, ButtonBG, boxShadow, borderRadius, padding,top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show, setShowMobileReserveModal, reserveModal, dispatch}) => {
 console.log(exit)
     const content = (
         <>
@@ -69,9 +75,11 @@ console.log(exit)
                 borderRadius={borderRadius}
             >
                 {btn ? "" : (
-                    <div  style={{display:'flex', justifyContent: 'flex-start', marginBottom: 'max(0.5vw, 1rem)'}}>
-                        <Button borderRadius='27px' padding="3px" display='flex' alignT='center' justify='center' height='35px' width='35px' background='var(--color-primary)' border='none' icon={CancelIcon}  onClicks={reserveModal ? () => dispatch(setShowMobileReserveModal(false)) : ()=> setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
-                    </div>
+                    <ButtonContainer
+                        justifyButton={justifyButton}
+                    >
+                        <Button borderRadius='27px' padding="3px" display='flex' alignT='center' justify='center' height='35px' width='35px' background={ButtonBG ? ButtonBG : 'var(--color-primary)'} border='none' icon={CancelIcon}  onClicks={reserveModal ? () => dispatch(setShowMobileReserveModal(false)) : ()=> setShow(false)} className="Modal-btn" styles="Modal-Padding"/>
+                    </ButtonContainer>
                 )}
                 {children}
             </MainModal>
@@ -91,7 +99,7 @@ const Modal = (props) => {
             {props.show && <Backdrop onClick={props.reserveModal ? () => dispatch(props.setShowMobileReserveModal(false)) : ()=> props.setShow(false)} theme={props.theme} /> }
             <AnimatePresence>
                 {props.show && (
-                    <ModalOverLay dispatch={dispatch} boxShadow={props.boxShadow} borderRadius={props.borderRadius} reserveModal={props.reserveModal} setShowMobileReserveModal={props.setShowMobileReserveModal} height={props.height} background={props.background} right={props.right}  exit={props.exit} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left} padding={props.padding}>
+                    <ModalOverLay ButtonBG={props.ButtonBG}  justifyButton={props.justifyButton} dispatch={dispatch} boxShadow={props.boxShadow} borderRadius={props.borderRadius} reserveModal={props.reserveModal} setShowMobileReserveModal={props.setShowMobileReserveModal} height={props.height} background={props.background} right={props.right}  exit={props.exit} overFlow={props.overFlow} show={props.show} btn={props.btn} transition={props.transition} animate={props.animate} initial={props.initial} setShow={props.setShow} top={props.top} width={props.width} left={props.left} padding={props.padding}>
                         {props.children}
                     </ModalOverLay>
                 )}
