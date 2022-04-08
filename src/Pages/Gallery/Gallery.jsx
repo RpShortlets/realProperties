@@ -62,7 +62,7 @@ const Card = styled.div `
 
     img {
         inline-size: fit-content;
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 15 / 13;
         object-fit: cover;
         width: 100%;
         border-radius: 12.6733px  12.6733px 0 0;

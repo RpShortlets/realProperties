@@ -17,7 +17,6 @@ import C4Three from "../../image/Man/pixThree.jpeg"
 import C4Four from "../../image/Man/pixFour.jpeg"
 import C4Five from "../../image/Man/pixFive.jpeg"
 import C4Six from "../../image/Man/pixSix.jpeg"
-import C4Seven from "../../image/Man/pixSeven.jpeg"
 import C4Eight from "../../image/Man/pixEight.jpeg"
 import C4Nine from "../../image/Man/pixNine.jpeg"
 import C4Ten from "../../image/Man/pixTen.jpeg"
@@ -40,7 +39,6 @@ import C4LargeThree from "../../image/Man/largePixThree.jpeg"
 import C4LargeFour from "../../image/Man/largePixFour.jpeg"
 import C4LargeFive from "../../image/Man/largePixFive.jpeg"
 import C4LargeSix from "../../image/Man/largePixSix.jpeg"
-import C4LargeSeven from "../../image/Man/largePixSeven.jpeg"
 import C4LargeEight from "../../image/Man/largePixEight.jpeg"
 import C4LargeNine from "../../image/Man/largePixNine.jpeg"
 import C4LargeTen from "../../image/Man/largePixTen.jpeg"
@@ -127,11 +125,11 @@ export const  GallarySlice = createSlice({
                 src: C4LargeSix,
                 loading: 'lazy',
             },
-            {
-                id: 7,
-                src: C4LargeSeven,
-                loading: 'lazy',
-            },
+            // {
+            //     id: 7,
+            //     src: C4LargeSeven,
+            //     loading: 'lazy',
+            // },
             {
                 id: 8,
                 src: C4LargeEight,
@@ -248,11 +246,11 @@ export const  GallarySlice = createSlice({
                         src: C4Six,
                         loading: 'lazy',
                     },
-                    {
-                        id: 7,
-                        src: C4Seven,
-                        loading: 'lazy',
-                    },
+                    // {
+                    //     id: 7,
+                    //     src: C4Seven,
+                    //     loading: 'lazy',
+                    // },
                     {
                         id: 8,
                         src: C4Eight,

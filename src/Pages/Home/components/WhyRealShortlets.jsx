@@ -50,7 +50,7 @@ const IconDivs = styled.div `
     border-radius: 9.68824px;
     width:  100%;
     height: 190px;
-    /* cursor: pointer; */
+    cursor: pointer;
     transition: 2s;
     color: var(--color-primary);
 
@@ -95,7 +95,7 @@ const IconDivs = styled.div `
 `
 
 
-const WhyRealShortlets = ({about}) => {
+const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShortlets}) => {
     
     return (
         <Container>
@@ -104,6 +104,7 @@ const WhyRealShortlets = ({about}) => {
                 <Content  >
                     {RealShortlets.map((item) => (
                         <IconDivs key={item.id} as={motion.div}
+                            onClick={() => handleWhyRealShortlets(item.id)}
                             // whileHover={{ scale: 1.06 }}
                             // whileTap={{ scale: 0.9 }} 
                         >

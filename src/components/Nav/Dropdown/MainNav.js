@@ -15,6 +15,7 @@ const NavStyle = styled(motion.nav)`
     right: 0;
     bottom: 0;
     width: ${({width}) => width ? width : '230px'};
+    z-index: ${({zIndex}) => zIndex};
 
 
     @media screen and (min-width: 700px) and (max-width: 920px) {
@@ -61,7 +62,7 @@ const sidebar = {
   }
 };
 
-export const MainNav = ({ItemIds, top}) => {
+export const MainNav = ({ItemIds, top, zIndex}) => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -76,6 +77,7 @@ export const MainNav = ({ItemIds, top}) => {
             ref={containerRef}
             height={isOpen  ? true : false}
             width={Query && !isOpen ? '230px' :  Query && isOpen ? '230px' : !Query && isOpen ? '230px': '60px'}
+            zIndex={zIndex}
         >
           <Back variants={sidebar} background={isOpen}/>
           <Navigation isOpen={isOpen} toggleOpen={toggleOpen} itemIds={ItemIds} top={top}  />
