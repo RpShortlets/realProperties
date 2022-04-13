@@ -13,9 +13,9 @@ import useMediaQuery from '../../hooks/useMediaQuery/useMediaQuery';
 import { AnimatePresence } from "framer-motion"
 import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveImage';
 import BG from "../../image/background.webp"
-import Modal from "../../components/Modal/Modal";
+// import WhyModal from "./components/WhyModal";
 
-import { WhyRealShortletsData } from './data/data';
+// import { WhyRealShortletsData } from './data/data';
 // import MothersDayPromo from './components/Promo/MothersDayPromo';
 //import { useEffect } from 'react';
 // import Promotion from './components/Promo/Promotion';
@@ -27,13 +27,7 @@ const Section = styled.section `
     position: relative;
 `
 
-const ModalContent = styled.span `
-    p {
-        line-height: 2;
-        color: var(--color-primary);
-        font-size: var(--font-small-screen);
-    }
-`
+
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -128,13 +122,14 @@ const Home = () => {
                 </AnimatePresence>
             }
 
-            <Modal background="var(--color-light-gray)" ButtonBG="transparent" show={whyShortlet} transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -100}} exit={{opacity: 0, y: -100}} animate={{opacity: 1, y: 0}}  setShow={setWhyShortLet} theme="rgba(0, 0, 0, .8)" left={Query ? "20%": "5%"} top="30%" width={Query ? "60%" : "90%"}>
-                <ModalContent>
-                    <p>{WhyRealShortletsData[whyRealShortletId]?.content}</p>
-                    <p>{WhyRealShortletsData[whyRealShortletId]?.content2}</p>
-                    <p>{WhyRealShortletsData[whyRealShortletId]?.content3}</p>
-                </ModalContent>
-            </Modal>
+            {/* <WhyModal 
+                whyRealShortletId={whyRealShortletId}
+                whyShortlet={whyShortlet}
+                setWhyShortLet={setWhyShortLet}
+                Query={Query}
+                WhyRealShortletsData={WhyRealShortletsData}
+
+            /> */}
 
             {/* {showPromo && (
                 <MothersDayPromo  
@@ -149,7 +144,7 @@ const Home = () => {
                     setPromoBig={setPromoBig}
                 />
             )} */}
-            <Section>
+            <Section data-testid="why-modal">
                 <SearchFilter 
                     openModal={openModal} 
                     setOpenModal={setOpenModal}
@@ -176,6 +171,8 @@ const Home = () => {
                         whyShortlet={whyShortlet}
                         setWhyShortLet={setWhyShortLet}
                         handleWhyRealShortlets={handleWhyRealShortlets}
+                        whyRealShortletId={whyRealShortletId}
+                        
 
                     />
                 }
