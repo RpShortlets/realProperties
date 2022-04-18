@@ -31,8 +31,8 @@ const key = "@@TechnoRealProperty"
 
 
 const Login = () => {
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [formdata, setFormData] = useState({email: '', password: ''})
     const [loading, setloading] = useState(false)
@@ -50,9 +50,9 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(res));
                 localStorage.setItem('USER', JSON.stringify( CryptoJS.AES.encrypt(res.toString(), key).toString()));
 
-                // dispatch(getAdminProfile(res))
-                // setloading(false);
-                // navigate('/admin/live/home')
+                dispatch(getAdminProfile(res))
+                setloading(false);
+                navigate('/admin/live/home')
 
             } else if(res === 'Email or Password is wrong'){
                 setloading(false);
