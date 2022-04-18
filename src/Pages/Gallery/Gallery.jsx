@@ -22,11 +22,16 @@ const Background = [
     },
     {
         id: 3,
+        image: Exp,
+        title: "Event",
+    },
+    {
+        id: 4,
         image: Car,
         title: 'Cars'
     },
     {
-        id: 4,
+        id: 5,
         image: Exp,
         title: 'Experience'
     },
@@ -50,8 +55,12 @@ const Scroller = styled.div `
     grid-template-columns: repeat(1, 1fr);
     gap: 2rem;
 
-    @media screen and (min-width: 669px) { 
+    @media screen and (min-width: 669px) and (max-width: 899px) { 
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: 900px) { 
+        grid-template-columns: repeat(3, 1fr);
     }
 
 `

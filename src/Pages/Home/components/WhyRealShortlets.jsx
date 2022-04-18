@@ -133,22 +133,22 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
     const refs = useRef(RealShortlets.map(() => React.createRef()));
 
 
+    //handleClick rotate card to 180deg
     const handleClick = (e) => {
         if(refs?.current[e]) {
-            console.log({
-                ref:refs?.current[0].className,
-                refs: refs.current[e].current.className,
-                e
-            })
             if (refs.current[e].current.className === "card" ) {
-                if(refs.current[e].current.style.transform === "rotateY(180deg)") {
-                    refs.current[e].current.style.transform = "rotateY(0deg)";
+                refs.current[e].current.style.transform = "rotateY(180deg)";
+                /* if(refs.current[e].current.style.transform === "rotateY(180deg)") { */
                 }
-                else {
-                    refs.current[e].current.style.transform = "rotateY(180deg)";
-                }
-            };
-        }        
+            };      
+    }
+
+
+    //handleLeaveCard rotate card back to 0deg
+    const handleLeaveCard = (e) => {
+        if(refs?.current[e]) { 
+            refs.current[e].current.style.transform = "rotateY(0deg)";
+        }
     }
 
     return (
@@ -158,7 +158,7 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
                 <Content>
                     {RealShortlets.map((item, i) => (
                         <Contains className="container" >
-                            <div className="card"  onClick={() => handleClick(item.id)} ref={refs.current[item.id]}>
+                            <div className="card"  onMouseLeave={() => handleLeaveCard(item.id)} onMouseEnter={() => handleClick(item.id)} ref={refs.current[item.id]}>
                                 <div className="front">
                                     <div>
                                         {item.image} 
@@ -166,9 +166,9 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
                                     </div>
                                 </div>
                                 <div className="back">
-                                    <p style={{fontSize: '12px', textAlign: 'justify'}}>{item?.content}</p>
-                                    <p style={{fontSize: '12px',  textAlign: 'justify'}}>{item?.content2}</p>
-                                    <p style={{fontSize: '12px',  textAlign: 'justify'}}>{item?.content3}</p>
+                                    <p style={{fontSize: '12px', textAlign: 'start'}}>{item?.content}</p>
+                                    <p style={{fontSize: '12px',  textAlign: 'start'}}>{item?.content2}</p>
+                                    <p style={{fontSize: '12px',  textAlign: 'start'}}>{item?.content3}</p>
 
                                 </div>
                             </div>
