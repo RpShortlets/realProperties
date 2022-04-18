@@ -48,6 +48,21 @@ import C4LargeThirteen from "../../image/Man/largePixThirteen.jpeg"
 import C4LargeFourteen from "../../image/Man/largePixFourteen.jpeg"
 
 
+//Mother Day Picture
+import MotherOne from "../../image/event/mothers/motherOne.jpeg"
+import MotherTWe from "../../image/event/mothers/motherTwo.jpeg"
+import MotherThree from "../../image/event/mothers/motherThree.jpeg"
+import MotherFour from "../../image/event/mothers/motherFour.jpeg"
+import MotherFive from "../../image/event/mothers/motherFive.jpeg"
+import MotherSix from "../../image/event/mothers/motherSix.jpeg"
+import MotherSeven from "../../image/event/mothers/motherSeven.jpeg"
+import MotherEight from "../../image/event/mothers/motherEight.jpeg"
+import MotherNine from "../../image/event/mothers/motherNine.jpeg"
+import MotherTen from "../../image/event/mothers/motherTen.jpeg"
+import MotherEleven from "../../image/event/mothers/motherEleven.jpeg"
+import MotherTwelve from "../../image/event/mothers/motherTwelve.jpeg"
+
+
 
 
 
@@ -163,6 +178,68 @@ export const  GallarySlice = createSlice({
             {
                 id: 14,
                 src: C4LargeFourteen,
+                loading: 'lazy',
+            }
+        ],
+        motherDay: [
+            {
+                id: 1,
+                src: MotherOne,
+                loading: 'lazy',
+            },
+            {
+                id: 2,
+                src: MotherTWe,
+                loading: 'lazy',
+            },
+            {
+                id: 3,
+                src: MotherThree,
+                loading: 'lazy',
+            },
+            {
+                id: 4,
+                src: MotherFour,
+                loading: 'lazy',
+            },
+            {
+                id: 5,
+                src: MotherFive,
+                loading: 'lazy',
+            },
+            {
+                id: 6,
+                src: MotherSix,
+                loading: 'lazy',
+            },
+            {
+                id: 7,
+                src: MotherSeven,
+                loading: 'lazy',
+            },
+            {
+                id: 8,
+                src: MotherEight,
+                loading: 'lazy',
+            },
+            {
+                id: 9,
+                src: MotherNine,
+                loading: 'lazy',
+            },
+            {
+                id: 10,
+                src: MotherTen,
+                loading: 'lazy',
+            },
+            {
+                id: 11,
+                src: MotherEleven,
+                loading: 'lazy',
+            },
+            {
+                id: 12,
+                src: MotherTwelve,
                 loading: 'lazy',
             }
         ]
@@ -296,7 +373,7 @@ export const  GallarySlice = createSlice({
         fetchGallaryFailure: (state, action) => {
             state.loading = false;
             state.error = action.payload;
-        }
+        },
     }
 });
 

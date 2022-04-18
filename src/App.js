@@ -64,7 +64,7 @@ const App = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-site-verification" content="yH5ZAohsbhjoY2WBqB8T3g92l6mF22PLofwEfcogXp8" />
       </Helmet>
-      {location.pathname ==='/admin/live'  || location.pathname === "/gallery/apartments" || location.pathname === "/gallery/cars" ||  location.pathname === "/gallery/videos" || location.pathname === "/gallery/experience" || location.pathname === "/admin/live/register-user"|| location.pathname === "/admin/live/home" ||  location.pathname ==='/agency' || location.pathname ==='/admin/live/complains' ||  location.pathname ==='/admin/live/update-booking' || location.pathname ==='/admin/live/deleted'  || location.pathname ==='/admin/live/completed' ||  location.pathname ==='/admin/live/pending' || location.pathname ==='/login' ? null : (<Nav />)}
+      {location.pathname ==='/admin/live'  || location.pathname === "/gallery/apartments" || location.pathname === "/gallery/cars" ||  location.pathname === "/gallery/videos" || location.pathname === "/gallery/event" || location.pathname === "/gallery/experience" || location.pathname === "/admin/live/register-user"|| location.pathname === "/admin/live/home" ||  location.pathname ==='/agency' || location.pathname ==='/admin/live/complains' ||  location.pathname ==='/admin/live/update-booking' || location.pathname ==='/admin/live/deleted'  || location.pathname ==='/admin/live/completed' ||  location.pathname ==='/admin/live/pending' || location.pathname ==='/login' ? null : (<Nav />)}
       <Suspense 
         fallback={<div style={{height: '100vh', position: 'relative', margin: '1rem'}}>
           <Clip type='TailSpin' />

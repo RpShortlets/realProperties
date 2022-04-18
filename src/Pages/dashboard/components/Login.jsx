@@ -78,13 +78,13 @@ const Login = () => {
         {/* {window.location.pathname === '/admin/live' ? ( */}
             <Section>
                 <Main>
-                    <div className="loginCard"> 
+                    <div data-testid="loginDiv" className="loginCard"> 
                         <h1>Login</h1>
                         <div>
                             <form onSubmit={handleLogin}>
                                 <Input  type="email" label="Email"  placeholder="Email" name="email" Icon={Person}  value={formdata.email} formdata={formdata} handleChange={(e) => setFormData({...formdata, email: e.target.value })}   />
                                 <Input  type="password" label="Password" placeholder="Password" name="password" Icon={Person}  value={formdata.password} formdata={formdata} handleChange={(e) => setFormData({...formdata, password: e.target.value })} />
-                                <Button background='var(--linear-primary)' title={loading  ?  <Pulse color="#fff"  size="10px"  loading={loading}/>  : 'Login'} disabledBG="var(--linear-primary)" border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
+                                <Button disabled={!formdata.email && !formdata.password} background='var(--linear-primary)' title={loading  ?  <Pulse color="#fff"  size="10px"  loading={loading}/>  : 'Login'} disabledBG="var(--linear-primary)" border="0"  color='var(--color-white)' width='100%' padding='.7rem' fontSize='var(--font-xtra-small-screen)' />
                             </form>
                         </div>
                     </div>

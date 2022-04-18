@@ -1,6 +1,6 @@
 import styled from "styled-components"
+import React, { useRef } from "react"
 import { RealShortlets } from "../data/data"
-import {motion} from "framer-motion"
 import { PaddingStyle } from "../../../styles/globalStyles"
 
 
@@ -27,7 +27,85 @@ const Wrapper = styled.div `
 
 `
 
+const Contains = styled.div`
+    margin: 20px 0;
+    width: 100%;
+    height: 200px;
+    perspective: 600px;
+
+
+    div:first-child {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        justify-content: center;
+    }
+    .card {
+        transition: transform 2s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+        background: var(--color-light-gray);
+        border-radius: 9.68824px;
+        color: var(--color-primary);
+        border: none !important;
+
+
+        :hover {
+            background: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
+            color: #fff; 
+        }
+
+        p {
+            margin: .5rem 0 0 0;
+        }
+
+        svg {
+            font-size: 2.5rem !important;
+        }
+
+        
+        @media screen and (min-width: 769px) {
+            p {
+                font-size: var(--font-small-screen)
+            }
+
+            svg {
+                font-size: var(--font-big) !important;
+            }
+        }
+
+    
+    .front, .back {
+        backface-visibility: hidden;
+        height: 100%;
+        width: 100%;
+    }
+
+    
+    .front {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background: url("http://placehold.it/250x250"); */
+        padding: max(2vw, 1.2rem);
+    }
+
+    .back {
+        /* background: url("http://placehold.it/100x100"); */
+        padding: 10px;
+        overflow-x: auto;
+        transform: rotateY(180deg);
+    }
+
+`
+
+
 const Content = styled.div `
+    
     margin: 2rem 0 0 0;
     display: grid;
     grid-template-columns: 1fr;
@@ -42,79 +120,59 @@ const Content = styled.div `
         gap: 2rem;
         grid-template-columns: repeat(4, 1fr);
     }
+
+
+
     
 `
 
-const IconDivs = styled.div `
-    background: var(--color-light-gray);
-    border-radius: 9.68824px;
-    width:  100%;
-    height: 190px;
-    cursor: pointer;
-    transition: 2s;
-    color: var(--color-primary);
 
-    /* :hover {
-        background: linear-gradient(270deg, rgba(33, 147, 176, 0) 0%, #17677B 0%, #1C7B93 28.87%, #2193B0 100%);
-        color: #fff; 
-    } */
 
-    p {
-        margin: .5rem 0 0 0;
+
+const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShortlets, whyRealShortletId}) => {
+    const refs = useRef(RealShortlets.map(() => React.createRef()));
+
+
+    //handleClick rotate card to 180deg
+    const handleClick = (e) => {
+        if(refs?.current[e]) {
+            if (refs.current[e].current.className === "card" ) {
+                refs.current[e].current.style.transform = "rotateY(180deg)";
+                /* if(refs.current[e].current.style.transform === "rotateY(180deg)") { */
+                }
+            };      
     }
 
-    > div:first-child {
-        height: 100%;
-        padding: max(2vw, 1.2rem);
-    }
 
-    > div:first-child div {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-
-        svg {
-            font-size: 2.5rem !important;
-        }
-
-    }
-
-    @media screen and (min-width: 769px) {
-
-        p {
-            font-size: var(--font-small-screen)
-        }
-
-        svg {
-            font-size: var(--font-big) !important;
+    //handleLeaveCard rotate card back to 0deg
+    const handleLeaveCard = (e) => {
+        if(refs?.current[e]) { 
+            refs.current[e].current.style.transform = "rotateY(0deg)";
         }
     }
-`
 
-
-const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShortlets}) => {
-    
     return (
         <Container>
             <Wrapper  about={about} paddingleft='true' paddingRight='true'>
                 <h2>Why RP Shortlets</h2>
-                <Content  >
-                    {RealShortlets.map((item) => (
-                        <IconDivs key={item.id} as={motion.div}
-                            onClick={() => handleWhyRealShortlets(item.id)}
-                            // whileHover={{ scale: 1.06 }}
-                            // whileTap={{ scale: 0.9 }} 
-                        >
-                            <div>
-                                <div>
-                                    {item.image} 
-                                    <p>{item.title}</p>
+                <Content>
+                    {RealShortlets.map((item, i) => (
+                        <Contains className="container" >
+                            <div className="card"  onMouseLeave={() => handleLeaveCard(item.id)} onMouseEnter={() => handleClick(item.id)} ref={refs.current[item.id]}>
+                                <div className="front">
+                                    <div>
+                                        {item.image} 
+                                        <p>{item.title}</p>
+                                    </div>
+                                </div>
+                                <div className="back">
+                                    <p style={{fontSize: '12px', textAlign: 'start'}}>{item?.content}</p>
+                                    <p style={{fontSize: '12px',  textAlign: 'start'}}>{item?.content2}</p>
+                                    <p style={{fontSize: '12px',  textAlign: 'start'}}>{item?.content3}</p>
+
                                 </div>
                             </div>
-                        </IconDivs>
+                        </Contains>
                     ))}
                 </Content>
             </Wrapper>

@@ -53,7 +53,7 @@ const ButtonContainer = styled.div `
 
 
 const ModalOverLay = ({justifyButton, ButtonBG, boxShadow, borderRadius, padding,top, exit, background, width, overFlow, right, height, left, initial, children, setShow, animate, transition, btn, show, setShowMobileReserveModal, reserveModal, dispatch}) => {
-console.log(exit)
+
     const content = (
         <>
             <MainModal 

@@ -5,11 +5,13 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from "react-redux"
 import  {fetchGallarySuccess} from '../../redux/actions/gallery'
 import { motion, AnimatePresence } from "framer-motion"
+import {AiOutlineCamera} from "react-icons/ai"
 
 import A4Image from "../../image/small/picThree.jpeg"
 import C4Image from "../../image/Man/pixFour.jpeg"
 
 import A4video from "../../video/A4Video.mp4"
+import MotherImage from "../../image/mother.webp"
 
 import Error from '../../components/Error/Error'
 
@@ -34,6 +36,14 @@ const VideoImages = [
         image: C4Image,
         name: 'C4',
     }
+]
+
+const EventImages = [
+    {
+        id: 0,
+        image: MotherImage,
+        name: 'Mother\'s Day 2022',
+    },
 ]
 
 const Section  = styled.section`
@@ -166,7 +176,7 @@ const Cards = styled.div `
         border-radius: 9px;
     }
 
-    div {
+    >  div:first-child {
         ::before {
             position: relative;
         }
@@ -192,12 +202,40 @@ const Cards = styled.div `
     span {
         position: absolute;
         color: #fff;
-        display: flex;
+        ${FlexStyle}
         justify-content: center;
-        align-items: center;
         width: 100%;
         flex-direction: column;
         height: 100%
+    }
+
+    .eventContainer {
+        position: absolute;
+        color: #fff;
+        ${FlexStyle}
+        justify-content: space-around;
+        width: 100%;
+        flex-direction: column;
+        height: 100%;
+
+        p {
+            margin: 0;
+            font-size: var(--font-small);
+            font-weight: 600;
+        }
+
+        div {
+            ${FlexStyle}
+
+            span {
+                display: contents;
+            }
+
+            svg {
+                margin-right: 5px;
+                font-size: 15px;
+            }
+        }
     }
 `
 const container = {
@@ -225,7 +263,7 @@ const GalleryImages = () => {
     const dispatch = useDispatch()
     const Query = useMediaQuery("(min-width: 600px)")
     const A4loaded = useProgressiveImage(A4Image)
-    const { gallary, largeA4Image, largeC4Image } = useSelector(state => state.gallary)
+    const { gallary, largeA4Image, largeC4Image, motherDay } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("A4")
     const [currentImageIndex, setCurrentIndex] = useState(0);
@@ -249,13 +287,18 @@ const GalleryImages = () => {
             title:  'Videos',
             path: '/gallery/videos'
         },
-        {
+        { 
             id: 3,
+            title:  'Event',
+            path: '/gallery/event'
+        },
+        {
+            id: 4,
             title: 'Cars',
             path: '/gallery/cars'
         },
         {
-            id: 4,
+            id: 5,
             title: 'Experience',
             path: '/gallery/experience'
         }
@@ -276,13 +319,18 @@ const GalleryImages = () => {
             title:  'Apartments',
             path: '/gallery/apartments'
         },
-        {
+        { 
             id: 3,
+            title:  'Event',
+            path: '/gallery/event'
+        },
+        {
+            id: 4,
             title: 'Cars',
             path: '/gallery/cars'
         },
         {
-            id: 4,
+            id: 5,
             title: 'Experience',
             path: '/gallery/experience'
         }
@@ -303,6 +351,42 @@ const GalleryImages = () => {
             title:  'Apartments',
             path: '/gallery/apartments'
         },
+        { 
+            id: 3,
+            title:  'Event',
+            path: '/gallery/event'
+        },
+        {
+            id: 4,
+            title: 'Videos',
+            path: '/gallery/videos'
+        },
+        {
+            id: 5,
+            title: 'Experience',
+            path: '/gallery/experience'
+        }
+    ] : pathname === "/gallery/experience" ?  [ 
+        {
+            id: 0,
+            title: 'Home',
+            path: '/'
+        },
+        {
+            id: 1,
+            title: 'Gallery',
+            path: '/gallery'
+        },
+        { 
+            id: 2,
+            title:  'Apartments',
+            path: '/gallery/apartments'
+        },
+        { 
+            id: 3,
+            title:  'Event',
+            path: '/gallery/event'
+        },
         {
             id: 3,
             title: 'Videos',
@@ -310,10 +394,10 @@ const GalleryImages = () => {
         },
         {
             id: 4,
-            title: 'Experience',
-            path: '/gallery/experience'
+            title: 'Cars',
+            path: '/gallery/cars'
         }
-    ] : pathname === "/gallery/experience" &&  [ 
+    ] : pathname === "/gallery/event" &&  [ 
     
         {
             id: 0,
@@ -362,6 +446,16 @@ const GalleryImages = () => {
             }))
         }
     }
+
+    for (var m = 0; m < motherDay?.length; m++) {
+        images = motherDay.map((image) => ({
+            src: image.src,
+            loading: 'lazy',
+        }))
+        
+    }
+
+    //* END OF TRANSFORM IMAGES TO ARRAY OF OBJECTS
 
 
 
@@ -463,26 +557,6 @@ const GalleryImages = () => {
                                     </span>
                                 </Cards>
                             ))}
-{/*                             
-                            <Cards imageLoaded={C4loaded}>
-                                <div>
-                                    <img src={C4Image} alt="C4" />
-                                </div>
-                                <span>
-                                    <Button 
-                                        icon={VideoPlayer} 
-                                        border="1px solid var(--color-primary)" 
-                                        background="transparent" 
-                                        display={"flex"}
-                                        alignT="center"
-                                        justify={"center"}
-                                        padding= {Query ? "1rem" : ".8rem"}
-                                        borderRadius="40px"
-                                        fontSize= "var(--font-medium)"
-                                        onClicks={playVideo}
-                                    />
-                                </span>
-                            </Cards> */}
                         </ImageContainer>
                     </Main>
                 </Section>
@@ -513,6 +587,57 @@ const GalleryImages = () => {
                     <Error title="We are updating our gallery. Please check back." />
                 </Main>
             </Section>
+        )
+    }
+
+    if(pathname === '/gallery/event') {
+        return ( 
+            <>
+                {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
+                <ImageModal 
+                    isOpen={isOpen} 
+                    gotoPrevious={gotoPrevious} 
+                    gotoNext={gotoNext} 
+                    images={images} 
+                    currentImageIndex={currentImageIndex} 
+                    setIsOpen={setIsOpen} 
+                />
+                <Section>
+                    <Main paddingleft="true" paddingRight="true" >
+                        <div>
+                            <MainNav ItemIds={ItemIds} top="20px"  zIndex="1" />
+                        </div>
+                        <ImageContainer
+                                as={motion.div} 
+                                variants={container}
+                                initial="hidden"
+                                animate="show"
+
+                            >
+                                {EventImages?.map((image, index) => (
+                                    <Cards 
+                                        imageLoaded={A4loaded}
+                                        as={motion.div} key={index} variants={itemB} 
+                                        onClick={() => showPictures(index)}  
+                                    >
+                                        <div>
+                                            <img src={image.image} alt={image.name} />
+                                        </div>
+                                        <div className='eventContainer'>
+                                            <p>
+                                                {image.name}
+                                            </p>
+                                            <div>
+                                                <AiOutlineCamera /> 
+                                                <span>Click to see pictures</span>
+                                            </div>
+                                        </div>
+                                    </Cards>
+                                ))}
+                            </ImageContainer>
+                    </Main>
+                </Section>
+            </>
         )
     }
 
