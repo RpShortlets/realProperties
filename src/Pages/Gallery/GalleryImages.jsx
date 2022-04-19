@@ -431,7 +431,8 @@ const GalleryImages = () => {
         setCurrentIndex(id)
     }
 
-    let images = []
+    let images = [];
+    let mDay = [];
     //* TRANSFORM IMAGES TO ARRAY OF OBJECTS
     for (var i = 0; i < gallary?.length; i++) {
         if(apartmentName === "A4") { 
@@ -448,10 +449,12 @@ const GalleryImages = () => {
     }
 
     for (var m = 0; m < motherDay?.length; m++) {
-        images = motherDay.map((image) => ({
+        mDay = motherDay.map((image) => ({
             src: image.src,
             loading: 'lazy',
         }))
+
+        
         
     }
 

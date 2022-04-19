@@ -1,6 +1,6 @@
 import {Login, AdminDashboard, NotFound, Home, AdminLogin, SearchResult, PropertyDetails, 
     Payments, OrderSummary, Verify, Transfer, Gallery, MobileReservation, About, CustomerService,
-    TermsandPolicy, Policy, ValueAdded, GalleryImages, Agency, AdminHome
+    TermsandPolicy, Policy, ValueAdded, GalleryImages, Agency, AdminHome, ComingPage, ComingPageDetails
 } 
     from "./export"
 import {Navigate} from "react-router-dom";
@@ -122,6 +122,14 @@ const routes = (isLoggedIn, Query,user) =>
         {
             path: '/agency',
             element: <Agency />,
+        },
+        {
+            path: '/coming-soon',
+            element: <ComingPage />,
+        },
+        {
+            path: '/coming-soon/apartment/:id',
+            element: <ComingPageDetails />,
         }
     ];
 

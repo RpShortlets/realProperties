@@ -313,7 +313,7 @@ const SearchResult = () => {
                                                 {searchResult?.length > 0 ? (
                                                     <>
                                                         {searchResult?.map((property) => (
-                                                            <Result data={property} key={property.apartment_id}  status={status}/>
+                                                            <Result data={property} key={property.apartment_id} status={status} title="Make Reservation"/>
                                                         ))}
                                                     </>
                                                 ) : (

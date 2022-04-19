@@ -16,6 +16,23 @@ import { checkScrollState } from '../../../../redux/actions/componentState';
 import { useDispatch } from "react-redux";
 import { motion, useAnimation } from 'framer-motion';
 import { setOpenDrawer } from "../../../../redux/actions/componentState";
+import Carousels from "../../../../components/Carousel/Carousel";
+
+
+const Data = [ 
+    {
+        id: 1,
+        picture: BG,
+    },
+    {
+        id: 2,
+        picture: BG3,
+    },
+    {
+        id: 3,
+        picture: BG4,
+    }
+]
 
 const FilterContainer = styled.div `
     background-image: url(${props => props.backgroundImage});
@@ -135,7 +152,7 @@ const Fiter = styled.div `
 // `
 
 
-const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
+const SearchFilter = ({index, handleSelect, SubmitForm, openModal, setOpenModal, handleModal, value, myRef, location, handleGuest, 
     guest, resetCount, openGuest, handleOption, homeDateValue, setHomeDateValue, setOpenGuest, isOpenCalender, setIsOpenCalender, loaded}) => {
         const Medium = useMediaQuery("(max-width: 850px)")
         const Query = useMediaQuery("(min-width: 769px)")
@@ -200,22 +217,7 @@ const SearchFilter = ({SubmitForm, openModal, setOpenModal, handleModal, value, 
         <>
             {loaded  ? (
                 <FilterContainer className={styles.HomeFilterBackground} >
-                    <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel"  style={{height: '100%'}}>
-                        <div className="carousel-inner"  style={{height: '100%', }}>
-                            <div className="carousel-item active" style={{height: '100%', }}>
-                                <img src={BG} className="d-block w-100" alt="..." style={{height: '100%', objectFit: 'cover'}} />
-                            </div>
-                            {/* <div className="carousel-item" style={{height: '100%', }}>
-                                <img src={BG2} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div> */}
-                            <div className="carousel-item" style={{height: '100%', }}>
-                                <img src={BG3} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div> 
-                            <div className="carousel-item" style={{height: '100%', }}>
-                                <img src={BG4} className="d-block w-100" alt="..."  style={{height: '100%', objectFit: 'cover'}}/>
-                            </div> 
-                        </div>
-                    </div>
+                    <Carousels data={Data} index={index} handleSelect={handleSelect} controls={false}/>
                     <FilterWrapper className="justify-center">
                         <Header>
                             <h1>Reserve Your Luxury Shortlet</h1>

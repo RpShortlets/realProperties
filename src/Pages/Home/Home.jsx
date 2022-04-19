@@ -16,7 +16,7 @@ import BG from "../../image/background.webp"
 // import WhyModal from "./components/WhyModal";
 
 // import { WhyRealShortletsData } from './data/data';
-// import MothersDayPromo from './components/Promo/MothersDayPromo';
+import PromoBanner from './components/Promo/PromoBanner';
 //import { useEffect } from 'react';
 // import Promotion from './components/Promo/Promotion';
 // import PromotionDiv from './components/Promo/PromoHome';
@@ -39,10 +39,15 @@ const Home = () => {
     const [openGuest, setOpenGuest] = useState(false)
     const [whyShortlet, setWhyShortLet] = useState(false)
     const [whyRealShortletId, setWhyRealShortletId] = useState(null)
-    // const [showPromo, setShowPromo] = useState(false)
-    //const [promoCounter, setPromoCounter] = useState(3)
+    const [showPromo, setShowPromo] = useState(false)
+    const [promoCounter, setPromoCounter] = useState(3)
     // const [promoBig, setPromoBig] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
+    const [index, setIndex] = useState(0);
+
+    const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+    }
 
 
     const TotalGuest = useAddGuestTotal({adultcount, childrencount});
@@ -88,30 +93,35 @@ const Home = () => {
         navigate(`/s/location=${searchValue}&adults=${adultcount > 0 ?  adultcount : ''}&children=${childrencount >  0 ? childrencount : ''}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate : ''}`)
     }
 
+    //handleComingSoon
+    const handleComingSoon = () => {
+        navigate('/coming-soon')
+    }
 
-    // useEffect(() => {
-    //     let timerId;
-    //     if(promoCounter === 0) {  
-    //         setShowPromo(true) 
-    //     } else {
-    //         timerId = setTimeout(() => {
-    //             setPromoCounter((countDown) => countDown -1);
-                
-    //         }, 1000);
-    //     }
-
-    //     return () => clearInterval(timerId)
-
-    // }, [promoCounter]);
 
     useEffect(() => {
-        if(whyShortlet) {
+        let timerId;
+        if(promoCounter === 0) {  
+            setShowPromo(true) 
+        } else {
+            timerId = setTimeout(() => {
+                setPromoCounter((countDown) => countDown -1);
+                
+            }, 1000);
+        }
+
+        return () => clearInterval(timerId)
+
+    }, [promoCounter]);
+
+    useEffect(() => {
+        if(showPromo) {
             document.body.style.overflow = 'hidden'
         } 
         return () => {
             document.body.style.overflow = 'auto'
         }
-    }, [whyShortlet])
+    }, [showPromo])
 
     return (
         <> 
@@ -131,19 +141,21 @@ const Home = () => {
 
             /> */}
 
-            {/* {showPromo && (
-                <MothersDayPromo  
+            {showPromo && (
+                <PromoBanner  
                     showPromo={showPromo}
                     setShowPromo={setShowPromo}
-                    Onclicks={handleShowBigPromo}
+                    OnClicks={handleComingSoon}
+                    index={index}
+                    handleSelect={handleSelect}
                 />
             )}
-            {promoBig && (
+            {/* {promoBig && (
                 <Promotion  
                     promoBig={promoBig}
                     setPromoBig={setPromoBig}
                 />
-            )} */}
+            )}  */}
             <Section data-testid="why-modal">
                 <SearchFilter 
                     openModal={openModal} 

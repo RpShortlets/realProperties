@@ -21,6 +21,8 @@ export const TermsandPolicy = lazy(() => import('./Pages/Term and Policy/Termand
 export const ValueAdded = lazy(() => import('./Pages/Vas/ValueAdded'))
 export const Agency = lazy(() => import('./Pages/Agency/Agency'))
 export const AdminHome = lazy(() => import('./Pages/dashboard/components/AdminHome'))
+export const ComingPage = lazy(() => import('./Pages/Coming Soon/ComingResult'))
+export const ComingPageDetails = lazy(() => import('./Pages/Coming Soon/ComingDetails'))
 
 export { default as Footer } from "./components/Footer/Footer"
 export { default as NotFound } from "./components/NotFound"
