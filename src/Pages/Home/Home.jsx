@@ -17,9 +17,7 @@ import BG from "../../image/background.webp"
 
 // import { WhyRealShortletsData } from './data/data';
 import PromoBanner from './components/Promo/PromoBanner';
-//import { useEffect } from 'react';
-// import Promotion from './components/Promo/Promotion';
-// import PromotionDiv from './components/Promo/PromoHome';
+import { getHomeData } from '../../redux/actionCreators/actionCreators';
 
 
 const Section = styled.section `
@@ -34,6 +32,10 @@ const Home = () => {
     const navigate = useNavigate()
 
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, openDrawer} = useSelector(state => state.ComponentState)
+    const {process, upcomingGallery} = useSelector(state => state.homeReducer)
+
+    console.log(upcomingGallery)
+
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
@@ -41,6 +43,8 @@ const Home = () => {
     const [whyRealShortletId, setWhyRealShortletId] = useState(null)
     const [showPromo, setShowPromo] = useState(false)
     const [promoCounter, setPromoCounter] = useState(3)
+    const [showText, setShowText] = useState(false)
+    const [apartmentId, setApartmentId] = useState()
     // const [promoBig, setPromoBig] = useState(false)
     const [isOpenCalender, setIsOpenCalender] = useState(false)
     const [index, setIndex] = useState(0);
@@ -98,6 +102,11 @@ const Home = () => {
         navigate('/coming-soon')
     }
 
+    //* handleGetComingDetails fetch Coming Apartment Details with apartment id
+    const handleGetComingDetails = (id) => {
+        navigate(`/coming-soon/apartment/${id}`)
+    }
+
 
     useEffect(() => {
         let timerId;
@@ -123,6 +132,10 @@ const Home = () => {
         }
     }, [showPromo])
 
+    useEffect(() => {
+        dispatch(getHomeData())
+    }, [dispatch])
+
     return (
         <> 
 
@@ -132,14 +145,6 @@ const Home = () => {
                 </AnimatePresence>
             }
 
-            {/* <WhyModal 
-                whyRealShortletId={whyRealShortletId}
-                whyShortlet={whyShortlet}
-                setWhyShortLet={setWhyShortLet}
-                Query={Query}
-                WhyRealShortletsData={WhyRealShortletsData}
-
-            /> */}
 
             {showPromo && (
                 <PromoBanner  
@@ -148,14 +153,15 @@ const Home = () => {
                     OnClicks={handleComingSoon}
                     index={index}
                     handleSelect={handleSelect}
+                    data={upcomingGallery}
+                    apartmentId={apartmentId}
+                    setApartmentId={setApartmentId}
+                    showText={showText}
+                    setShowText={setShowText}
+                    fetch={handleGetComingDetails}
                 />
             )}
-            {/* {promoBig && (
-                <Promotion  
-                    promoBig={promoBig}
-                    setPromoBig={setPromoBig}
-                />
-            )}  */}
+    
             <Section data-testid="why-modal">
                 <SearchFilter 
                     openModal={openModal} 

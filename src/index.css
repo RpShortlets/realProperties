@@ -291,3 +291,13 @@ a:hover {
     margin: 0px !important;
 }
 
+.react-multi-carousel-track  li {
+    width: 250px !important;
+}
+
+@media screen and (max-width: 600px) {
+    
+    .react-multi-carousel-track  li {
+        width: 240px !important;
+    }
+}

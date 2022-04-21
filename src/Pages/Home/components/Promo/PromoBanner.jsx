@@ -1,6 +1,3 @@
-import { useState } from "react"
-import Banner from "../../../../image/small/picOne.jpeg"
-import Banner2 from "../../../../image/small/picTwo.jpeg"
 import styled from "styled-components"
 import Modal from "../../../../components/Modal/Modal"
 import useMediaQuery from "../../../../hooks/useMediaQuery/useMediaQuery"
@@ -10,16 +7,6 @@ import Button from "../../../../components/Button/Button"
 import Carousels from "../../../../components/Carousel/Carousel"
 
 
-const Data = [
-    {
-        id: 1,
-        picture: Banner
-    },
-    {
-        id: 2,
-        picture: Banner2
-    }
-]
 
 // const Image = styled.img`
 //     width: 100%;
@@ -88,24 +75,42 @@ const Container = styled.div `
 `
 
 
-const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect}) => {
+const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, data, setShowText, setApartmentId, showText, apartmentId, fetch}) => {
     const Query = useMediaQuery("(max-width: 600px)")
-    
 
+    const setId = (id) => {
+        setApartmentId(id)
+        setShowText(true)
+    }
+
+    const removeId = () => {
+        setApartmentId(null)
+        setShowText(false)
+    }
+
+    
     return (
-        <Modal data-testtId="promoModal" borderRadius="3px" padding="0" transition={{duration: 0.5, type:{type:'spring'}}} initial={{opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: -50}} show={showPromo} setShow={setShowPromo} width={Query ? "90%" : "50%"} theme="rgba(0,0,0,0.92)" left={Query ? "5%" : "25%"} top="40%" btn>
+        <Modal data-testtId="promoModal" borderRadius="3px" padding="0" transition={{duration: 0.3, type:{type:'spring'}}} initial={ !showText ? {width: "50%", opacity: 0, y: -0} : {opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={showText ? {width: "62%", opacity: 1, y: -50} : {opacity: 1, y: -50}} show={showPromo} setShow={setShowPromo}  theme="rgba(0,0,0,0.92)" left={Query ? "5%" : !Query && showText ? "20%" : "25%"} top="40%" btn>
             <Cancel onClick={() => setShowPromo(false)}>{ CancelIcon}</Cancel>
             <Container>
-                {/* <div className="comingImage"> */}
-                <Carousels data={Data} index={index} handleSelect={handleSelect} controls={true} />
-                {/* </div> */}
+                <Carousels fetch={fetch} controls={false} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
                 <div className="comingContent">
-                    <div>
-                        <p style={{marginTop: "0", fontSize: "var(--font-xtra-small)"}}>Coming Soon!</p>
-                        <h1>20% OFF</h1>
-                        <p>Early birds make your bookings for some of our brand new apartments</p>
-                        <Button onClicks={OnClicks} padding={".6rem .9rem"} title={"See more"} color="var(--color-white)" border={"0"} background="var(--linear-primary)" />
-                    </div>
+                    {!showText ? (
+                        <div>
+                            <p style={{marginTop: "0", fontSize: "var(--font-xtra-small)"}}>Coming Soon!</p>
+                            <h1>20% OFF</h1>
+                            <p>Early birds make your bookings for some of our brand new apartments</p>
+                            <Button onClicks={OnClicks} padding={".6rem .9rem"} title={"See more"} color="var(--color-white)" border={"0"} background="var(--linear-primary)" />
+                        </div>
+                    ) : 
+                        <div>
+                            <p style={{marginTop: "0", fontSize: "var(--font-xtra-small)"}}>Coming Soon!</p>
+                            <h1 style={{fontSize: "2.2rem"}}>{data?.result[apartmentId]?.apartment_name}</h1>
+                            <p>Early birds make your bookings for some of our brand new apartments</p>
+                            <Button onClicks={OnClicks} padding={".6rem .9rem"} title={"See more"} color="var(--color-white)" border={"0"} background="var(--linear-primary)" />
+                        </div> 
+                    }
+        
                 </div>
             </Container>
         </Modal>

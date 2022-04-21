@@ -7,6 +7,7 @@ import './index.css';
 import App from './App';
 import 'lazysizes';
 import 'antd/dist/antd.css';
+import "react-multi-carousel/lib/styles.css";
 
 
 // import reportWebVitals from './reportWebVitals';

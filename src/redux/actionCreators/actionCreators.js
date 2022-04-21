@@ -26,6 +26,20 @@ export const UpdateBooks = createAsyncThunk("reservation/UpdateBooks", async () 
 
 //* END OF  UPDATE BOOKINGS
 
+//* HOME CALLS
+
+    //! GET UPCOMING APARTMENTS PICTURES FOR SLIDE SHOW
+    export const getHomeData = createAsyncThunk("homeReducer/getHomeData", async () => {
+        const response = await axios.get(`${BaseURL}/get-upcoming-apartment`)
+
+        return response.data
+    }) 
+
+    //! END OF GET UPCOMING APARTMENTS PICTURES FOR SLIDE SHOW
+
+
+//* END OF HOME CALLS
+
 
 //* SEARCH BOOKINGS
 export const searchShortlets = createAsyncThunk("shortlet/searchShortlet", async ({searchV, checkI, checkO, adult, childr}) => {
@@ -407,3 +421,19 @@ export const ContactSupport = createAsyncThunk("support/contactSupport", async (
     return response.data;
 
 });
+
+
+//* COMING SOON CALLS
+    
+    export const getComingSoonDetails = createAsyncThunk("comingReducer/getComingSoonDetails", async(id) => {
+        console.log(id)
+        const {data} = await axios.get(`${BaseURL}/upcoming-shortlet-details`, {
+            params: {
+                apartment_id: id
+            }
+        });
+        return data;
+    })
+
+
+//* END OF COMING SOON CALLS

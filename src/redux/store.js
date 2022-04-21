@@ -9,9 +9,12 @@ import CustomerRecords from "./actions/saveCustomerRecord"
 import AdminDashboard from "./actions/adminDashboard"
 import CustomerSupport from "./actions/customerSupport"
 import GallarySlice from "./actions/gallery"
+import HomeReducer  from "./actions/home"
+import ComingSoonReducer from "./actions/comingSoonReducer"
 
 export const store = configureStore({
     reducer: {
+        homeReducer: HomeReducer,
         ComponentState: componentState,
         formState: formState,
         propertyResult: propertyResult,
@@ -21,7 +24,8 @@ export const store = configureStore({
         customerRecord : CustomerRecords,
         adminDashboard: AdminDashboard,
         customerSupport: CustomerSupport,
-        gallary: GallarySlice
+        gallary: GallarySlice,
+        comingsoonReducer: ComingSoonReducer
 
     },
     middleware: (getDefaultMiddleware) =>

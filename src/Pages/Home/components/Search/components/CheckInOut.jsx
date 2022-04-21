@@ -65,7 +65,7 @@ const CheckInOut = ({homeDateValue, setHomeDateValue, setIsOpenCalender, isOpenC
     
     }, [homeDateValue, dispatch, setIsOpenCalender])
 
-    console.log(isOpenCalender)
+
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateRangePicker

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import {Router} from 'react-router-dom'
 import ComingSoon from '../ComingResult';
 import { Provider } from 'react-redux'
 import {store} from "../../../redux/store"
@@ -6,9 +7,12 @@ import {store} from "../../../redux/store"
 
 test("Must display modal", () => {
     render(
-        <Provider store={store}>
-            <ComingSoon />
-        </Provider>
+        <Router>
+            <Provider store={store}>
+                <ComingSoon />
+            </Provider>
+        </Router>
+
     );
 
     const ComingPage = screen.getByTestId('comingId')
@@ -17,9 +21,11 @@ test("Must display modal", () => {
 
 test("Must have an header", () => {
     render(
-        <Provider store={store}>
-            <ComingSoon />
-        </Provider>
+        <Router>
+            <Provider store={store}>
+                <ComingSoon />
+            </Provider>
+        </Router>
     );
 
 
@@ -29,9 +35,11 @@ test("Must have an header", () => {
 
 test("header must have a value Up Coming Apartments", () => {
     render(
-        <Provider store={store}>
-            <ComingSoon />
-        </Provider>
+        <Router>
+            <Provider store={store}>
+                <ComingSoon />
+            </Provider>
+        </Router>
     )
 
 

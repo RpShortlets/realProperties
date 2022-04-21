@@ -157,7 +157,7 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
                 <h2>Why RP Shortlets</h2>
                 <Content>
                     {RealShortlets.map((item, i) => (
-                        <Contains className="container" >
+                        <Contains className="container" key={i} >
                             <div className="card"  onMouseLeave={() => handleLeaveCard(item.id)} onMouseEnter={() => handleClick(item.id)} ref={refs.current[item.id]}>
                                 <div className="front">
                                     <div>

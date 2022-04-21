@@ -34,9 +34,9 @@ const BodyIconCard = styled.div `
 
 `
 
-const IconCard = ({data, title, Icon, style}) => {
+const IconCard = ({data, title, Icon, style, testid}) => {
     return (
-        <BodyIconCard style={style}>
+        <BodyIconCard style={style} data-testid={testid}>
             <div>
                 <span>{Icon}</span>
             </div>

@@ -39,14 +39,14 @@ const Buttons = styled.button`
     }
 `
 
-const Button = ({zIndex,position, left, right, bottom, boxShadow, disabledBG, title,justify,fontSize,hoverText, fontWeight, borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
+const Button = ({zIndex,position, whileHover, left, right, bottom, boxShadow, disabledBG, title,justify,fontSize,hoverText, fontWeight, borderRadius, classNames, hover, height, MouseEnter, MouseLeave, padding, alignT, type, onClicks, color, background, style, border, disabled, icon, width, display, svgMargin}) => {
     
 
     return (
         <>
             <Buttons
                 as={motion.button}
-                whileHover={{ scale: 1.05 }}
+                whileHover={whileHover ? "" : {scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
                 className={classNames}
                 display={display} 
