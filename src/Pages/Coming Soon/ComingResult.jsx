@@ -1,37 +1,13 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import Bk from "../../image/comingImg.png"
-import comingImage from "../../image/comingPage.png"
 import PropertyCard from "../../components/PropertyCard/PropertyCard"
+import { getHomeData } from '../../redux/actionCreators/actionCreators'
+import { useDispatch, useSelector } from 'react-redux'
+import { SkeletonLoader } from '../../components/Loader/Skeleton'
 
 
-const Data = [
-    {
-        id: 1,
-        picture: comingImage,
-        apartment_name: 'Executive Suite',
-        price: '50,000',
-        price2: '30,000',
-        property_brief_description: '2bedroom Apartment' 
-    },
-    {
-        id: 2,
-        picture: comingImage,
-        apartment_name: 'Executive Suite',
-        price: '60,000',
-        price2: '40,000',
-        property_brief_description: '2bedroom Apartment' 
-    },
-    {
-        id: 3,
-        picture: comingImage,
-        apartment_name: 'Executive Suite',
-        price: '70,000',
-        price2: '50,000',
-        property_brief_description: '2bedroom Apartment' 
-    }
-]
 
 
 const Section = styled.section `
@@ -81,10 +57,21 @@ const Container = styled.div `
 
 const ComingResult = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
+    const {process, upcomingGallery} = useSelector(state => state.homeReducer)
+
+    console.log({
+        process,
+        upcomingGallery 
+    })
     const handleGetDetails = (id) => {
-        navigate(`/coming-soon/apartment/1`)
+        navigate(`/coming-soon/apartment/${id}`)
     }
+
+    useEffect(() => {
+        dispatch(getHomeData())
+    }, [dispatch])
 
     return (
         <>  
@@ -96,11 +83,21 @@ const ComingResult = () => {
                     <div className='ImageBk'></div>
                     <div className="comingCard">
                         <div>
-                            <h1 data-testId="comingHeader" >Up Coming Apartments</h1>
+                            <h1 data-testId="comingHeader" > {process === "loading" ? <SkeletonLoader width="20vw" height={"20px"} />  : process === "succeeded" &&  "Up Coming Apartments"}</h1>
                             <div>
-                                {Data.map((item) => (
-                                    <PropertyCard data={item} title="View" color handleGetDetails={handleGetDetails}/>
-                                ))}
+                                {process === "loading" ? 
+                                    <div>
+                                        <SkeletonLoader width="100%" height={"200px"} /> 
+                                        <SkeletonLoader width="100%" height={"200px"} /> 
+                                    </div>
+                                : process === "succeeded" && 
+                                (   
+                                    <>
+                                        {upcomingGallery?.result?.map((item) => (
+                                            <PropertyCard data={item} title="View" color handleGetDetails={() => handleGetDetails(item?.apartment_id)}/>
+                                        ))}
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

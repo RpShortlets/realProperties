@@ -481,14 +481,7 @@ const PropertyDetails = () => {
                                         
                                     />
                                 )}            
-                                {status === "loading" ? 
-                                    <Amenities>
-                                        <SkeletonLoader  height='300px'/> 
-                                    </Amenities> :
-                                    status === "succeeded" && (
-                                        <PropertyAmenities />
-                                    )
-                                }   
+                                <PropertyAmenities />
                             </BodyContent>
                         </BodyContainer>
                     </Header>
@@ -506,9 +499,6 @@ const Description = styled.div `
     grid-column: 1/4;
 `
 
-const Amenities = styled.div `
-    grid-column: 1/4;
-`
 
 const BodyHeader = styled.div `
     grid-column: 1/5;

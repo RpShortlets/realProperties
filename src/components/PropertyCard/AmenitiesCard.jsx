@@ -19,9 +19,12 @@ const BorderStyle = css`
 `
 
 const H2 = css`
-    font-size: var(--font-small-screen);
+    font-size: var(--font-medium);
     font-weight: 600;
     margin: 0;
+
+    
+
 `
 
 const Amenities = styled.div `
@@ -29,6 +32,12 @@ const Amenities = styled.div `
 
     h2 {
         ${H2}
+    }
+
+    @media screen and (min-width: 769px) {
+        h2 {
+            font-size: var(--font-small-screen);
+        }
     }
 `
 
@@ -53,17 +62,24 @@ const AmenitiesHeader = styled.div `
 
 `
 
-const AmenitiesCard = ({show, setShow, Query, PropertyDetails}) => {
+const AmenitiesCard = ({show, setShow, Query, PropertyDetails,loading}) => {
+    
     return (
         <Amenities>
             <h2>Amenities</h2>
             <AmenitiesHeader>        
-                <AmenitiesOne PropertyDetails={PropertyDetails} />
-                {Query ? (<AmenitiesTwo  PropertyDetails={PropertyDetails} />) : (
+                <AmenitiesOne
+                    loading={loading} 
+                    PropertyDetails={PropertyDetails} 
+                />
+                {Query ? (<AmenitiesTwo  loading={loading} PropertyDetails={PropertyDetails} />) : (
                     <AnimatePresence>
                         {show && (
                         <motion.div initial={{height: '0', opacity: 0}} animate={{height: '100%', opacity: 1}} exit={{height: '0', opacity: 0}} transition={{duration: .5, type: { type: 'spring'}}}>
-                            <AmenitiesTwo PropertyDetails={PropertyDetails} />
+                            <AmenitiesTwo 
+                                PropertyDetails={PropertyDetails} 
+                                loading={loading}
+                            />
                         </motion.div>
                         )}
                     </AnimatePresence>     

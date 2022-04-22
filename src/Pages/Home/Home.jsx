@@ -34,7 +34,7 @@ const Home = () => {
     const {adultcount, childrencount, checkInDate, checkOutDate, searchValue, openDrawer} = useSelector(state => state.ComponentState)
     const {process, upcomingGallery} = useSelector(state => state.homeReducer)
 
-    console.log(upcomingGallery)
+
 
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)

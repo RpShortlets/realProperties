@@ -61,6 +61,7 @@ export const CustomRightArrowButton = (props) => {
 
 
 const ImageModal = ({isOpen, gotoPrevious, gotoNext, images, currentImageIndex, setIsOpen, Query }) => {
+    
     return (
         <>
             <Lightbox

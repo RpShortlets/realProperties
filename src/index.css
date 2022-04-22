@@ -295,6 +295,10 @@ a:hover {
     width: 250px !important;
 }
 
+.react-multiple-carousel__arrow {
+    z-index: 11 !important;
+}
+
 @media screen and (max-width: 600px) {
     
     .react-multi-carousel-track  li {

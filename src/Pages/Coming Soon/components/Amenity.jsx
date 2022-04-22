@@ -10,7 +10,7 @@ const Amenities = styled.div `
     }
 `
 
-const AmenityComponent = ({showAmenity, setShowAmenity, PropertyDetails, Query}) => {
+const AmenityComponent = ({showAmenity, setShowAmenity, PropertyDetails, Query, loading}) => {
     return (
         <Amenities>
             <AmenitiesCard 
@@ -18,6 +18,7 @@ const AmenityComponent = ({showAmenity, setShowAmenity, PropertyDetails, Query})
                 show={showAmenity}
                 PropertyDetails={PropertyDetails}
                 Query={Query}
+                loading={loading}
             />
         </Amenities>
     )

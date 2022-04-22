@@ -239,16 +239,7 @@ const ReservationRight = ({setShowModal, proceess}) => {
         }
 
     }
-    
-
-    // useMemo(() => {
-    //     if(status === 'succeeded') {
-    //         navigate(`/order-summary/ref/${Ongoing_id[0]?.ongoing_id}`)
-    //     }
-        
-    // }, [status, navigate, Ongoing_id]);
-
-    
+ 
 
     return (
         <>

@@ -1,12 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styled from "styled-components"
 import IconCard from '../../../components/PropertyCard/IconCard'
 import { FlexStyle } from "../../../styles/globalStyles"
 import Button from '../../../components/Button/Button'
 import { IoBed } from "react-icons/io5"
-import { IoIosArrowForward } from "react-icons/io"
 import { Rooms, Baths } from "../../../Svg/svg"
+import { SkeletonLoader } from "../../../components/Loader/Skeleton"
 
 
 const Header = styled.header`
@@ -34,7 +33,7 @@ const Details =styled.div`
 
     .IconWrapper {
         display: flex;
-        margin: max(1vw, 1.2rem) 0;
+        margin: max(3vw, 1.5rem) 0;
     }
 
     .descriptionWrapper {
@@ -57,7 +56,7 @@ const Details =styled.div`
     }
 
     .clickWrapper {
-        margin: 1rem 0 0 0;
+        margin: 3rem 0 0 0;
         ${FlexStyle}
         justify-content: space-between;
 
@@ -79,36 +78,54 @@ const Details =styled.div`
     }
 `
 
-const DetailComponent = ({show, setShow,}) => {
+const DetailComponent = ({loading, data,setShowForm, showForm, scrollToPosition}) => {
+
     return (
         <Details>
             <div className="detailWrapper">
                 <Header>
-                    <h1 data-testid="comingDetailsHeader">Executive Suite</h1>
-                    <p  title="price">&#8358;50,000</p>
+                    <h1 data-testid="comingDetailsHeader">  {loading === "loading" ? <SkeletonLoader width="20vw" height={"20px"} />  : loading === "succeeded" && data?.general_info?.[0]?.apartment_proper_name}</h1>
+                    <p  title="price">{loading === "loading" ? <SkeletonLoader width="10vw" height={"20px"} />  : loading === "succeeded" && <span>&#8358;{data?.general_info[0]?.price?.toLocaleString()} </span> }</p>
                 </Header>
                 <div className='IconWrapper'>
-                    <IconCard data={3} title="Beds" Icon={<IoBed/>} testid="iconCard" />
-                    <IconCard data={2} title="Bathroom" Icon={Baths} style={{margin: '0 max(5vw, 1rem)'}} testid="iconCard" />
-                    <IconCard data={2} title="Rooms" Icon={Rooms} testid="iconCard" />
+                    {loading === "loading" ? <SkeletonLoader width="40px" height={"40px"} circle /> : loading === "succeeded" &&
+                        <IconCard data={data?.general_info[0]?.bed} title="Beds" Icon={<IoBed/>} testid="iconCard" />
+                    }
+                    {loading === "loading" ? <SkeletonLoader width="40px" height={"40px"} circle />: loading === "succeeded" &&
+                        <IconCard data={data?.general_info[0]?.bath} title="Bathroom" Icon={Baths} style={{margin: '0 max(5vw, 1rem)'}} testid="iconCard" />
+                    }
+                    {loading === "loading" ? <SkeletonLoader width="40px" height={"40px"} circle /> : loading === "succeeded" &&
+                        <IconCard data={data?.general_info[0]?.room} title="Rooms" Icon={Rooms} testid="iconCard" />
+                    }
                 </div>
                 <div className="descriptionWrapper">
-                    <p>Dolore proident voluptate ullamco qui. Deserunt Lorem deserunt Lorem fugiat excepteur mollit reprehenderit. Magna do non proident amet excepteur. Lorem laboris nulla ut id sunt aliquip incididunt magna ut reprehenderit. Voluptate tempor cupidatat eiusmod consectetur sint. Eiusmod consectetur labore culpa nostrud consectetur proident fugiat exercitation ullamco. Amet commodo laborum mollit culpa ad et veniam.</p>
-                    {show && <p>Dolore sit elit id duis dolore aliqua eu. Id aute sint occaecat elit dolore. Elit magna qui occaecat ut quis aliquip labore proident. Proident qui adipisicing deserunt sint cupidatat sit mollit labore aliquip reprehenderit in aute consectetur velit. Laboris et veniam sunt anim consequat commodo est ad ipsum sunt exercitation ut. Occaecat ullamco ex anim sit eiusmod ut. Sint enim ad aute adipisicing.</p>}
+                    <p>
+                        {loading === "loading" ? <>
+                            <SkeletonLoader width="100%" height={"15px"} />
+                            <SkeletonLoader width="100%" height={"15px"} />
+                            <SkeletonLoader width="100%" height={"15px"} />
+                            <SkeletonLoader width="100%" height={"15px"} />
+                        </> : loading === "succeeded" &&
+                        data?.general_info[0]?.property_description}
+                    </p>
+                    {/* {show && <p>Dolore sit elit id duis dolore aliqua eu. Id aute sint occaecat elit dolore. Elit magna qui occaecat ut quis aliquip labore proident. Proident qui adipisicing deserunt sint cupidatat sit mollit labore aliquip reprehenderit in aute consectetur velit. Laboris et veniam sunt anim consequat commodo est ad ipsum sunt exercitation ut. Occaecat ullamco ex anim sit eiusmod ut. Sint enim ad aute adipisicing.</p>}
                     <Link to="#" onClick={() => setShow((prev) => !prev)}>{show ? 'See less': 'See more'}</Link>
-                    <IoIosArrowForward />
+                    <IoIosArrowForward /> */}
                 </div>
                 <div className="clickWrapper">
-                    <p>If you are intrested click on the button</p>
+                    <p>{loading === "loading" ? <SkeletonLoader width="20vw" height={"20px"} /> : loading === "succeeded" && "If you are intrested click on the button"}</p>
                     <div>
-                        <Button 
-                            title="Continue" 
-                            border="0" 
-                            color="var(--color-white)" 
-                            background="var(--linear-primary)"
-                            width={"100%"}
-                            padding=".8rem"
-                        />
+                        {loading === "loading" ? <SkeletonLoader width="17vw" height={"45px"} /> : loading === "succeeded" &&
+                            <Button 
+                                title="Continue" 
+                                border="0" 
+                                color="var(--color-white)" 
+                                background="var(--linear-primary)"
+                                width={"100%"}
+                                padding=".8rem"
+                                onClicks={scrollToPosition}
+                            />
+                        }
                     </div>
                 </div>
             </div>

@@ -217,7 +217,7 @@ const SearchFilter = ({index, handleSelect, SubmitForm, openModal, setOpenModal,
         <>
             {loaded  ? (
                 <FilterContainer className={styles.HomeFilterBackground} >
-                    <Carousels data={Data} index={index} handleSelect={handleSelect} controls={false}/>
+                    <Carousels imageStyle={{height: "100%"}} style={{height: "100%"}} data={Data} index={index} handleSelect={handleSelect} controls={false}/>
                     <FilterWrapper className="justify-center">
                         <Header>
                             <h1>Reserve Your Luxury Shortlet</h1>

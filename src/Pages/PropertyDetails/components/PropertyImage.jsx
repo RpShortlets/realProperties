@@ -186,10 +186,10 @@ const PropertyImage = ({status}) => {
                             <img data-src={pictures[1]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
-                    <SmallImage onClick={() => setIsOpen(true)}>
+                    <SmallImage onClick={() => showPictures(5)}>
                         {status === 'loading' ? <SkeletonLoader width='100%' height='100%'/> : 
                             status === "succeeded" && (
-                            <img data-src={Pic14} alt=""  width='100%' height='100%' className="lazyload"/>
+                            <img data-src={pictures[5]?.src} alt=""  width='100%' height='100%' className="lazyload"/>
                         )}
                     </SmallImage>
                     <SmallImage onClick={() => showPictures(6)}>

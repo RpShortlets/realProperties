@@ -184,106 +184,109 @@ const Price = styled.div `
 `
 
 
-const PropertyCard = ({data, status, handleGetDetails, title, color }) => {
+const PropertyCard = ({data, status, handleGetDetails, title, color, loading }) => {
     
     
-    return (        
-        <Card >
-            <CardContainer onClick={handleGetDetails}>
-                <PictureContainer height={status === 'succeeded' ? 'true' : 'false'}>
-                    <div>
-                        <picture>
-                            <source
-                                data-srcset={data?.picture}
-                                media="(max-width: 559px)" />
-                            <source
-                                data-srcset={data?.picture}
-                                media="(min-width: 560px)" />
-                            
-                            <img data-src={data?.picture} alt="" width="100%" height="100%" className="lazyload"/>
-                        </picture>
-                    </div>
-                </PictureContainer>
-                <ContentContainer>
-                    <div>
+    return ( 
+        <>
+            <Card >    
+                <CardContainer onClick={handleGetDetails}>
+                    <PictureContainer height={status === 'succeeded' ? 'true' : 'false'}>
                         <div>
-                            <h2>{data?.apartment_name ? data?.apartment_name : ''}</h2>
-                            <span>{data?.address ? data?.address : ''}</span>
-                            <span>
-                                {data?.property_brief_description ? data?.property_brief_description : ''}
-                            </span>
+                            <picture>
+                                <source
+                                    data-srcset={data?.picture}
+                                    media="(max-width: 559px)" />
+                                <source
+                                    data-srcset={data?.picture}
+                                    media="(min-width: 560px)" />
+                                
+                                <img data-src={data?.picture} alt="" width="100%" height="100%" className="lazyload"/>
+                            </picture>
                         </div>
-                        <IconDiv>
-                            <IconContent>
-                                    {data?.bed && (
-                                        <IconCard>
-                                            <div>
-                                                <span><IoBed/></span>
-                                            </div>
-                                            <div>
-                                                <span>{data?.bed ? data?.bed : ''}</span>
-                                                <span>Beds</span>
-                                            </div>
-                                        </IconCard>
-                                    )}
-                                    {data?.bath && (
-                                        <IconCard>
-                                            <div>
-                                                <span> {Baths}</span> 
-                                            </div>
-                                            <div>
-                                                <span>{data?.bath ? data?.bath : ''}</span>
-                                                <span>Bath</span>
-                                            </div>
-                                        </IconCard>
-                                    )}
-                                    {data?.washer && (
-                                        <IconCard>
-                                            <div>
-                                                <span>{Washer}</span> 
-                                            </div>
-                                            <div>
-                                                <span>{data?.washer && data?.washer}</span>   
-                                            </div>                            
-                                        </IconCard>
-                                    )}
-                                    {data?.room && (
-                                        <IconCard>
-                                            <div>
-                                                <span>{Rooms}</span>
-                                            </div>
-                                            <div>
-                                                <span>{data?.room} </span>
-                                                <span>Rooms</span>
-                                            </div>
-                                        </IconCard>
-                                    )}
-                            </IconContent>
-                        </IconDiv>
-                    </div>
-                    <Apartment>
+                    </PictureContainer>
+                    <ContentContainer>
                         <div>
-                            <span>{data?.room && 'Apartment'}</span>
+                            <div>
+                                <h2>{data?.apartment_name ? data?.apartment_name : ''}</h2>
+                                <span>{data?.address ? data?.address : ''}</span>
+                                <span>
+                                    {data?.property_brief_description ? data?.property_brief_description :  data?.description ? data?.description : ''}
+                                </span>
+                            </div>
+                            <IconDiv>
+                                <IconContent>
+                                        {data?.bed && (
+                                            <IconCard>
+                                                <div>
+                                                    <span><IoBed/></span>
+                                                </div>
+                                                <div>
+                                                    <span>{data?.bed ? data?.bed : ''}</span>
+                                                    <span>Beds</span>
+                                                </div>
+                                            </IconCard>
+                                        )}
+                                        {data?.bath && (
+                                            <IconCard>
+                                                <div>
+                                                    <span> {Baths}</span> 
+                                                </div>
+                                                <div>
+                                                    <span>{data?.bath ? data?.bath : ''}</span>
+                                                    <span>Bath</span>
+                                                </div>
+                                            </IconCard>
+                                        )}
+                                        {data?.washer && (
+                                            <IconCard>
+                                                <div>
+                                                    <span>{Washer}</span> 
+                                                </div>
+                                                <div>
+                                                    <span>{data?.washer && data?.washer}</span>   
+                                                </div>                            
+                                            </IconCard>
+                                        )}
+                                        {data?.room && (
+                                            <IconCard>
+                                                <div>
+                                                    <span>{Rooms}</span>
+                                                </div>
+                                                <div>
+                                                    <span>{data?.room} </span>
+                                                    <span>Rooms</span>
+                                                </div>
+                                            </IconCard>
+                                        )}
+                                </IconContent>
+                            </IconDiv>
                         </div>
-                        <div>
-                            <span>{data?.room && '6 Max Guests'}</span>
-                        </div>
-                        <div>
-                            <span>{data?.seaview}</span>
-                        </div>
-                    </Apartment>
-                    <Price color={color} >
-                        <div>
-                            <h3>&#8358; {data?.price && data?.price.toLocaleString()}</h3>
-                            {data?.price2 && <h3>&#8358; {data?.price2 && data?.price2.toLocaleString()}</h3>}
-                        </div>
-                        <div style={{marginLeft:'max(8vw, 2.5rem)', flex: '1'}}>
-                            <Button color={"var(--color-white)"} padding=".6rem" border="0" title={title} background="var(--linear-primary)" fontSize="var(--font-xtra-small-screen)" />
-                        </div>
-                    </Price>
-                </ContentContainer>
-            </CardContainer>
-        </Card>
+                        <Apartment>
+                            <div>
+                                <span>{data?.room && 'Apartment'}</span>
+                            </div>
+                            <div>
+                                <span>{data?.room && '6 Max Guests'}</span>
+                            </div>
+                            <div>
+                                <span>{data?.seaview}</span>
+                            </div>
+                        </Apartment>
+                        <Price color={color} >
+                            <div>
+                                <h3>&#8358; {data?.price && data?.price.toLocaleString()}</h3>
+                                {data?.discounted_price && <h3>&#8358; {data?.discounted_price && data?.discounted_price.toLocaleString()}</h3>}
+                            </div>
+                            <div style={{marginLeft:'max(8vw, 2.5rem)', flex: '1'}}>
+                                <Button color={"var(--color-white)"} padding=".6rem" border="0" title={title} background="var(--linear-primary)" fontSize="var(--font-xtra-small-screen)" />
+                            </div>
+                        </Price>
+                    </ContentContainer>
+                </CardContainer>
+            </Card>
+            
+        </>
     )
 }
 

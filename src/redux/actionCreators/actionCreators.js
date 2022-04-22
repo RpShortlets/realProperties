@@ -426,12 +426,25 @@ export const ContactSupport = createAsyncThunk("support/contactSupport", async (
 //* COMING SOON CALLS
     
     export const getComingSoonDetails = createAsyncThunk("comingReducer/getComingSoonDetails", async(id) => {
-        console.log(id)
+        
         const {data} = await axios.get(`${BaseURL}/upcoming-shortlet-details`, {
             params: {
                 apartment_id: id
             }
         });
+        return data;
+    })
+
+    //! SAVE CUSTOMER DETAIL FOR COMING SOON APARTMETNS
+    export const saveCustomerComingDetails = createAsyncThunk("comingReducer/saveCustomerComingDetails", async({formdata, phn, id}) => {
+        const Data = {
+            apartment_id: id,
+            firstname: formdata.firstname,
+            lastname: formdata.lastname,
+            email: formdata.email,
+            phone_no: phn 
+        }
+        const {data} = await axios.post(`${BaseURL}/save-upcoming-customer-info`, Data);
         return data;
     })
 

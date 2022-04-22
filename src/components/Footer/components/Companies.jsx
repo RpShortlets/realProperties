@@ -26,11 +26,11 @@ const Companies = () => {
                             Gallery
                         </NavLink>
                     </div>
-                    <div>
+                    {/* <div>
                         <NavLink to="#">
                             About our Value Added Service
                         </NavLink>
-                    </div>
+                    </div> */}
                     <div>
                         <NavLink to="/terms">
                             Terms and Condition

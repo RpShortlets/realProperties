@@ -5,6 +5,7 @@ import PhotoOne from "../../../image/photos.png"
 import PhotoTwo from "../../../image/photosTwo.png"
 import VideoComing from "../../../image/comingSoonVideo.png"
 import Button from '../../../components/Button/Button'
+import { SkeletonLoader } from '../../../components/Loader/Skeleton'
 
 
 const ImageGrid = styled.div `
@@ -56,30 +57,40 @@ const ImageGrid = styled.div `
 `
 
 
-const Images = () => {
+const Images = ({loading, data, showPictures}) => {
+    
     return (
         <ImageGrid>
             <div className="gridOne">
-                <img src={VideoComing} alt="" width="100%" height="100%" />
+                {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
+                    <img src={VideoComing} alt="" width="100%" height="100%" />
+                }
             </div>
             <div className="gridTwo">
-                <img src={PhotoOne} alt="apartment_picture" width="100%" height="100%" />
+                {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
+                    <img src={PhotoOne} alt="apartment_picture" width="100%" height="100%" />
+                }
             </div>
             <div className="gridThree">
-                <img src={PhotoTwo} alt="apartment_picture" width="100%" height="100%" />
+                {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
+                    <img src={PhotoTwo} alt="apartment_picture" width="100%" height="100%" />
+                }
             </div>
-            <div className="morePhotos">
-                <Button 
-                    title="More photos" 
-                    border={"0"} 
-                    borderRadius="2px"  
-                    fontSize="var(--font-xtra-small-screen)"  
-                    background="var(--linear-primary)" 
-                    color="var(--color-white)" 
-                    padding={".4rem"}
-                    whileHover
-                />
-            </div>
+            {loading === "loading" ? "" : loading === "succeeded" &&
+                <div className="morePhotos">
+                    <Button 
+                        title="More photos" 
+                        border={"0"} 
+                        borderRadius="2px"  
+                        fontSize="var(--font-xtra-small-screen)"  
+                        background="var(--linear-primary)" 
+                        color="var(--color-white)" 
+                        padding={".4rem"}
+                        whileHover
+                        onClicks={showPictures}
+                    />
+                </div>
+            }
         </ImageGrid>
     )
 }

@@ -48,7 +48,7 @@ const Facility = styled.div `
     width: 35vw;
 
     h2 {
-        font-size: var(--font-small-screen);
+        font-size: var(--font-medium);
         font-weight: 600;
         margin: 0;
     }
@@ -61,6 +61,13 @@ const Facility = styled.div `
 
     .carouselDiv {
         margin: 2rem 0 0;
+    }
+
+
+    @media screen and (min-width: 769px) {
+        h2 {
+            font-size: var(--font-small-screen);
+        }
     }
 
     @media screen and (max-width: 991px) {
