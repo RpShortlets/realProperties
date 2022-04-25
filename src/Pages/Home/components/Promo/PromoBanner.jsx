@@ -105,11 +105,6 @@ const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, da
         <Modal data-testtId="promoModal" borderRadius="3px" padding="0" transition={{duration: 0.3, type:{type:'spring'}}} initial={{opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: -50}} show={showPromo} setShow={setShowPromo}  theme="rgba(0,0,0,0.92)" left={Query ? "5%" : "20%"} width={Query ? "90%" : "62%"} top={Query ? "25%" : "40%"} btn>
             <Cancel onClick={() => setShowPromo(false)}>{ CancelIcon}</Cancel>
             <Container>
-                {loading === "loading" && (
-                    <div style={{width: '100%', height: "200px"}}>
-                        <SkeletonLoader width="100%" height={"100%"} />
-                    </div>
-                ) }
                 <Carousels style={{cursor: 'pointer'}} loading={loading} fetch={fetch} controls={true} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
                 <div className="comingContent">
                     {!showText ? (
