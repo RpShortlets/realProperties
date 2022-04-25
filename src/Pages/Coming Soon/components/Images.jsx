@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 
-import PhotoOne from "../../../image/photos.png"
-import PhotoTwo from "../../../image/photosTwo.png"
-import VideoComing from "../../../image/comingSoonVideo.png"
+
 import Button from '../../../components/Button/Button'
 import { SkeletonLoader } from '../../../components/Loader/Skeleton'
 
@@ -58,22 +56,23 @@ const ImageGrid = styled.div `
 
 
 const Images = ({loading, data, showPictures}) => {
+    console.log(data?.pictures)
     
     return (
         <ImageGrid>
             <div className="gridOne">
                 {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
-                    <img src={VideoComing} alt="" width="100%" height="100%" />
+                    <img src={data?.pictures[0]?.picture} alt="" width="100%" height="100%" />
                 }
             </div>
             <div className="gridTwo">
                 {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
-                    <img src={PhotoOne} alt="apartment_picture" width="100%" height="100%" />
+                    <img src={data?.pictures[1]?.picture} alt="apartment_picture" width="100%" height="100%" />
                 }
             </div>
             <div className="gridThree">
                 {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
-                    <img src={PhotoTwo} alt="apartment_picture" width="100%" height="100%" />
+                    <img src={data?.pictures[2]?.picture} alt="apartment_picture" width="100%" height="100%" />
                 }
             </div>
             {loading === "loading" ? "" : loading === "succeeded" &&

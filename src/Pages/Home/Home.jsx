@@ -154,6 +154,7 @@ const Home = () => {
                     index={index}
                     handleSelect={handleSelect}
                     data={upcomingGallery}
+                    loading={process}
                     apartmentId={apartmentId}
                     setApartmentId={setApartmentId}
                     showText={showText}

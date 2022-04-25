@@ -184,7 +184,7 @@ const Price = styled.div `
 `
 
 
-const PropertyCard = ({data, status, handleGetDetails, title, color, loading }) => {
+const PropertyCard = ({data, status, handleGetDetails, title, color, loading, btn }) => {
     
     
     return ( 
@@ -278,8 +278,16 @@ const PropertyCard = ({data, status, handleGetDetails, title, color, loading }) 
                                 <h3>&#8358; {data?.price && data?.price.toLocaleString()}</h3>
                                 {data?.discounted_price && <h3>&#8358; {data?.discounted_price && data?.discounted_price.toLocaleString()}</h3>}
                             </div>
-                            <div style={{marginLeft:'max(8vw, 2.5rem)', flex: '1'}}>
-                                <Button color={"var(--color-white)"} padding=".6rem" border="0" title={title} background="var(--linear-primary)" fontSize="var(--font-xtra-small-screen)" />
+                            <div style={{marginLeft: btn ? 'max(8vw, 1rem)' : "max(8vw, 2.5rem)", flex: '1'}}>
+                                <Button 
+                                    color={"var(--color-white)"} 
+                                    padding=".6rem" 
+                                    border="0" 
+                                    title={title} 
+                                    background="var(--linear-primary)" 
+                                    fontSize="var(--font-xtra-small-screen)" 
+                                    width={btn && "90%"}
+                                    />
                             </div>
                         </Price>
                     </ContentContainer>

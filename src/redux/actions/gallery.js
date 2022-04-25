@@ -61,6 +61,30 @@ import MotherNine from "../../image/event/mothers/motherNine.jpeg"
 import MotherTen from "../../image/event/mothers/motherTen.jpeg"
 import MotherEleven from "../../image/event/mothers/motherEleven.jpeg"
 import MotherTwelve from "../../image/event/mothers/motherTwelve.jpeg"
+import Mother13 from "../../image/event/mothers/13M.jpeg"
+import Mother14 from "../../image/event/mothers/14M.jpeg"
+import Mother15 from "../../image/event/mothers/15M.jpeg"
+import Mother16 from "../../image/event/mothers/16M.jpeg"
+import Mother17 from "../../image/event/mothers/17M.jpeg"
+import Mother18 from "../../image/event/mothers/18M.jpeg"
+import Mother19 from "../../image/event/mothers/19M.jpeg"
+import Mother20 from "../../image/event/mothers/20M.jpeg"
+import Mother21 from "../../image/event/mothers/21M.jpeg"
+import Mother22 from "../../image/event/mothers/22M.jpeg"
+import Mother23 from "../../image/event/mothers/23M.jpeg"
+import Mother24 from "../../image/event/mothers/24M.jpeg"
+import Mother25 from "../../image/event/mothers/25M.jpeg"
+import Mother26 from "../../image/event/mothers/26M.jpeg"
+import Mother27 from "../../image/event/mothers/27M.jpeg"
+import Mother28 from "../../image/event/mothers/28M.jpeg"
+import Mother29 from "../../image/event/mothers/29M.jpeg"
+import Mother30 from "../../image/event/mothers/30M.jpeg"
+import Mother31 from "../../image/event/mothers/31M.jpeg"
+import Mother32 from "../../image/event/mothers/32M.jpeg"
+import Mother33 from "../../image/event/mothers/33M.jpeg"
+import Mother34 from "../../image/event/mothers/34M.jpeg"
+import Mother35 from "../../image/event/mothers/35M.jpeg"
+import Mother36 from "../../image/event/mothers/36M.jpeg"
 
 
 
@@ -240,6 +264,126 @@ export const  GallarySlice = createSlice({
             {
                 id: 12,
                 src: MotherTwelve,
+                loading: 'lazy',
+            },
+            {
+                id: 13,
+                src: Mother13,
+                loading: 'lazy',
+            },
+            {
+                id: 14,
+                src: Mother14,
+                loading: 'lazy',
+            },
+            {
+                id: 15,
+                src: Mother15,
+                loading: 'lazy',
+            },
+            {
+                id: 16,
+                src: Mother16,
+                loading: 'lazy',
+            },
+            {
+                id: 17,
+                src: Mother17,
+                loading: 'lazy',
+            },
+            {
+                id: 18,
+                src: Mother18,
+                loading: 'lazy',
+            },
+            {
+                id: 19,
+                src: Mother19,
+                loading: 'lazy',
+            },
+            {
+                id: 20,
+                src: Mother20,
+                loading: 'lazy',
+            },
+            {
+                id: 21,
+                src: Mother21,
+                loading: 'lazy',
+            },
+            {
+                id: 22,
+                src: Mother22,
+                loading: 'lazy',
+            },
+            {
+                id: 23,
+                src: Mother23,
+                loading: 'lazy',
+            },
+            {
+                id: 24,
+                src: Mother24,
+                loading: 'lazy',
+            },
+            {
+                id: 25,
+                src: Mother25,
+                loading: 'lazy',
+            },
+            {
+                id: 26,
+                src: Mother26,
+                loading: 'lazy',
+            },
+            {
+                id: 27,
+                src: Mother27,
+                loading: 'lazy',
+            },
+            {
+                id: 28,
+                src: Mother28,
+                loading: 'lazy',
+            },
+            {
+                id: 29,
+                src: Mother29,
+                loading: 'lazy',
+            },
+            {
+                id: 30,
+                src: Mother30,
+                loading: 'lazy',
+            },
+            {
+                id: 31,
+                src: Mother31,
+                loading: 'lazy',
+            },
+            {
+                id: 32,
+                src: Mother32,
+                loading: 'lazy',
+            },
+            {
+                id: 33,
+                src: Mother33,
+                loading: 'lazy',
+            },
+            {
+                id: 34,
+                src: Mother34,
+                loading: 'lazy',
+            },
+            {
+                id: 35,
+                src: Mother35,
+                loading: 'lazy',
+            },
+            {
+                id: 36,
+                src: Mother36,
                 loading: 'lazy',
             }
         ]

@@ -267,6 +267,7 @@ const GalleryImages = () => {
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("A4")
     const [currentImageIndex, setCurrentIndex] = useState(0);
+    const [currentImageIndexMother, setCurrentIndexMother] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenVideo, setIsOpenVideo] = useState(false);
 
@@ -431,7 +432,7 @@ const GalleryImages = () => {
         setCurrentIndex(id)
     }
 
-    let images = [];
+    let images = []
     let mDay = [];
     //* TRANSFORM IMAGES TO ARRAY OF OBJECTS
     for (var i = 0; i < gallary?.length; i++) {
@@ -458,6 +459,8 @@ const GalleryImages = () => {
         
     }
 
+    console.log(mDay)
+
     //* END OF TRANSFORM IMAGES TO ARRAY OF OBJECTS
 
 
@@ -468,6 +471,13 @@ const GalleryImages = () => {
     const gotoNext = () =>
         currentImageIndex + 1 < images.length &&
         setCurrentIndex(currentImageIndex + 1);
+
+    //! Mother day next and previous function
+    const gotoPreviousMother = () =>
+        currentImageIndexMother > 0 && setCurrentIndexMother(currentImageIndexMother - 1);
+    const gotoNextMother = () =>
+        currentImageIndexMother + 1 < mDay.length &&
+        setCurrentIndexMother(currentImageIndexMother + 1);
     
     //* GET IMAGES FROM REDUX STORE
     const GetImages = (id) => {
@@ -599,10 +609,10 @@ const GalleryImages = () => {
                 {isOpen  && <Backdrop onClick={()=> setIsOpen(!isOpen)} zIndex="4" theme="rgba(0, 0, 0, .9)" /> }
                 <ImageModal 
                     isOpen={isOpen} 
-                    gotoPrevious={gotoPrevious} 
-                    gotoNext={gotoNext} 
-                    images={images} 
-                    currentImageIndex={currentImageIndex} 
+                    gotoPrevious={gotoPreviousMother} 
+                    gotoNext={gotoNextMother} 
+                    images={mDay} 
+                    currentImageIndex={currentImageIndexMother} 
                     setIsOpen={setIsOpen} 
                 />
                 <Section>

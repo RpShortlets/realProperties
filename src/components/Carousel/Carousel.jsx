@@ -7,16 +7,17 @@ const Carosuel = styled(Carousel) `
     height: 100%;
 
     .carousel-inner {
-        height: 100%;
+        height: ${({loading}) => loading === "loading" ? "230px" : "100%"}
     }
 `
 
 
-const Carousels = ({index, handleSelect, data, controls, fade, onMouseEnter, onMouseLeave, fetch, style, imageStyle}) => {
+const Carousels = ({index, handleSelect, data, loading, controls, fade, onMouseEnter, onMouseLeave, fetch, style, imageStyle}) => {
 
     return (
         <>
-            <Carosuel  activeIndex={index} onSelect={handleSelect} fade={fade} controls={controls} indicators={false}>
+            <Carosuel loading={loading} activeIndex={index} onSelect={handleSelect} fade={fade} controls={controls} indicators={false}>
+                
                 {data?.map((data, i) => (
                     <Carousel.Item key={i}
                         onMouseEnter={() => onMouseEnter(i)}
@@ -29,11 +30,10 @@ const Carousels = ({index, handleSelect, data, controls, fade, onMouseEnter, onM
                             src={data?.picture}
                             alt="First slide"
                             style={imageStyle}
-                            
                         />
                     </Carousel.Item>
                 ))}
-                    
+                                    
             </Carosuel>
         </>
     )

@@ -36,10 +36,10 @@ const Container = styled.div `
     .comingCard {
         position: absolute;
         overflow: scroll;
-        left: 25%;
+        left: 5%;
         top: 15%;
         background: #fff;
-        width: 60%;
+        width: 90%;
         height: 70%;
         padding: max(5vh, 1.5rem) max(1vh, 1rem) 0 max(5vh, 1rem);
 
@@ -49,7 +49,17 @@ const Container = styled.div `
                 font-size: var(--font-small);
                 font-weight: 600;
                 text-align: center;
+                margin-bottom: 2rem;
             }
+        }
+    }
+
+    @media screen and (min-width: 601px) {
+        .comingCard { 
+            left: 25%;
+            top: 15%;
+            width: 60%;
+        
         }
     }
 
@@ -94,7 +104,7 @@ const ComingResult = () => {
                                 (   
                                     <>
                                         {upcomingGallery?.result?.map((item) => (
-                                            <PropertyCard data={item} title="View" color handleGetDetails={() => handleGetDetails(item?.apartment_id)}/>
+                                            <PropertyCard btn data={item} title="View" color handleGetDetails={() => handleGetDetails(item?.apartment_id)}/>
                                         ))}
                                     </>
                                 )}

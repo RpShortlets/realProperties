@@ -5,6 +5,7 @@ import { CancelIcon } from "../../../../Svg/svg"
 import { FlexStyle} from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
 import Carousels from "../../../../components/Carousel/Carousel"
+import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
 
 
 
@@ -15,6 +16,7 @@ import Carousels from "../../../../components/Carousel/Carousel"
 //     cursor: pointer;
 // `
 const Cancel = styled.span `
+    z-index: 2000;
     background: #333;
     color: #fff;
     position: absolute;
@@ -85,7 +87,7 @@ const Container = styled.div `
 `
 
 
-const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, data, setShowText, setApartmentId, showText, apartmentId, fetch}) => {
+const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, data, loading, setShowText, setApartmentId, showText, apartmentId, fetch}) => {
     const Query = useMediaQuery("(max-width: 600px)")
 
     const setId = (id) => {
@@ -98,12 +100,17 @@ const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, da
         setShowText(false)
     }
 
-    
+    console.log(loading)
     return (
         <Modal data-testtId="promoModal" borderRadius="3px" padding="0" transition={{duration: 0.3, type:{type:'spring'}}} initial={{opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: -50}} show={showPromo} setShow={setShowPromo}  theme="rgba(0,0,0,0.92)" left={Query ? "5%" : "20%"} width={Query ? "90%" : "62%"} top={Query ? "25%" : "40%"} btn>
             <Cancel onClick={() => setShowPromo(false)}>{ CancelIcon}</Cancel>
             <Container>
-                <Carousels style={{cursor: 'pointer'}} fetch={fetch} controls={true} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
+                {loading === "loading" && (
+                    <div style={{width: '100%', height: "200px"}}>
+                        <SkeletonLoader width="100%" height={"100%"} />
+                    </div>
+                ) }
+                <Carousels style={{cursor: 'pointer'}} loading={loading} fetch={fetch} controls={true} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
                 <div className="comingContent">
                     {!showText ? (
                         <div>
