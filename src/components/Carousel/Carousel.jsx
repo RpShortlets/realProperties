@@ -15,7 +15,7 @@ const Carosuel = styled(Carousel) `
     }
 `
 
-
+//Carousel Item
 const Carousels = ({index, handleSelect, data, loading, controls, fade, onMouseEnter, onMouseLeave, fetch, style, imageStyle, caro}) => {
 
     return (
