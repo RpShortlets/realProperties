@@ -5,7 +5,6 @@ import { CancelIcon } from "../../../../Svg/svg"
 import { FlexStyle} from "../../../../styles/globalStyles"
 import Button from "../../../../components/Button/Button"
 import Carousels from "../../../../components/Carousel/Carousel"
-import { SkeletonLoader } from "../../../../components/Loader/Skeleton"
 
 
 
@@ -100,12 +99,12 @@ const PromoBanner = ({showPromo, setShowPromo, OnClicks, index, handleSelect, da
         setShowText(false)
     }
 
-    console.log(loading)
+    
     return (
         <Modal data-testtId="promoModal" borderRadius="3px" padding="0" transition={{duration: 0.3, type:{type:'spring'}}} initial={{opacity: 0, y: -0}} exit={{opacity: 0, y: -20}} animate={{opacity: 1, y: -50}} show={showPromo} setShow={setShowPromo}  theme="rgba(0,0,0,0.92)" left={Query ? "5%" : "20%"} width={Query ? "90%" : "62%"} top={Query ? "25%" : "40%"} btn>
             <Cancel onClick={() => setShowPromo(false)}>{ CancelIcon}</Cancel>
             <Container>
-                <Carousels style={{cursor: 'pointer'}} loading={loading} fetch={fetch} controls={true} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
+                <Carousels caro="true" style={{cursor: 'pointer'}} loading={loading} fetch={fetch} controls={true} onMouseEnter={setId} onMouseLeave={removeId} data={data?.result} index={index} handleSelect={handleSelect} />
                 <div className="comingContent">
                     {!showText ? (
                         <div>

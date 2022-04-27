@@ -47,6 +47,10 @@ const PictureContainer = styled.div `
         object-fit: cover;
     }
 
+    @media screen and (max-width: 600px) {
+        height: ${({height}) => height ? '200px' : '250px'};
+    }
+
     @media screen and (min-width: 769px) {
         border-radius: 10px 0px 0px 10px; 
     }

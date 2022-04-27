@@ -24,8 +24,8 @@ const ItemIds = [
     },
     {
         id: 2,
-        title: 'Terms and Condition',
-        path: '/terms'
+        title: 'Hot Deals',
+        path: '/coming-soon'
     },
     {
         id: 3,

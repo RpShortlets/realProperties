@@ -15,9 +15,10 @@ import FacilityComponent from './components/Facility'
 import AmenityComponent from "./components/Amenity"
 import ImageModal from "../../components/Image Modal/ImageModal";
 import { Input, PhoneType } from '../../utils/FormElement/Input'
-import { Envelop, Person } from '../../Svg/svg'
+import { Envelop, Person, SearchNotFoundIcon } from '../../Svg/svg'
 import { OpenNotificationWithIcon } from '../../components/Notification/Notification'
 import { ClearSaveCustomer } from '../../redux/actions/comingSoonReducer'
+import Error from '../../components/Error/Error'
 
 
 
@@ -93,7 +94,7 @@ const ComingDetails = () => {
     const [showAmenity, setShowAmenity] = useState(false)
     const Query = useMediaQuery("(min-width: 769px)")
 
-
+    console.log(comingDetails, proceess)
 
     const gotoPrevious = () =>
         currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
@@ -115,11 +116,14 @@ const ComingDetails = () => {
     //* TRANSFORM IMAGES TO ARRAY OF OBJECTS
     for (var i = 0; i < newImages?.length; i++) {
         // images = newImages
-        images = newImages.map(image => ({
+        // slice small pictures from the array and create new array object
+        images = newImages?.slice(4)?.map(image => ({
             src: image.picture,
             loading: 'lazy',
         }))
     }
+
+   
 
     const scrollToPosition = () => {
         setShowForm(!showForm)
@@ -156,7 +160,7 @@ const ComingDetails = () => {
 
     //* FETCH APARTMENT DETAILS ON COMPONENT MOUNT
     useEffect(() => {
-        dispatch(getComingSoonDetails(id))        
+        dispatch(getComingSoonDetails(id))     
     }, [id, dispatch])
 
     //* ALLOW USER TO SCROLL DOWN TO RESERVATION FORM
@@ -192,6 +196,13 @@ const ComingDetails = () => {
         }
     }, [requesting, saveCustomer, dispatch])
 
+
+    if(proceess === 'failed') {
+        return (
+            <Error title="Something went wrong. Please try again" Icon={SearchNotFoundIcon} />
+        )
+    }
+    
 
     return (
         <>

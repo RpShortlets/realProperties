@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import Bk from "../../image/comingImg.png"
 import PropertyCard from "../../components/PropertyCard/PropertyCard"
-import { getHomeData } from '../../redux/actionCreators/actionCreators'
+import { getAllComingSoonProp } from '../../redux/actionCreators/actionCreators'
 import { useDispatch, useSelector } from 'react-redux'
 import { SkeletonLoader } from '../../components/Loader/Skeleton'
 
@@ -69,18 +69,15 @@ const ComingResult = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {process, upcomingGallery} = useSelector(state => state.homeReducer)
+    const {proceess, comingResults} = useSelector(state => state.comingsoonReducer)
 
-    console.log({
-        process,
-        upcomingGallery 
-    })
+
     const handleGetDetails = (id) => {
         navigate(`/coming-soon/apartment/${id}`)
     }
 
     useEffect(() => {
-        dispatch(getHomeData())
+        dispatch(getAllComingSoonProp())
     }, [dispatch])
 
     return (
@@ -93,17 +90,18 @@ const ComingResult = () => {
                     <div className='ImageBk'></div>
                     <div className="comingCard">
                         <div>
-                            <h1 data-testId="comingHeader" > {process === "loading" ? <SkeletonLoader width="20vw" height={"20px"} />  : process === "succeeded" &&  "Up Coming Apartments"}</h1>
+                            <h1 data-testId="comingHeader" > {proceess === "loading" ? <SkeletonLoader width="20vw" height={"20px"} />  : proceess
+                                === "succeeded" &&  "Up Coming Apartments"}</h1>
                             <div>
-                                {process === "loading" ? 
+                                {proceess === "loading" ? 
                                     <div>
                                         <SkeletonLoader width="100%" height={"200px"} /> 
                                         <SkeletonLoader width="100%" height={"200px"} /> 
                                     </div>
-                                : process === "succeeded" && 
+                                : proceess === "succeeded" && 
                                 (   
                                     <>
-                                        {upcomingGallery?.result?.map((item) => (
+                                        {comingResults?.result?.map((item) => (
                                             <PropertyCard btn data={item} title="View" color handleGetDetails={() => handleGetDetails(item?.apartment_id)}/>
                                         ))}
                                     </>

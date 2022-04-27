@@ -424,6 +424,13 @@ export const ContactSupport = createAsyncThunk("support/contactSupport", async (
 
 
 //* COMING SOON CALLS
+
+    export const getAllComingSoonProp = createAsyncThunk("comingReducer/getAllComingSoonProp", async () => {
+        const response = await axios.get(`${BaseURL}/get-coming-apartment`)
+
+        localStorage.setItem("cachedComingSoon", JSON.stringify(response.data))
+        return response.data
+    }) 
     
     export const getComingSoonDetails = createAsyncThunk("comingReducer/getComingSoonDetails", async(id) => {
         

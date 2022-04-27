@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
-import {getComingSoonDetails, saveCustomerComingDetails } from "../actionCreators/actionCreators"
+import {getComingSoonDetails, saveCustomerComingDetails, getAllComingSoonProp } from "../actionCreators/actionCreators"
 
 export const ComingSoonReducer = createSlice({
     name:"comingReducer",
     initialState: {
         comingDetails: {},
+        comingResults: {},
         saveCustomer: {}
     },
     reducers: {
@@ -14,6 +15,17 @@ export const ComingSoonReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        .addCase(getAllComingSoonProp.pending, (state, action) => {
+            state.proceess = 'loading'
+        })
+        .addCase(getAllComingSoonProp.fulfilled, (state, action) => {
+            state.proceess= "succeeded"
+            state.comingResults = action.payload
+        })
+        .addCase(getAllComingSoonProp.rejected, (state, action) => {
+            state.proceess = "failed"
+            state.comingResults = action.error.message
+        })
         .addCase(getComingSoonDetails.pending, (state, action) => {
             state.proceess = 'loading'
         })

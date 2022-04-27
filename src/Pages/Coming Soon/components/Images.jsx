@@ -13,7 +13,8 @@ const ImageGrid = styled.div `
     gap: 1rem;
 
     .gridOne,
-    .gridThree  {
+    .gridThree,
+    .gridFour  {
         display: none;
     }
 
@@ -34,29 +35,34 @@ const ImageGrid = styled.div `
     }
 
     @media screen and (min-width: 601px) {
-        grid-template-rows: repeat(4, 1fr);
+        /* grid-template-rows: repeat(4, 1fr); */
 
-        .gridOne{
+        .gridFour,
+        .gridOne, 
+        .gridThree {
             display: block;
-            grid-row: 1/5;
+        }
+        
+        .gridOne{
+            grid-row: 1/2;
         }
         .gridTwo {
-            grid-row: 1/3;
+            grid-row: 1/2;
             grid-column: 2/3;
         }
 
         .gridThree {
-            display: block;
-            grid-row: 3/5;
+            grid-row: 3/2;
             grid-column: 2/3;
         }
+
+        
     }
 
 `
 
 
 const Images = ({loading, data, showPictures}) => {
-    console.log(data?.pictures)
     
     return (
         <ImageGrid>
@@ -73,6 +79,11 @@ const Images = ({loading, data, showPictures}) => {
             <div className="gridThree">
                 {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
                     <img src={data?.pictures[2]?.picture} alt="apartment_picture" width="100%" height="100%" />
+                }
+            </div>
+            <div className="gridFour">
+                {loading === "loading" ? <SkeletonLoader width="100%" height={"100%"} /> : loading === "succeeded" &&
+                    <img src={data?.pictures[3]?.picture} alt="apartment_picture" width="100%" height="100%" />
                 }
             </div>
             {loading === "loading" ? "" : loading === "succeeded" &&

@@ -7,16 +7,20 @@ const Carosuel = styled(Carousel) `
     height: 100%;
 
     .carousel-inner {
-        height: ${({loading}) => loading === "loading" ? "230px" : "100%"}
+        height: 100%;
+    }
+
+    @media screen and (max-width: 600px) {
+        height: ${({caro}) => caro ? "230px" : "100%"}
     }
 `
 
 
-const Carousels = ({index, handleSelect, data, loading, controls, fade, onMouseEnter, onMouseLeave, fetch, style, imageStyle}) => {
+const Carousels = ({index, handleSelect, data, loading, controls, fade, onMouseEnter, onMouseLeave, fetch, style, imageStyle, caro}) => {
 
     return (
         <>
-            <Carosuel loading={loading} activeIndex={index} onSelect={handleSelect} fade={fade} controls={controls} indicators={false}>
+            <Carosuel caro={caro} activeIndex={index} onSelect={handleSelect} fade={fade} controls={controls} indicators={false}>
                 
                 {data?.map((data, i) => (
                     <Carousel.Item key={i}

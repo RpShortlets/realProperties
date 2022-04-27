@@ -189,7 +189,7 @@ const Cards = styled.div `
             width: 100%;
             height: ${({imageLoaded}) => !imageLoaded ? "250px" : "100%"};
             /* height: 100%; */
-            background: rgba(0,0,0,.5);
+            background: ${({isHover}) => isHover ? "rgba(0,0,0,.9)" : "rgba(0,0,0,.5)" };
             border-radius: 9px;
     
             :hover {
@@ -210,18 +210,22 @@ const Cards = styled.div `
     }
 
     .eventContainer {
+        overflow-y: scroll;
+        padding: 20px 16PX;
         position: absolute;
         color: #fff;
-        ${FlexStyle}
+        ${({isHover}) => !isHover && FlexStyle}
         justify-content: space-around;
         width: 100%;
         flex-direction: column;
         height: 100%;
 
-        p {
+        p,ol,li {
             margin: 0;
-            font-size: var(--font-small);
-            font-weight: 600;
+            font-size: ${({isHover}) => !isHover ? 'var(--font-small)' : "var(--font-xtraLarge-small)" };
+            font-weight:  ${({isHover}) => !isHover && '600'};
+            line-height: 1.5;
+            text-align: justify;
         }
 
         div {
@@ -270,6 +274,7 @@ const GalleryImages = () => {
     const [currentImageIndexMother, setCurrentIndexMother] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenVideo, setIsOpenVideo] = useState(false);
+    const [isHover, setIsHover] = useState(false)
 
     const ItemIds =  pathname === "/gallery/apartments" ? [ 
     
@@ -458,12 +463,9 @@ const GalleryImages = () => {
         
         
     }
-
-    console.log(mDay)
+   
 
     //* END OF TRANSFORM IMAGES TO ARRAY OF OBJECTS
-
-
 
     const gotoPrevious = () =>
         currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
@@ -632,19 +634,49 @@ const GalleryImages = () => {
                                         imageLoaded={A4loaded}
                                         as={motion.div} key={index} variants={itemB} 
                                         onClick={() => showPictures(index)}  
+                                        isHover={isHover}
+                                        onMouseEnter={() => setIsHover((prev) => !prev)}
+                                        onMouseLeave={() => setIsHover((prev) => !prev)}
                                     >
                                         <div>
                                             <img src={image.image} alt={image.name} />
                                         </div>
-                                        <div className='eventContainer'>
-                                            <p>
-                                                {image.name}
-                                            </p>
-                                            <div>
-                                                <AiOutlineCamera /> 
-                                                <span>Click to see pictures</span>
+                                        {isHover ? (
+                                            <div className='eventContainer'>
+                                                <p>
+                                                    Gaspard mermillod wouldn’t have said it better when he said “A mother is she who can take the place of all others but whose place no one else can take”
+                                                    Rpshortlets organized a Mother’s Day giveaway event which took place on Friday, April 8, 2022. 
+                                                    The winners of the giveaway received these packages:
+                                                </p>
+                                                <ol>
+                                                    <li>2 days stay in our luxurious apartments</li>
+                                                    <li>Pick up/drop off services between their homes and apartments</li>
+                                                    <li>Meals were provided </li>
+                                                    <li>Gifts were given to winners </li>
+                                                </ol>
+                                                <p>
+                                                    Our collaborators Perriescafe created a delicious spread (or meals) for the occasion, while Cerisenoire did a spectacular job with the gifts which were given to the winners. 
+
+                                                    The view from the property was beautiful, and the apartment could not have been better.
+
+                                                    Our hosts had an amazing time with the winners and their needs were carted for. 
+
+                                                    The event was a huge success and the mothers were delighted.
+
+                                                    Our apartments are indeed an affordable luxury you need to experience too.
+                                                </p>
                                             </div>
-                                        </div>
+                                        ) : (
+                                            <div className='eventContainer'>
+                                                <p>
+                                                    {image.name}
+                                                </p>
+                                                <div>
+                                                    <AiOutlineCamera /> 
+                                                    <span>Click to see pictures</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </Cards>
                                 ))}
                             </ImageContainer>

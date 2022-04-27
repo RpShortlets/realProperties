@@ -35,7 +35,6 @@ const Home = () => {
     const {process, upcomingGallery} = useSelector(state => state.homeReducer)
 
 
-
     const [homeDateValue, setHomeDateValue] = useState([null, null]);
     const [openModal, setOpenModal] = useState(false)
     const [openGuest, setOpenGuest] = useState(false)
@@ -146,7 +145,7 @@ const Home = () => {
             }
 
 
-            {showPromo && (
+            {showPromo && upcomingGallery !== "Request failed with status code 429" && (
                 <PromoBanner  
                     showPromo={showPromo}
                     setShowPromo={setShowPromo}
