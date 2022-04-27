@@ -24,8 +24,8 @@ const Carousels = ({index, handleSelect, data, loading, controls, fade, onMouseE
                 
                 {data?.map((data, i) => (
                     <Carousel.Item key={i}
-                        onMouseEnter={() => onMouseEnter(i)}
-                        onMouseLeave={() => onMouseLeave(i)}
+                        onMouseEnter={onMouseEnter ? () => onMouseEnter(i) : () => console.log("")}
+                        onMouseLeave={onMouseLeave ? () => onMouseLeave(i): () => console.log("")}
                         onClick={() => fetch(data?.apartment_id)}
                         style={style}
                     >
