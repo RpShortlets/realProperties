@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export const BaseURL = 'https://tranquil-tundra-47751.herokuapp.com';
+export const BaseURL = 'https://rpshortlets.herokuapp.com';
 // axios.interceptors.request.use((req) => {
 //     if (user && user.token)  {
 //         req.headers.Authorization = `Bearer ${user?.token}`;
