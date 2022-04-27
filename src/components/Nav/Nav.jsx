@@ -22,11 +22,11 @@ const ItemIds = [
         title: 'Gallery',
         path: '/gallery'
     },
-    {
-        id: 2,
-        title: 'Hot Deals',
-        path: '/coming-soon'
-    },
+    // {
+    //     id: 2,
+    //     title: 'Hot Deals',
+    //     path: '/coming-soon'
+    // },
     {
         id: 3,
         title: 'Customer Support',

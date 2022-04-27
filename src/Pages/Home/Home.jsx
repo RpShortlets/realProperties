@@ -122,14 +122,14 @@ const Home = () => {
 
     }, [promoCounter]);
 
-    useEffect(() => {
-        if(showPromo) {
-            document.body.style.overflow = 'hidden'
-        } 
-        return () => {
-            document.body.style.overflow = 'auto'
-        }
-    }, [showPromo])
+    // useEffect(() => {
+    //     if(showPromo) {
+    //         document.body.style.overflow = 'hidden'
+    //     } 
+    //     return () => {
+    //         document.body.style.overflow = 'auto'
+    //     }
+    // }, [showPromo])
 
     useEffect(() => {
         dispatch(getHomeData())
@@ -144,7 +144,7 @@ const Home = () => {
                 </AnimatePresence>
             }
 
-
+{/* 
             {showPromo && upcomingGallery !== "Request failed with status code 429" && (
                 <PromoBanner  
                     showPromo={showPromo}
@@ -160,7 +160,7 @@ const Home = () => {
                     setShowText={setShowText}
                     fetch={handleGetComingDetails}
                 />
-            )}
+            )} */}
     
             <Section data-testid="why-modal">
                 <SearchFilter 
