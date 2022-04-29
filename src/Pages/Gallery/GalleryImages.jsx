@@ -11,6 +11,7 @@ import A4Image from "../../image/small/picThree.jpeg"
 import C4Image from "../../image/Man/pixFour.jpeg"
 
 import A4video from "../../video/A4Video.mp4"
+import C4Video from "../../video/c4Video.mp4"
 import MotherImage from "../../image/mother.webp"
 
 import Error from '../../components/Error/Error'
@@ -27,14 +28,25 @@ import useProgressiveImage from '../../hooks/useProgressiveImage/useProgressiveI
 
 const VideoImages = [
     {
-        id: 1,
+        id: 0,
         image: A4Image,
         name: 'A4',
     },
     {
-        id: 2,
+        id: 1,
         image: C4Image,
         name: 'C4',
+    }
+]
+
+const VideoData = [
+    {
+        id: 0,
+        src: A4video
+    },
+    {
+        id: 1,
+        src: C4Video
     }
 ]
 
@@ -270,6 +282,7 @@ const GalleryImages = () => {
     const { gallary, largeA4Image, largeC4Image, motherDay } = useSelector(state => state.gallary)
     const { pathname } = useLocation()
     const [apartmentName, setApartmentName] = useState("A4")
+    const [videoId, setVideoId] = useState(0)
     const [currentImageIndex, setCurrentIndex] = useState(0);
     const [currentImageIndexMother, setCurrentIndexMother] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
@@ -489,7 +502,8 @@ const GalleryImages = () => {
 
 
     //* PLAY VIDEO IN A MODAL
-    const playVideo = (video) => {
+    const playVideo = (id) => {
+        setVideoId(id)
         setIsOpenVideo((prev) => !prev)
     }
     
@@ -531,7 +545,7 @@ const GalleryImages = () => {
                     <VideoModal 
                         setIsOpenVideo={setIsOpenVideo} 
                         isOpenVideo={isOpenVideo}
-                        src={A4video}
+                        src={VideoData[videoId].src}
                         query={Query} 
                     
                     />
@@ -552,7 +566,7 @@ const GalleryImages = () => {
                                 <Cards 
                                     imageLoaded={A4loaded}
                                     as={motion.div} key={index} variants={itemB} 
-                                    onClick={playVideo}   
+                                    onClick={() => playVideo(image.id)}   
                                 >
                                     <div>
                                         <img src={image.image} alt={image.name} />

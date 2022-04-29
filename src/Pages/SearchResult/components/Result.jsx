@@ -16,8 +16,6 @@ const Result = ({data: {apartment_id}, status, data, title }) => {
 
     const handleGetDetails = async(Id) => {  
         localStorage.setItem('apidid', encrypted)      
-        // dispatch(ShortletDetails({checkInDate,checkOutDate,apartment_id}))
-        //checkIn=${checkInDate}&checkOut=${checkOutDate 
         navigate(`/apartment/${apartment_id}&checkin=${checkInDate !== null ? checkInDate : ''}&checkout=${checkOutDate !== null ? checkOutDate: ''}`)
     }
 

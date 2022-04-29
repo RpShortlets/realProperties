@@ -211,7 +211,7 @@ const PropertyCard = ({data, status, handleGetDetails, title, color, loading, bt
                     </PictureContainer>
                     <ContentContainer>
                         <div>
-                            <div>
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <h2>{data?.apartment_name ? data?.apartment_name : ''}</h2>
                                 <span>{data?.address ? data?.address : ''}</span>
                                 <span>

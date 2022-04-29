@@ -68,7 +68,7 @@ const Contains = styled.div`
         
         @media screen and (min-width: 769px) {
             p {
-                font-size: var(--font-small-screen)
+                font-size: var(--font-small-screen);
             }
 
             svg {
@@ -99,6 +99,7 @@ const Contains = styled.div`
         padding: 10px;
         overflow-x: auto;
         transform: rotateY(180deg);
+        z-index: 11;
     }
 
 `
@@ -138,16 +139,19 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
         if(refs?.current[e]) {
             if (refs.current[e].current.className === "card" ) {
                 refs.current[e].current.style.transform = "rotateY(180deg)";
+                refs.current[e].current.childNodes[0].style.visibility = "hidden";
                 /* if(refs.current[e].current.style.transform === "rotateY(180deg)") { */
                 }
             };      
     }
 
+    /* console.log(refs?.current[0]?.current?.childNodes[0].style.visibility = "hidden") */
 
     //handleLeaveCard rotate card back to 0deg
     const handleLeaveCard = (e) => {
         if(refs?.current[e]) { 
             refs.current[e].current.style.transform = "rotateY(0deg)";
+            refs.current[e].current.childNodes[0].style.visibility = "visible";
         }
     }
 
@@ -158,7 +162,7 @@ const WhyRealShortlets = ({about, whyShortlet, setWhyShortLet, handleWhyRealShor
                 <Content>
                     {RealShortlets.map((item, i) => (
                         <Contains className="container" key={i} >
-                            <div className="card"  onMouseLeave={() => handleLeaveCard(item.id)} onMouseEnter={() => handleClick(item.id)} ref={refs.current[item.id]}>
+                            <div className="card"  onMouseLeave={() => handleLeaveCard(item.id)} onClick={() => handleClick(item.id)} ref={refs.current[item.id]}>
                                 <div className="front">
                                     <div>
                                         {item.image} 
