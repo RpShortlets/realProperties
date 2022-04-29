@@ -17,7 +17,7 @@ export const FaqData = [
     {
         id: 4,
         header: 'How long can I rent for?',
-        content: '-	We would be delighted to host you however long or short your stay would be. There are no absolutely no restrictions whatsoever.'
+        content: '-	We would be delighted to host you however long or short your stay would be. There are absolutely no restrictions to the length of your stay.'
     },
     {
         id: 5,

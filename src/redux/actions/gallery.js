@@ -64,9 +64,6 @@ import MotherTwelve from "../../image/event/mothers/motherTwelve.jpeg"
 import Mother13 from "../../image/event/mothers/13M.jpeg"
 import Mother14 from "../../image/event/mothers/14M.jpeg"
 import Mother15 from "../../image/event/mothers/15M.jpeg"
-import Mother16 from "../../image/event/mothers/16M.jpeg"
-import Mother17 from "../../image/event/mothers/17M.jpeg"
-import Mother18 from "../../image/event/mothers/18M.jpeg"
 import Mother19 from "../../image/event/mothers/19M.jpeg"
 import Mother20 from "../../image/event/mothers/20M.jpeg"
 import Mother21 from "../../image/event/mothers/21M.jpeg"
@@ -279,21 +276,6 @@ export const  GallarySlice = createSlice({
             {
                 id: 15,
                 src: Mother15,
-                loading: 'lazy',
-            },
-            {
-                id: 16,
-                src: Mother16,
-                loading: 'lazy',
-            },
-            {
-                id: 17,
-                src: Mother17,
-                loading: 'lazy',
-            },
-            {
-                id: 18,
-                src: Mother18,
                 loading: 'lazy',
             },
             {

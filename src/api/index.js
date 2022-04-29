@@ -1,6 +1,8 @@
 import axios from "axios";
 
 
+// http://localhost:5050/
+// https://rpshortlets.herokuapp.com
 
 export const BaseURL = 'https://rpshortlets.herokuapp.com';
 // axios.interceptors.request.use((req) => {
