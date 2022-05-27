@@ -4,7 +4,7 @@ import axios from "axios";
 // http://localhost:5050/
 // https://rpshortlets.herokuapp.com
 
-export const BaseURL = "http://localhost:5050";
+export const BaseURL = "https://rpshortlets.herokuapp.com";
 // axios.interceptors.request.use((req) => {
 //     if (user && user.token)  {
 //         req.headers.Authorization = `Bearer ${user?.token}`;
