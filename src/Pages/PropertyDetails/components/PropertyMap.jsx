@@ -66,7 +66,7 @@ const PropertyMap = () => {
             to="#"
             onClick={() => dispatch(setShowDirections(!showDirections))}
           >
-            Get Discription
+            Get Description
           </Btn>
         </div>
       </div>
