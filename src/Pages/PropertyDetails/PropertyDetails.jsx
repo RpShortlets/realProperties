@@ -582,7 +582,7 @@ const PropertyDetails = () => {
                 lenghtstay={diffDays ? diffDays : staylength}
                 // margin="max(3vw,2rem) 0"
               />
-              <PropertyMap status={reserve} />
+              {/* <PropertyMap status={reserve} /> */}
             </BodyContent>
           </BodyContainer>
 
