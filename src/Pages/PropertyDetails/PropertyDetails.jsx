@@ -442,8 +442,8 @@ const PropertyDetails = () => {
         {showModal && (
           <Reservation setShowModal={setShowModal} proceess={proceess} />
         )}
-          </AnimatePresence>
-          <MapDescriptionModal/>
+      </AnimatePresence>
+      <MapDescriptionModal />
       <Section>
         <Main paddingleft="true" paddingRight="true">
           <Header>
@@ -582,7 +582,7 @@ const PropertyDetails = () => {
                 lenghtstay={diffDays ? diffDays : staylength}
                 // margin="max(3vw,2rem) 0"
               />
-              {/* <PropertyMap status={reserve} /> */}
+              <PropertyMap status={reserve} />
             </BodyContent>
           </BodyContainer>
 
